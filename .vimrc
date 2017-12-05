@@ -7,7 +7,9 @@ map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
-
+let mapleader=","
+set autochdir
+set tags=tags;
 """"""""""""""""""""""""""""""
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -16,6 +18,8 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'Yggdroot/indentLine'
+Plugin 'scrooloose/nerdtree'
+Plugin 'taglist.vim'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""""
@@ -49,7 +53,6 @@ let g:ycm_seed_identifiers_with_syntax=1
 ""开始补全的字符数"
 let g:ycm_min_num_of_chars_for_completion=1
 
-let mapleader=","
 " 跳转到定义处, 分屏打开
 " let g:ycm_goto_buffer_command = 'horizontal-split'
 " nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
@@ -68,3 +71,18 @@ endif
 "set noexpandtab
 "set noautoindent
 set pastetoggle=<F9>
+
+"F2开启和关闭树"
+map <F2> :NERDTreeToggle<CR>
+let NERDTreeChDirMode=1
+""显示书签"
+let NERDTreeShowBookmarks=1
+"设置忽略文件类型"
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+""窗口大小"
+let NERDTreeWinSize=35
+
+map <F3> :Tlist<CR>
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Use_Right_Window = 1  
