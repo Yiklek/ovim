@@ -7,9 +7,14 @@ map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
+inoremap <c-h> <left>
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
 let mapleader=","
 set autochdir
 set tags=tags;
+set mouse=a
 """"""""""""""""""""""""""""""
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -20,6 +25,7 @@ Plugin 'Lokaltog/vim-powerline'
 Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/nerdtree'
 Plugin 'taglist.vim'
+Plugin 'jiangmiao/auto-pairs'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""""
@@ -42,9 +48,9 @@ let g:ycm_autoclose_preview_window_after_completion=1
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "python解释器路径"
 let g:ycm_path_to_python_interpreter='/usr/bin/python3'
-"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+"let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
 "直接触发自动补全
-let g:ycm_key_invoke_completion = ''
+let g:ycm_key_invoke_completion = '<F4>'
 ""是否开启语义补全"
 let g:ycm_seed_identifiers_with_syntax=1
 "是否在注释中也开启补全"
@@ -52,7 +58,8 @@ let g:ycm_seed_identifiers_with_syntax=1
 "let g:ycm_collect_identifiers_from_comments_and_strings = 0
 ""开始补全的字符数"
 let g:ycm_min_num_of_chars_for_completion=1
-
+let g:ycm_cache_omnifunc=0
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" | 
 " 跳转到定义处, 分屏打开
 " let g:ycm_goto_buffer_command = 'horizontal-split'
 " nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
@@ -86,3 +93,5 @@ map <F3> :Tlist<CR>
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window = 1  
+
+
