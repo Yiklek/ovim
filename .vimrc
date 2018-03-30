@@ -2,7 +2,7 @@
 " F2 file tree
 " F3 tag list
 " F4 ycm auto complete
-" F9 pastetoggle
+" F5 pastetoggle
 set nocompatible
 set number
 set ts=4
@@ -111,5 +111,5 @@ let Tlist_Use_Right_Window = 1
 "let g:AutoPairsMapCR=0
 "other keymap
 "粘贴模式
-set pastetoggle=<F9>
+set pastetoggle=<F5>
 
