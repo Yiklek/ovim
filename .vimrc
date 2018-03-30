@@ -9,7 +9,7 @@ set ts=4
 set shiftwidth=4
 set expandtab
 "set noexpandtab
-set noautoindent
+"set noautoindent
 syntax on   
 map <Left> <Nop>
 map <Right> <Nop>
@@ -74,7 +74,7 @@ let g:ycm_seed_identifiers_with_syntax=1
 "let g:ycm_complete_in_comments=1
 "let g:ycm_collect_identifiers_from_comments_and_strings = 0
 ""开始补全的字符数"
-let g:ycm_min_num_of_chars_for_completion=1
+let g:ycm_min_num_of_chars_for_completion=2
 let g:ycm_cache_omnifunc=0
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" | 
 " 跳转到定义处, 分屏打开
