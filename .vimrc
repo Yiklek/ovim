@@ -19,7 +19,7 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
-let mapleader=","
+let mapleader="\<space>"
 set autochdir
 set tags=tags;
 "set mouse=a
@@ -52,7 +52,7 @@ let g:indentLine_enabled = 1
 "powerline
 set laststatus=2
 "let g:Powerline_symbols = 'fancy'
-
+let g:Powerline_colorscheme = 'solarized256'
 "ycm
 "keymaps:
 "直接触发自动补全
@@ -112,4 +112,35 @@ let Tlist_Use_Right_Window = 1
 "other keymap
 "粘贴模式
 set pastetoggle=<F5>
-
+"窗口快捷键
+"l-\ 左右分割
+nmap <leader>\ :vsplit<CR>
+" l-- 上下分割
+nmap <leader>- :split<CR>
+" l-q 保存并退出
+nmap <leader>q :wq<CR>
+" 焦点移动
+nmap <leader>h <c-w>h
+nmap <leader>j <c-w>j
+nmap <leader>k <c-w>k
+nmap <leader>l <c-w>l
+" 位置移动
+nmap <leader>J <c-w>J
+nmap <leader>K <c-w>K
+nmap <leader>H <c-w>H
+nmap <leader>L <c-w>L
+" 大小调整
+nmap <leader>jj 5<c-w>+
+nmap <leader>kk 5<c-w>- 
+nmap <leader>hh 5<c-w><
+nmap <leader>ll 5<c-w>>
+" 标签
+nmap <leader>tq :tabc<CR>
+nmap <leader>tQ :tabo<CR>
+nmap <leader>tls :tabs<CR>
+nmap <leader>to :tabe<space>
+nmap <leader>tsp :tab split<CR>
+nmap <leader>th gT
+nmap <leader>tj gt
+nmap <leader>tk gT
+nmap <leader>tl gT
