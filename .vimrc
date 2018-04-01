@@ -1,8 +1,8 @@
 " keymaps:
 " F2 file tree
 " F3 tag list
-" F4 ycm auto complete
-" F5 pastetoggle
+" F4 pastetoggle
+" l-<tab> ycm autocomplete toggle
 set nocompatible
 set number
 set ts=4
@@ -34,7 +34,10 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/nerdtree'
 Plugin 'taglist.vim'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'rdnetto/YCM-Generator'
+Plugin 'Yelgors/YCM-Generator'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'chiel92/vim-autoformat'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""""
@@ -56,7 +59,7 @@ let g:Powerline_colorscheme = 'solarized256'
 "ycm
 "keymaps:
 "直接触发自动补全
-let g:ycm_key_invoke_completion = '<F4>'
+let g:ycm_key_invoke_completion = '<leader><tab>'
 " 跳转定义
 " nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -74,6 +77,7 @@ let g:ycm_seed_identifiers_with_syntax=1
 "let g:ycm_complete_in_comments=1
 "let g:ycm_collect_identifiers_from_comments_and_strings = 0
 ""开始补全的字符数"
+" let g:ycm_auto_trigger=0
 let g:ycm_min_num_of_chars_for_completion=2
 let g:ycm_cache_omnifunc=0
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" | 
@@ -87,9 +91,10 @@ if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
 endif
     " new version
 if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 endif
-
+"autocmd FileType cpp let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+"autocmd FileType c let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf_c.py"
 " NERDTree
 "F2开启和关闭树"
 map <F2> :NERDTreeToggle<CR>
@@ -110,15 +115,33 @@ let Tlist_Use_Right_Window = 1
 "auto-pairs
 "let g:AutoPairsMapCR=0
 "other keymap
+
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<leader>g"
+let g:UltiSnipsJumpForwardTrigger="<leader>b"
+let g:UltiSnipsJumpBackwardTrigger="<leader>z"
+
+" vim-autoformat
+"auto-format
+"F5自动格式化代码并保存
+noremap <leader>f :Autoformat<CR>:w<CR>
+" let g:autoformat_verbosemode=1
+
 "粘贴模式
-set pastetoggle=<F5>
+set pastetoggle=<F4>
+" 下一行
+imap <leader><CR> <esc>o
+nmap <leader><CR> <esc>o
 "窗口快捷键
 "l-\ 左右分割
-nmap <leader>\ :vsplit<CR>
+nmap <leader>\ :vsplit<space>
 " l-- 上下分割
-nmap <leader>- :split<CR>
+nmap <leader>- :split<space>
 " l-q 保存并退出
 nmap <leader>q :wq<CR>
+nmap <leader>w :w<CR>
 " 焦点移动
 nmap <leader>h <c-w>h
 nmap <leader>j <c-w>j
@@ -132,14 +155,20 @@ nmap <leader>L <c-w>L
 " 大小调整
 nmap <leader>jj 5<c-w>+
 nmap <leader>kk 5<c-w>- 
-nmap <leader>hh 5<c-w><
-nmap <leader>ll 5<c-w>>
+nmap <leader>hh 5<c-w>>
+nmap <leader>ll 5<c-w><
 " 标签
+" 关闭当前标签
 nmap <leader>tq :tabc<CR>
+" 关闭所有标签
 nmap <leader>tQ :tabo<CR>
+" 列出所有标签
 nmap <leader>tls :tabs<CR>
+" 在新标签中打开
 nmap <leader>to :tabe<space>
+" 新标签打开当前文件
 nmap <leader>tsp :tab split<CR>
+" 切换标签
 nmap <leader>th gT
 nmap <leader>tj gt
 nmap <leader>tk gT
