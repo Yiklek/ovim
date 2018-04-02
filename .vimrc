@@ -10,7 +10,7 @@ set shiftwidth=4
 set expandtab
 "set noexpandtab
 "set noautoindent
-syntax on   
+syntax on
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
@@ -39,6 +39,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'chiel92/vim-autoformat'
 Plugin 'skywind3000/asyncrun.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
 "Plugin 'shougo/vimshell.vim'
 "Plugin 'Shougo/vimproc.vim'
 call vundle#end()
@@ -98,18 +100,18 @@ let g:ycm_seed_identifiers_with_syntax=1
 " let g:ycm_auto_trigger=0
 let g:ycm_min_num_of_chars_for_completion=2
 let g:ycm_cache_omnifunc=0
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" | 
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
 " 跳转到定义处, 分屏打开
 " let g:ycm_goto_buffer_command = 'horizontal-split'
 let g:ycm_confirm_extra_conf = 0
 " 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
 " " old version
 if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+	let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
 endif
-    " new version
+" new version
 if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+	let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 endif
 "autocmd FileType cpp let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 "autocmd FileType c let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf_c.py"
@@ -136,7 +138,7 @@ let NERDTreeWinSize=35
 map <F3> :Tlist<CR>
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
-let Tlist_Use_Right_Window = 1  
+let Tlist_Use_Right_Window = 1
 
 "auto-pairs
 "let g:AutoPairsMapCR=0
@@ -157,6 +159,16 @@ noremap <leader>f :Autoformat<CR>:w<CR>
 " asyncrun
 map <leader>r <esc>:AsyncRun<space>
 let g:asyncrun_open=10
+
+" ctrlP
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
+
+let g:ctrlp_extensions = ['funky']
+
+
 "粘贴模式
 set pastetoggle=<F4>
 " 下一行
@@ -182,7 +194,7 @@ nmap <leader>H <c-w>H
 nmap <leader>L <c-w>L
 " 大小调整
 nmap <leader>jj 5<c-w>+
-nmap <leader>kk 5<c-w>- 
+nmap <leader>kk 5<c-w>-
 nmap <leader>hh 5<c-w>>
 nmap <leader>ll 5<c-w><
 " 标签
