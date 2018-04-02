@@ -38,9 +38,27 @@ Plugin 'Yelgors/YCM-Generator'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'chiel92/vim-autoformat'
+Plugin 'skywind3000/asyncrun.vim'
+"Plugin 'shougo/vimshell.vim'
+"Plugin 'Shougo/vimproc.vim'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""""
+"call plug#begin('~/.vim/plugged')
+"Plug 'VundleVim/Vundle.vim'
+"Plug 'Lokaltog/vim-powerline'
+"Plug 'Yggdroot/indentLine'
+"Plug 'scrooloose/nerdtree'
+"Plug 'vim-scripts/taglist.vim'
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+"Plug 'chiel92/vim-autoformat'
+"Plug 'maralla/completor.vim'
+"Plug 'altercation/vim-colors-solarized'
+"call plug#end()
+"
 set encoding=utf-8
 "主题 theme
 syntax enable
@@ -95,6 +113,14 @@ if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_
 endif
 "autocmd FileType cpp let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 "autocmd FileType c let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf_c.py"
+
+
+" "completor
+" let g:completor_clang_binary = '/usr/bin/clang'
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+
 " NERDTree
 "F2开启和关闭树"
 map <F2> :NERDTreeToggle<CR>
@@ -128,7 +154,9 @@ let g:UltiSnipsJumpBackwardTrigger="<leader>z"
 "F5自动格式化代码并保存
 noremap <leader>f :Autoformat<CR>:w<CR>
 " let g:autoformat_verbosemode=1
-
+" asyncrun
+map <leader>r <esc>:AsyncRun<space>
+let g:asyncrun_open=10
 "粘贴模式
 set pastetoggle=<F4>
 " 下一行
@@ -140,7 +168,7 @@ nmap <leader>\ :vsplit<space>
 " l-- 上下分割
 nmap <leader>- :split<space>
 " l-q 保存并退出
-nmap <leader>q :wq<CR>
+nmap <leader>q :q<CR>
 nmap <leader>w :w<CR>
 " 焦点移动
 nmap <leader>h <c-w>h
@@ -173,3 +201,6 @@ nmap <leader>th gT
 nmap <leader>tj gt
 nmap <leader>tk gT
 nmap <leader>tl gT
+
+auto FileType  cpp set makeprg=g++\ -o\ %<\ %
+auto FileType  c set makeprg=gcc\ -o\ %<\ %
