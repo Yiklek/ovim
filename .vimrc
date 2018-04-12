@@ -25,42 +25,42 @@ set tags=tags;
 "set mouse=a
 """"""""""""""""""""""""""""""
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'Yggdroot/indentLine'
-Plugin 'scrooloose/nerdtree'
-Plugin 'taglist.vim'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'Yelgors/YCM-Generator'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'chiel92/vim-autoformat'
-Plugin 'skywind3000/asyncrun.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tacahiroy/ctrlp-funky'
-"Plugin 'shougo/vimshell.vim'
-"Plugin 'Shougo/vimproc.vim'
-call vundle#end()
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+" Plugin 'VundleVim/Vundle.vim'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Lokaltog/vim-powerline'
+" Plugin 'Yggdroot/indentLine'
+" Plugin 'scrooloose/nerdtree'
+" Plugin 'taglist.vim'
+" Plugin 'jiangmiao/auto-pairs'
+" Plugin 'Yelgors/YCM-Generator'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
+" Plugin 'chiel92/vim-autoformat'
+" Plugin 'skywind3000/asyncrun.vim'
+" Plugin 'kien/ctrlp.vim'
+" Plugin 'tacahiroy/ctrlp-funky'
+" "Plugin 'shougo/vimshell.vim'
+" "Plugin 'Shougo/vimproc.vim'
+" call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""""
-"call plug#begin('~/.vim/plugged')
-"Plug 'VundleVim/Vundle.vim'
-"Plug 'Lokaltog/vim-powerline'
-"Plug 'Yggdroot/indentLine'
-"Plug 'scrooloose/nerdtree'
-"Plug 'vim-scripts/taglist.vim'
-"Plug 'jiangmiao/auto-pairs'
-"Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
-"Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
-"Plug 'chiel92/vim-autoformat'
-"Plug 'maralla/completor.vim'
-"Plug 'altercation/vim-colors-solarized'
-"call plug#end()
-"
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'
+Plug 'Lokaltog/vim-powerline'
+Plug 'Yggdroot/indentLine'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/taglist.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'chiel92/vim-autoformat'
+Plug 'maralla/completor.vim'
+Plug 'altercation/vim-colors-solarized'
+call plug#end()
+""""""""""""""""""""""""""""""
 set encoding=utf-8
 "主题 theme
 syntax enable
@@ -117,11 +117,12 @@ endif
 "autocmd FileType c let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf_c.py"
 
 
-" "completor
-" let g:completor_clang_binary = '/usr/bin/clang'
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+"completor
+"注释掉completor.vim/pythonx/completers/cpp/__init__.py中on_complete方法的date['word']
+let g:completor_clang_binary = '/usr/bin/clang'
+inoremap <expr> <Tab> pumvisible() ? "\<down>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 " NERDTree
 "F2开启和关闭树"
