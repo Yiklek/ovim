@@ -19,47 +19,47 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
-let mapleader="\<space>"
+let mapleader=","
 set autochdir
 set tags=tags;
 "set mouse=a
 """"""""""""""""""""""""""""""
 filetype off
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
-" Plugin 'VundleVim/Vundle.vim'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Lokaltog/vim-powerline'
-" Plugin 'Yggdroot/indentLine'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'taglist.vim'
-" Plugin 'jiangmiao/auto-pairs'
-" Plugin 'Yelgors/YCM-Generator'
-" Plugin 'SirVer/ultisnips'
-" Plugin 'honza/vim-snippets'
-" Plugin 'chiel92/vim-autoformat'
-" Plugin 'skywind3000/asyncrun.vim'
-" Plugin 'kien/ctrlp.vim'
-" Plugin 'tacahiroy/ctrlp-funky'
-" "Plugin 'shougo/vimshell.vim'
-" "Plugin 'Shougo/vimproc.vim'
-" call vundle#end()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'Yggdroot/indentLine'
+Plugin 'scrooloose/nerdtree'
+Plugin 'taglist.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Yelgors/YCM-Generator'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'chiel92/vim-autoformat'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
+"Plugin 'shougo/vimshell.vim'
+"Plugin 'Shougo/vimproc.vim'
+call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
-Plug 'VundleVim/Vundle.vim'
-Plug 'Lokaltog/vim-powerline'
-Plug 'Yggdroot/indentLine'
-Plug 'scrooloose/nerdtree'
-Plug 'vim-scripts/taglist.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'chiel92/vim-autoformat'
-Plug 'maralla/completor.vim'
-Plug 'altercation/vim-colors-solarized'
-call plug#end()
+"call plug#begin('~/.vim/plugged')
+"Plug 'VundleVim/Vundle.vim'
+"Plug 'Lokaltog/vim-powerline'
+"Plug 'Yggdroot/indentLine'
+"Plug 'scrooloose/nerdtree'
+"Plug 'vim-scripts/taglist.vim'
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+"Plug 'chiel92/vim-autoformat'
+"Plug 'maralla/completor.vim'
+"Plug 'altercation/vim-colors-solarized'
+"call plug#end()
 """"""""""""""""""""""""""""""
 set encoding=utf-8
 "主题 theme
@@ -196,8 +196,8 @@ nmap <leader>L <c-w>L
 " 大小调整
 nmap <leader>jj 5<c-w>+
 nmap <leader>kk 5<c-w>-
-nmap <leader>hh 5<c-w>>
-nmap <leader>ll 5<c-w><
+nmap <leader>hh 5<c-w><
+nmap <leader>ll 5<c-w>>
 " 标签
 " 关闭当前标签
 nmap <leader>tq :tabc<CR>
@@ -215,5 +215,5 @@ nmap <leader>tj gt
 nmap <leader>tk gT
 nmap <leader>tl gT
 
-auto FileType  cpp set makeprg=g++\ -o\ %<\ %
-auto FileType  c set makeprg=gcc\ -o\ %<\ %
+auto FileType  cpp set makeprg=g++\ -o\ %<.out\ %
+auto FileType  c set makeprg=gcc\ -o\ %<.out\ %
