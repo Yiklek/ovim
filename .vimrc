@@ -70,11 +70,11 @@ let g:solarized_termcolors=256
 
 "缩进线
 "let g:indentLine_char='┆'
-let g:indentLine_enabled = 1
+let g:indentLine_enabled = 0
 
 "powerline
 set laststatus=2
-"let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'fancy'
 let g:Powerline_colorscheme = 'solarized256'
 "ycm
 "keymaps:
