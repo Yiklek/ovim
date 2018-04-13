@@ -18,7 +18,7 @@ install_vim_config(){
     ln -s ~/oh-my-config/.vimrc ~
 }
 install_tmux_config(){
-	git clone https://github.com/gpakosz/.tmux.git ~
+	download_config
     ln -s -f ~/.tmux/.tmux.conf
     cp ~/.tmux/.tmux.conf.local ~
     ln -s ~/oh-my-config/.tmux.conf ~/.tmux.conf.locale.self
