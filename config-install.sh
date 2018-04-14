@@ -155,6 +155,9 @@ case $1 in
     zsh)
         install_oh_my_zsh 
         ;;
+    pull)
+        download_config
+        ;;
     *)
 		download_config
         install_vim_config 
