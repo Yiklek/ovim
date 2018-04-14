@@ -1,3 +1,4 @@
+#!/bin/bash
 #set -e
 current_dir=$PWD
 my_config_path="$HOME/.oh-my-config"
@@ -125,6 +126,7 @@ install_shell_config(){
     then 
         ln -s $my_config_path/.shrc $HOME
         echo "source ~/.shrc" >> ~/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
+        . $HOME/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
     else
         log_error "install shrc config failed."$HOME/.shrc" has existed"
     fi
