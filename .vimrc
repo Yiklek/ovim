@@ -49,6 +49,8 @@ set tags=tags;
 call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe'
 Plug 'Lokaltog/vim-powerline'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/taglist.vim'
@@ -72,6 +74,9 @@ syntax enable
 set background=dark
 colorscheme solarized
 let g:solarized_termcolors=256
+let g:airline_theme='solarized'
+let g:airline_solarized_bg='dark'
+let g:airline_powerline_fonts = 1
 
 "缩进线
 "let g:indentLine_char='┆'

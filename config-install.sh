@@ -9,18 +9,38 @@ flag_tmux=false
 flag_vim=false 
 flag_zsh=false 
 flag_shrc=false 
+# Use colors, but only if connected to a terminal, and that terminal
+# supports them.
+if which tput >/dev/null 2>&1; then
+    ncolors=$(tput colors)
+fi
+if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
+  RED="$(tput setaf 1)"
+  GREEN="$(tput setaf 2)"
+  YELLOW="$(tput setaf 3)"
+  BLUE="$(tput setaf 4)"
+  BOLD="$(tput bold)"
+  NORMAL="$(tput sgr0)"
+else
+  RED=""
+  GREEN=""
+  YELLOW=""
+  BLUE=""
+  BOLD=""
+  NORMAL=""
+fi
 log_info(){
-    log_info_prefix="\033[34m[info] \033[0m"
-    echo $log_info_prefix $1
+    log_info_prefix="${BLUE}[info] ${NORMAL} %s\n" 
+    printf "$log_info_prefix" "$1"
 }
 log_error(){
-    log_info_prefix="\033[31m[error]\033[0m"
-    echo $log_info_prefix $1
+    log_error_prefix="${RED}[error]${NORMAL} %s\n" 
+    printf "$log_error_prefix" "$1"
 }
 
 log_ok(){
-    log_info_prefix="\033[32m[ ok ] \033[0m"
-    echo $log_info_prefix $1
+    log_ok_prefix="${GREEN}[ ok ] ${NORMAL} %s\n" 
+    printf "$log_ok_prefix" "$1"
 }
 check_git(){
     log_info 'check git'
