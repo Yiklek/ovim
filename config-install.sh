@@ -1,15 +1,25 @@
 #set -e
-currentdir=$PWD
-myconfigpath="$HOME/.oh-my-config"
-tmuxconfigpath="$HOME/.tmux"
-zshconfigpath="$HOME/.oh-my-zsh"
+current_dir=$PWD
+my_config_path="$HOME/.oh-my-config"
+tmux_config_path="$HOME/.tmux"
+zsh_config_path="$HOME/.oh-my-zsh"
 vim_plug_file="$HOME/.vim/autoload/plug.vim"
+flag_my_config=false
+flag_tmux=false 
+flag_vim=false 
+flag_zsh=false 
+flag_shrc=false 
 log_info(){
-    log_info_prefix="\033[34m[info]\033[0m"
+    log_info_prefix="\033[34m[info] \033[0m"
     echo $log_info_prefix $1
 }
 log_error(){
     log_info_prefix="\033[31m[error]\033[0m"
+    echo $log_info_prefix $1
+}
+
+log_ok(){
+    log_info_prefix="\033[32m[ ok ] \033[0m"
     echo $log_info_prefix $1
 }
 check_git(){
@@ -23,22 +33,22 @@ check_git(){
 }
 download_config(){
     log_info 'downloading..'
-    if [ -d $myconfigpath ]
+    if [ -d $my_config_path ]
     then 
         log_info 'update config'
-        cd $myconfigpath
+        cd $my_config_path
         git pull
-        cd $currentdir
+        cd $current_dir
     else 
         log_info 'download config'
 	    git clone https://git.coding.net/YGZ/oh-my-config.git ~/.oh-my-config
     fi
-    if [ -d $tmuxconfigpath ]
+    if [ -d $tmux_config_path ]
     then 
         log_info 'update .tmux' 
-        cd $tmuxconfigpath
+        cd $tmux_config_path
         git pull
-        cd $currentdir
+        cd $current_dir
     else 
         log_info 'download config'
 	    git clone https://github.com/gpakosz/.tmux.git ~/.tmux
@@ -46,48 +56,78 @@ download_config(){
 }
 install_vim_config(){
     log_info 'install vim config'
-    ln -s $myconfigpath/.vimrc ~
-    res=$?
-    if [ $res -ne 0 ]
-    then 
-        log_error 'install vim config failed.'
-        exit
+    if [ ! -f $HOME/.vimrc  ]
+    then
+        ln -s $my_config_path/.vimrc ~
+    else
+        log_error "install vim config failed."$HOME/.vimrc" has existed"
     fi
+#    res=$?
+#    if [ $res -ne 0 ]
+#    then 
+#        log_error 'install vim config failed.'
+#        exit
+#    fi
     if [ ! -f $vim_plug_file ]
     then 
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    else 
+        log_error "install vim-plug failed."$vim_plug_file" has existed"
     fi
 }
 install_tmux_config(){
     log_info 'install tmux config'
-    ln -s -f $tmuxconfigpath/.tmux.conf ~
-    cp $tmuxconfigpath/.tmux.conf.local ~
-    ln -s $myconfigpath/.tmux.conf ~/.tmux.conf.local.self
-    echo "if '[ -f ~/.tmux.conf.local.self ]' 'source ~/.tmux.conf.local.self'" >> ~/.tmux.conf.local
+    if [ ! -f $HOME/.tmux.conf ] 
+    then 
+        ln -s $tmux_config_path/.tmux.conf $HOME
+    else
+        log_error "install .tmux failed."$HOME/.tmux.conf" has existed"
+    fi
+    if [ ! -f $HOME/.tmux.conf.local ] 
+    then 
+        cp $tmux_config_path/.tmux.conf.local $HOME
+        echo "if '[ -f ~/.tmux.conf.local.self ]' 'source ~/.tmux.conf.local.self'" >> ~/.tmux.conf.local
+    else
+        log_error "install .tmux failed."$HOME/.tmux.conf.local" has existed"
+    fi
+    if [ ! -f $HOME/.tmux.conf.local.self ] 
+    then 
+        ln -s $my_config_path/.tmux.conf $HOME/.tmux.conf.local.self
+    else
+        log_error "install tmux config failed."$HOME/.tmux.conf.local.self" has existed"
+    fi
+    
 }
 install_shell_config(){
     log_info 'install shell config'
-    ln -s $myconfigpath/.shrc ~
-    echo "source ~/.shrc" >> ~/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
+    if [ ! -f $HOME/.shrc ] 
+    then 
+        ln -s $my_config_path/.shrc $HOME
+        echo "source ~/.shrc" >> ~/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
+    else
+        log_error "install shrc config failed."$HOME/.shrc" has existed"
+    fi
 }
 install_oh_my_zsh(){
     log_info 'install oh-my-zsh'
-    if [ ! -d $zshconfigpath  ]
+    if [ ! -d $zsh_config_path  ]
     then 
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
 }
 check_git
-download_config
 case $1 in
     vim )
+        download_config
         install_vim_config
         ;;
     tmux )
+        download_config
         install_tmux_config 
         ;;
     shell )
+        download_config
         install_shell_config 
         ;;
     zsh)
