@@ -225,5 +225,5 @@ nmap <leader>tj gt
 nmap <leader>tk gT
 nmap <leader>tl gT
 
-auto FileType  cpp set makeprg=g++\ -o\ %<.out\ %
-auto FileType  c set makeprg=gcc\ -o\ %<.out\ %
+auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.out\ %
+auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.out\ %
