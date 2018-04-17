@@ -10,6 +10,7 @@ set shiftwidth=4
 set expandtab
 "set noexpandtab
 "set noautoindent
+filetype plugin indent on
 syntax on
 map <Left> <Nop>
 map <Right> <Nop>
@@ -19,6 +20,10 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
+noremap <c-h> <left>
+noremap <c-j> <down>
+noremap <c-k> <up>
+noremap <c-l> <right>
 let mapleader=","
 set autochdir
 set tags=tags;
@@ -53,6 +58,7 @@ Plug 'Lokaltog/vim-powerline'
 "Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/taglist.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
@@ -66,6 +72,7 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'altercation/vim-colors-solarized'
 ""Plugin 'shougo/vimshell.vim'
 ""Plugin 'Shougo/vimproc.vim'
+Plug 'pseewald/vim-anyfold'
 call plug#end()
 """"""""""""""""""""""""""""""
 set encoding=utf-8
@@ -179,6 +186,10 @@ let g:ctrlp_funky_syntax_highlight = 1
 
 let g:ctrlp_extensions = ['funky']
 
+"fold
+let anyfold_activate=1
+set foldlevel=1
+set foldlevelstart=99
 
 "粘贴模式
 set pastetoggle=<F4>
