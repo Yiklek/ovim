@@ -73,6 +73,8 @@ Plug 'altercation/vim-colors-solarized'
 ""Plugin 'shougo/vimshell.vim'
 ""Plugin 'Shougo/vimproc.vim'
 Plug 'pseewald/vim-anyfold'
+Plug 'roxma/vim-paste-easy'
+"Plug 'conradirwin/vim-bracketed-paste'
 call plug#end()
 """"""""""""""""""""""""""""""
 set encoding=utf-8
@@ -234,7 +236,7 @@ nmap <leader>tsp :tab split<CR>
 nmap <leader>th gT
 nmap <leader>tj gt
 nmap <leader>tk gT
-nmap <leader>tl gT
+nmap <leader>tl gt
 
 auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.out\ %
 auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.out\ %
