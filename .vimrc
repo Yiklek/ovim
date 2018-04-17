@@ -55,7 +55,7 @@ augroup END
 " vim-plug {{{
 call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe'
-Plug 'Lokaltog/vim-powerline'
+Plug 'Lokaltog/vim-powerline',{'branch':'develop'}
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
