@@ -68,7 +68,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'chiel92/vim-autoformat'
 Plug 'skywind3000/asyncrun.vim'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 "Plug 'maralla/completor.vim'
 Plug 'altercation/vim-colors-solarized'
@@ -257,6 +257,7 @@ let g:asyncrun_open=10
 " }}}
 
 " ctrlP {{{
+let g:ctrlp_map = '<leader>p'
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
