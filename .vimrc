@@ -54,30 +54,62 @@ augroup END
 
 " vim-plug {{{
 call plug#begin('~/.vim/plugged')
+" best completer
 Plug 'Valloric/YouCompleteMe'
+
+" generate .ycm_extra_conf.py
+Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
+
+" use this to complete if YCM can't work
+"Plug 'maralla/completor.vim'
+
+" status bar
 Plug 'Lokaltog/vim-powerline',{'branch':'develop'}
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
+
+" indent
 Plug 'Yggdroot/indentLine'
+
+" source manager
 Plug 'scrooloose/nerdtree'
+
+" auto comment
 Plug 'scrooloose/nerdcommenter'
+
+" tag
 Plug 'vim-scripts/taglist.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
+" templete
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
 Plug 'chiel92/vim-autoformat'
+
 Plug 'skywind3000/asyncrun.vim'
+
+" search file
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
-"Plug 'maralla/completor.vim'
+"Plug 'wincent/command-t'
+
 Plug 'altercation/vim-colors-solarized'
-""Plugin 'shougo/vimshell.vim'
-""Plugin 'Shougo/vimproc.vim'
+
+" fold
 Plug 'pseewald/vim-anyfold',{'for': ['c','cpp','python','java','fortran','javascript']}
+
 Plug 'roxma/vim-paste-easy'
-"Plug 'romainl/vim-cool'
 "Plug 'conradirwin/vim-bracketed-paste'
+
+" auto nohl after search
+"Plug 'romainl/vim-cool'
+
+" easy regular search
+"Plug 'haya14busa/incsearch.vim'
+
+" shell in vim
+"Plugin 'shougo/vimshell.vim'
+"Plugin 'Shougo/vimproc.vim'
 call plug#end()
 """"""""""""""""""""""""""""""
 " }}}
@@ -277,4 +309,14 @@ au FileType vim normal zM
 " make {{{
 auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.out\ %
 auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.out\ %
-" }}
+" }}}
+
+" clip {{{
+function! WSLClip()
+    let filename = expand("%").".temp"
+    let winclip = $WINCLIP
+    exe "silent !" "cat ".filename."|".winclip." && rm ".filename
+    redraw!
+endfunction
+vnoremap <leader>c :w! %.temp<cr>:call WSLClip()<cr>
+" }}}
