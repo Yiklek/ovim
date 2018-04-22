@@ -64,9 +64,9 @@ Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
 "Plug 'maralla/completor.vim'
 
 " status bar
-Plug 'Lokaltog/vim-powerline',{'branch':'develop'}
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+"Plug 'Lokaltog/vim-powerline',{'branch':'develop'}
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " indent
 Plug 'Yggdroot/indentLine'
@@ -176,9 +176,10 @@ nmap <leader>tl gt
 
 "主题 theme {{{
 syntax enable
-set background=dark
+set background=light
 colorscheme solarized
 let g:solarized_termcolors=256
+call togglebg#map("<F5>")
 " }}}
 
 "缩进线 indentLine {{{
@@ -188,10 +189,10 @@ let g:indentLine_enabled = 0
 
 "powerline airline {{{
 set laststatus=2
-let g:Powerline_symbols = 'fancy'
-let g:Powerline_colorscheme = 'solarized256'
+"let g:Powerline_symbols = 'fancy'
+"let g:Powerline_colorscheme = 'solarized256'
 
-let g:airline_theme='solarized'
+let g:airline_theme='papercolor'
 let g:airline_solarized_bg='dark'
 let g:airline_powerline_fonts = 1
 " }}}
@@ -319,4 +320,24 @@ function! WSLClip()
     redraw!
 endfunction
 vnoremap <leader>c :w! %.temp<cr>:call WSLClip()<cr>
+" }}}
+
+" zoom {{{
+function! Zoom ()
+    " check if is the zoomed state (tabnumber > 1 && window == 1)
+    if tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1
+        let l:cur_winview = winsaveview()
+        let l:cur_bufname = bufname('')
+        tabclose
+
+        " restore the view
+        if l:cur_bufname == bufname('')
+            call winrestview(cur_winview)
+        endif
+    else
+        tab split
+    endif
+endfunction
+
+nmap <leader>z :call Zoom()<CR>
 " }}}
