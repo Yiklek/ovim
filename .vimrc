@@ -101,6 +101,7 @@ Plug 'pseewald/vim-anyfold',{'for': ['c','cpp','python','java','fortran','javasc
 Plug 'roxma/vim-paste-easy'
 "Plug 'conradirwin/vim-bracketed-paste'
 
+Plug 'tpope/vim-surround'
 " auto nohl after search
 "Plug 'romainl/vim-cool'
 
