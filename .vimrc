@@ -18,13 +18,56 @@ let mapleader=","
 set autochdir
 set tags=tags;
 set hlsearch
+set scrolloff=3
+set shortmess=atI
 "set mouse=a
+" }}}
+
 " vim 文件折叠方式为 marker {{{
 augroup ft_vim
     au!
     au FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
+
+" windows {{{
+if has('win32')
+    set clipboard+=unnamed
+    " 设置 alt 键不映射到菜单栏
+    set winaltkeys=no
+    set backspace=indent,eol,start whichwrap+=<,>,[,]
+    let g:plug_dir = '~/vimfiles'
+    let g:python_interpreter = 'python'
+else
+    let g:plug_dir = '~/.vim'
+    let g:python_interpreter = '/usr/bin/python3'
+endif
+" }}}
+
+" gui {{{
+if has('gui_running')
+               " gvim-only stuff
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    set cursorline
+    " 窗口大小
+    set lines=35 columns=140
+    " 分割出来的窗口位于当前窗口下边/右边
+    set splitbelow
+    set splitright
+    "不显示工具/菜单栏
+    set guioptions-=T
+    "set guioptions-=m
+    set guioptions-=L
+    set guioptions-=r
+    set guioptions-=b
+    " 使用内置 tab 样式而不是 gui
+    set guioptions-=e
+    set nolist
+    " set listchars=tab:▶\ ,eol:¬,trail:·,extends:>,precedes:<
+    set guifont=Consolas:h14:cANSI
+               " non-gvim stuff
+endif
 " }}}
 
 " Vundel {{{
@@ -53,7 +96,7 @@ augroup END
 " }}}
 
 " vim-plug {{{
-call plug#begin('~/.vim/plugged')
+call plug#begin(g:plug_dir.'/plugged')
 " best completer
 Plug 'Valloric/YouCompleteMe'
 
@@ -72,13 +115,13 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 
 " source manager
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " auto comment
 Plug 'scrooloose/nerdcommenter'
 
 " tag
-Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/taglist.vim', { 'on':  'Tlist' }
 Plug 'jiangmiao/auto-pairs'
 " templete
 Plug 'SirVer/ultisnips'
@@ -178,8 +221,9 @@ nmap <leader>tl gt
 "主题 theme {{{
 syntax enable
 set background=dark
-colorscheme solarized
 let g:solarized_termcolors=256
+let g:solarized_italic=0
+colorscheme solarized
 call togglebg#map("<F5>")
 " }}}
 
@@ -232,7 +276,7 @@ let g:ycm_autoclose_preview_window_after_completion=1
 "离开插入模式后自动关闭预览窗口"
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "python解释器路径"
-let g:ycm_path_to_python_interpreter='/usr/bin/python3'
+let g:ycm_path_to_python_interpreter=g:python_interpreter
 "let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
 ""是否开启语义补全"
 let g:ycm_seed_identifiers_with_syntax=1
@@ -362,4 +406,20 @@ function! Zoom ()
 endfunction
 
 nmap <leader>z :call Zoom()<CR>
+" }}}
+
+" remove whitespace {{{
+" Remove trailing whitespace when writing a buffer, but not for diff files.
+" From: Vigil
+" @see http://blog.bs2.to/post/EdwardLee/17961
+function! RemoveTrailingWhitespace()
+    if &ft != "diff"
+        let b:curcol = col(".")
+        let b:curline = line(".")
+        silent! %s/\s\+$//
+        silent! %s/\(\s*\n\)\+\%$//
+        call cursor(b:curline, b:curcol)
+    endif
+endfunction
+autocmd BufWritePre * call RemoveTrailingWhitespace()
 " }}}
