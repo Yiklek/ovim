@@ -221,9 +221,9 @@ nmap <leader>tl gt
 "主题 theme {{{
 syntax enable
 set background=dark
-let g:solarized_termcolors=256
 let g:solarized_italic=0
 colorscheme solarized
+let g:solarized_termcolors=256
 call togglebg#map("<F5>")
 " }}}
 
