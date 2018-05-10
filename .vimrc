@@ -36,11 +36,15 @@ if has('win32')
     " 设置 alt 键不映射到菜单栏
     set winaltkeys=no
     set backspace=indent,eol,start whichwrap+=<,>,[,]
+    autocmd GUIEnter * simalt ~x
     let g:plug_dir = '~/vimfiles'
     let g:python_interpreter = 'python'
+    let g:binary_suffix = 'exe'
 else
     let g:plug_dir = '~/.vim'
     let g:python_interpreter = '/usr/bin/python3'
+    au GUIEnter * call MaximizeWindow()
+    let g:binary_suffix = 'out'
 endif
 " }}}
 
@@ -309,7 +313,6 @@ endif
 let g:completor_clang_binary = '/usr/bin/clang'
 inoremap <expr> <Tab> pumvisible() ? "\<down>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 "}}}
 
 " NERDTree {{{
@@ -374,8 +377,13 @@ au FileType vim normal zM
 " }}}
 
 " make {{{
-auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.out\ %
-auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.out\ %
+if has('win32')
+    auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.exe\ %
+    auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.exe\ %
+else
+    auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.out\ %
+    auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.out\ %
+endif
 " }}}
 
 " clip {{{
@@ -422,4 +430,10 @@ function! RemoveTrailingWhitespace()
     endif
 endfunction
 autocmd BufWritePre * call RemoveTrailingWhitespace()
+" }}}
+
+" max window {{{
+function! MaximizeWindow()
+    silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+endfunction
 " }}}
