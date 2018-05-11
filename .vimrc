@@ -38,11 +38,11 @@ if has('win32')
     set winaltkeys=no
     set backspace=indent,eol,start whichwrap+=<,>,[,]
     autocmd GUIEnter * simalt ~x
-    let g:plug_dir = '~/vimfiles'
+    let g:dotvim = '~/vimfiles'
     let g:python_interpreter = 'python'
     let g:binary_suffix = 'exe'
 else
-    let g:plug_dir = '~/.vim'
+    let g:dotvim = '~/.vim'
     let g:python_interpreter = '/usr/bin/python3'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
@@ -101,7 +101,7 @@ endif
 " }}}
 
 " vim-plug {{{
-call plug#begin(g:plug_dir.'/plugged')
+call plug#begin(g:dotvim.'/plugged')
 " best completer
 Plug 'Valloric/YouCompleteMe'
 
@@ -127,7 +127,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " tag
 "Plug 'vim-scripts/taglist.vim', { 'on':  'Tlist' }
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'jiangmiao/auto-pairs'
 " templete
 Plug 'SirVer/ultisnips'
@@ -285,7 +285,6 @@ let g:ycm_autoclose_preview_window_after_completion=1
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "python解释器路径"
 let g:ycm_path_to_python_interpreter=g:python_interpreter
-"let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
 ""是否开启语义补全"
 let g:ycm_seed_identifiers_with_syntax=1
 "是否在注释中也开启补全"
@@ -298,15 +297,18 @@ let g:ycm_cache_omnifunc=0
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
 " 跳转到定义处, 分屏打开
 " let g:ycm_goto_buffer_command = 'horizontal-split'
-let g:ycm_confirm_extra_conf = 0
+let g:ycm_confirm_extra_conf = 1
 " 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-" " old version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+" old version
+if !empty(glob(g:dotvim."/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = g:dotvim."/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
 endif
 " new version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+if !empty(glob(g:dotvim."/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = g:dotvim."/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+endif
+if filereadable('~/.ycm_extra_conf.py')
+    let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
 endif
 "autocmd FileType cpp let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 "autocmd FileType c let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf_c.py"
@@ -442,6 +444,9 @@ endfunction
 " }}}
 
 " gutentags {{{
+if !executable('ctags')
+    let g:gutentags_enabled = 0
+endif
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
