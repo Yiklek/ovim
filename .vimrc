@@ -16,7 +16,8 @@ filetype plugin indent on
 syntax on
 let mapleader=","
 set autochdir
-set tags=tags;
+"set tags=tags;
+set tags=./.tags;,.tags
 set hlsearch
 set scrolloff=3
 set shortmess=atI
@@ -125,7 +126,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 
 " tag
-Plug 'vim-scripts/taglist.vim', { 'on':  'Tlist' }
+"Plug 'vim-scripts/taglist.vim', { 'on':  'Tlist' }
+Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
 " templete
 Plug 'SirVer/ultisnips'
@@ -149,6 +151,8 @@ Plug 'roxma/vim-paste-easy'
 "Plug 'conradirwin/vim-bracketed-paste'
 
 Plug 'tpope/vim-surround'
+
+Plug 'ludovicchabant/vim-gutentags'
 " auto nohl after search
 "Plug 'romainl/vim-cool'
 
@@ -327,11 +331,10 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 let NERDTreeWinSize=35
 " }}}
 
-" taglist {{{
-map <F3> :Tlist<CR>
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Use_Right_Window = 1
+" tagbar {{{
+map <F3> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 30
 " }}}
 
 "auto-pairs {{{
@@ -437,3 +440,26 @@ function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
 endfunction
 " }}}
+
+" gutentags {{{
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
+
+" }}
