@@ -24,13 +24,6 @@ set shortmess=atI
 "set mouse=a
 " }}}
 
-" vim 文件折叠方式为 marker {{{
-augroup ft_vim
-    au!
-    au FileType vim setlocal foldmethod=marker
-augroup END
-" }}}
-
 " windows {{{
 if has('win32')
     set clipboard+=unnamed
@@ -51,7 +44,7 @@ endif
 
 " gui {{{
 if has('gui_running')
-               " gvim-only stuff
+    " gvim-only stuff
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
     set cursorline
@@ -68,10 +61,11 @@ if has('gui_running')
     set guioptions-=b
     " 使用内置 tab 样式而不是 gui
     set guioptions-=e
+    set gcr=a:block-blinkon0
     set nolist
     " set listchars=tab:▶\ ,eol:¬,trail:·,extends:>,precedes:<
     set guifont=Consolas:h14:cANSI
-               " non-gvim stuff
+    " non-gvim stuff
 endif
 " }}}
 
@@ -138,6 +132,7 @@ Plug 'chiel92/vim-autoformat'
 Plug 'skywind3000/asyncrun.vim'
 
 " search file
+"Plug 'Yggdroot/LeaderF'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 "Plug 'wincent/command-t'
@@ -374,11 +369,38 @@ let g:ctrlp_extensions = ['funky']
 " }}}
 
 "fold {{{
+" vim 文件折叠方式为 marker {{{
+augroup ft_vim
+    au!
+    "au BufRead,BufNewFile * if &ft == 'vim' | normal zM | endif
+    au FileType vim setlocal foldmethod=marker
+    au FileType vim let anyfold_activate=0
+    au FileType vim :%foldc
+augroup END
+" }}}
+
 let anyfold_activate=1
 set foldlevel=1
 set foldlevelstart=99
-au FileType vim normal zM
 "nnoremap <space> za
+" }}}
+
+" LeaderF {{{
+"let g:Lf_ShortcutF = '<c-p>'
+"let g:Lf_ShortcutB = '<m-n>'
+"noremap <c-n> :LeaderfMru<cr>
+"noremap <m-p> :LeaderfFunction!<cr>
+"noremap <m-n> :LeaderfBuffer<cr>
+"noremap <m-m> :LeaderfTag<cr>
+"let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+
+"let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+"let g:Lf_WorkingDirectoryMode = 'Ac'
+"let g:Lf_WindowHeight = 0.30
+"let g:Lf_CacheDirectory = expand('~/.vim/cache')
+"let g:Lf_ShowRelativePath = 0
+"let g:Lf_HideHelp = 1
+"let g:Lf_StlColorscheme = 'powerline'
 " }}}
 
 " make {{{
@@ -464,7 +486,7 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " 检测 ~/.cache/tags 不存在就新建
 if !isdirectory(s:vim_tags)
-   silent! call mkdir(s:vim_tags, 'p')
+    silent! call mkdir(s:vim_tags, 'p')
 endif
 
 " }}
