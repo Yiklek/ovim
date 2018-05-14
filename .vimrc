@@ -334,6 +334,7 @@ let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 ""窗口大小"
 let NERDTreeWinSize=35
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
 
 " tagbar {{{
