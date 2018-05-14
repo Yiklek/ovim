@@ -21,6 +21,9 @@ set tags=./.tags;,.tags
 set hlsearch
 set scrolloff=3
 set shortmess=atI
+"set cursorcolumn
+set cursorline
+set vb t_vb=
 "set mouse=a
 " }}}
 
@@ -47,7 +50,6 @@ if has('gui_running')
     " gvim-only stuff
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
-    set cursorline
     " 窗口大小
     set lines=35 columns=140
     " 分割出来的窗口位于当前窗口下边/右边
@@ -127,7 +129,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-Plug 'chiel92/vim-autoformat'
+Plug 'chiel92/vim-autoformat',{'on':'Autoformat'}
 
 Plug 'skywind3000/asyncrun.vim'
 
@@ -137,7 +139,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 "Plug 'wincent/command-t'
 
-Plug 'altercation/vim-colors-solarized'
+Plug 'arakashic/nvim-colors-solarized'
+"Plug 'iCyMind/NeoSolarized'
 
 " fold
 Plug 'pseewald/vim-anyfold',{'for': ['c','cpp','python','java','fortran','javascript']}
@@ -221,9 +224,12 @@ nmap <leader>th gT
 nmap <leader>tj gt
 nmap <leader>tk gT
 nmap <leader>tl gt
+
+nmap <leader>bq :bd<cr>
 " }}}
 
 "主题 theme {{{
+"set termguicolors
 syntax enable
 set background=dark
 let g:solarized_italic=0
