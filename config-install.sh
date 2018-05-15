@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 #set -e
 current_dir=$PWD
 my_config_path="$HOME/.oh-my-config"
@@ -16,19 +16,19 @@ if which tput >/dev/null 2>&1; then
     ncolors=$(tput colors)
 fi
 if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
-  RED="$(tput setaf 1)"
-  GREEN="$(tput setaf 2)"
-  YELLOW="$(tput setaf 3)"
-  BLUE="$(tput setaf 4)"
-  BOLD="$(tput bold)"
-  NORMAL="$(tput sgr0)"
+    RED="$(tput setaf 1)"
+    GREEN="$(tput setaf 2)"
+    YELLOW="$(tput setaf 3)"
+    BLUE="$(tput setaf 4)"
+    BOLD="$(tput bold)"
+    NORMAL="$(tput sgr0)"
 else
-  RED=""
-  GREEN=""
-  YELLOW=""
-  BLUE=""
-  BOLD=""
-  NORMAL=""
+    RED=""
+    GREEN=""
+    YELLOW=""
+    BLUE=""
+    BOLD=""
+    NORMAL=""
 fi
 log_info(){
     log_info_prefix="${BLUE}[info] ${NORMAL} %s\n"
@@ -45,12 +45,12 @@ log_ok(){
 }
 check_git(){
     log_info 'check git'
-	if command -v git >/dev/null 2>&1; then
-		log_info 'exists git'
-	else
-	    log_error 'no exists git."apt install git" to install git'
+    if command -v git >/dev/null 2>&1; then
+        log_info 'exists git'
+    else
+        log_error 'no exists git."apt install git" to install git'
         exit 1
-	fi
+    fi
 }
 download_config(){
     log_info 'downloading..'
@@ -63,17 +63,17 @@ download_config(){
         cd $current_dir
     else
         log_info 'download config'
-	    git clone --recursive https://git.coding.net/YGZ/oh-my-config.git ~/.oh-my-config
+        git clone --recursive https://git.coding.net/YGZ/oh-my-config.git ~/.oh-my-config
     fi
     #if [ -d $tmux_config_path ]
     #then
-        #log_info 'update .tmux'
-        #cd $tmux_config_path
-        #git pull
-        #cd $current_dir
+    #log_info 'update .tmux'
+    #cd $tmux_config_path
+    #git pull
+    #cd $current_dir
     #else
-        #log_info 'download config'
-		#git clone https://github.com/gpakosz/.tmux.git ~/.tmux
+    #log_info 'download config'
+    #git clone https://github.com/gpakosz/.tmux.git ~/.tmux
     #fi
 }
 install_vim_config(){
@@ -84,16 +84,16 @@ install_vim_config(){
     else
         log_error "install vim config failed."$HOME/.vimrc" has existed"
     fi
-#    res=$?
-#    if [ $res -ne 0 ]
-#    then
-#        log_error 'install vim config failed.'
-#        exit
-#    fi
+    #    res=$?
+    #    if [ $res -ne 0 ]
+    #    then
+    #        log_error 'install vim config failed.'
+    #        exit
+    #    fi
     if [ ! -f $vim_plug_file ]
     then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     else
         log_error "install vim-plug failed."$vim_plug_file" has existed"
     fi
@@ -123,14 +123,22 @@ install_tmux_config(){
 }
 install_shell_config(){
     log_info 'install shell config'
-    if [ ! -f $HOME/.shrc ]
+    shell_rc=~/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
+    if [ ! -f $HOME/.rc.sh ]
     then
-        ln -s $my_config_path/.shrc $HOME
-        echo "source ~/.shrc" >> ~/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
-        . $HOME/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
+        ln -s $my_config_path/.rc.sh $HOME
     else
-        log_error "install shrc config failed."$HOME/.shrc" has existed"
+        log_error "install .rc.sh config failed."$HOME/.rc.sh" has existed"
+        return
     fi
+    if cat $shell_rc | grep "source ~/.rc.sh">/dev/null
+    then
+        log_info "source config has been wrote"
+    else
+        log_info "add source"
+        echo "source ~/.rc.sh" >> $shell_rc
+    fi
+    . $HOME/.rc.sh
 }
 install_oh_my_zsh(){
     log_info 'install oh-my-zsh'
@@ -160,7 +168,7 @@ case $1 in
         download_config
         ;;
     *)
-		download_config
+        download_config
         install_vim_config
         install_tmux_config
 esac
