@@ -58,7 +58,8 @@ download_config(){
     then
         log_info 'update config'
         cd $my_config_path
-        git pull --recurse-submodules
+        git pull
+        git submodule update --recursive
         cd $current_dir
     else
         log_info 'download config'
