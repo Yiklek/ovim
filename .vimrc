@@ -466,7 +466,8 @@ nmap <leader>z :call Zoom()<CR>
 " From: Vigil
 " @see http://blog.bs2.to/post/EdwardLee/17961
 function! RemoveTrailingWhitespace()
-    if &ft != "diff"
+    let ignore_filetypes = ['diff', 'markdown']
+    if index(ignore_filetypes,&ft) < 0
         let b:curcol = col(".")
         let b:curline = line(".")
         silent! %s/\s\+$//
