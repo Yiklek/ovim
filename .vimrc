@@ -142,7 +142,7 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'arakashic/nvim-colors-solarized'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'iCyMind/NeoSolarized'
-
+"Plug 'miconda/lucariox.vim'
 " fold
 Plug 'pseewald/vim-anyfold',{'for': ['c','cpp','python','java','fortran','javascript']}
 
