@@ -183,6 +183,7 @@ noremap <c-l> <right>
 nnoremap <esc><esc> :silent! nohls<cr>
 "粘贴模式
 set pastetoggle=<F4>
+nmap <F6> :redraw!<cr>
 " 下一行
 imap <leader><CR> <esc>o
 nmap <leader><CR> <esc>o
@@ -235,6 +236,7 @@ syntax enable
 set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
+set t_Co=256
 colorscheme solarized
 let g:solarized_termcolors=256
 call togglebg#map("<F5>")
