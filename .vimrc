@@ -154,6 +154,8 @@ Plug 'tpope/vim-surround'
 Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'mhinz/vim-signify'
+
+Plug 'Yelgors/vim-togglemouse',{'branch':'dev'}
 " auto nohl after search
 "Plug 'romainl/vim-cool'
 
@@ -391,7 +393,7 @@ augroup ft_vim
     "au BufRead,BufNewFile * if &ft == 'vim' | normal zM | endif
     au FileType vim setlocal foldmethod=marker
     au FileType vim let anyfold_activate=0
-    au FileType vim :%foldc
+    au FileType vim exe "silent!:%foldc"
 augroup END
 " }}}
 
@@ -519,4 +521,8 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+" }}}
+
+" mouse{{{
+call toggle_mouse#map("<F7>")
 " }}}
