@@ -140,6 +140,7 @@ Plug 'tacahiroy/ctrlp-funky'
 "Plug 'wincent/command-t'
 
 Plug 'arakashic/nvim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 "Plug 'iCyMind/NeoSolarized'
 
 " fold
