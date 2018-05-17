@@ -102,7 +102,7 @@ call plug#begin(g:dotvim.'/plugged')
 Plug 'Valloric/YouCompleteMe'
 
 " generate .ycm_extra_conf.py
-Plug 'Yelgors/YCM-Generator',{'branch':'stable'}
+Plug 'https://gitee.com/yelgors/YCM-Generator.git',{'branch':'stable'}
 
 " use this to complete if YCM can't work
 "Plug 'maralla/completor.vim'
@@ -155,7 +155,7 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'mhinz/vim-signify'
 
-Plug 'Yelgors/vim-togglemouse',{'branch':'dev'}
+Plug 'https://gitee.com/yelgors/vim-togglemouse.git',{'branch':'dev'}
 " auto nohl after search
 "Plug 'romainl/vim-cool'
 
