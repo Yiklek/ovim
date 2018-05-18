@@ -24,6 +24,7 @@ set shortmess=atI
 "set cursorcolumn
 set cursorline
 set vb t_vb=
+au GuiEnter * set t_vb=
 "set mouse=a
 " }}}
 
