@@ -436,10 +436,10 @@ endif
 function! WSLClip()
     let filename = expand("%").".temp"
     let winclip = $WINCLIP
-    exe "silent !" "cat ".filename."|".winclip." && rm ".filename
+    exe "silent !" "cat ".$HOME.'/'.filename."|".winclip." && rm ".$HOME.'/'.filename
     redraw!
 endfunction
-vnoremap <leader>c :w! %.temp<cr>:call WSLClip()<cr>
+vnoremap <leader>c :w! $HOME/%.temp<cr>:call WSLClip()<cr>
 " }}}
 
 " zoom {{{
