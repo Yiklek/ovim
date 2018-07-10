@@ -97,6 +97,12 @@ install_vim_config(){
     else
         log_error "install vim-plug failed."$vim_plug_file" has existed"
     fi
+    if [ ! -f $HOME/.vim/config-help.txt  ]
+    then
+        ln -s $my_config_path/config-help.txt ~/.vim/config-help.txt
+    else
+        log_error "install vim config failed."$HOME/.vim/config-help.txt" has existed"
+    fi
 }
 install_tmux_config(){
     log_info 'install tmux config'
