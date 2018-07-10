@@ -542,16 +542,16 @@ imap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
 " {{{
 function! DispalyHelp()
     let help_file = g:dotvim."/config-help.txt"
-    if !exists("b:opening")
-        let b:opening = 0
+    if !exists("g:opening")
+        let g:opening = 0
     endif
-    if b:opening
+    if g:opening
         exec "bdelete ".help_file
-        let b:opening = 0
+        let g:opening = 0
     else
         exec "rightbelow 30vsplit ".help_file
         setlocal nomodifiable
-        let b:opening = 1
+        let g:opening = 1
     endif
 endfunction
 nmap <F9> :call DispalyHelp()<cr>
