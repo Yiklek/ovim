@@ -101,7 +101,7 @@ endif
 call plug#begin(g:dotvim.'/plugged')
 " best completer
 Plug 'Valloric/YouCompleteMe'
-
+Plug 'tenfyzhong/CompleteParameter.vim'
 " generate .ycm_extra_conf.py
 Plug 'https://gitee.com/yelgors/YCM-Generator.git',{'branch':'stable'}
 
@@ -355,6 +355,8 @@ let g:tagbar_width = 30
 
 "auto-pairs {{{
 "let g:AutoPairsMapCR=0
+"let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+"inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
 "}}}
 
 " UltiSnips {{{
@@ -527,4 +529,12 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 " mouse{{{
 call toggle_mouse#map("<F7>")
+" }}}
+
+" {{{
+inoremap <silent><expr> <c-f> complete_parameter#pre_complete("()")
+smap <c-o> <Plug>(complete_parameter#goto_next_parameter)
+imap <c-o> <Plug>(complete_parameter#goto_next_parameter)
+smap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
+imap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
 " }}}
