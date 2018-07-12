@@ -532,7 +532,7 @@ call toggle_mouse#map("<F7>")
 " }}}
 
 " {{{
-inoremap <silent><expr> <c-t> complete_parameter#pre_complete("()")
+inoremap <silent><expr> <c-x> complete_parameter#pre_complete("()")
 smap <c-o> <Plug>(complete_parameter#goto_next_parameter)
 imap <c-o> <Plug>(complete_parameter#goto_next_parameter)
 smap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
