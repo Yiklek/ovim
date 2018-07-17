@@ -183,10 +183,10 @@ noremap <c-h> <left>
 noremap <c-j> <down>
 noremap <c-k> <up>
 noremap <c-l> <right>
-nnoremap <esc><esc> :silent! nohls<cr>
+nnoremap <esc><esc> :silent! nohlsearch<cr>
 "粘贴模式
 set pastetoggle=<F4>
-nmap <F6> :redraw!<cr>
+nmap <F5> :redraw!<cr>
 " 下一行
 imap <leader><CR> <esc>o
 nmap <leader><CR> <esc>o
@@ -242,7 +242,7 @@ let g:solarized_italic=0
 set t_Co=256
 colorscheme solarized
 let g:solarized_termcolors=256
-call togglebg#map("<F5>")
+call togglebg#map("<F6>")
 " }}}
 
 "缩进线 indentLine {{{
@@ -532,6 +532,7 @@ call toggle_mouse#map("<F7>")
 " }}}
 
 " {{{
+" CompleteParameter {{{
 inoremap <silent><expr> <c-x> complete_parameter#pre_complete("()")
 smap <c-o> <Plug>(complete_parameter#goto_next_parameter)
 imap <c-o> <Plug>(complete_parameter#goto_next_parameter)
@@ -549,7 +550,7 @@ function! DispalyHelp()
         exec "bdelete ".help_file
         let g:opening = 0
     else
-        exec "rightbelow 30vsplit ".help_file
+        exec "rightbelow 50vsplit ".help_file
         setlocal nomodifiable
         let g:opening = 1
     endif
