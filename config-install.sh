@@ -52,6 +52,15 @@ check_git(){
         exit 1
     fi
 }
+check_curl(){
+    log_info 'check curl'
+    if command -v curl >/dev/null 2>&1; then
+        log_info 'exists curl'
+    else
+        log_error 'no exists curl."apt install git" to install git'
+        exit 1
+    fi
+}
 download_config(){
     log_info 'downloading..'
     if [ -d $my_config_path ]
@@ -104,6 +113,22 @@ install_vim_config(){
         log_error "install vim config failed."$HOME/.vim/config-help.txt" has existed"
     fi
 }
+clean_vim_config(){
+    if [ -f $HOME/.vimrc  ]
+    then
+        rm $HOME/.vimrc
+    fi
+
+    if [ -f $vim_plug_file ]
+    then
+        rm $vim_plug_file
+    fi
+
+    if [ -f $HOME/.vim/config-help.txt  ]
+    then
+        rm $HOME/.vim/config-help.txt
+    fi
+}
 install_tmux_config(){
     log_info 'install tmux config'
     if [ ! -f $HOME/.tmux.conf ]
@@ -127,9 +152,46 @@ install_tmux_config(){
     fi
 
 }
+clean_tmux_config(){
+    if [ -f $HOME/.tmux.conf ]
+    then
+        rm $HOME/.tmux.conf
+    fi
+
+    if [ -f $HOME/.tmux.conf.local ]
+    then
+        rm "$HOME/.tmux.conf.local"
+    fi
+
+    if [ -f $HOME/.tmux.conf.local.self ]
+    then
+        rm "$HOME/.tmux.conf.local.self"
+    fi
+}
+install_oh_my_zsh(){
+    log_info 'install oh-my-zsh'
+    if [ ! -d $zsh_config_path  ]
+    then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    fi
+}
+clean_oh_my_zsh_config(){
+    if [ -d $zsh_config_path  ]
+    then
+        rm -rf ~/.oh-my-zsh
+    fi
+    if [ -f $HOME/.zshrc  ]
+    then
+        rm $HOME/.zshrc
+    fi
+}
 install_shell_config(){
     log_info 'install shell config'
     shell_rc=~/.`echo $SHELL | rev | cut -d'/' -f 1 | rev`rc
+    if [ $1 ]; then
+        shell_rc=~/.$1rc
+        log_info "set shell config $shell_rc"
+    fi
     if [ ! -f $HOME/.rc.sh ]
     then
         ln -s $my_config_path/.rc.sh $HOME
@@ -146,14 +208,25 @@ install_shell_config(){
     fi
     . $HOME/.rc.sh
 }
-install_oh_my_zsh(){
-    log_info 'install oh-my-zsh'
-    if [ ! -d $zsh_config_path  ]
+clean_shell_config(){
+    if [ -f $HOME/.rc.sh ]
     then
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+        rm $HOME/.rc.sh
     fi
 }
+command_help(){
+    cat <<- EOF
+    vim: install vim-plug,vim config
+    tmux: install tmux config
+    zsh: install oh-my-zsh
+    shell: install shell config.run this command after zsh
+    pull: update git repo
+    update: update git repo
+EOF
+    exit 0
+}
 check_git
+check_curl
 case $1 in
     vim )
         download_config
@@ -165,7 +238,8 @@ case $1 in
         ;;
     shell )
         download_config
-        install_shell_config
+        clean_shell_config
+        install_shell_config $2
         ;;
     zsh)
         install_oh_my_zsh
@@ -173,8 +247,18 @@ case $1 in
     pull)
         download_config
         ;;
-    *)
+    update)
         download_config
-        install_vim_config
-        install_tmux_config
+        ;;
+    clean)
+        clean_vim_config
+        clean_tmux_config
+        clean_shell_config
+        clean_oh_my_zsh_config
+        ;;
+    help)
+        command_help
+        ;;
+    *)
+        command_help
 esac

@@ -143,7 +143,8 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'arakashic/nvim-colors-solarized'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'iCyMind/NeoSolarized'
-"Plug 'miconda/lucariox.vim'
+Plug 'miconda/lucariox.vim'
+Plug 'morhetz/gruvbox'
 " fold
 Plug 'pseewald/vim-anyfold',{'for': ['c','cpp','python','java','fortran','javascript']}
 
@@ -240,7 +241,8 @@ set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
 set t_Co=256
-colorscheme solarized
+"colorscheme solarized
+colorscheme gruvbox
 let g:solarized_termcolors=256
 call togglebg#map("<F6>")
 " }}}
@@ -255,9 +257,9 @@ set laststatus=2
 "let g:Powerline_symbols = 'fancy'
 "let g:Powerline_colorscheme = 'solarized256'
 
-let g:airline_theme='papercolor'
+let g:airline_theme='sol'
 let g:airline_solarized_bg='dark'
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
 "let g:airline#extensions#tabline#formatter = 'default'
