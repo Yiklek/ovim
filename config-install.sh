@@ -260,5 +260,6 @@ case $1 in
         command_help
         ;;
     *)
+	download_config
         command_help
 esac
