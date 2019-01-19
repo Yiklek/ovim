@@ -44,18 +44,20 @@ tab and buffer
 ----------------------------------
 window
 ----------------------------------
-<leader>J: put window below
-<leader>K: put window above
-<leader>H: put window left
-<leader>L: put window right
-<leader>jj :make window height short
-<leader>kk :make window height long
-<leader>hh :make window length short
-<leader>ll :make window length long
-<leader>h: focus on left
-<leader>j: focus on down
-<leader>k: focus on up
-<leader>l: focus on right
+<leader>wn: new window below
+<leader>ws: new window right
+<leader>wJ: put window below
+<leader>wK: put window above
+<leader>wH: put window left
+<leader>wL: put window right
+<leader>wjj :make window height short
+<leader>wkk :make window height long
+<leader>whh :make window length short
+<leader>wll :make window length long
+<leader>wh: focus on left
+<leader>wj: focus on down
+<leader>wk: focus on up
+<leader>wl: focus on right
 <leader>\ : vsplit
 <leader>- : split
 <leader>z: zoom window
