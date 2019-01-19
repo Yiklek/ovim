@@ -199,21 +199,26 @@ nmap <leader>- :split<space>
 " l-q 保存并退出
 nmap <leader>q :q<CR>
 nmap <leader>w :w<CR>
+" 新窗口
+" 下方
+nmap <leader>wn <c-w>n
+" 右方
+nmap <leader>ws <c-w>s
 " 焦点移动
-nmap <leader>h <c-w>h
-nmap <leader>j <c-w>j
-nmap <leader>k <c-w>k
-nmap <leader>l <c-w>l
+nmap <leader>wh <c-w>h
+nmap <leader>wj <c-w>j
+nmap <leader>wk <c-w>k
+nmap <leader>wl <c-w>l
 " 位置移动
-nmap <leader>J <c-w>J
-nmap <leader>K <c-w>K
-nmap <leader>H <c-w>H
-nmap <leader>L <c-w>L
+nmap <leader>wJ <c-w>J
+nmap <leader>wK <c-w>K
+nmap <leader>wH <c-w>H
+nmap <leader>wL <c-w>L
 " 大小调整
-nmap <leader>jj 5<c-w>+
-nmap <leader>kk 5<c-w>-
-nmap <leader>hh 5<c-w><
-nmap <leader>ll 5<c-w>>
+nmap <leader>wjj 5<c-w>+
+nmap <leader>wkk 5<c-w>-
+nmap <leader>whh 5<c-w><
+nmap <leader>wll 5<c-w>>
 " 标签
 " 关闭当前标签
 nmap <leader>tq :tabc<CR>
