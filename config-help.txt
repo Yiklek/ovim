@@ -44,16 +44,14 @@ tab and buffer
 ----------------------------------
 window
 ----------------------------------
-<leader>wn: new window below
-<leader>ws: new window right
 <leader>wJ: put window below
 <leader>wK: put window above
 <leader>wH: put window left
 <leader>wL: put window right
-<leader>wjj :make window height short
-<leader>wkk :make window height long
-<leader>whh :make window length short
-<leader>wll :make window length long
+<leader>wwj :make window height short
+<leader>wwk :make window height long
+<leader>wwh :make window length short
+<leader>wwl :make window length long
 <leader>wh: focus on left
 <leader>wj: focus on down
 <leader>wk: focus on up

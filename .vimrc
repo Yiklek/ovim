@@ -199,11 +199,6 @@ nmap <leader>- :split<space>
 " l-q 保存并退出
 nmap <leader>q :q<CR>
 nmap <leader>w :w<CR>
-" 新窗口
-" 下方
-nmap <leader>wn <c-w>n
-" 右方
-nmap <leader>ws <c-w>s
 " 焦点移动
 nmap <leader>wh <c-w>h
 nmap <leader>wj <c-w>j
@@ -215,10 +210,10 @@ nmap <leader>wK <c-w>K
 nmap <leader>wH <c-w>H
 nmap <leader>wL <c-w>L
 " 大小调整
-nmap <leader>wjj 5<c-w>+
-nmap <leader>wkk 5<c-w>-
-nmap <leader>whh 5<c-w><
-nmap <leader>wll 5<c-w>>
+nmap <leader>wwj 5<c-w>+
+nmap <leader>wwk 5<c-w>-
+nmap <leader>wwh 5<c-w><
+nmap <leader>wwl 5<c-w>>
 " 标签
 " 关闭当前标签
 nmap <leader>tq :tabc<CR>
@@ -546,10 +541,13 @@ smap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
 imap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
 " }}}
 
-" {{{
-function! DispalyHelp()
+" {{{ DisplayHelp
+function! DisplayHelp()
     let help_file = g:dotvim."/config-help.txt"
-    if !exists("g:opening")
+    let bnr = bufwinnr(help_file)
+    if bnr > 0
+        let g:opening = 1
+    else
         let g:opening = 0
     endif
     if g:opening
@@ -561,5 +559,5 @@ function! DispalyHelp()
         let g:opening = 1
     endif
 endfunction
-nmap <F9> :call DispalyHelp()<cr>
+nmap <F9> :call DisplayHelp()<cr>
 " }}}
