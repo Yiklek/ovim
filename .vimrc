@@ -19,9 +19,9 @@ syntax on                " 自动语法高亮
 "set laststatus=2         " 总是显示状态栏
 set number               " 开启行号显示
 set cursorline           " 高亮显示当前行
-set whichwrap+=<,>,h,l   " 设置光标键跨行
+"set whichwrap+=<,>,h,l   " 设置光标键跨行
 "set ttimeoutlen=0        " 设置<ESC>键响应时间
-set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
+"set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 
 set ts=4
 set shiftwidth=4
@@ -72,7 +72,7 @@ if has('win32')
     let g:binary_suffix = 'exe'
 else
     let g:dotvim = '~/.vim'
-    let g:python_interpreter = '/usr/bin/python3'
+    let g:python_interpreter = 'python3'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 endif
