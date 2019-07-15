@@ -60,7 +60,8 @@ set autoread            " 文件在vim之外修改过，自动重新读入
 
 " }}}
 
-" windows {{{
+" os config {{{
+let g:dotvimd = '~/.vim.d'
 if has('win32')
     set clipboard+=unnamed
     " 设置 alt 键不映射到菜单栏
@@ -70,6 +71,11 @@ if has('win32')
     let g:dotvim = '~/vimfiles'
     let g:python_interpreter = 'python'
     let g:binary_suffix = 'exe'
+elseif has('mac')
+    let g:dotvim = '~/.vim'
+    let g:python_interpreter = '/Users/yiguangzheng/miniconda3/envs/vim/bin/python3'
+    au GUIEnter * call MaximizeWindow()
+    let g:binary_suffix = 'out'
 else
     let g:dotvim = '~/.vim'
     let g:python_interpreter = 'python3'
@@ -99,38 +105,27 @@ if has('gui_running')
     set gcr=a:block-blinkon0
     set nolist
     " set listchars=tab:▶\ ,eol:¬,trail:·,extends:>,precedes:<
-    set guifont=Consolas:h14:cANSI
+    "set guifont=Consolas:h14:cANSI
+    if has('mac')
+        set guifont=Monaco:h14
+    endif
+    if has('win32')
+        set guifont=Consolas:h14:cANSI
+    endif
     " non-gvim stuff
 endif
 " }}}
 
-" Vundel {{{
-"filetype off
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-"Plugin 'VundleVim/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'Lokaltog/vim-powerline'
-"Plugin 'Yggdroot/indentLine'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'taglist.vim'
-"Plugin 'jiangmiao/auto-pairs'
-"Plugin 'Yelgors/YCM-Generator'
-"Plugin 'SirVer/ultisnips'
-"Plugin 'honza/vim-snippets'
-"Plugin 'chiel92/vim-autoformat'
-"Plugin 'skywind3000/asyncrun.vim'
-"Plugin 'kien/ctrlp.vim'
-"Plugin 'tacahiroy/ctrlp-funky'
-""Plugin 'shougo/vimshell.vim'
-""Plugin 'Shougo/vimproc.vim'
-"call vundle#end()
-"filetype plugin indent on
-""""""""""""""""""""""""""""""
-" }}}
 
 " vim-plug {{{
-call plug#begin(g:dotvim.'/plugged')
+call plug#begin(g:dotvimd.'/plugged')
+"if has('nvim')
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
+"endif
 " best completer
 Plug 'Valloric/YouCompleteMe'
 Plug 'tenfyzhong/CompleteParameter.vim'
@@ -317,6 +312,15 @@ nmap <leader>; :bp<cr>
 nmap <leader>' :bn<cr>
 " }}}
 
+" deoplete {{{
+let g:deoplete#enable_at_startup = 1
+
+let g:python3_host_prog = expand('~/miniconda3/envs/vim/bin/python')
+" 不懂为什么这里还要设置路径
+set pythonthreehome=~/miniconda3/envs/vim/
+"set pyxversion=3
+" }}}
+
 "ycm {{{
 "keymaps:
 "直接触发自动补全
@@ -331,6 +335,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "python解释器路径"
 let g:ycm_path_to_python_interpreter=g:python_interpreter
+let g:ycm_server_python_interpreter=g:python_interpreter
+"let g:ycm_python_interpreter_path=g:python_interpreter
 ""是否开启语义补全"
 let g:ycm_seed_identifiers_with_syntax=1
 "是否在注释中也开启补全"

@@ -87,11 +87,17 @@ download_config(){
 }
 install_vim_config(){
     log_info 'install vim config'
-    if [ ! -f $HOME/.vimrc  ]
+    if [ ! -d ~/.vim ]
     then
-        ln -s $my_config_path/.vimrc ~
+        log_info 'make .vim dir'
+        rm -rf ~/.vim
+        mkdir ~/.vim
+    fi
+    if [ ! -f $HOME/.vim/vimrc  ]
+    then
+        ln -s $my_config_path/vim/vimrc ~/.vim
     else
-        log_error "install vim config failed."$HOME/.vimrc" has existed"
+        log_error "install vim config failed."$HOME/.vim/vimrc" has existed"
     fi
     #    res=$?
     #    if [ $res -ne 0 ]
@@ -108,15 +114,15 @@ install_vim_config(){
     fi
     if [ ! -f $HOME/.vim/config-help.txt  ]
     then
-        ln -s $my_config_path/config-help.txt ~/.vim/config-help.txt
+        ln -s $my_config_path/vim/config-help.txt ~/.vim/config-help.txt
     else
         log_error "install vim config failed."$HOME/.vim/config-help.txt" has existed"
     fi
 }
 clean_vim_config(){
-    if [ -f $HOME/.vimrc  ]
+    if [ -f $HOME/.vim/vimrc  ]
     then
-        rm $HOME/.vimrc
+        rm $HOME/.vim/vimrc
     fi
 
     if [ -f $vim_plug_file ]
@@ -133,20 +139,20 @@ install_tmux_config(){
     log_info 'install tmux config'
     if [ ! -f $HOME/.tmux.conf ]
     then
-        ln -s $my_config_path/.tmux/.tmux.conf $HOME
+        ln -s $my_config_path/tmux/.tmux/.tmux.conf $HOME
     else
-        log_error "install .tmux failed."$HOME/.tmux.conf" has existed"
+        log_error "install .tmux failed."$HOME/tmux/.tmux.conf" has existed"
     fi
     if [ ! -f $HOME/.tmux.conf.local ]
     then
-        cp $my_config_path/.tmux/.tmux.conf.local $HOME
+        cp $my_config_path/tmux/.tmux/.tmux.conf.local $HOME
         echo "if '[ -f ~/.tmux.conf.local.self ]' 'source ~/.tmux.conf.local.self'" >> ~/.tmux.conf.local
     else
         log_error "install .tmux failed."$HOME/.tmux.conf.local" has existed"
     fi
     if [ ! -f $HOME/.tmux.conf.local.self ]
     then
-        ln -s $my_config_path/.tmux.conf $HOME/.tmux.conf.local.self
+        ln -s $my_config_path/tmux/.tmux.conf $HOME/.tmux.conf.local.self
     else
         log_error "install tmux config failed."$HOME/.tmux.conf.local.self" has existed"
     fi
