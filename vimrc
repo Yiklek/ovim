@@ -527,6 +527,12 @@ autocmd BufWritePre * call RemoveTrailingWhitespace()
 " max window {{{
 function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+    if exists("+lines")
+        set lines=9999
+    endif
+    if exists("+columns")
+        set columns=9999
+    endif
 endfunction
 " }}}
 
