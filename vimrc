@@ -61,7 +61,8 @@ set autoread            " 文件在vim之外修改过，自动重新读入
 " }}}
 
 " os config {{{
-let g:dotvimd = '~/.vim.d'
+let g:dotvimd='~/.vim.d'
+set rtp+=g:dotvimd
 if has('win32')
     set clipboard+=unnamed
     " 设置 alt 键不映射到菜单栏
@@ -73,7 +74,7 @@ if has('win32')
     let g:binary_suffix = 'exe'
 elseif has('mac')
     let g:dotvim = '~/.vim'
-    let g:python_interpreter = '/Users/yiguangzheng/miniconda3/envs/vim/bin/python3'
+    let g:python_interpreter = expand('/Users/yiguangzheng/.pyenv/versions/3.7.4/bin/python3.7')
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 else
