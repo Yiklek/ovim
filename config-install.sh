@@ -200,7 +200,7 @@ install_shell_config(){
     fi
     if [ ! -f $HOME/.rc.sh ]
     then
-        ln -s $my_config_path/.rc.sh $HOME
+        ln -s $my_config_path/shell/.rc.sh $HOME
     else
         log_error "install .rc.sh config failed."$HOME/.rc.sh" has existed"
         return
@@ -228,6 +228,7 @@ command_help(){
     shell: install shell config.run this command after zsh
     pull: update git repo
     update: update git repo
+    clean:clean all installed config
 EOF
     exit 0
 }
