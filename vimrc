@@ -4,17 +4,31 @@
 " F4 pastetoggle
 " l-<tab> ycm autocomplete toggle
 " General {{{
-set nocompatible
-set number
+let mapleader = ","      " 定义<leader>键
+set nocompatible         " 设置不兼容原始vi模式
+filetype on              " 设置开启文件类型侦测
+filetype plugin on       " 设置加载对应文件类型的插件
+set noeb                 " 关闭错误的提示
+syntax enable            " 开启语法高亮功能
+syntax on                " 自动语法高亮
+
+"set t_Co=256             " 开启256色支持 主题Theme中设置
+"set cmdheight=2          " 设置命令行的高度
+"set showcmd              " select模式下显示选中的行数
+"set ruler                " 总是显示光标位置
+"set laststatus=2         " 总是显示状态栏
+set number               " 开启行号显示
+set cursorline           " 高亮显示当前行
+"set whichwrap+=<,>,h,l   " 设置光标键跨行
+"set ttimeoutlen=0        " 设置<ESC>键响应时间
+"set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
+
 set ts=4
 set shiftwidth=4
 set expandtab
 set encoding=utf-8
 "set noexpandtab
 "set noautoindent
-filetype plugin indent on
-syntax on
-let mapleader=","
 set autochdir
 "set tags=tags;
 set tags=./.tags;,.tags
@@ -22,13 +36,33 @@ set hlsearch
 set scrolloff=3
 set shortmess=atI
 "set cursorcolumn
-set cursorline
 set vb t_vb=
 au GuiEnter * set t_vb=
 "set mouse=a
+
+
+" 缓存设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nobackup            " 设置不备份
+"set noswapfile          " 禁止生成临时文件
+set autoread            " 文件在vim之外修改过，自动重新读入
+"set autowrite           " 设置自动保存
+"set confirm             " 在处理未保存或只读文件的时候，弹出确认
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 编码设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"set langmenu=zh_CN.UTF-8
+"set helplang=cn
+"set termencoding=utf-8
+"set encoding=utf8
+"set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030"
+
 " }}}
 
-" windows {{{
+" os config {{{
+let g:dotvimd='~/.vim.d'
+set rtp+=g:dotvimd
 if has('win32')
     set clipboard+=unnamed
     " 设置 alt 键不映射到菜单栏
@@ -38,9 +72,14 @@ if has('win32')
     let g:dotvim = '~/vimfiles'
     let g:python_interpreter = 'python'
     let g:binary_suffix = 'exe'
+elseif has('mac')
+    let g:dotvim = '~/.vim'
+    let g:python_interpreter = expand('/Users/yiguangzheng/.pyenv/versions/3.7.4/bin/python3.7')
+    au GUIEnter * call MaximizeWindow()
+    let g:binary_suffix = 'out'
 else
     let g:dotvim = '~/.vim'
-    let g:python_interpreter = '/usr/bin/python3'
+    let g:python_interpreter = 'python3'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 endif
@@ -67,38 +106,27 @@ if has('gui_running')
     set gcr=a:block-blinkon0
     set nolist
     " set listchars=tab:▶\ ,eol:¬,trail:·,extends:>,precedes:<
-    set guifont=Consolas:h14:cANSI
+    "set guifont=Consolas:h14:cANSI
+    if has('mac')
+        set guifont=Monaco:h14
+    endif
+    if has('win32')
+        set guifont=Consolas:h14:cANSI
+    endif
     " non-gvim stuff
 endif
 " }}}
 
-" Vundel {{{
-"filetype off
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-"Plugin 'VundleVim/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'Lokaltog/vim-powerline'
-"Plugin 'Yggdroot/indentLine'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'taglist.vim'
-"Plugin 'jiangmiao/auto-pairs'
-"Plugin 'Yelgors/YCM-Generator'
-"Plugin 'SirVer/ultisnips'
-"Plugin 'honza/vim-snippets'
-"Plugin 'chiel92/vim-autoformat'
-"Plugin 'skywind3000/asyncrun.vim'
-"Plugin 'kien/ctrlp.vim'
-"Plugin 'tacahiroy/ctrlp-funky'
-""Plugin 'shougo/vimshell.vim'
-""Plugin 'Shougo/vimproc.vim'
-"call vundle#end()
-"filetype plugin indent on
-""""""""""""""""""""""""""""""
-" }}}
 
 " vim-plug {{{
-call plug#begin(g:dotvim.'/plugged')
+call plug#begin(g:dotvimd.'/plugged')
+"if has('nvim')
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
+"endif
 " best completer
 Plug 'Valloric/YouCompleteMe'
 Plug 'tenfyzhong/CompleteParameter.vim'
@@ -185,6 +213,8 @@ noremap <c-j> <down>
 noremap <c-k> <up>
 noremap <c-l> <right>
 nnoremap <esc><esc> :silent! nohlsearch<cr>
+nnoremap <leader>e :edit $MYVIMRC<cr>
+nnoremap <leader>s :source $MYVIMRC<cr>
 "粘贴模式
 set pastetoggle=<F4>
 nmap <F5> :redraw!<cr>
@@ -200,20 +230,20 @@ nmap <leader>- :split<space>
 nmap <leader>q :q<CR>
 nmap <leader>w :w<CR>
 " 焦点移动
-nmap <leader>h <c-w>h
-nmap <leader>j <c-w>j
-nmap <leader>k <c-w>k
-nmap <leader>l <c-w>l
+nmap <leader>wh <c-w>h
+nmap <leader>wj <c-w>j
+nmap <leader>wk <c-w>k
+nmap <leader>wl <c-w>l
 " 位置移动
-nmap <leader>J <c-w>J
-nmap <leader>K <c-w>K
-nmap <leader>H <c-w>H
-nmap <leader>L <c-w>L
+nmap <leader>wJ <c-w>J
+nmap <leader>wK <c-w>K
+nmap <leader>wH <c-w>H
+nmap <leader>wL <c-w>L
 " 大小调整
-nmap <leader>jj 5<c-w>+
-nmap <leader>kk 5<c-w>-
-nmap <leader>hh 5<c-w><
-nmap <leader>ll 5<c-w>>
+nmap <leader>wwj 5<c-w>+
+nmap <leader>wwk 5<c-w>-
+nmap <leader>wwh 5<c-w><
+nmap <leader>wwl 5<c-w>>
 " 标签
 " 关闭当前标签
 nmap <leader>tq :tabc<CR>
@@ -283,6 +313,15 @@ nmap <leader>; :bp<cr>
 nmap <leader>' :bn<cr>
 " }}}
 
+" deoplete {{{
+let g:deoplete#enable_at_startup = 1
+
+let g:python3_host_prog = expand('~/miniconda3/envs/vim/bin/python')
+" 不懂为什么这里还要设置路径
+set pythonthreehome=~/miniconda3/envs/vim/
+"set pyxversion=3
+" }}}
+
 "ycm {{{
 "keymaps:
 "直接触发自动补全
@@ -297,6 +336,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "python解释器路径"
 let g:ycm_path_to_python_interpreter=g:python_interpreter
+let g:ycm_server_python_interpreter=g:python_interpreter
+"let g:ycm_python_interpreter_path=g:python_interpreter
 ""是否开启语义补全"
 let g:ycm_seed_identifiers_with_syntax=1
 "是否在注释中也开启补全"
@@ -344,7 +385,7 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 ""窗口大小"
 let NERDTreeWinSize=35
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe 'NERDTree' | endif
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe 'NERDTree' | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
@@ -486,6 +527,12 @@ autocmd BufWritePre * call RemoveTrailingWhitespace()
 " max window {{{
 function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+    if exists("+lines")
+        set lines=9999
+    endif
+    if exists("+columns")
+        set columns=9999
+    endif
 endfunction
 " }}}
 
@@ -541,10 +588,13 @@ smap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
 imap <c-i> <Plug>(complete_parameter#goto_previous_parameter)
 " }}}
 
-" {{{
-function! DispalyHelp()
+" {{{ DisplayHelp
+function! DisplayHelp()
     let help_file = g:dotvim."/config-help.txt"
-    if !exists("g:opening")
+    let bnr = bufwinnr(help_file)
+    if bnr > 0
+        let g:opening = 1
+    else
         let g:opening = 0
     endif
     if g:opening
@@ -556,5 +606,5 @@ function! DispalyHelp()
         let g:opening = 1
     endif
 endfunction
-nmap <F9> :call DispalyHelp()<cr>
+nmap <F9> :call DisplayHelp()<cr>
 " }}}
