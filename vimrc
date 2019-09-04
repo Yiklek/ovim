@@ -61,6 +61,7 @@ set autoread            " 文件在vim之外修改过，自动重新读入
 " }}}
 
 " os config {{{
+let g:_config_python_home=''
 let g:dotvimd='~/.vim.d'
 set rtp+=g:dotvimd
 if has('win32')
@@ -70,16 +71,25 @@ if has('win32')
     set backspace=indent,eol,start whichwrap+=<,>,[,]
     autocmd GUIEnter * simalt ~x
     let g:dotvim = '~/vimfiles'
-    let g:python_interpreter = 'python'
+    if has('nvim')
+        let g:dotvim = '~/AppData/Local/nvim'
+    endif
+    let g:_config_python_home=''
+    let g:python_interpreter = g:_config_python_home.'python'
     let g:binary_suffix = 'exe'
 elseif has('mac')
     let g:dotvim = '~/.vim'
-    let g:python_interpreter = expand('/Users/yiguangzheng/.pyenv/versions/3.7.4/bin/python3.7')
+    if has('nvim')
+        let g:dotvim = '~/AppData/Local/nvim'
+    endif
+    let g:_config_python_home=expand('~/.pyenv/versions/3.7.4')
+    let g:python_interpreter = g:_config_python_home. '/bin/python3.7'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 else
     let g:dotvim = '~/.vim'
-    let g:python_interpreter = 'python3'
+    let g:_config_python_home=''
+    let g:python_interpreter = g:_config_python_home.'python3'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 endif
@@ -314,11 +324,11 @@ nmap <leader>' :bn<cr>
 " }}}
 
 " deoplete {{{
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
-let g:python3_host_prog = expand('~/miniconda3/envs/vim/bin/python')
+" let g:python3_host_prog = expand('~/miniconda3/envs/vim/bin/python')
 " 不懂为什么这里还要设置路径
-set pythonthreehome=~/miniconda3/envs/vim/
+" set pythonthreehome=~/miniconda3/envs/vim/
 "set pyxversion=3
 " }}}
 
@@ -353,12 +363,12 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
 let g:ycm_confirm_extra_conf = 1
 " 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
 " old version
-if !empty(glob(g:dotvim."/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = g:dotvim."/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+if !empty(glob(g:dotvimd."/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = g:dotvimd."/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
 endif
 " new version
-if !empty(glob(g:dotvim."/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = g:dotvim."/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+if !empty(glob(g:dotvimd."/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = g:dotvimd."/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 endif
 if filereadable('~/.ycm_extra_conf.py')
     let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
