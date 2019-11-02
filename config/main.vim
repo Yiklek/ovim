@@ -148,6 +148,7 @@ execute 'source' g:config_root.'/plugins/leaderf.vim'
 execute 'source' g:config_root.'/plugins/gutentags.vim'
 execute 'source' g:config_root.'/plugins/signify.vim'
 execute 'source' g:config_root.'/plugins/complete-parameter.vim'
+execute 'source' g:config_root.'/plugins/defx.vim'
 
 "主题 theme {{{
 "set termguicolors
@@ -264,3 +265,6 @@ function! DisplayHelp()
 endfunction
 nmap <F9> :call DisplayHelp()<cr>
 " }}}
+
+" 剩余的窗口都不是文件编辑窗口时，自动退出vim
+autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
