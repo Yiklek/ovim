@@ -75,3 +75,17 @@ plugin
 
 <leader>r: asyncrun
 ----------------------------------
+<leader>ff: leaderf
+<leader>fm :LeaderfMru>
+<leader>fc :LeaderfFunction!
+<leader>fb :LeaderfBuffer
+<leader>ft :LeaderfTag
+----------------------------------
+<leader>p :ctrlp
+<c-f> :switch mode
+<c-b> :switch mode
+<leader>pu :CtrlpFunky
+<leader>pU :CtrlpFunky word
+
+
+----------------------------------

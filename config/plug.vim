@@ -1,13 +1,19 @@
 
 " vim-plug {{{
 call plug#begin(g:dotvimd.'/plugged')
-"if has('nvim')
+if has('nvim')
   "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
+  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'kristijanhusak/defx-git'
+  Plug 'kristijanhusak/defx-icons'
+  else
   "Plug 'Shougo/deoplete.nvim'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'kristijanhusak/defx-git'
+  Plug 'kristijanhusak/defx-icons'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 " best completer
 Plug 'Valloric/YouCompleteMe'
 Plug 'tenfyzhong/CompleteParameter.vim'
@@ -44,7 +50,7 @@ Plug 'chiel92/vim-autoformat',{'on':'Autoformat'}
 Plug 'skywind3000/asyncrun.vim'
 
 " search file
-"Plug 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 "Plug 'wincent/command-t'
