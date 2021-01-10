@@ -9,8 +9,6 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
 "补全后自动关机预览窗口"
 let g:ycm_autoclose_preview_window_after_completion=1
-"离开插入模式后自动关闭预览窗口"
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "python解释器路径"
 let g:ycm_path_to_python_interpreter=g:python_interpreter
 let g:ycm_server_python_interpreter=g:python_interpreter
@@ -24,7 +22,6 @@ let g:ycm_seed_identifiers_with_syntax=1
 " let g:ycm_auto_trigger=0
 let g:ycm_min_num_of_chars_for_completion=2
 let g:ycm_cache_omnifunc=0
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
 " 跳转到定义处, 分屏打开
 " let g:ycm_goto_buffer_command = 'horizontal-split'
 let g:ycm_confirm_extra_conf = 1

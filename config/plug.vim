@@ -1,24 +1,24 @@
 
 " vim-plug {{{
 call plug#begin(g:dotvimd.'/plugged')
-if has('nvim')
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'kristijanhusak/defx-git'
-  Plug 'kristijanhusak/defx-icons'
-  else
-  "Plug 'Shougo/deoplete.nvim'
-  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'kristijanhusak/defx-git'
-  Plug 'kristijanhusak/defx-icons'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ }
+
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'kristijanhusak/defx-git'
+Plug 'kristijanhusak/defx-icons'
+if !has('nvim')
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 " best completer
 Plug 'Valloric/YouCompleteMe'
-Plug 'tenfyzhong/CompleteParameter.vim'
+"Plug 'tenfyzhong/CompleteParameter.vim'
 " generate .ycm_extra_conf.py
-Plug 'https://gitee.com/yelgors/YCM-Generator.git',{'branch':'stable'}
+"Plug 'https://gitee.com/yelgors/YCM-Generator.git',{'branch':'stable'}
 
 " use this to complete if YCM can't work
 "Plug 'maralla/completor.vim'
@@ -82,6 +82,8 @@ Plug 'https://gitee.com/yelgors/vim-togglemouse.git',{'branch':'dev'}
 " shell in vim
 "Plugin 'shougo/vimshell.vim'
 "Plugin 'Shougo/vimproc.vim'
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+Plug '~/.oh-my-config/vim/ovim'
 call plug#end()
 """"""""""""""""""""""""""""""
 " }}}

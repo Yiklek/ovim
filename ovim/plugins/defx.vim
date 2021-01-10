@@ -1,6 +1,8 @@
 
 " defx{{{
+
 nmap <silent> = :Defx<CR>
+call extend(g:space_key_map,{'=':[':Defx','defx']})
 call defx#custom#option('_', {
       \ 'winwidth': 45,
       \ 'split': 'vertical',
