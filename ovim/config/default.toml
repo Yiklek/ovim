@@ -1,4 +1,8 @@
 hook_source = ""
+
+[var]
+python3_host_prog = "~/miniconda3/envs/vim/bin/python"
+
 [[plugins]]
 repo = "arakashic/nvim-colors-solarized"
 

@@ -1,10 +1,12 @@
 
 let g:ovim_root_path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let $OVIM_ROOT_PATH = g:ovim_root_path
-let $VIM_PATH  = g:dotvim 
+let g:vim_path = fnamemodify(resolve(expand('$MYVIMRC')), ':h')
+let $VIM_PATH  = g:vim_path
 
 
 let g:ovim_global_options = {}
+
 
 if !exists('g:space_key_map')
     let g:space_key_map =  {}
@@ -28,6 +30,11 @@ endfunction
 
 function! s:options() abort
     let l:options = ovim#utils#load_default()
+    if exists('l:options.var')
+        for [k,v] in items(l:options.var)
+            exe "let g:".k.' = "'.v.'"'
+        endfor
+    endif
     return l:options
 endfunction
 
