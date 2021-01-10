@@ -1,0 +1,130 @@
+hook_source = ""
+[[plugins]]
+repo = "arakashic/nvim-colors-solarized"
+
+[[plugins]]
+repo = "morhetz/gruvbox"
+
+[[plugins]]
+repo = "miconda/lucariox.vim"
+
+[[plugins]]
+repo = "https://gitee.com/yelgors/vim-togglemouse.git"
+branch = "dev"
+
+[[plugins]]
+repo = "Shougo/defx.nvim"
+do = ":UpdateRemotePlugins"
+hook_post_source = "source $OVIM_ROOT_PATH/plugins/defx.vim"
+
+[[plugins]]
+repo = "kristijanhusak/defx-git"
+
+[[plugins]]
+repo = "kristijanhusak/defx-icons"
+
+[[plugins]]
+repo = "roxma/nvim-yarp"
+if = "!has('nvim')"
+
+[[plugins]]
+repo = "roxma/vim-hug-neovim-rpc"
+if = "!has('nvim')"
+
+[[plugins]]
+repo = "vim-airline/vim-airline"
+hook_source = "source $OVIM_ROOT_PATH/plugins/airline.vim"
+
+[[plugins]]
+repo = "vim-airline/vim-airline-themes"
+
+[[plugins]]
+repo = "Yggdroot/indentLine"
+hook_source = "source $OVIM_ROOT_PATH/plugins/indentLine.vim"
+
+[[plugins]]
+repo = "scrooloose/nerdtree"
+on = "NERDTreeToggle"
+hook_source = "source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
+
+[[plugins]]
+repo = "scrooloose/nerdcommenter"
+hook_source = """call extend(g:leader_key_map,{'c':{'name':'+注释'}})"""
+
+[[plugins]]
+repo = "majutsushi/tagbar"
+on = "TagbarToggle"
+hook_source = "source $OVIM_ROOT_PATH/plugins/tarbar.vim"
+
+[[plugins]]
+repo = "jiangmiao/auto-pairs"
+hook_source = "source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
+
+[[plugins]]
+repo = "SirVer/ultisnips"
+hook_source = "source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
+
+[[plugins]]
+repo = "honza/vim-snippets"
+
+[[plugins]]
+repo = "chiel92/vim-autoformat"
+on = "Autoformat"
+hook_source = "source $OVIM_ROOT_PATH/plugins/autoformat.vim"
+
+[[plugins]]
+repo = "skywind3000/asyncrun.vim"
+hook_source = "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
+
+[[plugins]]
+repo = "Yggdroot/LeaderF"
+hook_source = "source $OVIM_ROOT_PATH/plugins/leaderf.vim"
+
+[[plugins]]
+repo = "ctrlpvim/ctrlp.vim"
+hook_source = "source $OVIM_ROOT_PATH/plugins/ctrlp.vim"
+
+[[plugins]]
+repo = "tacahiroy/ctrlp-funky"
+
+[[plugins]]
+repo = "pseewald/vim-anyfold"
+hook_source = "source $OVIM_ROOT_PATH/plugins/fold.vim"
+
+[[plugins]]
+repo = "roxma/vim-paste-easy"
+
+[[plugins]]
+repo = "tpope/vim-surround"
+
+[[plugins]]
+repo = "ludovicchabant/vim-gutentags"
+hook_source = "source $OVIM_ROOT_PATH/plugins/gutentags.vim"
+
+[[plugins]]
+repo = "mhinz/vim-signify"
+hook_source = "source $OVIM_ROOT_PATH/plugins/signify.vim"
+
+[[plugins]]
+repo = "liuchengxu/vim-which-key"
+# on = [ "WhichKey", "WhichKey!",]
+hook_post_source = "source $OVIM_ROOT_PATH/plugins/vim-which-key.vim"
+
+[[plugins]]
+repo = "voldikss/vim-floaterm"
+hook_post_source = "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
+
+
+[[plugins]]
+repo = "liuchengxu/vista.vim"
+#if = 0
+hook_source = "source $OVIM_ROOT_PATH/plugins/vista.vim"
+
+[[plugins]]
+repo = "yianwillis/vimcdoc"
+if = "!has('nvim')"
+
+[[modules]]
+name = "autocomplete"
+method = "deoplete"
+

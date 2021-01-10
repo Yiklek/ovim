@@ -105,6 +105,12 @@ install_nvim_config(){
     else
         log_error "install nvim config failed."$HOME/.config/nvim/config" has existed"
     fi
+    if [ ! -d $HOME/.config/nvim/ovim  ]
+    then
+        ln -s $my_config_path/vim/ovim ~/.config/nvim/
+    else
+        log_error "install nvim config failed."$HOME/.config/nvim/ovim" has existed"
+    fi
     #    res=$?
     #    if [ $res -ne 0 ]
     #    then
@@ -134,6 +140,10 @@ clean_nvim_config(){
     if [ -d $HOME/.config/nvim/config  ]
     then
         rm -rf $HOME/.config/nvim/config
+    fi
+    if [ -d $HOME/.config/nvim/ovim  ]
+    then
+        rm -rf $HOME/.config/nvim/ovim
     fi
     if [ -f $HOME/.config/nvim/autoload/plug.vim ]
     then
@@ -165,6 +175,12 @@ install_vim_config(){
     else
         log_error "install vim config failed."$HOME/.vim/config" has existed"
     fi
+    if [ ! -d $HOME/.vim/ovim  ]
+    then
+        ln -s $my_config_path/vim/ovim ~/.vim/
+    else
+        log_error "install vim config failed."$HOME/.vim/ovim" has existed"
+    fi
     #    res=$?
     #    if [ $res -ne 0 ]
     #    then
@@ -194,6 +210,10 @@ clean_vim_config(){
     if [ -d $HOME/.vim/config  ]
     then
         rm $HOME/.vim/config
+    fi
+    if [ -d $HOME/.vim/ovim  ]
+    then
+        rm $HOME/.vim/ovim
     fi
     if [ -f $vim_plug_file ]
     then
@@ -306,19 +326,15 @@ check_git
 check_curl
 case $1 in
     vim )
-        download_config
         install_vim_config
         ;;
     nvim )
-        download_config
         install_nvim_config
         ;;
     tmux )
-        download_config
         install_tmux_config
         ;;
     shell )
-        download_config
         clean_shell_config
         install_shell_config $2
         ;;

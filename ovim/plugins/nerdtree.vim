@@ -2,6 +2,7 @@
 " NERDTree {{{
 "F2开启和关闭树"
 map <F2> :NERDTreeToggle<CR>
+let g:space_key_map['<F2>'] = [':NERDTreeToggle','文件目录(outdate)']
 let NERDTreeChDirMode=1
 ""显示书签"
 let NERDTreeShowBookmarks=1

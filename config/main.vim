@@ -5,6 +5,7 @@
 " l-<tab> ycm autocomplete toggle
 " General {{{
 let mapleader = ","      " 定义<leader>键
+let maplocalleader = '<TAB>'
 set nocompatible         " 设置不兼容原始vi模式
 filetype on              " 设置开启文件类型侦测
 filetype plugin on       " 设置加载对应文件类型的插件
@@ -62,10 +63,10 @@ set autoread            " 文件在vim之外修改过，自动重新读入
 
 " os config {{{
 let g:_config_python_home=''
-let g:dotvimd='~/.vim.d'
+let g:dotvimd=expand('~/.vim.d')
 set rtp+=g:dotvimd
 let g:config_root=fnamemodify(expand('<sfile>'), ':h')
-if has('win32')
+if has('win32')    "  windows
     set clipboard+=unnamed
     " 设置 alt 键不映射到菜单栏
     set winaltkeys=no
@@ -78,7 +79,7 @@ if has('win32')
     let g:_config_python_home=''
     let g:python_interpreter = g:_config_python_home.'python'
     let g:binary_suffix = 'exe'
-elseif has('mac')
+elseif has('mac')      " macos
     let g:dotvim = '~/.vim'
     if has('nvim')
         let g:dotvim = '~/AppData/Local/nvim'
@@ -87,7 +88,7 @@ elseif has('mac')
     let g:python_interpreter = g:_config_python_home. '/bin/python3.7'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
-else
+else                " linux
     let g:dotvim = '~/.vim'
     let g:_config_python_home=''
     let g:python_interpreter = g:_config_python_home.'python3'
@@ -95,7 +96,7 @@ else
     let g:binary_suffix = 'out'
 endif
 " }}}
-
+let g:dotvim = expand(g:dotvim)
 " gui {{{
 if has('gui_running')
     " gvim-only stuff
@@ -127,28 +128,13 @@ if has('gui_running')
     " non-gvim stuff
 endif
 " }}}
-
+" 插件无关map
+let &rtp=&rtp.','.g:dotvim.'/ovim'
+"execute 'source' g:config_root.'/plug.vim'
+call ovim#init()
 execute 'source' g:config_root.'/keymap.vim'
 
-execute 'source' g:config_root.'/plug.vim'
 
-execute 'source' g:config_root.'/plugins/indentLine.vim'
-execute 'source' g:config_root.'/plugins/airline.vim'
-execute 'source' g:config_root.'/plugins/youcompleteme.vim'
-execute 'source' g:config_root.'/plugins/completor.vim'
-execute 'source' g:config_root.'/plugins/nerdtree.vim'
-execute 'source' g:config_root.'/plugins/tarbar.vim'
-execute 'source' g:config_root.'/plugins/auto-pairs.vim'
-execute 'source' g:config_root.'/plugins/ultisnips.vim'
-execute 'source' g:config_root.'/plugins/autoformat.vim'
-execute 'source' g:config_root.'/plugins/asyncrun.vim'
-execute 'source' g:config_root.'/plugins/ctrlp.vim'
-execute 'source' g:config_root.'/plugins/fold.vim'
-execute 'source' g:config_root.'/plugins/leaderf.vim'
-execute 'source' g:config_root.'/plugins/gutentags.vim'
-execute 'source' g:config_root.'/plugins/signify.vim'
-execute 'source' g:config_root.'/plugins/complete-parameter.vim'
-execute 'source' g:config_root.'/plugins/defx.vim'
 
 "主题 theme {{{
 "set termguicolors
@@ -161,16 +147,10 @@ set t_Co=256
 colorscheme gruvbox
 let g:solarized_termcolors=256
 call togglebg#map("<F6>")
+let g:space_key_map['<F6>'] = ['<F6>','Toogle Bg(todo)']
+
 " }}}
 
-" deoplete {{{
-" let g:deoplete#enable_at_startup = 1
-
-" let g:python3_host_prog = expand('~/miniconda3/envs/vim/bin/python')
-" 不懂为什么这里还要设置路径
-" set pythonthreehome=~/miniconda3/envs/vim/
-"set pyxversion=3
-" }}}
 
 " make {{{
 if has('win32')
@@ -209,7 +189,7 @@ function! Zoom ()
     endif
 endfunction
 
-nmap <leader>z :call Zoom()<CR>
+nmap <leader>wz :call Zoom()<CR>
 " }}}
 
 " remove whitespace {{{
@@ -243,6 +223,8 @@ endfunction
 
 " mouse{{{
 call toggle_mouse#map("<F7>")
+let g:space_key_map['<F7>'] = ['<F7>','Toogle Mouse(todo)']
+
 " }}}
 
 " {{{ DisplayHelp
@@ -264,7 +246,15 @@ function! DisplayHelp()
     endif
 endfunction
 nmap <F9> :call DisplayHelp()<cr>
+let g:space_key_map['<F9>'] = ['<F6>','Show Help(todo)']
+
 " }}}
 
 " 剩余的窗口都不是文件编辑窗口时，自动退出vim
 autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+
+
+" 定位到退出位置并移动到屏幕中央
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif | normal! zvzz
+endif
