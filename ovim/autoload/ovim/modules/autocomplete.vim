@@ -58,7 +58,7 @@ function s:self.config() abort
         return !col || getline('.')[col - 1]  =~ '\s'
     endfunction"}}}
 
-    let g:python3_host_prog = expand('~/miniconda3/envs/vim/bin/python')
+    
     " 不懂为什么这里还要设置路径
     " set pythonthreehome=~/miniconda3/envs/vim/
     "set pyxversion=3

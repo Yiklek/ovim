@@ -64,7 +64,6 @@ set autoread            " 文件在vim之外修改过，自动重新读入
 " os config {{{
 let g:_config_python_home=''
 let g:dotvimd=expand('~/.vim.d')
-set rtp+=g:dotvimd
 let g:config_root=fnamemodify(expand('<sfile>'), ':h')
 if has('win32')    "  windows
     set clipboard+=unnamed
@@ -72,31 +71,25 @@ if has('win32')    "  windows
     set winaltkeys=no
     set backspace=indent,eol,start whichwrap+=<,>,[,]
     autocmd GUIEnter * simalt ~x
-    let g:dotvim = '~/vimfiles'
-    if has('nvim')
-        let g:dotvim = '~/AppData/Local/nvim'
-    endif
+
     let g:_config_python_home=''
     let g:python_interpreter = g:_config_python_home.'python'
     let g:binary_suffix = 'exe'
 elseif has('mac')      " macos
-    let g:dotvim = '~/.vim'
-    if has('nvim')
-        let g:dotvim = '~/AppData/Local/nvim'
-    endif
+
     let g:_config_python_home=expand('~/.pyenv/versions/3.7.4')
     let g:python_interpreter = g:_config_python_home. '/bin/python3.7'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 else                " linux
-    let g:dotvim = '~/.vim'
     let g:_config_python_home=''
     let g:python_interpreter = g:_config_python_home.'python3'
     au GUIEnter * call MaximizeWindow()
     let g:binary_suffix = 'out'
 endif
 " }}}
-let g:dotvim = expand(g:dotvim)
+
+let g:dotvim = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 " gui {{{
 if has('gui_running')
     " gvim-only stuff
@@ -129,8 +122,8 @@ if has('gui_running')
 endif
 " }}}
 " 插件无关map
-let &rtp=&rtp.','.g:dotvim.'/ovim'
-"execute 'source' g:config_root.'/plug.vim'
+let &rtp=&rtp.','.g:dotvim.'/ovim,'.g:dotvimd
+
 call ovim#init()
 execute 'source' g:config_root.'/keymap.vim'
 
