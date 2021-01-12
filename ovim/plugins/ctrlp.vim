@@ -1,6 +1,8 @@
 
 " ctrlP {{{
-let g:ctrlp_map = '<leader>p'
+let g:ctrlp_map = '<leader>p<space>'
+nnoremap <leader>p<space> :CtrlP<Cr>
+
 nnoremap <Leader>pu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>pU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>

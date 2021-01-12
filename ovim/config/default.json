@@ -1,5 +1,8 @@
 {
     "hook_source": "",
+    "var": {
+        "python3_host_prog": "~/miniconda3/envs/vim/bin/python"
+    },
     "plugins": [
         {
             "repo": "arakashic/nvim-colors-solarized"
@@ -17,7 +20,7 @@
         {
             "repo": "Shougo/defx.nvim",
             "do": ":UpdateRemotePlugins",
-            "hook_post_source":"source $OVIM_ROOT_PATH/plugins/defx.vim"
+            "hook_post_source": "source $OVIM_ROOT_PATH/plugins/defx.vim"
         },
         {
             "repo": "kristijanhusak/defx-git"
@@ -33,38 +36,38 @@
             "repo": "roxma/vim-hug-neovim-rpc",
             "if": "!has('nvim')"
         },
-
         {
             "repo": "vim-airline/vim-airline",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/airline.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/airline.vim"
         },
         {
             "repo": "vim-airline/vim-airline-themes"
         },
         {
             "repo": "Yggdroot/indentLine",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/indentLine.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/indentLine.vim"
         },
         {
             "repo": "scrooloose/nerdtree",
             "on": "NERDTreeToggle",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
         },
         {
-            "repo": "scrooloose/nerdcommenter"
+            "repo": "scrooloose/nerdcommenter",
+            "hook_source": "call extend(g:leader_key_map,{'c':{'name':'+\u6ce8\u91ca'}})"
         },
         {
             "repo": "majutsushi/tagbar",
             "on": "TagbarToggle",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/tarbar.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/tarbar.vim"
         },
         {
             "repo": "jiangmiao/auto-pairs",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
         },
         {
             "repo": "SirVer/ultisnips",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
         },
         {
             "repo": "honza/vim-snippets"
@@ -72,26 +75,26 @@
         {
             "repo": "chiel92/vim-autoformat",
             "on": "Autoformat",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/autoformat.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/autoformat.vim"
         },
         {
             "repo": "skywind3000/asyncrun.vim",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
         },
         {
             "repo": "Yggdroot/LeaderF",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/leaderf.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/leaderf.vim"
         },
         {
             "repo": "ctrlpvim/ctrlp.vim",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/ctrlp.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/ctrlp.vim"
         },
         {
             "repo": "tacahiroy/ctrlp-funky"
         },
         {
             "repo": "pseewald/vim-anyfold",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/fold.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/fold.vim"
         },
         {
             "repo": "roxma/vim-paste-easy"
@@ -101,24 +104,33 @@
         },
         {
             "repo": "ludovicchabant/vim-gutentags",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/gutentags.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/gutentags.vim"
         },
         {
             "repo": "mhinz/vim-signify",
-            "hook_source":"source $OVIM_ROOT_PATH/plugins/signify.vim"
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/signify.vim"
         },
         {
             "repo": "liuchengxu/vim-which-key",
-            "on": [
-                "WhichKey",
-                "WhichKey!"
-            ]
+            "hook_post_source": "source $OVIM_ROOT_PATH/plugins/vim-which-key.vim"
+        },
+        {
+            "repo": "voldikss/vim-floaterm",
+            "hook_post_source": "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
+        },
+        {
+            "repo": "liuchengxu/vista.vim",
+            "hook_source": "source $OVIM_ROOT_PATH/plugins/vista.vim"
+        },
+        {
+            "repo": "yianwillis/vimcdoc",
+            "if": "!has('nvim')"
         }
     ],
     "modules": [
         {
             "name": "autocomplete",
-            "method": "ycm"
+            "method": "deoplete"
         }
     ]
 }

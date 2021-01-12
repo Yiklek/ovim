@@ -1,10 +1,12 @@
 
 set hidden
 " 告诉LS那个文件夹才是project root，同时也告诉它compile_commands在哪里
+let g:LanguageClient_autoStart = 0
 let g:LanguageClient_rootMarkers = {
             \ 'cpp': ['compile_commands.json', 'build'],
             \ 'c': ['compile_commands.json', 'build'],
-            \ 'python': ['.git']
+            \ 'python': ['.git'],
+            \ 'rust':['Cargo.toml']
             \ }
 let s:lsp_servers = {
       \ 'ada' : ['ada_language_server'],
@@ -23,7 +25,7 @@ let s:lsp_servers = {
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['python3' , '-m' ,'pyls'],
       \ 'crystal' : ['scry'],
-      \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'rust' : ['rust-analyzer'],
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
@@ -47,3 +49,10 @@ let g:LanguageClient_serverCommands = s:lsp_servers
 "nnoremap <space>lu :call *LanguageClient#textDocument_documentHighlight()<CR>
 "nnoremap <space>lm :call LanguageClient_contextMenu()<CR>
 "nnoremap <space>pc :pc<CR>
+autocmd InsertEnter *  call s:start_server()
+
+function s:start_server()
+      if !LanguageClient#isServerRunning()
+            call LanguageClient#startServer()
+      endif
+endfunction

@@ -70,6 +70,7 @@ noremap ]t  gT
 
 tnoremap <esc><esc><esc>  <C-W>N
 
+
 " for vim-which-key
 let g:space_key_map['<F5>'] = [':redraw!','刷新']
 
