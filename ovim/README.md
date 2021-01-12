@@ -19,4 +19,17 @@ module可由多个plugin配置成 预留接口
 
 ## plugin
 
-'liuchengxu/vim-which-key'
+## 依赖 
+
+### python
+* pynvim
+* toml
+* python-language-server
+
+### node
+* neovim
+
+### other
+
+* Universal Ctags(for vista.vim)
+* nerd-fonts(for icon) 

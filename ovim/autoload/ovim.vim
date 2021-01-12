@@ -1,7 +1,7 @@
 
 let g:ovim_root_path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let $OVIM_ROOT_PATH = g:ovim_root_path
-let g:vim_path = fnamemodify(resolve(expand('$MYVIMRC')), ':h')
+let g:vim_path = fnamemodify(expand('$MYVIMRC'), ':h')
 let $VIM_PATH  = g:vim_path
 
 
@@ -14,17 +14,24 @@ endif
 
 
 if !exists('g:leader_key_map')
-    let g:leader_key_map =  {'x':{'name':'+编辑'},'f':{'name':'+文件/查找'},'e':{'name':'+Extentions'}}
+    let g:leader_key_map =  {'x':{'name':'+编辑'},'f':{'name':'+文件/查找'},
+    \ 'e':{'name':'+Extentions'},'j':"+Code Jump(TODO)",
+    \ 'c':{'name':'+注释'},
+    \}
 endif
 
 function! ovim#init() abort
     let g:ovim_global_options = s:options()
-    call ovim#plugin#begin(g:dotvimd.'/plugged')
-        call s:modules(g:ovim_global_options.modules)
-        call s:plugins(g:ovim_global_options.plugins)
-
+    if exists('g:ovim_global_options.modules')
+            call s:modules(g:ovim_global_options.modules)
+        endif
+    if ovim#plugin#begin(g:dotvimd.'/plugged')
+        if exists('g:ovim_global_options.plugins')
+            call s:plugins(g:ovim_global_options.plugins)
+        endif 
+    endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
-
+    
 endfunction
 
 
@@ -32,7 +39,7 @@ function! s:options() abort
     let l:options = ovim#utils#load_default()
     if exists('l:options.var')
         for [k,v] in items(l:options.var)
-            exe "let g:".k.' = "'.v.'"'
+            let g:{k} = v
         endfor
     endif
     return l:options

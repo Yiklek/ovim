@@ -131,13 +131,24 @@ execute 'source' g:config_root.'/keymap.vim'
 
 "主题 theme {{{
 "set termguicolors
+function! s:has_colorscheme(name) abort
+    let pat = 'colors/'.a:name.'.vim'
+    return !empty(globpath(&rtp, pat))
+endfunction
+
 syntax enable
 set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
 set t_Co=256
-"colorscheme solarized
-colorscheme gruvbox
+
+silent! colorscheme solarized
+silent! colorscheme gruvbox
+" if s:has_colorscheme('gruvbox')
+"     colorscheme gruvbox
+" elseif s:has_colorscheme('solarized')
+"     colorscheme solarized
+" endif
 let g:solarized_termcolors=256
 call togglebg#map("<F6>")
 let g:space_key_map['<F6>'] = ['<F6>','Toogle Bg(todo)']
