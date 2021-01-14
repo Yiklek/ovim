@@ -1,12 +1,18 @@
 hook_source = ""
+# if use plug,set to 1 to improve bootstrap
+make_json = 0
+
+
 
 [var]
 python3_host_prog = "~/miniconda3/envs/vim/bin/python"
 ovim_plug_manager = 'dein'
 
 
+# theme
 [[plugins]]
 repo = "arakashic/nvim-colors-solarized"
+if = 0
 
 [[plugins]]
 repo = "morhetz/gruvbox"
@@ -14,24 +20,46 @@ repo = "morhetz/gruvbox"
 [[plugins]]
 repo = "miconda/lucariox.vim"
 
+
+[[plugins]]
+repo = 'hardcoreplayers/oceanic-material'
+
+[[plugins]]
+repo = 'mhartington/oceanic-next'
+
 [[plugins]]
 repo = "https://gitee.com/yelgors/vim-togglemouse.git"
 branch = "dev"
 rev = "dev"
+hook_post_source = """call toggle_mouse#map("<F7>")
+let g:space_key_map['<F7>'] = ['<F7>','Toogle Mouse(todo)']"""
 
+##### file explore
 [[plugins]]
 repo = "Shougo/defx.nvim"
 do = ":UpdateRemotePlugins"
+on_cmd = "Defx"
+hook_add = "source $OVIM_ROOT_PATH/keymaps/defx.vim"
 hook_post_source = "source $OVIM_ROOT_PATH/plugins/defx.vim"
 
 [[plugins]]
 repo = "kristijanhusak/defx-git"
+on_source = ['defx.nvim']
+
 
 [[plugins]]
 repo = "kristijanhusak/defx-icons"
 on = ['Defx']
-on_cmd = ['Defx']
+on_source = ['defx.nvim']
 
+[[plugins]]
+repo = "scrooloose/nerdtree"
+on = ["NERDTreeToggle","NERDTree"]
+on_cmd = ["NERDTreeToggle","NERDTree"]
+hook_add = "source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
+if = 0
+
+###### async compatility
 [[plugins]]
 repo = "roxma/nvim-yarp"
 if = "!has('nvim')"
@@ -40,22 +68,39 @@ if = "!has('nvim')"
 repo = "roxma/vim-hug-neovim-rpc"
 if = "!has('nvim')"
 
+##### status line
 [[plugins]]
 repo = "vim-airline/vim-airline"
 hook_source = "source $OVIM_ROOT_PATH/plugins/airline.vim"
+if = 0
 
 [[plugins]]
 repo = "vim-airline/vim-airline-themes"
+if = 0
 
+[[plugins]]
+repo = 'glepnir/spaceline.vim'
+hook_source = """set laststatus=2
+let g:spaceline_seperate_style = 'none'
+"""
+if = 0
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+if = 0
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_source = """set laststatus=2
+let g:spaceline_seperate_style = 'none'
+"""
+
+### edit
 [[plugins]]
 repo = "Yggdroot/indentLine"
 hook_source = "source $OVIM_ROOT_PATH/plugins/indentLine.vim"
+on_event = [ "BufReadPost", "BufWritePost" ]
 
-[[plugins]]
-repo = "scrooloose/nerdtree"
-on = ["NERDTreeToggle","NERDTree"]
-on_cmd = ["NERDTreeToggle","NERDTree"]
-hook_add = "source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
 
 [[plugins]]
 repo = "scrooloose/nerdcommenter"
@@ -77,13 +122,17 @@ hook_add = "source $OVIM_ROOT_PATH/plugins/tarbar.vim"
 [[plugins]]
 repo = "jiangmiao/auto-pairs"
 hook_source = "source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
+on_event = [ "BufReadPost", "BufWritePost" ]
 
 [[plugins]]
 repo = "SirVer/ultisnips"
 hook_source = "source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
+on_event = [ "InsertEnter" ]
+
 
 [[plugins]]
 repo = "honza/vim-snippets"
+on_event = [ "InsertEnter" ]
 
 [[plugins]]
 repo = "chiel92/vim-autoformat"
@@ -98,38 +147,20 @@ hook_add = "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
 on = ['AsyncRun']
 on_cmd = ['AsyncRun']
 
-# [[plugins]]
-# repo = "Yggdroot/LeaderF"
-# hook_add = "source $OVIM_ROOT_PATH/plugins/leaderf.vim"
-# on = ['Leaderf','LeaderfFile','LeaderfBuffer',
-#         'LeaderfBufferAll',"LeaderfMru","LeaderfMruCwd",
-#         "LeaderfTag","LeaderfBufTag","LeaderfBufTagAll",
-#         "LeaderfFunction","LeaderfFunctionAll"]
-# on_cmd = ['Leaderf','LeaderfFile','LeaderfBuffer',
-#         'LeaderfBufferAll',"LeaderfMru","LeaderfMruCwd",
-#         "LeaderfTag","LeaderfBufTag","LeaderfBufTagAll",
-#         "LeaderfFunction","LeaderfFunctionAll"]
-
-# [[plugins]]
-# repo = "ctrlpvim/ctrlp.vim"
-# hook_add = "source $OVIM_ROOT_PATH/plugins/ctrlp.vim"
-# on = ["CtrlP","CtrlPFunky"]
-# on_cmd = ["CtrlP","CtrlPFunky"]
-
-# [[plugins]]
-# repo = "tacahiroy/ctrlp-funky"
-# on = ["CtrlP","CtrlPFunky"]
-# on_cmd = ["CtrlP","CtrlPFunky"]
 
 [[plugins]]
 repo = "pseewald/vim-anyfold"
 hook_source = "source $OVIM_ROOT_PATH/plugins/fold.vim"
+on_event = [ "BufReadPost", "BufWritePost" ]
 
 [[plugins]]
 repo = "roxma/vim-paste-easy"
+on_event = ['InsertEnter']
 
 [[plugins]]
 repo = "tpope/vim-surround"
+on_event = ['InsertEnter']
+
 
 [[plugins]]
 repo = "ludovicchabant/vim-gutentags"
@@ -141,6 +172,8 @@ repo = "mhinz/vim-signify"
 hook_add = "source $OVIM_ROOT_PATH/plugins/signify.vim"
 on = ['SignifyDiff']
 on_cmd = ['SignifyDiff']
+on_event = [ "BufReadPost", "BufWritePost" ]
+
 
 [[plugins]]
 repo = "liuchengxu/vim-which-key"
@@ -178,11 +211,58 @@ repo = "haya14busa/dein-command.vim"
 if = "g:ovim_plug_manager ==# 'dein'"
 on_cmd = 'Dein'
 
+[[plugins]]
+repo = 'glepnir/dashboard-nvim'
+hook_source = """let g:dashboard_default_executive ="fzf"
+let g:dashboard_fzf_window = 0
+let g:dashboard_custom_shortcut = {}
+let g:dashboard_custom_shortcut['last_session'] = '--->'
+let g:dashboard_custom_shortcut['find_history'] = '--->'
+let g:dashboard_custom_shortcut['find_file'] = '--->'
+let g:dashboard_custom_shortcut['change_colorscheme'] = '--->'
+let g:dashboard_custom_shortcut['new_file'] = '--->'
+let g:dashboard_custom_shortcut['find_word'] = '--->'
+let g:dashboard_custom_shortcut['book_marks'] = '--->'
+let g:dashboard_custom_header = [
+\\ '',
+\\ ' ██████╗ ██╗   ██╗██╗███╗   ███╗',
+\\ '██╔═══██╗██║   ██║██║████╗ ████║',
+\\ '██║   ██║██║   ██║██║██╔████╔██║',
+\\ '██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+\\ '╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+\\ ' ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+\\ '',
+\\ ]                             
+"""
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_map = ['<Plug>(EasyAlign)']
+on = ['<Plug>(EasyAlign)']
+hook_add = """
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+"""
+
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+on = ['<Plug>(accelerated_jk_gj)','<Plug>(accelerated_jk_gk)']
+on_map = ['<Plug>(accelerated']
+hook_add = """
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
+"""
+
+# [[plugins]]
+# repo = 'kevinhwang91/rnvimr'
+# if = '0 && has("nvim")'
+# on_cmd = 'RnvimrToggle'
+
 [[modules]]
 name = "autocomplete"
 method = "deoplete"
 
 [[modules]]
 name = "search"
-method = ['leaderf','ctrlp']
-
+method = ['leaderf','ctrlp','fzf']
+leader_prefix = 's'

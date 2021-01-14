@@ -140,19 +140,22 @@ syntax enable
 set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
-set t_Co=256
-
+" set t_Co=256
+ if (has("termguicolors"))
+  set termguicolors
+ endif
+let g:oceanic_material_allow_underline = 1
 silent! colorscheme solarized
 silent! colorscheme gruvbox
+" silent! colorscheme oceanic_material
+" silent! colorscheme OceanicNext
+" hi CursorLine cterm=NONE
 " if s:has_colorscheme('gruvbox')
 "     colorscheme gruvbox
 " elseif s:has_colorscheme('solarized')
 "     colorscheme solarized
 " endif
 let g:solarized_termcolors=256
-call togglebg#map("<F6>")
-let g:space_key_map['<F6>'] = ['<F6>','Toogle Bg(todo)']
-
 " }}}
 
 
@@ -225,11 +228,7 @@ function! MaximizeWindow()
 endfunction
 " }}}
 
-" mouse{{{
-call toggle_mouse#map("<F7>")
-let g:space_key_map['<F7>'] = ['<F7>','Toogle Mouse(todo)']
 
-" }}}
 
 " {{{ DisplayHelp
 function! DisplayHelp()
@@ -250,8 +249,10 @@ function! DisplayHelp()
     endif
 endfunction
 nmap <F9> :call DisplayHelp()<cr>
+try
 let g:space_key_map['<F9>'] = ['<F6>','Show Help(todo)']
-
+catch 
+endtry
 " }}}
 
 " 剩余的窗口都不是文件编辑窗口时，自动退出vim
