@@ -53,6 +53,6 @@ autocmd InsertEnter *  call s:start_server()
 
 function s:start_server()
       if !LanguageClient#isServerRunning()
-            call LanguageClient#startServer()
+            silent! call LanguageClient#startServer()
       endif
 endfunction

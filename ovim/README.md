@@ -8,11 +8,8 @@ keymap全部经过统一接口便于生成速查
 module可由多个plugin配置成 预留接口
 
 常量初始化
-
-加载合并plugins配置
-
 加载合并modules配置
-
+加载合并plugins配置
 调用包管理器
 
 # default
@@ -33,3 +30,7 @@ module可由多个plugin配置成 预留接口
 
 * Universal Ctags(for vista.vim)
 * nerd-fonts(for icon) 
+* fzf
+* rg(optional,for fuzzy search text)
+* rq(optional,for faster bootstrap)
+* rust-analyzer(for rust)

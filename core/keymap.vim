@@ -1,5 +1,5 @@
 
-" global keymap {{{
+" basic keymap {{{
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
@@ -72,8 +72,9 @@ tnoremap <esc><esc><esc>  <C-W>N
 
 
 " for vim-which-key
-let g:space_key_map['<F5>'] = [':redraw!','刷新']
-
+if exists('g:space_key_map')
+    let g:space_key_map['<F5>'] = [':redraw!','刷新']
+endif
 let s:leader_key_map = {'<CR>':'换行',
                         \ '\': [':vsplit ','竖线分割'],
                         \ '-':[':split ','横线分割'],
@@ -93,11 +94,11 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       'z':['Zoom()','最大化窗口']
                         \   },
                         \ 't':{'name':'+标签',
-                        \       'q':[':tabc<CR>','关闭当前标签'],
-                        \       'Q':[':tabo<CR>','关闭所有标签'],
+                        \       'q':[':tabc','关闭当前标签'],
+                        \       'Q':[':tabo','关闭所有标签'],
                         \       'ls':[':tabs','列出所有标签'],
                         \       'o':[':tabe ','新标签打开'],
-                        \       'sp':[':tab split<CR>','新标签打开当前文件'],
+                        \       'sp':[':tab split','新标签打开当前文件'],
                         \       'h':[':-tabn','上一个标签'],
                         \       'k':[':-tabn','上一个标签'],
                         \       'j':[':+tabn','下一个标签'],
@@ -110,6 +111,7 @@ let s:leader_key_map = {'<CR>':'换行',
                         \   },
                         \ 'f':{'v':{'name':'+vim相关','e':[':edit $MYVIMRC','编辑配置文件'],'s':[':source $MYVIMRC','重新加载配置文件']}},
                     \}
-
-call extend(g:leader_key_map,s:leader_key_map)
+if exists('g:leader_key_map')
+    call extend(g:leader_key_map,s:leader_key_map)
+endif
 " }}}

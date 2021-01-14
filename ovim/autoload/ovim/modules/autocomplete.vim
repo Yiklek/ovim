@@ -24,19 +24,22 @@ function s:self.plugins() abort
     elseif s:self.method ==# 'deoplete'
         call add(s:self.plugs,{ "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
                                 \    "build":"bash install.sh","rev":"next","branch": "next",
+                                \    "on_event":["InsertEnter"],
                                 \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
                                 \    "hook_post_update":"bash install.sh"
                                 \    })
         call add(s:self.plugs,{
     \        "repo": "Shougo/deoplete.nvim",
     \        "do": ":UpdateRemotePlugins",
+    \        "on_event":['InsertEnter'],
     \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-deoplete.vim"
     \    })
-        call add(s:self.plugs,{ "repo": "Shougo/neco-vim","ft":"vim"})
+        call add(s:self.plugs,{ "repo": "Shougo/neco-vim","ft":"vim",'on_source':'deoplete.nvim'})
 
     elseif s:self.method ==# 'ycm'
         call add(s:self.plugs,{
     \        "repo": "Valloric/YouCompleteMe",
+    \        "on_event":['InsertEnter']
     \        "hook_source":"source $OVIM_ROOT_PATH/plugins/complete-youcompleteme.vim"
     \        
     \    })

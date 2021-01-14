@@ -1,6 +1,5 @@
 
 " option: plug dein(todo)
-let g:ovim_plug_manager = get(g:,'ovim_plug_manager','plug')
 
 function ovim#plugin#begin(arg)
     if g:ovim_plug_manager ==# 'plug'
@@ -22,9 +21,13 @@ endfun
 
 function ovim#plugin#end(plugins)
     if g:ovim_plug_manager ==# 'plug'
-        call s:_plug_source(a:plugins)
+        if type(a:plugins) == v:t_list
+            call s:_plug_source(a:plugins)
+        endif
         call plug#end()
-        call s:_plug_post_source(a:plugins)
+        if type(a:plugins) == v:t_list
+            call s:_plug_post_source(a:plugins)
+        endif
     elseif g:ovim_plug_manager ==# 'dein'
         if exists("g:dein_loading") && g:dein_loading
             call dein#end()
@@ -42,7 +45,7 @@ function ovim#plugin#add(repo,...)
         call s:_plug_add(a:1)
         Plug a:repo, a:1
     elseif g:ovim_plug_manager ==# 'dein'
-        if g:dein_loading
+        if exists("g:dein_loading") && g:dein_loading
             call dein#add(a:repo,a:1)
         endif
     endif

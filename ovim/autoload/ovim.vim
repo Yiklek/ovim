@@ -6,7 +6,7 @@ let $VIM_PATH  = g:vim_path
 
 
 let g:ovim_global_options = {}
-
+let g:ovim_plug_manager = get(g:,'ovim_plug_manager','dein')
 
 if !exists('g:space_key_map')
     let g:space_key_map =  {}
@@ -16,15 +16,16 @@ endif
 if !exists('g:leader_key_map')
     let g:leader_key_map =  {'x':{'name':'+编辑'},'f':{'name':'+文件/查找'},
     \ 'e':{'name':'+Extentions'},'j':"+Code Jump(TODO)",
-    \ 'c':{'name':'+注释'},
+    \ 'c':{'name':'+注释'}, 
     \}
 endif
 
 function! ovim#init() abort
+    let g:ovim_global_options = {'plugins':[]}
     let g:ovim_global_options = s:options()
     if exists('g:ovim_global_options.modules')
             call s:modules(g:ovim_global_options.modules)
-        endif
+    endif
     if ovim#plugin#begin(g:dotvimd.'/plugged')
         if exists('g:ovim_global_options.plugins')
             call s:plugins(g:ovim_global_options.plugins)
