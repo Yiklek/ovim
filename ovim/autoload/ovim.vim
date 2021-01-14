@@ -4,6 +4,8 @@ let $OVIM_ROOT_PATH = g:ovim_root_path
 let g:vim_path = fnamemodify(expand('$MYVIMRC'), ':h')
 let $VIM_PATH  = g:vim_path
 
+let g:ovim_cacha_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
+
 
 let g:ovim_global_options = {}
 let g:ovim_plug_manager = get(g:,'ovim_plug_manager','dein')
@@ -26,7 +28,7 @@ function! ovim#init() abort
     if exists('g:ovim_global_options.modules')
             call s:modules(g:ovim_global_options.modules)
     endif
-    if ovim#plugin#begin(g:dotvimd.'/plugged')
+    if ovim#plugin#begin(g:ovim_cacha_path)
         if exists('g:ovim_global_options.plugins')
             call s:plugins(g:ovim_global_options.plugins)
         endif 

@@ -15,7 +15,7 @@ endfun
 
 function ovim#utils#log(msg) abort
     let time = strftime('%H:%M:%S')
-    let log = '[ ' . self.name . ' ] [' . time . '] ' . a:msg
+    let log = '[ovim] [' . time . '] ' . a:msg
     echom log
 endfun
 

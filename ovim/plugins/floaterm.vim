@@ -4,10 +4,10 @@ hi Floaterm guibg=black ctermbg=darkgreen ctermfg=darkgreen
 hi FloatermBorder guibg=darkgreen ctermbg=darkgreen guifg=darkgreen 
 hi FloatermNC guibg=gray
 
-nnoremap <leader>et<space> :FloatermToggle<CR>
+nnoremap <leader>et<space> :FloatermToggle  --wintype=float --position=center --width=0.8 --height=0.8<CR>
 nnoremap <leader>et[ :FloatermPrev<CR>
 nnoremap <leader>et] :FloatermNext<CR>
-nnoremap <leader>etn :FloatermNew<CR>
+nnoremap <leader>etn :FloatermNew --wintype=float --position=center --width=0.8 --height=0.8<CR>
 nnoremap <leader>et0 :FloatermFirst<CR>
 nnoremap <leader>et9 :FloatermLast<CR>
 nnoremap <leader>etk :FloatermKill<CR>
@@ -27,10 +27,10 @@ vnoremap <leader>ets :FloatermSend<CR>
 
 
 call extend(g:leader_key_map.e,{'t':{'name':'+Terminal',
-                                    \    ' ':[':FloatermToggle','Toggle Terminal'],
+                                    \    ' ':[':FloatermToggle'],
                                     \    '[':[':FloatermPrev','Previous Terminal'],
                                     \    ']':[':FloatermNext','Next Terminal'],
-                                    \    'n':[':FloatermNew','New Terminal'],
+                                    \    'n':[':FloatermNew --wintype=float --position=center --width=0.8 --height=0.8','New Terminal'],
                                     \    '0':[':FloatermFirst','First Terminal'],
                                     \    '9':[':FloatermLast','Last Terminal'],
                                     \    'k':[':FloatermKill','Kill Terminal'],

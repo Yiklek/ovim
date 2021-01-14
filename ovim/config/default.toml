@@ -49,7 +49,6 @@ on_source = ['defx.nvim']
 
 [[plugins]]
 repo = "kristijanhusak/defx-icons"
-on = ['Defx']
 on_source = ['defx.nvim']
 
 [[plugins]]
@@ -83,17 +82,14 @@ repo = 'glepnir/spaceline.vim'
 hook_source = """set laststatus=2
 let g:spaceline_seperate_style = 'none'
 """
-if = 0
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
-if = 0
+
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-hook_source = """set laststatus=2
-let g:spaceline_seperate_style = 'none'
-"""
+if = 0
 
 ### edit
 [[plugins]]
@@ -170,8 +166,9 @@ on_event = [ "BufReadPost", "BufWritePost" ]
 [[plugins]]
 repo = "mhinz/vim-signify"
 hook_add = "source $OVIM_ROOT_PATH/plugins/signify.vim"
-on = ['SignifyDiff']
-on_cmd = ['SignifyDiff']
+hook_post_source = 'SignifyEnable'
+on = ['SignifyDiff','SignifyEnable','SignifyEnableAll','SignifyToggle']
+on_cmd = ['SignifyDiff','SignifyEnable','SignifyEnableAll','SignifyToggle']
 on_event = [ "BufReadPost", "BufWritePost" ]
 
 
@@ -232,6 +229,13 @@ hook_add = """
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 """
+
+[[plugins]]
+repo = 'Yiklek/vim-buffet'
+on_event = [ 'VimEnter' ]
+hook_source = "source $OVIM_ROOT_PATH/plugins/buffet.vim"
+
+
 
 # [[plugins]]
 # repo = 'kevinhwang91/rnvimr'

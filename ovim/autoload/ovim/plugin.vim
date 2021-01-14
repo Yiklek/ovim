@@ -3,13 +3,30 @@
 
 function ovim#plugin#begin(arg)
     if g:ovim_plug_manager ==# 'plug'
-        call plug#begin(a:arg)
+    if !filereadable(g:vim_path.'/autoload/plug.vim')
+            call ovim#utils#log('downloading plug.vim...')
+            if executable('curl')
+                call ovim#utils#log('downloading plug.vim...')
+                call system('curl -fLo '.g:vim_path.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+            else
+                call ovim#utils#log('download plug.vim manually')
+            endif
+    endif
+        call plug#begin(a:arg.'/plugged')
         return 1
     elseif g:ovim_plug_manager ==# 'dein'
         set rtp+=$VIM_PATH/dein.vim
         let g:dein#auto_recache = 1
-        if dein#load_state('~/.cache/dein')
-            call dein#begin('~/.cache/dein')
+        if !isdirectory(g:vim_path.'/dein.vim')
+            if executable('git')
+                call ovim#utils#log('downloading dein.vim...')
+                call system('git clone https://github.com/Shougo/dein.vim.git '.g:vim_path.'/dein.vim')
+            else 
+                call ovim#utils#log('download dein.vim manually')
+            endif
+        endif
+        if dein#load_state(a:arg.'/dein')
+            call dein#begin(a:arg.'/dein')
             call dein#add(g:vim_path.'/dein.vim')
             let g:dein_loading = 1
             return 1

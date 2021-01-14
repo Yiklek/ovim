@@ -10,7 +10,7 @@ let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 let g:gutentags_ctags_tagfile = '.tags'
 
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = expand('~/.cache/tags')
+let s:vim_tags = g:ovim_cacha_path.'/tags'
 let g:gutentags_cache_dir = s:vim_tags
 
 " 配置 ctags 的参数
