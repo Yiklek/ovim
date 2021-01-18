@@ -85,6 +85,80 @@ download_config(){
     #git clone https://github.com/gpakosz/.tmux.git ~/.tmux
     #fi
 }
+install_nvim_config(){
+    log_info 'install nvim config'
+    if [ ! -d ~/.config/nvim ]
+    then
+        log_info 'make nvim dir'
+        rm -rf ~/.vim
+        mkdir -p  ~/.config/nvim
+    fi
+    if [ ! -f $HOME/.config/nvim/init.vim  ]
+    then
+        ln -s $my_config_path/vim/vimrc ~/.config/nvim/init.vim
+    else
+        log_error "install nvim config failed."$HOME/.config/nvim/init.vim" has existed"
+    fi
+    #if [ ! -d $HOME/.config/nvim/config  ]
+    #then
+    #ln -s $my_config_path/vim/config ~/.config/nvim/
+    #else
+    #log_error "install nvim config failed."$HOME/.config/nvim/config" has existed"
+    #fi
+    #if [ ! -d $HOME/.config/nvim/ovim  ]
+    #then
+    #ln -s $my_config_path/vim/ovim ~/.config/nvim/
+    #else
+    #log_error "install nvim config failed."$HOME/.config/nvim/ovim" has existed"
+    #fi
+    #    res=$?
+    #    if [ $res -ne 0 ]
+    #    then
+    #        log_error 'install vim config failed.'
+    #        exit
+    #    fi
+    if [ ! -f $HOME/.config/nvim/autoload/plug.vim ]
+    then
+        curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+                else
+                    log_error "install vim-plug failed."$vim_plug_file" has existed"
+    fi
+    #if [ ! -f $HOME/.config/nvim/config-help.txt  ]
+    #then
+    #ln -s $my_config_path/vim/config-help.txt ~/.config/nvim/config-help.txt
+    #else
+    #log_error "install nvim config failed."$HOME/.config/nvim/config-help.txt" has existed"
+    #fi
+}
+clean_nvim_config(){
+    if [ -f $HOME/.config/nvim/init.vim  ]
+    then
+        rm $HOME/.config/nvim/init.vim
+    fi
+
+    if [ -d $HOME/.config/nvim/config  ]
+    then
+        rm -rf $HOME/.config/nvim/config
+    fi
+    if [ -d $HOME/.config/nvim/ovim  ]
+    then
+        rm -rf $HOME/.config/nvim/ovim
+    fi
+    if [ -f $HOME/.config/nvim/autoload/plug.vim ]
+    then
+        rm $HOME/.config/nvim/autoload/plug.vim
+    fi
+
+    if [ -f $HOME/.config/nvim/config-help.txt  ]
+    then
+        rm $HOME/.config/nvim/config-help.txt
+    fi
+    if [ -d $HOME/.config/nvim  ]
+    then
+        rm -rf $HOME/.config/nvim
+    fi
+}
 install_vim_config(){
     log_info 'install vim config'
     if [ ! -d ~/.vim ]
@@ -99,6 +173,18 @@ install_vim_config(){
     else
         log_error "install vim config failed."$HOME/.vim/vimrc" has existed"
     fi
+    #if [ ! -d $HOME/.vim/config  ]
+    #then
+    #ln -s $my_config_path/vim/config ~/.vim/
+    #else
+    #log_error "install vim config failed."$HOME/.vim/config" has existed"
+    #fi
+    #if [ ! -d $HOME/.vim/ovim  ]
+    #then
+    #ln -s $my_config_path/vim/ovim ~/.vim/
+    #else
+    #log_error "install vim config failed."$HOME/.vim/ovim" has existed"
+    #fi
     #    res=$?
     #    if [ $res -ne 0 ]
     #    then
@@ -109,15 +195,15 @@ install_vim_config(){
     then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    else
-        log_error "install vim-plug failed."$vim_plug_file" has existed"
+                else
+                    log_error "install vim-plug failed."$vim_plug_file" has existed"
     fi
-    if [ ! -f $HOME/.vim/config-help.txt  ]
-    then
-        ln -s $my_config_path/vim/config-help.txt ~/.vim/config-help.txt
-    else
-        log_error "install vim config failed."$HOME/.vim/config-help.txt" has existed"
-    fi
+    #if [ ! -f $HOME/.vim/config-help.txt  ]
+    #then
+    #ln -s $my_config_path/vim/config-help.txt ~/.vim/config-help.txt
+    #else
+    #log_error "install vim config failed."$HOME/.vim/config-help.txt" has existed"
+    #fi
 }
 clean_vim_config(){
     if [ -f $HOME/.vim/vimrc  ]
@@ -125,6 +211,14 @@ clean_vim_config(){
         rm $HOME/.vim/vimrc
     fi
 
+    if [ -d $HOME/.vim/config  ]
+    then
+        rm $HOME/.vim/config
+    fi
+    if [ -d $HOME/.vim/ovim  ]
+    then
+        rm $HOME/.vim/ovim
+    fi
     if [ -f $vim_plug_file ]
     then
         rm $vim_plug_file
@@ -133,6 +227,10 @@ clean_vim_config(){
     if [ -f $HOME/.vim/config-help.txt  ]
     then
         rm $HOME/.vim/config-help.txt
+    fi
+    if [ -d $HOME/.vim ]
+    then
+        rm -rf $HOME/.vim
     fi
 }
 install_tmux_config(){
@@ -230,21 +328,21 @@ command_help(){
     update: update git repo
     clean:clean all installed config
 EOF
-    exit 0
+exit 0
 }
 check_git
 check_curl
 case $1 in
     vim )
-        download_config
         install_vim_config
         ;;
+    nvim )
+        install_nvim_config
+        ;;
     tmux )
-        download_config
         install_tmux_config
         ;;
     shell )
-        download_config
         clean_shell_config
         install_shell_config $2
         ;;
@@ -258,15 +356,17 @@ case $1 in
         download_config
         ;;
     clean)
-        clean_vim_config
-        clean_tmux_config
-        clean_shell_config
-        clean_oh_my_zsh_config
+        clean_$2_config
+        #clean_vim_config
+        #clean_nvim_config
+        #clean_tmux_config
+        #clean_shell_config
+        #clean_oh_my_zsh_config
         ;;
     help)
         command_help
         ;;
     *)
-	download_config
+        download_config
         command_help
 esac
