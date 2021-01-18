@@ -2,6 +2,7 @@
 " option: plug dein(todo)
 
 function ovim#plugin#begin(arg)
+    let g:ovim_plug_manager = get(g:ovim_global_options,'ovim_plug_manager','dein')
     if g:ovim_plug_manager ==# 'plug'
     if !filereadable(g:vim_path.'/autoload/plug.vim')
             call ovim#utils#log('downloading plug.vim...')
@@ -58,9 +59,14 @@ endfun
 
 
 function ovim#plugin#add(repo,...)
+    if !s:_plug_will_load(a:1)
+        return
+    endif
     if g:ovim_plug_manager ==# 'plug'
-        call s:_plug_add(a:1)
-        Plug a:repo, a:1
+        if s:_plug_will_load(a:1)
+            call s:_plug_add(a:1)
+            Plug a:repo, a:1
+        endif
     elseif g:ovim_plug_manager ==# 'dein'
         if exists("g:dein_loading") && g:dein_loading
             call dein#add(a:repo,a:1)
@@ -70,10 +76,7 @@ endfun
 
 function s:_plug_source(plugins)
     for p in a:plugins
-        if exists('p.if')
-            \ && (type(p['if']) == v:t_number && p.if == 0
-            \ || type(p['if']) == v:t_string && !eval(p['if']))
-        else
+        if s:_plug_will_load(p)
             if exists('p.hook_source')
                 execute(p.hook_source)
             endif
@@ -83,10 +86,7 @@ endfun
 
 function s:_plug_post_source(plugins)
     for p in a:plugins
-        if exists('p.if')
-            \ && (type(p['if']) == v:t_number && p.if == 0
-            \ || type(p['if']) == v:t_string && !eval(p['if']))
-        else
+        if s:_plug_will_load(p)
             if exists('p.hook_post_source')
                 execute(p.hook_post_source)
             endif
@@ -95,12 +95,21 @@ function s:_plug_post_source(plugins)
 endfun
 
 function s:_plug_add(plugin)
-    if exists('a:plugin.if')
-        \ && (type(a:plugin['if']) == v:t_number && a:plugin.if == 0
-        \ || type(a:plugin['if']) == v:t_string && !eval(a:plugin['if']))
-    else
+    if s:_plug_will_load(a:plugin)
         if exists('a:plugin.hook_add')
             execute(a:plugin.hook_add)
         endif
     endif
+endfun
+
+function s:_plug_will_load(plugin)
+    if exists('a:plugin._will_load')
+        return a:plugin._will_load
+    endif
+    let l:level =  get(g:ovim_global_options,'config_level',2) < get(a:plugin,'level',0) ? 0 : 1
+    let l:if = !(exists('a:plugin.if') 
+        \ && (type(a:plugin['if']) == v:t_number && a:plugin.if == 0
+            \ || type(a:plugin['if']) == v:t_string && !eval(a:plugin['if'])))
+    let a:plugin._will_load = l:level && l:if
+    return a:plugin._will_load
 endfun

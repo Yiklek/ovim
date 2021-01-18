@@ -75,6 +75,7 @@ if has('win32')    "  windows
     let g:_config_python_home=''
     let g:python_interpreter = g:_config_python_home.'python'
     let g:binary_suffix = 'exe'
+    vnoremap <leader>c :w! $HOME/%.temp<cr>:call WSLClip()<cr>
 elseif has('mac')      " macos
 
     let g:_config_python_home=expand('~/.pyenv/versions/3.7.4')
@@ -113,7 +114,7 @@ if has('gui_running')
     " set listchars=tab:▶\ ,eol:¬,trail:·,extends:>,precedes:<
     "set guifont=Consolas:h14:cANSI
     if has('mac')
-        set guifont=Monaco:h14
+        let &guifont="DejaVu Sans Mono Nerd Font Complete Mono:h18"
     endif
     if has('win32')
         set guifont=Consolas:h14:cANSI
@@ -176,7 +177,6 @@ function! WSLClip()
     exe "silent !" "cat ".$HOME.'/'.filename."|".winclip." && rm ".$HOME.'/'.filename
     redraw!
 endfunction
-vnoremap <leader>c :w! $HOME/%.temp<cr>:call WSLClip()<cr>
 " }}}
 
 " zoom {{{

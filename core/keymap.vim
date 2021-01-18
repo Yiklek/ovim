@@ -65,8 +65,8 @@ nmap <leader>bn :bn<cr>
 
 noremap [b  :bp<cr>
 noremap ]b  :bn<cr>
-noremap [t  gt
-noremap ]t  gT
+noremap ]t  gt
+noremap [t  gT
 
 tnoremap <esc><esc><esc>  <C-W>N
 

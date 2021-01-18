@@ -2,9 +2,20 @@ let g:buffet_show_index = 1
 let g:buffet_always_show_tabline = 0
 
 function! g:BuffetSetCustomColors()
-  hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#00FF00 guifg=#000000
+    " hi!  BuffetCurrentBuffer  term=bold ctermfg=142 ctermbg=237 guifg=#b8bb26 guibg=#3c3836
+    hi!  link  BuffetCurrentBuffer   TabLineSel
+    hi!  link  BuffetActiveBuffer   BuffetTab
+    hi!  link  BuffetBuffer   TabLine
+    hi!  link  BuffetModCurrentBuffer   BuffetCurrentBuffer
+    hi!  link  BuffetModActiveBuffer   BuffetActiveBuffer
+    hi!  link  BuffetModBuffer   BuffetBuffer
+    hi!  link  BuffetTrunc   TabLine
+    hi!  link  BuffetTab   TabLine
+
+"   hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#00FF00 guifg=#000000
 endfunction
 
+" hi  link  BuffetCurrentBuffer   BuffetCurrentBuffer
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)

@@ -111,7 +111,7 @@ endfun
 
 function s:self.config() abort
     "todo config
-    let g:leader_key_map[self.leader_prefix] = get(g:,'leader_key_map.'.self.leader_prefix,{'name':'+Search'})
+    let g:leader_key_map[self.leader_prefix] = get(g:leader_key_map,self.leader_prefix,{'name':'+Search'})
     if index(self.method,'fzf') >= 0
         let g:leader_key_map[self.leader_prefix].f = {'name':'fzf',' ':[':Files','Files']}
         exe 'nnoremap <leader>'.self.leader_prefix.'f<space> :Files<CR>'

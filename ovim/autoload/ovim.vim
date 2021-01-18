@@ -8,7 +8,6 @@ let g:ovim_cacha_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand
 
 
 let g:ovim_global_options = {}
-let g:ovim_plug_manager = get(g:,'ovim_plug_manager','dein')
 
 if !exists('g:space_key_map')
     let g:space_key_map =  {}
@@ -17,8 +16,8 @@ endif
 
 if !exists('g:leader_key_map')
     let g:leader_key_map =  {'x':{'name':'+编辑'},'f':{'name':'+文件/查找'},
-    \ 'e':{'name':'+Extentions'},'j':"+Code Jump(TODO)",
-    \ 'c':{'name':'+注释'}, 
+    \ 'e':{'name':'+Extentions'},'j':{"name":"+Code Jump"},
+    \ 'c':{'name':'+注释'},
     \}
 endif
 
@@ -31,10 +30,10 @@ function! ovim#init() abort
     if ovim#plugin#begin(g:ovim_cacha_path)
         if exists('g:ovim_global_options.plugins')
             call s:plugins(g:ovim_global_options.plugins)
-        endif 
+        endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
-    
+
 endfunction
 
 
@@ -50,18 +49,15 @@ endfunction
 
 function! s:plugins(plugs) abort
     for p in a:plugs
-        if exists('p.if')
-            if type(p['if']) == v:t_number && p.if != 0 || type(p['if']) == v:t_string && eval(p['if'])
-                call ovim#plugin#add(p.repo,p)
-            endif
-        else
-            call ovim#plugin#add(p.repo,p)
-        endif
+        call ovim#plugin#add(p.repo,p)
     endfor
 endfunction
 
 function! s:modules(mdls) abort
     for m in a:mdls
+        if get(g:ovim_global_options,'config_level',2) < get(m,'level',0)
+            continue
+        endif
         if exists('m.enable') && m.enable == v:false
         else
             let module = ovim#modules#load(m.name,m)
@@ -69,6 +65,6 @@ function! s:modules(mdls) abort
             call extend(g:ovim_global_options['plugins'],l:module_plugins)
             call module.config()
         endif
-        
+
     endfor
 endfunction
