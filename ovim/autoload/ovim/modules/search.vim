@@ -20,7 +20,7 @@ endfun
 
 function s:self.plugins() abort
     
-    let s:self.plugs = []
+    let s:self.plugs = {}
     for m in self.method
 
             call extend(self.plugs,s:method_plugins_{m}())
@@ -29,7 +29,7 @@ function s:self.plugins() abort
     return s:self.plugs
 endfun
 
-let s:keys = []
+
 
 " require rg for Leaderf rg
 let s:leader_cmds = ["LeaderfFile",
@@ -58,13 +58,13 @@ let s:leader_cmds = ["LeaderfFile",
 \ "LeaderfRgRecall",
 \ "Leaderf"]
 function s:method_plugins_leaderf() abort
-    return [{
+    return {'Yggdroot/LeaderF':{
 \    "repo": "Yggdroot/LeaderF",
 \    "hook_add": "source $OVIM_ROOT_PATH/plugins/leaderf.vim",
 \    'on' : s:leader_cmds,
 \    'on_cmd' : s:leader_cmds,
 \    "on_func" : ['leaderf#Any#start']
-\        }]
+\        }}
 endfun
 
 
@@ -78,34 +78,34 @@ let s:ctrlp_cmds = [ "CtrlP",
 \ "CtrlPClearCache",
 \ "CtrlPClearAllCaches",]
 function s:method_plugins_ctrlp() abort
-    return [{
+    return {'ctrlpvim/ctrlp.vim':{
 \    "repo" : "ctrlpvim/ctrlp.vim",
 \    "hook_add" : "source $OVIM_ROOT_PATH/plugins/ctrlp.vim",
 \    "on" : s:ctrlp_cmds, 
 \    "on_cmd" : s:ctrlp_cmds,
 \    },
-\    {"repo" : "tacahiroy/ctrlp-funky",
+\    "tacahiroy/ctrlp-funky":{"repo" : "tacahiroy/ctrlp-funky",
 \       "on" : ['CtrlPFunky'],
 \   "on_cmd" : ['CtrlPFunky'],}
-\]
+\}
 endfun
 " require fzf
 let s:fzf_cmds = ["Files",'GFiles','Buffers','Colors','Ag','Rg','Lines','BLines',
 \    'Tags','BTags','Marks','Windows','Locate','History',
 \    'Snippets','Commits','BCommits','Commands','Maps','Helptags','Filetypes']
 function s:method_plugins_fzf() abort
-    return [{
+    return {'junegunn/fzf':{
 \    "repo" : "junegunn/fzf",
 \    "on" : s:fzf_cmds,
 \    "on_cmd" : s:fzf_cmds,
 \    "on_func" :['fzf#run'],
-\    },{
+\    },'junegunn/fzf.vim':{
 \    "repo" : "junegunn/fzf.vim",
 \    "on" : s:fzf_cmds,
 \    "on_source" : ['fzf'],
 \    "on_func" :['fzf#run','fzf#vim#'],
 \    },
-\]
+\}
 endfun
 
 
