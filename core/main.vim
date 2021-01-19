@@ -66,7 +66,6 @@ let g:_config_python_home=''
 let g:dotvimd=expand('~/.vim.d')
 let g:config_root=fnamemodify(expand('<sfile>'), ':h')
 if has('win32')    "  windows
-    set clipboard+=unnamed
     " 设置 alt 键不映射到菜单栏
     set winaltkeys=no
     set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -122,6 +121,9 @@ if has('gui_running')
     " non-gvim stuff
 endif
 " }}}
+" if has('clipboard')
+"  set clipboard+=unnamed
+" endif
 " 插件无关map
 let &rtp=&rtp.','.g:dotvim.'/ovim,'.g:dotvimd
 

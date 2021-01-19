@@ -50,6 +50,17 @@ function ovim#utils#load_default() abort
 	throw 'OvimError: default config not found.'
 endfun
 
+function ovim#utils#load_custom() abort
+	let l:default_suffix = ['json','toml']
+	for i in l:default_suffix
+		if filereadable(g:vim_path.'/config/custom.'.i)
+			let l:r = ovim#utils#load_config(g:vim_path.'/config/custom.'.i)
+			return r
+		endif
+	endfor
+	return {}
+endfun
+
 function ovim#utils#source(filename) abort
 	source a:filename
 endfun
@@ -57,8 +68,10 @@ endfun
 function s:toml2json(toml)
 	if executable('rq')
 		let l:cmd = 'rq --input-toml --output-json --format indented'
-	elseif
+	elseif executable('python3')
 		let l:cmd = 'python3 -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
+	else
+		throw "OvimError:0000: one of python3 or rq required!"
 	endif
 	return system(l:cmd,a:toml)
 endfun
