@@ -18,26 +18,26 @@ endfun
 
 function s:self.plugins() abort
     
-    let s:self.plugs = []
+    let s:self.plugs = {}
     if s:self.method ==# 'coc'
-        call add(s:self.plugs,{"repo": "neoclide/coc.nvim", "rev": "release","branch": "release", "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim"})
+        let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim", "rev": "release","branch": "release", "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim"}
     elseif s:self.method ==# 'deoplete'
-        call add(s:self.plugs,{ "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
+        let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
                                 \    "build":"bash install.sh","rev":"next","branch": "next",
                                 \    "on_event":["InsertEnter"],
                                 \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
                                 \    "hook_post_update":"bash install.sh"
-                                \    })
-        call add(s:self.plugs,{
+                                \    }
+        let s:self.plugs['Shougo/deoplete.nvim'] = {
     \        "repo": "Shougo/deoplete.nvim",
     \        "do": ":UpdateRemotePlugins",
     \        "on_event":['InsertEnter'],
     \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-deoplete.vim"
-    \    })
-        call add(s:self.plugs,{ "repo": "Shougo/neco-vim","ft":"vim",'on_source':'deoplete.nvim'})
+    \    }
+        let s:self.plugs['Shougo/neco-vim'] = { "repo": "Shougo/neco-vim","ft":"vim",'on_source':'deoplete.nvim'}
 
     elseif s:self.method ==# 'ycm'
-        call add(s:self.plugs,{
+        let s:self.plugs['Valloric/YouCompleteMe'] = {
     \        "repo": "Valloric/YouCompleteMe",
     \        "on_event":['InsertEnter']
     \        "hook_source":"source $OVIM_ROOT_PATH/plugins/complete-youcompleteme.vim"

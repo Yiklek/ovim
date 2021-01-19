@@ -5,36 +5,33 @@ make_json = 0
 # level 1 normal: complete search file-explore git comment floaterm e.g.
 # level 2 enhanced: motion multi-line align jump
 config_level = 2
-ovim_plug_manager = 'dein'
-
+ovim_plug_manager = "dein"
 
 [var]
 python3_host_prog = "~/miniconda3/envs/vim/bin/python"
 
-# theme
-[[plugins]]
+[plugins."arakashic/nvim-colors-solarized"]
 level = 0
 repo = "arakashic/nvim-colors-solarized"
 if = 0
 
-[[plugins]]
+[plugins."morhetz/gruvbox"]
 level = 0
 repo = "morhetz/gruvbox"
 
-[[plugins]]
+[plugins."miconda/lucariox.vim"]
 level = 0
 repo = "miconda/lucariox.vim"
 
-
-[[plugins]]
+[plugins."hardcoreplayers/oceanic-material"]
 level = 0
-repo = 'hardcoreplayers/oceanic-material'
+repo = "hardcoreplayers/oceanic-material"
 
-[[plugins]]
+[plugins."mhartington/oceanic-next"]
 level = 0
-repo = 'mhartington/oceanic-next'
+repo = "mhartington/oceanic-next"
 
-[[plugins]]
+[plugins."https://gitee.com/yelgors/vim-togglemouse.git"]
 level = 0
 repo = "https://gitee.com/yelgors/vim-togglemouse.git"
 branch = "dev"
@@ -42,8 +39,7 @@ rev = "dev"
 hook_post_source = """call toggle_mouse#map("<F7>")
 let g:space_key_map['<F7>'] = ['<F7>','Toogle Mouse(todo)']"""
 
-##### file explore
-[[plugins]]
+[plugins."Shougo/defx.nvim"]
 level = 1
 repo = "Shougo/defx.nvim"
 do = ":UpdateRemotePlugins"
@@ -51,340 +47,289 @@ on_cmd = "Defx"
 hook_add = "source $OVIM_ROOT_PATH/keymaps/defx.vim"
 hook_post_source = "source $OVIM_ROOT_PATH/plugins/defx.vim"
 
-[[plugins]]
+[plugins."kristijanhusak/defx-git"]
 level = 1
 repo = "kristijanhusak/defx-git"
-on_source = ['defx.nvim']
+on_source = [ "defx.nvim",]
 
-
-[[plugins]]
+[plugins."kristijanhusak/defx-icons"]
 level = 1
 repo = "kristijanhusak/defx-icons"
-on_source = ['defx.nvim']
+on_source = [ "defx.nvim",]
 
-[[plugins]]
+[plugins."scrooloose/nerdtree"]
 level = 1
 repo = "scrooloose/nerdtree"
-on = ["NERDTreeToggle","NERDTree"]
-on_cmd = ["NERDTreeToggle","NERDTree"]
+on = [ "NERDTreeToggle", "NERDTree",]
+on_cmd = [ "NERDTreeToggle", "NERDTree",]
 hook_add = "source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
 if = 0
 
-###### async compatility
-[[plugins]]
+[plugins."roxma/nvim-yarp"]
 level = 1
 repo = "roxma/nvim-yarp"
 if = "!has('nvim')"
 
-[[plugins]]
+[plugins."roxma/vim-hug-neovim-rpc"]
 level = 1
 repo = "roxma/vim-hug-neovim-rpc"
 if = "!has('nvim')"
 
-##### status line
-[[plugins]]
+[plugins."vim-airline/vim-airline"]
 level = 0
 repo = "vim-airline/vim-airline"
 hook_source = "source $OVIM_ROOT_PATH/plugins/airline.vim"
 if = 0
 
-[[plugins]]
+[plugins."vim-airline/vim-airline-themes"]
 level = 0
 repo = "vim-airline/vim-airline-themes"
 if = 0
 
-[[plugins]]
+[plugins."glepnir/spaceline.vim"]
 level = 0
-repo = 'glepnir/spaceline.vim'
+repo = "glepnir/spaceline.vim"
 hook_source = """set laststatus=2
-let g:spaceline_seperate_style = 'none'
-"""
+let g:spaceline_seperate_style = 'none'"""
 
-[[plugins]]
+[plugins."ryanoasis/vim-devicons"]
 level = 0
-repo = 'ryanoasis/vim-devicons'
+repo = "ryanoasis/vim-devicons"
 
-
-[[plugins]]
+[plugins."itchyny/lightline.vim"]
 level = 0
-repo = 'itchyny/lightline.vim'
+repo = "itchyny/lightline.vim"
 if = 0
 
-# tabline tab无序号，若显示tab编号有错位问题（todo）
-[[plugins]]
+[plugins."hardcoreplayers/vim-buffet"]
 level = 0
-repo = 'hardcoreplayers/vim-buffet'
-on_event = [ 'VimEnter' , 'GUIEnter' ]
+repo = "hardcoreplayers/vim-buffet"
+on_event = [ "VimEnter", "GUIEnter",]
 hook_source = "source $OVIM_ROOT_PATH/plugins/buffet.vim"
 if = 0
 
-
-## tabline 列出所有buffer，右侧显示当前tab。buffer只位于一个tab中.无快速切换buffer方法
-[[plugins]]
+[plugins."pacha/vem-tabline"]
 level = 0
-repo = 'pacha/vem-tabline'
-on_event = [ 'BufRead','BufAdd','BufNew' ]
+repo = "pacha/vem-tabline"
+on_event = [ "BufRead", "BufAdd", "BufNew",]
 hook_source = "source $OVIM_ROOT_PATH/plugins/vem-tabline.vim"
 
-[[plugins]]
+[plugins."bling/vim-bufferline"]
 level = 0
-repo = 'bling/vim-bufferline'
-on_event = ['VimEnter' , 'GUIEnter']
-# 使用updatetime控制时间间隔，文档中没有写
-hook_source = '''
-  let g:bufferline_echo = 1
-  set updatetime=500
+repo = "bling/vim-bufferline"
+on_event = [ "VimEnter", "GUIEnter",]
+hook_source = """  let g:bufferline_echo = 1
+set updatetime=500
 
-  nnoremap <tab>1 :b1<cr>
-  nnoremap <tab>2 :b2<cr>
-  nnoremap <tab>3 :b3<cr>
-  nnoremap <tab>4 :b4<cr>
-  nnoremap <tab>5 :b5<cr>
-  nnoremap <tab>6 :b6<cr>
-  nnoremap <tab>7 :b7<cr>
-  nnoremap <tab>8 :b8<cr>
-  nnoremap <tab>9 :b9<cr>
-  nnoremap <tab>0 :b10<cr>
-'''
+nnoremap <tab>1 :b1<cr>
+nnoremap <tab>2 :b2<cr>
+nnoremap <tab>3 :b3<cr>
+nnoremap <tab>4 :b4<cr>
+nnoremap <tab>5 :b5<cr>
+nnoremap <tab>6 :b6<cr>
+nnoremap <tab>7 :b7<cr>
+nnoremap <tab>8 :b8<cr>
+nnoremap <tab>9 :b9<cr>
+nnoremap <tab>0 :b10<cr>"""
 
-# 单tab显示buffer，多tab显示tab，无index
-[[plugins]]
+[plugins."ap/vim-buftabline"]
 level = 0
-repo = 'ap/vim-buftabline'
-on_event = ['VimEnter' , 'GUIEnter']
-hook_source = 'source $OVIM_ROOT_PATH/plugins/buftabline.vim'
+repo = "ap/vim-buftabline"
+on_event = [ "VimEnter", "GUIEnter",]
+hook_source = "source $OVIM_ROOT_PATH/plugins/buftabline.vim"
 if = 0
 
-### edit
-[[plugins]]
+[plugins."Yggdroot/indentLine"]
 level = 1
 repo = "Yggdroot/indentLine"
 hook_source = "source $OVIM_ROOT_PATH/plugins/indentLine.vim"
-on_event = [ "BufReadPost", "BufWritePost" ]
+on_event = [ "BufReadPost", "BufWritePost",]
 
-
-[[plugins]]
+[plugins."scrooloose/nerdcommenter"]
 level = 1
 repo = "scrooloose/nerdcommenter"
 hook_add = "source $OVIM_ROOT_PATH/plugins/nerdcomment.vim"
-on = ['<Plug>NERDCommenterComment','<Plug>NERDCommenterNested',
-        '<Plug>NERDCommenterToggle','<Plug>NERDCommenterMinimal','<Plug>NERDCommenterInvert',
-        '<Plug>NERDCommenterSexy','<Plug>NERDCommenterYank',
-        '<Plug>NERDCommenterToEOL','<Plug>NERDCommenterAppend',
-        '<Plug>NERDCommenterAltDelims','<Plug>NERDCommenterAlignLeft',
-        '<Plug>NERDCommenterAlignBoth','<Plug>NERDCommenterUncomment']
-on_map = { n = "<Plug>NERDCommenter" }
+on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCommenterToggle", "<Plug>NERDCommenterMinimal", "<Plug>NERDCommenterInvert", "<Plug>NERDCommenterSexy", "<Plug>NERDCommenterYank", "<Plug>NERDCommenterToEOL", "<Plug>NERDCommenterAppend", "<Plug>NERDCommenterAltDelims", "<Plug>NERDCommenterAlignLeft", "<Plug>NERDCommenterAlignBoth", "<Plug>NERDCommenterUncomment",]
 
-[[plugins]]
+[plugins."majutsushi/tagbar"]
 level = 1
 repo = "majutsushi/tagbar"
-on = ["Tagbar","TagbarToggle"]
-on_cmd = ["Tagbar"]
+on = [ "Tagbar", "TagbarToggle",]
+on_cmd = [ "Tagbar",]
 hook_add = "source $OVIM_ROOT_PATH/plugins/tarbar.vim"
 
-[[plugins]]
+[plugins."jiangmiao/auto-pairs"]
 level = 1
 repo = "jiangmiao/auto-pairs"
 hook_source = "source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
-on_event = [ "BufReadPost", "BufWritePost" ]
+on_event = [ "BufReadPost", "BufWritePost",]
 
-[[plugins]]
+[plugins."SirVer/ultisnips"]
 level = 1
 repo = "SirVer/ultisnips"
 hook_source = "source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
-on_event = [ "InsertEnter" ]
+on_event = [ "InsertEnter",]
 
-
-[[plugins]]
+[plugins."honza/vim-snippets"]
 level = 1
 repo = "honza/vim-snippets"
-on_event = [ "InsertEnter" ]
+on_event = [ "InsertEnter",]
 
-[[plugins]]
+[plugins."chiel92/vim-autoformat"]
 level = 1
 repo = "chiel92/vim-autoformat"
 on = "Autoformat"
 on_cmd = "Autoformat"
 hook_add = "source $OVIM_ROOT_PATH/plugins/autoformat.vim"
 
-
-[[plugins]]
+[plugins."skywind3000/asyncrun.vim"]
 level = 1
 repo = "skywind3000/asyncrun.vim"
 hook_add = "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
-on = ['AsyncRun']
-on_cmd = ['AsyncRun']
+on = [ "AsyncRun",]
+on_cmd = [ "AsyncRun",]
 
-
-[[plugins]]
+[plugins."pseewald/vim-anyfold"]
 level = 1
 repo = "pseewald/vim-anyfold"
 hook_source = "source $OVIM_ROOT_PATH/plugins/fold.vim"
-on_event = [ "BufReadPost", "BufWritePost" ]
+on_event = [ "BufReadPost", "BufWritePost",]
 
-[[plugins]]
+[plugins."roxma/vim-paste-easy"]
 level = 0
 repo = "roxma/vim-paste-easy"
-on_event = ['InsertEnter']
-hook_source = 'let g:leader_key_map[","] = "EasyMotion"'
+on_event = [ "InsertEnter",]
 
-[[plugins]]
+[plugins."tpope/vim-surround"]
 level = 1
 repo = "tpope/vim-surround"
-on_event = ['InsertEnter']
+on_event = [ "InsertEnter",]
 
-
-[[plugins]]
+[plugins."ludovicchabant/vim-gutentags"]
 level = 1
 repo = "ludovicchabant/vim-gutentags"
 hook_source = "source $OVIM_ROOT_PATH/plugins/gutentags.vim"
-on_event = [ "BufReadPost", "BufWritePost" ]
+on_event = [ "BufReadPost", "BufWritePost",]
 
-[[plugins]]
+[plugins."mhinz/vim-signify"]
 level = 1
 repo = "mhinz/vim-signify"
 hook_add = "source $OVIM_ROOT_PATH/plugins/signify.vim"
-hook_post_source = 'SignifyEnable'
-on = ['SignifyDiff','SignifyEnable','SignifyEnableAll','SignifyToggle']
-on_cmd = ['SignifyDiff','SignifyEnable','SignifyEnableAll','SignifyToggle']
-on_event = [ "BufReadPost", "BufWritePost" ]
+hook_post_source = "SignifyEnable"
+on = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
+on_cmd = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
+on_event = [ "BufReadPost", "BufWritePost",]
 
-
-[[plugins]]
+[plugins."liuchengxu/vim-which-key"]
 level = 1
 repo = "liuchengxu/vim-which-key"
 hook_post_source = "source $OVIM_ROOT_PATH/plugins/vim-which-key.vim"
 
-[[plugins]]
+[plugins."voldikss/vim-floaterm"]
 level = 1
 repo = "voldikss/vim-floaterm"
 hook_add = "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
-on = ['FloatermToggle','FloatermPrev','FloatermNext',
-        'FloatermNew','FloatermFirst','FloatermLast','FloatermKill']
-on_cmd = ['FloatermToggle','FloatermPrev','FloatermNext',
-        'FloatermNew','FloatermFirst','FloatermLast','FloatermKill']
+on = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast", "FloatermKill",]
+on_cmd = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast", "FloatermKill",]
 
-[[plugins]]
+[plugins."liuchengxu/vista.vim"]
 level = 1
 repo = "liuchengxu/vista.vim"
 hook_add = "source $OVIM_ROOT_PATH/plugins/vista.vim"
-on = ['Vista','Vista!','Vista!!']
-on_cmd = ['Vista','Vista!','Vista!!']
+on = [ "Vista", "Vista!", "Vista!!",]
+on_cmd = [ "Vista", "Vista!", "Vista!!",]
 
-
-
-# [[plugins]]
-# repo = "yianwillis/vimcdoc"
-# if = "!has('nvim')"
-
-[[plugins]]
+[plugins."tweekmonster/startuptime.vim"]
 level = 0
 repo = "tweekmonster/startuptime.vim"
 on = "StartupTime"
 on_cmd = "StartupTime"
 
-[[plugins]]
+[plugins."wsdjeg/dein-ui.vim"]
 level = 0
 repo = "wsdjeg/dein-ui.vim"
 if = "g:ovim_plug_manager ==# 'dein'"
-on_cmd = 'DeinUpdate'
+on_cmd = "DeinUpdate"
 
-[[plugins]]
+[plugins."haya14busa/dein-command.vim"]
 level = 0
 repo = "haya14busa/dein-command.vim"
 if = "g:ovim_plug_manager ==# 'dein'"
-on_cmd = 'Dein'
+on_cmd = "Dein"
 
-[[plugins]]
+[plugins."glepnir/dashboard-nvim"]
 level = 1
-repo = 'glepnir/dashboard-nvim'
+repo = "glepnir/dashboard-nvim"
 hook_source = "source $OVIM_ROOT_PATH/plugins/dashboard.vim"
 
-[[plugins]]
+[plugins."junegunn/vim-easy-align"]
 level = 2
-repo = 'junegunn/vim-easy-align'
-on_map = ['<Plug>(EasyAlign)']
-on = ['<Plug>(EasyAlign)']
-hook_add = """
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-"""
+repo = "junegunn/vim-easy-align"
+on_map = [ "<Plug>(EasyAlign)",]
+on = [ "<Plug>(EasyAlign)",]
+hook_add = "xmap ga <Plug>(EasyAlign)\nnmap ga <Plug>(EasyAlign)\n"
 
-[[plugins]]
+[plugins."rhysd/accelerated-jk"]
 level = 1
-repo = 'rhysd/accelerated-jk'
-on = ['<Plug>(accelerated_jk_gj)','<Plug>(accelerated_jk_gk)']
-on_map = ['<Plug>(accelerated']
-hook_add = """
-nmap j <Plug>(accelerated_jk_gj)
-nmap k <Plug>(accelerated_jk_gk)
-"""
+repo = "rhysd/accelerated-jk"
+on = [ "<Plug>(accelerated_jk_gj)", "<Plug>(accelerated_jk_gk)",]
+on_map = [ "<Plug>(accelerated",]
+hook_add = "nmap j <Plug>(accelerated_jk_gj)\nnmap k <Plug>(accelerated_jk_gk)\n"
 
-[[plugins]]
+[plugins."junegunn/vim-peekaboo"]
 level = 2
-repo = 'junegunn/vim-peekaboo'
-# on_event = ['VimEnter' , 'GUIEnter']
-on_event = ['BufEnter']
+repo = "junegunn/vim-peekaboo"
+on_event = [ "BufEnter",]
 
-
-[[plugins]]
+[plugins."easymotion/vim-easymotion"]
 level = 2
-repo = 'easymotion/vim-easymotion'
-# on_event = ['VimEnter' , 'GUIEnter']
-on_event = ['BufEnter']
+repo = "easymotion/vim-easymotion"
+on_event = [ "BufEnter",]
+hook_source = """let g:leader_key_map[","] = 'EasyMotion'"""
 
-
-
-[[plugins]]
+[plugins."junegunn/vim-after-object"]
 level = 2
-repo = 'junegunn/vim-after-object'
-hook_post_source = 'call after_object#enable("=",":","#"," ")'
-# on_event = ['VimEnter' , 'GUIEnter']
-on_event = ['BufEnter']
+repo = "junegunn/vim-after-object"
+hook_post_source = """call after_object#enable('=',':','#',' ')"""
+on_event = [ "BufEnter",]
 
-
-[[plugins]]
+[plugins."cespare/vim-toml"]
 level = 1
-repo = 'cespare/vim-toml'
-ft = 'toml'
-on_ft = 'toml'
+repo = "cespare/vim-toml"
+ft = "toml"
+on_ft = "toml"
 
-[[plugins]]
+[plugins."mg979/vim-visual-multi"]
 level = 2
-repo = 'mg979/vim-visual-multi'
-# on_event = ['VimEnter' , 'GUIEnter']
-on_event = ['BufEnter']
+repo = "mg979/vim-visual-multi"
+on_event = [ "BufEnter",]
 
-
-
-[[plugins]]
+[plugins."mbbill/undotree"]
 level = 2
-repo = 'mbbill/undotree'
-hook_add = '''nnoremap <leader>u :UndotreeToggle<cr>
-let g:leader_key_map.u = '撤销'
-'''
-on = ['UndotreeToggle']
-on_cmd = ['UndotreeToggle']
+repo = "mbbill/undotree"
+hook_add = """nnoremap <leader>u :UndotreeToggle<cr>
+let g:leader_key_map.u = '撤销'"""
+on = [ "UndotreeToggle",]
+on_cmd = [ "UndotreeToggle",]
 
-[[plugins]]
+[plugins."pechorin/any-jump.vim"]
 level = 2
-repo = 'pechorin/any-jump.vim'
-on = ['AnyJump','AnyJumpVisual','AnyJumpBack','AnyJumpLastResults']
-on_cmd = ['AnyJump','AnyJumpVisual','AnyJumpBack','AnyJumpLastResults']
-hook_add = 'source $OVIM_ROOT_PATH/plugins/any-jump.vim'
+repo = "pechorin/any-jump.vim"
+on = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
+on_cmd = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
+hook_add = "source $OVIM_ROOT_PATH/plugins/any-jump.vim"
 
-# [[plugins]]
-# repo = 'kevinhwang91/rnvimr'
-# if = '0 && has("nvim")'
-# on_cmd = 'RnvimrToggle'
 
-[[modules]]
+[plugins."scrooloose/nerdcommenter".on_map]
+n = "<Plug>NERDCommenter"
+
+[modules.autocomplete]
 level = 1
 name = "autocomplete"
 method = "deoplete"
 
-[[modules]]
+[modules.search]
 level = 1
 name = "search"
-method = ['leaderf','ctrlp','fzf']
-leader_prefix = 's'
+method = [ "leaderf", "ctrlp", "fzf",]
+leader_prefix = "s"

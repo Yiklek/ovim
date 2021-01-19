@@ -22,7 +22,7 @@ if !exists('g:leader_key_map')
 endif
 
 function! ovim#init() abort
-    let g:ovim_global_options = {'plugins':[]}
+    let g:ovim_global_options = {'plugins':{}}
     let g:ovim_global_options = s:options()
     if exists('g:ovim_global_options.modules')
             call s:modules(g:ovim_global_options.modules)
@@ -36,9 +36,23 @@ function! ovim#init() abort
 
 endfunction
 
+function s:recursive_update(source,update)
+    if empty(a:update) || type(a:update) != v:t_dict || type(a:source) != v:t_dict
+       return
+    endif
+    for [k,v] in items(a:update)
+        if !exists('a:source.'.k) || type(v) != v:t_dict
+            let a:source[k] = v
+        else
+            call s:recursive_update(a:source[k],v)
+        endif
+    endfor
+endfunction
 
 function! s:options() abort
     let l:options = ovim#utils#load_default()
+    " let l:custom_options = ovim#utils#load_custom()
+    " call s:recursive_update(l:options,l:custom_options)
     if exists('l:options.var')
         for [k,v] in items(l:options.var)
             let g:{k} = v
@@ -48,13 +62,14 @@ function! s:options() abort
 endfunction
 
 function! s:plugins(plugs) abort
-    for p in a:plugs
+    for p in values(a:plugs)
         call ovim#plugin#add(p.repo,p)
     endfor
 endfunction
 
 function! s:modules(mdls) abort
-    for m in a:mdls
+    echo a:mdls
+    for m in values(a:mdls)
         if get(g:ovim_global_options,'config_level',2) < get(m,'level',0)
             continue
         endif
