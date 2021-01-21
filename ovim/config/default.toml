@@ -1,4 +1,5 @@
-hook_before_setup_plugin = "set updatetime=500"
+hook_before_setup_plugin = """set updatetime=500
+let &t_ut=''"""
 hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
 make_json = 0
