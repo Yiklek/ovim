@@ -128,6 +128,7 @@ endif
 let &rtp=&rtp.','.g:dotvim.'/ovim,'.g:dotvimd
 
 call ovim#init()
+
 execute 'source' g:config_root.'/keymap.vim'
 
 
@@ -144,12 +145,16 @@ set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
 " set t_Co=256
- if (has("termguicolors"))
+if (has("termguicolors"))
   set termguicolors
- endif
+endif
+" vim 在iterm2下一半启动时间都在加载主题  nvim很快
 let g:oceanic_material_allow_underline = 1
-silent! colorscheme solarized
+" silent! colorscheme solarized
 silent! colorscheme gruvbox
+" if !has("gui_running")
+"     hi Normal guibg=NONE ctermbg=NONE
+" endif
 " silent! colorscheme oceanic_material
 " silent! colorscheme OceanicNext
 " hi CursorLine cterm=NONE
