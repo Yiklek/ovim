@@ -42,6 +42,10 @@ nmap <leader>w= 5<c-w>+
 nmap <leader>w- 5<c-w>-
 nmap <leader>w, 5<c-w><
 nmap <leader>w. 5<c-w>>
+nmap <leader>ww 5<c-w>+
+nmap <leader>ws 5<c-w>-
+nmap <leader>wa 5<c-w><
+nmap <leader>wd 5<c-w>>
 " 标签
 " 关闭当前标签
 nmap <leader>tq :tabc<CR>
@@ -89,8 +93,12 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       'K':['<c-w>K','上移窗口'],
                         \       '=':['5<c-w>+','高度增加'],
                         \       '-':['5<c-w>-','高度减小'],
-                        \       ',':['5<c-w><','宽度增加'],
-                        \       '.':['5<c-w>>','宽度减小'],
+                        \       ',':['5<c-w><','宽度减小'],
+                        \       '.':['5<c-w>>','宽度增加'],
+                        \       'w':['5<c-w>+','高度增加'],
+                        \       's':['5<c-w>-','高度减小'],
+                        \       'a':['5<c-w><','宽度减小'],
+                        \       'd':['5<c-w>>','宽度增加'],
                         \       'z':['Zoom()','最大化窗口']
                         \   },
                         \ 't':{'name':'+标签',
