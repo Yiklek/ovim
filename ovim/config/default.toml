@@ -287,6 +287,7 @@ hook_add = "nmap j <Plug>(accelerated_jk_gj)\nnmap k <Plug>(accelerated_jk_gk)\n
 level = 2
 repo = "junegunn/vim-peekaboo"
 on_event = [ "CursorHold",]
+hook_post_source = 'call peekaboo#on()'
 
 [plugins."easymotion/vim-easymotion"]
 level = 2
