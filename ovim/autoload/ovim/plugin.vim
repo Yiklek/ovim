@@ -47,7 +47,7 @@ function ovim#plugin#end(plugins)
         endif
         call plug#end()
         if type(a:plugins) == v:t_dict
-            call s:_plug_post_source(values(a:plugins))
+            autocmd VimEnter * call s:_plug_post_source(values(g:ovim_global_options.plugins))
         endif
     elseif g:ovim_plug_manager ==# 'dein'
         if exists("g:dein_loading") && g:dein_loading
