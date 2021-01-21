@@ -21,9 +21,13 @@ if !exists('g:leader_key_map')
     \}
 endif
 
-function! ovim#init() abort
+" give 'default','custom' or {path} to choose config file.
+" when 'default' given,the default config will be loaded.
+" when 'custom' given,config file at your $MYVIMRC's directory config/custom.[json|toml] will be loaded
+" when a {path} given,specified file will be loaded
+function! ovim#init(...) abort
     let g:ovim_global_options = {'plugins':{}}
-    let g:ovim_global_options = s:options()
+    let g:ovim_global_options = s:options(exists("a:1") ? a:1: 'default')
     if exists('g:ovim_global_options.modules')
             call s:modules(g:ovim_global_options.modules)
     endif
@@ -49,10 +53,14 @@ function s:recursive_update(source,update)
     endfor
 endfunction
 
-function! s:options() abort
-    let l:options = ovim#utils#load_default()
-    " let l:custom_options = ovim#utils#load_custom()
-    " call s:recursive_update(l:options,l:custom_options)
+function! s:options(config) abort
+    if a:config == 'default'
+        let l:options = ovim#utils#load_default()
+    elseif a:config == 'custom'
+        let l:options = ovim#utils#load_custom()
+    else
+        let l:options = ovim#utils#load_config(a:config)
+    endif
     if exists('l:options.var')
         for [k,v] in items(l:options.var)
             let g:{k} = v
@@ -68,7 +76,6 @@ function! s:plugins(plugs) abort
 endfunction
 
 function! s:modules(mdls) abort
-    echo a:mdls
     for m in values(a:mdls)
         if get(g:ovim_global_options,'config_level',2) < get(m,'level',0)
             continue

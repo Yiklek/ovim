@@ -1,4 +1,5 @@
-hook_source = ""
+hook_before_setup_plugin = "set updatetime=500"
+hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
 make_json = 0
 # level 0 basic: theme statusline tabline
@@ -117,9 +118,8 @@ hook_source = "source $OVIM_ROOT_PATH/plugins/vem-tabline.vim"
 [plugins."bling/vim-bufferline"]
 level = 0
 repo = "bling/vim-bufferline"
-on_event = [ "VimEnter", "GUIEnter",]
+on_event = [ "CursorHold"]
 hook_source = """  let g:bufferline_echo = 1
-set updatetime=500
 
 nnoremap <tab>1 :b1<cr>
 nnoremap <tab>2 :b2<cr>
@@ -149,7 +149,12 @@ on_event = [ "BufReadPost", "BufWritePost",]
 level = 1
 repo = "scrooloose/nerdcommenter"
 hook_add = "source $OVIM_ROOT_PATH/plugins/nerdcomment.vim"
-on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCommenterToggle", "<Plug>NERDCommenterMinimal", "<Plug>NERDCommenterInvert", "<Plug>NERDCommenterSexy", "<Plug>NERDCommenterYank", "<Plug>NERDCommenterToEOL", "<Plug>NERDCommenterAppend", "<Plug>NERDCommenterAltDelims", "<Plug>NERDCommenterAlignLeft", "<Plug>NERDCommenterAlignBoth", "<Plug>NERDCommenterUncomment",]
+on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCommenterToggle", 
+        "<Plug>NERDCommenterMinimal", "<Plug>NERDCommenterInvert", "<Plug>NERDCommenterSexy", 
+        "<Plug>NERDCommenterYank", "<Plug>NERDCommenterToEOL", "<Plug>NERDCommenterAppend", 
+        "<Plug>NERDCommenterAltDelims", "<Plug>NERDCommenterAlignLeft", 
+        "<Plug>NERDCommenterAlignBoth", "<Plug>NERDCommenterUncomment",]
+on_map = { n = "<Plug>NERDCommenter" }
 
 [plugins."majutsushi/tagbar"]
 level = 1
@@ -229,8 +234,10 @@ hook_post_source = "source $OVIM_ROOT_PATH/plugins/vim-which-key.vim"
 level = 1
 repo = "voldikss/vim-floaterm"
 hook_add = "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
-on = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast", "FloatermKill",]
-on_cmd = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast", "FloatermKill",]
+on = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", 
+        "FloatermFirst", "FloatermLast", "FloatermKill",]
+on_cmd = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", 
+        "FloatermFirst", "FloatermLast", "FloatermKill",]
 
 [plugins."liuchengxu/vista.vim"]
 level = 1
@@ -279,19 +286,19 @@ hook_add = "nmap j <Plug>(accelerated_jk_gj)\nnmap k <Plug>(accelerated_jk_gk)\n
 [plugins."junegunn/vim-peekaboo"]
 level = 2
 repo = "junegunn/vim-peekaboo"
-on_event = [ "BufEnter",]
+on_event = [ "CursorHold",]
 
 [plugins."easymotion/vim-easymotion"]
 level = 2
 repo = "easymotion/vim-easymotion"
-on_event = [ "BufEnter",]
+on_event = [ "CursorHold",]
 hook_source = """let g:leader_key_map[","] = 'EasyMotion'"""
 
 [plugins."junegunn/vim-after-object"]
 level = 2
 repo = "junegunn/vim-after-object"
 hook_post_source = """call after_object#enable('=',':','#',' ')"""
-on_event = [ "BufEnter",]
+on_event = [ "CursorHold",]
 
 [plugins."cespare/vim-toml"]
 level = 1
@@ -302,7 +309,7 @@ on_ft = "toml"
 [plugins."mg979/vim-visual-multi"]
 level = 2
 repo = "mg979/vim-visual-multi"
-on_event = [ "BufEnter",]
+on_event = [ "CursorHold",]
 
 [plugins."mbbill/undotree"]
 level = 2
@@ -320,8 +327,7 @@ on_cmd = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
 hook_add = "source $OVIM_ROOT_PATH/plugins/any-jump.vim"
 
 
-[plugins."scrooloose/nerdcommenter".on_map]
-n = "<Plug>NERDCommenter"
+
 
 [modules.autocomplete]
 level = 1

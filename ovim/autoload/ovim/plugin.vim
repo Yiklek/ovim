@@ -3,6 +3,9 @@
 
 function ovim#plugin#begin(arg)
     let g:ovim_plug_manager = get(g:ovim_global_options,'ovim_plug_manager','dein')
+    if exists('g:ovim_global_options.hook_before_setup_plugin')
+        exe g:ovim_global_options.hook_before_setup_plugin
+    endif 
     if g:ovim_plug_manager ==# 'plug'
     if !filereadable(g:vim_path.'/autoload/plug.vim')
             call ovim#utils#log('downloading plug.vim...')
@@ -39,12 +42,12 @@ endfun
 
 function ovim#plugin#end(plugins)
     if g:ovim_plug_manager ==# 'plug'
-        if type(a:plugins) == v:t_list
-            call s:_plug_source(a:plugins)
+        if type(a:plugins) == v:t_dict
+            call s:_plug_source(values(a:plugins))
         endif
         call plug#end()
-        if type(a:plugins) == v:t_list
-            call s:_plug_post_source(a:plugins)
+        if type(a:plugins) == v:t_dict
+            call s:_plug_post_source(values(a:plugins))
         endif
     elseif g:ovim_plug_manager ==# 'dein'
         if exists("g:dein_loading") && g:dein_loading
@@ -55,6 +58,9 @@ function ovim#plugin#end(plugins)
         call dein#call_hook('source')
         call dein#call_hook('post_source')
     endif
+    if exists('g:ovim_global_options.hook_after_setup_plugin')
+        exe g:ovim_global_options.hook_after_setup_plugin
+    endif 
 endfun
 
 
