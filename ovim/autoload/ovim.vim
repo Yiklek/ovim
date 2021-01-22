@@ -15,7 +15,7 @@ endif
 
 
 if !exists('g:leader_key_map')
-    let g:leader_key_map =  {'x':{'name':'+编辑'},'f':{'name':'+文件/查找'},
+    let g:leader_key_map =  {'x':{'name':'+编辑'},'f':{'name':'+文件'},
     \ 'e':{'name':'+Extentions'},'j':{"name":"+Code Jump"},
     \ 'c':{'name':'+注释'},
     \}
@@ -37,21 +37,9 @@ function! ovim#init(...) abort
         endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
-
+    autocmd VimEnter * call ovim#utils#source(g:ovim_root_path.'/keymaps/global.vim')
 endfunction
 
-function s:recursive_update(source,update)
-    if empty(a:update) || type(a:update) != v:t_dict || type(a:source) != v:t_dict
-       return
-    endif
-    for [k,v] in items(a:update)
-        if !exists('a:source.'.k) || type(v) != v:t_dict
-            let a:source[k] = v
-        else
-            call s:recursive_update(a:source[k],v)
-        endif
-    endfor
-endfunction
 
 function! s:options(config) abort
     if a:config == 'default'

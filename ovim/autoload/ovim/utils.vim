@@ -66,7 +66,7 @@ function ovim#utils#load_custom() abort
 endfun
 
 function ovim#utils#source(filename) abort
-	source a:filename
+	exe 'source '.a:filename
 endfun
 
 function s:toml2json(toml)
@@ -79,3 +79,20 @@ function s:toml2json(toml)
 	endif
 	return system(l:cmd,a:toml)
 endfun
+
+
+function ovim#utils#recursive_update(source,update)
+    if empty(a:update) || type(a:update) != v:t_dict || type(a:source) != v:t_dict
+       return
+    endif
+	for [k,v] in items(a:update)
+		if !exists('a:source.'.k)
+			let a:source[k] = {}
+		endif
+        if type(v) != v:t_dict
+            let a:source[k] = v
+        else
+            call ovim#utils#recursive_update(a:source[k],v)
+        endif
+    endfor
+endfunction
