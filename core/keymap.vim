@@ -13,7 +13,7 @@ noremap <c-j> <down>
 noremap <c-k> <up>
 noremap <c-l> <right>
 nnoremap <esc><esc> :silent! nohlsearch<cr>
-nnoremap <leader>fve :edit $MYVIMRC<cr>
+nnoremap <leader>fve<space> :edit $MYVIMRC<cr>
 nnoremap <leader>fvs :source $MYVIMRC<cr>
 "粘贴模式
 set pastetoggle=<F4>
@@ -67,8 +67,8 @@ nmap <leader>bd :bd<cr>
 nmap <leader>bp :bp<cr>
 nmap <leader>bn :bn<cr>
 
-noremap [b  :bp<cr>
-noremap ]b  :bn<cr>
+noremap [b  :bp!<cr>
+noremap ]b  :bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
@@ -117,7 +117,7 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       'p':[':bp','上一个buffer'],
                         \       'n':[':bn','下一个buffer']
                         \   },
-                        \ 'f':{'v':{'name':'+vim相关','e':[':edit $MYVIMRC','编辑配置文件'],'s':[':source $MYVIMRC','重新加载配置文件']}},
+                        \ 'f':{'v':{'name':'+vim相关','e':{'name':'编辑配置',' ':[':tabe $MYVIMRC','MYVIMRC']},'s':[':source $MYVIMRC','重新加载配置文件']}},
                     \}
 if exists('g:leader_key_map')
     call extend(g:leader_key_map,s:leader_key_map)
