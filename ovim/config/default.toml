@@ -377,6 +377,12 @@ hook_source = """
       \\ ]
 """
 
+[plugins."iamcco/markdown-preview.nvim"]
+level = 2
+repo = "iamcco/markdown-preview.nvim"
+on_ft = ["markdown","pandoc.markdown","rmd"]
+#build = "sh -c 'cd app && yarn install'"
+
 [modules.autocomplete]
 level = 1
 name = "autocomplete"

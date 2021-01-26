@@ -1,6 +1,6 @@
 
 
-let s:self = ovim#modules#new() 
+let s:self = ovim#modules#new()
 
 function ovim#modules#autocomplete#load(...) abort
     let s:self.name = 'autocomplete'
@@ -17,13 +17,13 @@ function ovim#modules#autocomplete#load(...) abort
 endfun
 
 function s:self.plugins() abort
-    
+
     let s:self.plugs = {}
     if s:self.method ==# 'coc'
         let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim", "rev": "release","branch": "release", "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim"}
     elseif s:self.method ==# 'deoplete'
         let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
-                                \    "build":"bash install.sh","rev":"next","branch": "next",
+                                \    "build":"sh -c 'bash install.sh'","rev":"next","branch": "next",
                                 \    "on_event":["InsertEnter"],
                                 \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
                                 \    "hook_post_update":"bash install.sh"
@@ -41,7 +41,7 @@ function s:self.plugins() abort
     \        "repo": "Valloric/YouCompleteMe",
     \        "on_event":['InsertEnter']
     \        "hook_source":"source $OVIM_ROOT_PATH/plugins/complete-youcompleteme.vim"
-    \        
+    \
     \    })
     endif
     return s:self.plugs
@@ -55,9 +55,9 @@ function s:self.config() abort
     inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
     inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
 
-    inoremap <expr> <CR> pumvisible() ?  "\<C-y>" : "\<CR>" 
-    
-    if s:self.method != 'ycm'    
+    inoremap <expr> <CR> pumvisible() ?  "\<C-y>" : "\<CR>"
+
+    if s:self.method != 'ycm'
         inoremap <silent><expr> <leader><TAB>
                         \ pumvisible() ? "\<C-n>" :
                         \ <SID>check_back_space() ? "\<TAB>" :
@@ -88,7 +88,7 @@ function s:self.config() abort
                                 \ }
         let g:coc_global_extensions = ['coc-marketplace','coc-json','coc-python']
     endif
-    
+
     " 不懂为什么这里还要设置路径
     " set pythonthreehome=~/miniconda3/envs/vim/
     "set pyxversion=3
