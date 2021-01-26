@@ -96,3 +96,17 @@ function ovim#utils#recursive_update(source,update)
         endif
     endfor
 endfunction
+
+function ovim#utils#dein_sourced()
+	let l:ps = dein#get()
+	let l:count = 0
+	let l:sourced = []
+	for [k,v] in items(l:ps)
+		if v.sourced
+			let l:count += 1
+			call add(l:sourced,v.name)
+		endif
+	endfor
+	echo l:count len(l:ps)
+	echo l:sourced
+endfunction

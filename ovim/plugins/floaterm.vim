@@ -4,6 +4,8 @@ hi Floaterm guibg=black ctermbg=darkgreen ctermfg=darkgreen
 hi FloatermBorder guibg=darkgreen ctermbg=darkgreen guifg=darkgreen
 hi FloatermNC guibg=gray
 
+let g:floaterm_complete_options = {'shortcut': 'floaterm', 'priority': 5,'filter_length':[0,100]}
+
 nnoremap <leader>et<space> :FloatermToggle  --wintype=float --position=center --width=0.8 --height=0.8<CR>
 nnoremap <leader>et[ :FloatermPrev<CR>
 nnoremap <leader>et] :FloatermNext<CR>

@@ -5,7 +5,7 @@ function ovim#plugin#begin(arg)
     let g:ovim_plug_manager = get(g:ovim_global_options,'ovim_plug_manager','dein')
     if exists('g:ovim_global_options.hook_before_setup_plugin')
         exe g:ovim_global_options.hook_before_setup_plugin
-    endif 
+    endif
     if g:ovim_plug_manager ==# 'plug'
     if !filereadable(g:vim_path.'/autoload/plug.vim')
             call ovim#utils#log('downloading plug.vim...')
@@ -25,13 +25,13 @@ function ovim#plugin#begin(arg)
             if executable('git')
                 call ovim#utils#log('downloading dein.vim...')
                 call system('git clone https://github.com/Shougo/dein.vim.git '.g:vim_path.'/dein.vim')
-            else 
+            else
                 call ovim#utils#log('download dein.vim manually')
             endif
         endif
         if dein#load_state(a:arg.'/dein')
             call dein#begin(a:arg.'/dein')
-            call dein#add(g:vim_path.'/dein.vim')
+            call dein#add(g:vim_path.'/dein.vim',{ 'on_func':'dein#' })
             let g:dein_loading = 1
             return 1
         else
@@ -60,7 +60,7 @@ function ovim#plugin#end(plugins)
     endif
     if exists('g:ovim_global_options.hook_after_setup_plugin')
         exe g:ovim_global_options.hook_after_setup_plugin
-    endif 
+    endif
 endfun
 
 
@@ -113,7 +113,7 @@ function s:_plug_will_load(plugin)
         return a:plugin._will_load
     endif
     let l:level =  get(g:ovim_global_options,'config_level',2) < get(a:plugin,'level',0) ? 0 : 1
-    let l:if = !(exists('a:plugin.if') 
+    let l:if = !(exists('a:plugin.if')
         \ && (type(a:plugin['if']) == v:t_number && a:plugin.if == 0
             \ || type(a:plugin['if']) == v:t_string && !eval(a:plugin['if'])))
     let a:plugin._will_load = l:level && l:if
