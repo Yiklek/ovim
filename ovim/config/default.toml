@@ -7,7 +7,7 @@ make_json = 0
 # level 1 normal: complete search file-explore git comment floaterm e.g.
 # level 2 enhanced: motion multi-line align jump
 config_level = 2
-ovim_plug_manager = "dein"
+ovim_plug_manager = "plug"
 
 [var]
 python3_host_prog = "~/miniconda3/envs/vim/bin/python"
@@ -350,32 +350,7 @@ level = 2
 repo = "plasticboy/vim-markdown"
 on_ft = "markdown"
 for = "markdown"
-hook_source = """
-    let g:vim_markdown_folding_disabled = 1
-    let g:vim_markdown_no_default_key_mappings = 1
-    let g:vim_markdown_folding_level = 1
-    let g:vim_markdown_folding_style_pythonic = 1
-    let g:vim_markdown_frontmatter = 1
-    let g:vim_markdown_auto_insert_bullets = 1
-    let g:vim_markdown_new_list_item_indent = 0
-    let g:vim_markdown_conceal_code_blocks = 0
-    let g:vim_markdown_conceal = 0
-    let g:vim_markdown_strikethrough = 1
-    let g:vim_markdown_edit_url_in = 'vsplit'
-    let g:vim_markdown_fenced_languages = [
-      \\ 'c++=cpp',
-      \\ 'viml=vim',
-      \\ 'bash=sh',
-      \\ 'ini=dosini',
-      \\ 'js=javascript',
-      \\ 'json=javascript',
-      \\ 'jsx=javascriptreact',
-      \\ 'tsx=typescriptreact',
-      \\ 'docker=Dockerfile',
-      \\ 'makefile=make',
-      \\ 'py=python'
-      \\ ]
-"""
+hook_source = "source $OVIM_ROOT_PATH/plugins/markdown.vim"
 
 [plugins."iamcco/markdown-preview.nvim"]
 level = 2
