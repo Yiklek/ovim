@@ -4,7 +4,7 @@
 "
 "
 
-let s:self = ovim#modules#new() 
+let s:self = ovim#modules#new()
 
 function ovim#modules#search#load(...) abort
     let s:self.name = 'search'
@@ -19,7 +19,7 @@ function ovim#modules#search#load(...) abort
 endfun
 
 function s:self.plugins() abort
-    
+
     let s:self.plugs = {}
     for m in self.method
 
@@ -81,7 +81,7 @@ function s:method_plugins_ctrlp() abort
     return {'ctrlpvim/ctrlp.vim':{
 \    "repo" : "ctrlpvim/ctrlp.vim",
 \    "hook_add" : "source $OVIM_ROOT_PATH/plugins/ctrlp.vim",
-\    "on" : s:ctrlp_cmds, 
+\    "on" : s:ctrlp_cmds,
 \    "on_cmd" : s:ctrlp_cmds,
 \    },
 \    "tacahiroy/ctrlp-funky":{"repo" : "tacahiroy/ctrlp-funky",
@@ -127,9 +127,9 @@ function s:self.config() abort
         call s:keymap_list('f',s:fzf_cmds)
     endif
     if index(self.method,'leaderf') >= 0
-        let g:space_key_map.lrg = [':Leaderf rg','LeaderfRg']
-        nnoremap fl :LeaderfFile<CR>
-        nnoremap <space>fl :LeaderfFile<CR>
+        let g:space_key_map.flf = [':Leaderf rg','LeaderfRg']
+        nnoremap flf :LeaderfFile<CR>
+        nnoremap <space>flf :LeaderfFile<CR>
 
         let g:space_key_map.flr = [':Leaderf rg','LeaderfRg']
         nnoremap flr :Leaderf rg<CR>

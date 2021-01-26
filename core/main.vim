@@ -258,12 +258,12 @@ endfunction
 nmap <F9> :call DisplayHelp()<cr>
 try
 let g:space_key_map['<F9>'] = ['<F6>','Show Help(todo)']
-catch 
+catch
 endtry
 " }}}
 
-" 剩余的窗口都不是文件编辑窗口时，自动退出vim
-autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+" 剩余的窗口都不是文件编辑窗口时，自动退出当前tab
+"autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | q! | endif
 
 
 " 定位到退出位置并移动到屏幕中央

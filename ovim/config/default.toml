@@ -1,4 +1,4 @@
-hook_before_setup_plugin = """set updatetime=500
+hook_before_setup_plugin = """set updatetime=1000
 let &t_ut=''"""
 hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
@@ -151,12 +151,13 @@ on_event = [ "BufReadPost", "BufWritePost",]
 level = 1
 repo = "scrooloose/nerdcommenter"
 hook_add = "source $OVIM_ROOT_PATH/plugins/nerdcomment.vim"
-on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCommenterToggle", 
-        "<Plug>NERDCommenterMinimal", "<Plug>NERDCommenterInvert", "<Plug>NERDCommenterSexy", 
-        "<Plug>NERDCommenterYank", "<Plug>NERDCommenterToEOL", "<Plug>NERDCommenterAppend", 
-        "<Plug>NERDCommenterAltDelims", "<Plug>NERDCommenterAlignLeft", 
+on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCommenterToggle",
+        "<Plug>NERDCommenterMinimal", "<Plug>NERDCommenterInvert", "<Plug>NERDCommenterSexy",
+        "<Plug>NERDCommenterYank", "<Plug>NERDCommenterToEOL", "<Plug>NERDCommenterAppend",
+        "<Plug>NERDCommenterAltDelims", "<Plug>NERDCommenterAlignLeft",
         "<Plug>NERDCommenterAlignBoth", "<Plug>NERDCommenterUncomment",]
 on_map = { n = "<Plug>NERDCommenter" }
+on_func = "NERDComment"
 
 [plugins."majutsushi/tagbar"]
 level = 1
@@ -236,9 +237,9 @@ hook_post_source = "source $OVIM_ROOT_PATH/plugins/vim-which-key.vim"
 level = 1
 repo = "voldikss/vim-floaterm"
 hook_add = "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
-on = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", 
+on = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew",
         "FloatermFirst", "FloatermLast", "FloatermKill",]
-on_cmd = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", 
+on_cmd = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew",
         "FloatermFirst", "FloatermLast", "FloatermKill",]
 
 [plugins."liuchengxu/vista.vim"]
@@ -309,6 +310,12 @@ repo = "cespare/vim-toml"
 for = "toml"
 on_ft = "toml"
 
+[plugins."elzr/vim-json"]
+level = 1
+repo = "elzr/vim-json"
+for = "json"
+on_ft = "json"
+
 [plugins."mg979/vim-visual-multi"]
 level = 2
 repo = "mg979/vim-visual-multi"
@@ -338,6 +345,37 @@ let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = has('nvim') ? 'floating' : 'popup'
 highlight link EchoDocFloat Pmenu"""
 
+[plugins."plasticboy/vim-markdown"]
+level = 2
+repo = "plasticboy/vim-markdown"
+on_ft = "markdown"
+for = "markdown"
+hook_source = """
+    let g:vim_markdown_folding_disabled = 1
+    let g:vim_markdown_no_default_key_mappings = 1
+    let g:vim_markdown_folding_level = 1
+    let g:vim_markdown_folding_style_pythonic = 1
+    let g:vim_markdown_frontmatter = 1
+    let g:vim_markdown_auto_insert_bullets = 1
+    let g:vim_markdown_new_list_item_indent = 0
+    let g:vim_markdown_conceal_code_blocks = 0
+    let g:vim_markdown_conceal = 0
+    let g:vim_markdown_strikethrough = 1
+    let g:vim_markdown_edit_url_in = 'vsplit'
+    let g:vim_markdown_fenced_languages = [
+      \\ 'c++=cpp',
+      \\ 'viml=vim',
+      \\ 'bash=sh',
+      \\ 'ini=dosini',
+      \\ 'js=javascript',
+      \\ 'json=javascript',
+      \\ 'jsx=javascriptreact',
+      \\ 'tsx=typescriptreact',
+      \\ 'docker=Dockerfile',
+      \\ 'makefile=make',
+      \\ 'py=python'
+      \\ ]
+"""
 
 [modules.autocomplete]
 level = 1
