@@ -2,7 +2,7 @@
 " defx{{{
 
 nmap <silent> = :Defx<CR>
-call extend(g:space_key_map,{'=':[':Defx','defx']})
+call ovim#utils#recursive_update(g:space_key_map,{'=':[':Defx','defx']})
 call defx#custom#option('_', {
       \ 'winwidth': 40,
       \ 'split': 'vertical',
@@ -14,7 +14,9 @@ call defx#custom#option('_', {
       \ 'columns':'git:mark:indent:icons:filename:type:size:time'
       \ })
 " Avoid the white space highting issue
-autocmd FileType defx match ExtraWhitespace /^^/
+if !has('nvim')
+      autocmd FileType defx match ExtraWhitespace /^^/
+endif
 " Keymap in defx
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
@@ -40,10 +42,11 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> e defx#do_action('new_file')
     nnoremap <silent><buffer><expr> ed defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> E defx#do_action('new_multiple_files')
-    nnoremap <silent><buffer><expr> C defx#do_action('toggle_columns', 'git:mark:indent:icons:filename:type:size:time')
+    nnoremap <silent><buffer><expr> C defx#do_action('toggle_columns', 'git:mark:indent:filename:type:size:time')
     nnoremap <silent><buffer><expr> S defx#do_action('toggle_sort', 'time')
     nnoremap <silent><buffer><expr> dD defx#do_action('remove')
     nnoremap <silent><buffer><expr> r defx#do_action('rename')
+    nnoremap <silent><buffer><expr> cw defx#do_action('rename')
     nnoremap <silent><buffer><expr> ! defx#do_action('execute_command')
     nnoremap <silent><buffer><expr> x defx#do_action('execute_system')
     nnoremap <silent><buffer><expr> yp defx#do_action('yank_path')

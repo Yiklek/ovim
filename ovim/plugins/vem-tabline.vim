@@ -1,4 +1,4 @@
-let g:vem_tabline_show_number = "index"
+let g:vem_tabline_show_number = "buffnr"
 let g:vem_tabline_multiwindow_mode = 1
 
 nnoremap <leader>1 :1tabnext<CR>

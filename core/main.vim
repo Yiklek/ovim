@@ -66,7 +66,6 @@ let g:_config_python_home=''
 let g:dotvimd=expand('~/.vim.d')
 let g:config_root=fnamemodify(expand('<sfile>'), ':h')
 if has('win32')    "  windows
-    set clipboard+=unnamed
     " 设置 alt 键不映射到菜单栏
     set winaltkeys=no
     set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -122,10 +121,14 @@ if has('gui_running')
     " non-gvim stuff
 endif
 " }}}
+" if has('clipboard')
+"  set clipboard+=unnamed
+" endif
 " 插件无关map
 let &rtp=&rtp.','.g:dotvim.'/ovim,'.g:dotvimd
 
 call ovim#init()
+
 execute 'source' g:config_root.'/keymap.vim'
 
 
@@ -142,12 +145,16 @@ set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
 " set t_Co=256
- if (has("termguicolors"))
+if (has("termguicolors"))
   set termguicolors
- endif
+endif
+" vim 在iterm2下一半启动时间都在加载主题  nvim很快
 let g:oceanic_material_allow_underline = 1
-silent! colorscheme solarized
+" silent! colorscheme solarized
 silent! colorscheme gruvbox
+" if !has("gui_running")
+"     hi Normal guibg=NONE ctermbg=NONE
+" endif
 " silent! colorscheme oceanic_material
 " silent! colorscheme OceanicNext
 " hi CursorLine cterm=NONE
@@ -251,12 +258,12 @@ endfunction
 nmap <F9> :call DisplayHelp()<cr>
 try
 let g:space_key_map['<F9>'] = ['<F6>','Show Help(todo)']
-catch 
+catch
 endtry
 " }}}
 
-" 剩余的窗口都不是文件编辑窗口时，自动退出vim
-autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+" 剩余的窗口都不是文件编辑窗口时，自动退出当前tab
+"autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | q! | endif
 
 
 " 定位到退出位置并移动到屏幕中央

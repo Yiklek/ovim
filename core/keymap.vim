@@ -13,7 +13,7 @@ noremap <c-j> <down>
 noremap <c-k> <up>
 noremap <c-l> <right>
 nnoremap <esc><esc> :silent! nohlsearch<cr>
-nnoremap <leader>fve :edit $MYVIMRC<cr>
+nnoremap <leader>fve<space> :edit $MYVIMRC<cr>
 nnoremap <leader>fvs :source $MYVIMRC<cr>
 "粘贴模式
 set pastetoggle=<F4>
@@ -42,6 +42,10 @@ nmap <leader>w= 5<c-w>+
 nmap <leader>w- 5<c-w>-
 nmap <leader>w, 5<c-w><
 nmap <leader>w. 5<c-w>>
+nmap <leader>ww 5<c-w>+
+nmap <leader>ws 5<c-w>-
+nmap <leader>wa 5<c-w><
+nmap <leader>wd 5<c-w>>
 " 标签
 " 关闭当前标签
 nmap <leader>tq :tabc<CR>
@@ -63,8 +67,19 @@ nmap <leader>bd :bd<cr>
 nmap <leader>bp :bp<cr>
 nmap <leader>bn :bn<cr>
 
-noremap [b  :bp<cr>
-noremap ]b  :bn<cr>
+nnoremap <tab>1 :b!1<cr>
+nnoremap <tab>2 :b!2<cr>
+nnoremap <tab>3 :b!3<cr>
+nnoremap <tab>4 :b!4<cr>
+nnoremap <tab>5 :b!5<cr>
+nnoremap <tab>6 :b!6<cr>
+nnoremap <tab>7 :b!7<cr>
+nnoremap <tab>8 :b!8<cr>
+nnoremap <tab>9 :b!9<cr>
+nnoremap <tab>0 :b!10<cr>
+
+noremap [b  :bp!<cr>
+noremap ]b  :bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
@@ -89,8 +104,12 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       'K':['<c-w>K','上移窗口'],
                         \       '=':['5<c-w>+','高度增加'],
                         \       '-':['5<c-w>-','高度减小'],
-                        \       ',':['5<c-w><','宽度增加'],
-                        \       '.':['5<c-w>>','宽度减小'],
+                        \       ',':['5<c-w><','宽度减小'],
+                        \       '.':['5<c-w>>','宽度增加'],
+                        \       'w':['5<c-w>+','高度增加'],
+                        \       's':['5<c-w>-','高度减小'],
+                        \       'a':['5<c-w><','宽度减小'],
+                        \       'd':['5<c-w>>','宽度增加'],
                         \       'z':['Zoom()','最大化窗口']
                         \   },
                         \ 't':{'name':'+标签',
@@ -109,7 +128,7 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       'p':[':bp','上一个buffer'],
                         \       'n':[':bn','下一个buffer']
                         \   },
-                        \ 'f':{'v':{'name':'+vim相关','e':[':edit $MYVIMRC','编辑配置文件'],'s':[':source $MYVIMRC','重新加载配置文件']}},
+                        \ 'f':{'v':{'name':'+vim相关','e':{'name':'编辑配置',' ':[':tabe $MYVIMRC','MYVIMRC']},'s':[':source $MYVIMRC','重新加载配置文件']}},
                     \}
 if exists('g:leader_key_map')
     call extend(g:leader_key_map,s:leader_key_map)

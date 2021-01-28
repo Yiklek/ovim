@@ -1,8 +1,10 @@
 " Set floaterm window's background to black
-hi Floaterm guibg=black ctermbg=darkgreen ctermfg=darkgreen 
+hi Floaterm guibg=black ctermbg=darkgreen ctermfg=darkgreen
 " Set floating window border line color to cyan, and background to orange
-hi FloatermBorder guibg=darkgreen ctermbg=darkgreen guifg=darkgreen 
+hi FloatermBorder guibg=darkgreen ctermbg=darkgreen guifg=darkgreen
 hi FloatermNC guibg=gray
+
+let g:floaterm_complete_options = {'shortcut': 'floaterm', 'priority': 5,'filter_length':[0,100]}
 
 nnoremap <leader>et<space> :FloatermToggle  --wintype=float --position=center --width=0.8 --height=0.8<CR>
 nnoremap <leader>et[ :FloatermPrev<CR>
@@ -26,8 +28,8 @@ tnoremap <esc><tab>k  <c-\><c-n>:FloatermKill<CR>
 vnoremap <leader>ets :FloatermSend<CR>
 
 
-call extend(g:leader_key_map.e,{'t':{'name':'+Terminal',
-                                    \    ' ':[':FloatermToggle'],
+call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
+                                    \    ' ':[':FloatermToggle','Floaterm Toggle'],
                                     \    '[':[':FloatermPrev','Previous Terminal'],
                                     \    ']':[':FloatermNext','Next Terminal'],
                                     \    'n':[':FloatermNew --wintype=float --position=center --width=0.8 --height=0.8','New Terminal'],

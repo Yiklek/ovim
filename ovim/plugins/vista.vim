@@ -5,7 +5,7 @@ if !exists('g:leader_key_map.x.s')
     let g:leader_key_map.x.s = {}
 endif
 
-call extend(g:leader_key_map.x.s,{'name':'+Structure',
+call ovim#utils#recursive_update(g:leader_key_map.x.s,{'name':'+Structure',
                                     \ ' ':[':Vista!!','Vista'],
                                     \ 'a':[':Vista ale','ale'],
                                     \ 't':[':Vista ctags','ctags'],

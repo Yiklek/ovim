@@ -1,16 +1,16 @@
-nmap <Leader>cc <Plug>NERDCommenterComment
-nmap <Leader>cn <Plug>NERDCommenterNested
-nmap <Leader>c<space> <Plug>NERDCommenterToggle
-nmap <Leader>cm <Plug>NERDCommenterMinimal
-nmap <Leader>ci <Plug>NERDCommenterInvert
-nmap <Leader>cs <Plug>NERDCommenterSexy
-nmap <Leader>cy <Plug>NERDCommenterYank
-nmap <Leader>c$ <Plug>NERDCommenterToEOL
-nmap <Leader>cA <Plug>NERDCommenterAppend
-nmap <Leader>ca <Plug>NERDCommenterAltDelims
-nmap <Leader>cl <Plug>NERDCommenterAlignLeft
-nmap <Leader>cb <Plug>NERDCommenterAlignBoth
-nmap <Leader>cu <Plug>NERDCommenterUncomment
+map <Leader>cc <Plug>NERDCommenterComment
+map <Leader>cn <Plug>NERDCommenterNested
+map <Leader>c<space> <Plug>NERDCommenterToggle
+map <Leader>cm <Plug>NERDCommenterMinimal
+map <Leader>ci <Plug>NERDCommenterInvert
+map <Leader>cs <Plug>NERDCommenterSexy
+map <Leader>cy <Plug>NERDCommenterYank
+map <Leader>c$ <Plug>NERDCommenterToEOL
+map <Leader>cA <Plug>NERDCommenterAppend
+map <Leader>ca <Plug>NERDCommenterAltDelims
+map <Leader>cl <Plug>NERDCommenterAlignLeft
+map <Leader>cb <Plug>NERDCommenterAlignBoth
+map <Leader>cu <Plug>NERDCommenterUncomment
 let s:comment_map = {
                     \    'c':['<Plug>NERDCommenterComment','Comment'],
                     \    'n':['<Plug>NERDCommenterNested','Nested'],
@@ -26,4 +26,4 @@ let s:comment_map = {
                     \    'b':['<Plug>NERDCommenterAlignBoth','AlignBoth'],
                     \    'u':['<Plug>NERDCommenterUncomment','Uncomment'],
                     \}
-call extend(g:leader_key_map.c,s:comment_map)
+call ovim#utils#recursive_update(g:leader_key_map.c,s:comment_map)
