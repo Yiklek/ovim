@@ -1,7 +1,7 @@
-let g:ovim_keymap_order = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
-					\ 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
+let g:ovim_keymap_order = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+					\ 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 					\ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-					\ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 
+					\ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
 					\ 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 					\ '!', '@', '#', '$', '%', '&', '&', '*', '(',')',]
 let s:ovim_config_suffix = ['json','toml']
@@ -19,6 +19,13 @@ function ovim#utils#log(msg) abort
     let log = '[ovim] [' . time . '] ' . a:msg
     echom log
 endfun
+function ovim#utils#warning(msg) abort
+    let time = strftime('%H:%M:%S')
+    let log = '[ovim] [' . time . '] ' . a:msg
+	echohl WarningMsg
+    echom log
+	echohl None
+endfun
 
 " 暂时使用json  后续支持toml yaml
 function ovim#utils#load_config(filename) abort
@@ -27,7 +34,7 @@ function ovim#utils#load_config(filename) abort
 	let l:config_str = has('nvim') ? readfile(l:filename) : join(readfile(l:filename),"\n")
 	if l:filename =~# '\.json$'
 		" Parse JSON with built-in json_decode
-		return json_decode(l:config_str) 
+		return json_decode(l:config_str)
 	" elseif l:filename =~# '\.ya\?ml$'
 	" 	" Parse YAML with common command-line utilities
 	" 	return s:load_yaml(l:filename)
@@ -35,7 +42,7 @@ function ovim#utils#load_config(filename) abort
 		return json_decode(s:toml2json(l:config_str))
 	endif
 	call ovim#utils#log('Unknown config file format ' . l:filename)
-	return '' 
+	return ''
 endfun
 
 function ovim#utils#load_default() abort
@@ -48,7 +55,7 @@ function ovim#utils#load_default() abort
 			return r
 		endif
 	endfor
-	throw 'OvimError: default config not found.'
+	throw 'OvimError:0001: default config not found.'
 endfun
 
 function ovim#utils#load_custom() abort
@@ -109,4 +116,14 @@ function ovim#utils#dein_sourced()
 	endfor
 	echo l:count len(l:ps)
 	echo l:sourced
+endfunction
+
+function ovim#utils#copy_config()
+	if !filewritable(g:vim_path.'/config/custom.toml')
+		if !isdirectory(g:vim_path.'/config')
+			silent! call mkdir(g:vim_path.'/config', 'p')
+		endif
+		let l:config_str = readfile(g:ovim_root_path.'/config/default.toml')
+        call writefile(l:config_str,g:vim_path.'/config/custom.toml')
+	endif
 endfunction

@@ -1,4 +1,5 @@
 let g:dashboard_default_executive ="fzf"
+let g:dashboard_session_directory = g:ovim_cacha_path.'/session'
 let g:dashboard_fzf_window = 0
 let g:dashboard_custom_shortcut = {}
 let g:dashboard_custom_shortcut['last_session'] = '--->'

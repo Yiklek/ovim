@@ -49,7 +49,7 @@ let g:LanguageClient_serverCommands = s:lsp_servers
 "nnoremap <space>lu :call *LanguageClient#textDocument_documentHighlight()<CR>
 "nnoremap <space>lm :call LanguageClient_contextMenu()<CR>
 "nnoremap <space>pc :pc<CR>
-autocmd InsertEnter *  call s:start_server()
+autocmd InsertEnter,CursorHold *  call s:start_server()
 
 function s:start_server()
       if !LanguageClient#isServerRunning()

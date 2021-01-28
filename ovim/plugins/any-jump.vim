@@ -15,8 +15,7 @@ let s:leader_key_map = {' ':[':AnyJump','AnyJump'],
                         \ 'b':[':AnyJump','AnyJump'],
                         \ 'l':[':AnyJump','AnyJump'],
                         \ }
-
-call extend(g:leader_key_map.j,s:leader_key_map)
+call ovim#utils#recursive_update(g:leader_key_map.j,s:leader_key_map)
 
 
 " Show line numbers in search rusults

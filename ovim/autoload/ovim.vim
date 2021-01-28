@@ -21,6 +21,7 @@ if !exists('g:leader_key_map')
     \}
 endif
 
+command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
 " give 'default','custom' or {path} to choose config file.
 " when 'default' given,the default config will be loaded.
 " when 'custom' given,config file at your $MYVIMRC's directory config/custom.[json|toml] will be loaded
