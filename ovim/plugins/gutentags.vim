@@ -1,8 +1,19 @@
 
 " gutentags {{{
-if !executable('ctags')
+" 同时开启 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+	let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+	let g:gutentags_modules += ['gtags_cscope']
+elseif executable('cscope')
+	let g:gutentags_modules += ['cscope']
+endif
+if len(g:gutentags_modules) == 0
     let g:gutentags_enabled = 0
 endif
+
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
@@ -13,14 +24,50 @@ let g:gutentags_ctags_tagfile = '.tags'
 let s:vim_tags = g:ovim_cacha_path.'/tags'
 let g:gutentags_cache_dir = s:vim_tags
 
+" 检测 ~/.cache/ovim/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+    silent! call mkdir(s:vim_tags, 'p')
+endif
+
 " 配置 ctags 的参数
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-    silent! call mkdir(s:vim_tags, 'p')
-endif
+" 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
+
+
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+set cscopetag
+" cscope 倒排索引
+let g:gutentags_cscope_build_inverted_index = 1
+
+" 禁用 gutentags 自动加载 gtags 数据库的行为
+" let g:gutentags_auto_add_gtags_cscope = 0
+" let g:gutentags_auto_add_cscope = 0
+
+
+nmap <leader>ecs :vertical rightbelow scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ecg :vertical rightbelow scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ecc :vertical rightbelow scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ect :vertical rightbelow scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ece :vertical rightbelow scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ecf :vertical rightbelow scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>eci :vertical rightbelow scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <leader>ecd :vertical rightbelow scs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>eca :vertical rightbelow scs find a <C-R>=expand("<cword>")<CR><CR>
+let s:leader_key_map = {'e':{'c':{'name':'+cscope',
+                                \ 's':'查找本 C 符号',
+                                \ 'g':'查找本定义',
+                                \ 'd':'查找本函数调用的函数',
+                                \ 'c':'查找调用本函数的函数',
+                                \ 't':'查找本字符串',
+                                \ 'e':'查找本 egrep 模式',
+                                \ 'f':'查找本文件',
+                                \ 'i':'查找包含本文件的文件',
+                                \ 'a':'查找此符号被赋值的位置',
+                                \ }}}
+call ovim#utils#recursive_update(g:leader_key_map,s:leader_key_map)
 " }}}

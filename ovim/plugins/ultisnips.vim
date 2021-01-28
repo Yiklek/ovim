@@ -5,5 +5,5 @@
 let g:UltiSnipsExpandTrigger="<leader>xg"
 let g:UltiSnipsJumpForwardTrigger="<leader>xj"
 let g:UltiSnipsJumpBackwardTrigger="<leader>xk"
-call extend(g:leader_key_map.x,{'g':'插入模板'})
+call ovim#utils#recursive_update(g:leader_key_map.x,{'g':'插入模板'})
 " }}}

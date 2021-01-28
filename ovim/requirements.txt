@@ -1,0 +1,3 @@
+pynvim
+toml
+python-language-server

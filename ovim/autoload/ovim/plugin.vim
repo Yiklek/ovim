@@ -8,13 +8,8 @@ function ovim#plugin#begin(arg)
     endif
     if g:ovim_plug_manager ==# 'plug'
     if !filereadable(g:vim_path.'/autoload/plug.vim')
-            call ovim#utils#log('downloading plug.vim...')
-            if executable('curl')
-                call ovim#utils#log('downloading plug.vim...')
-                call system('curl -fLo '.g:vim_path.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-            else
-                call ovim#utils#log('download plug.vim manually')
-            endif
+        call ovim#utils#warning('download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually')
+        throw 'OvimError:0002: download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually'
     endif
         call plug#begin(a:arg.'/plugged')
         return 1
@@ -22,12 +17,8 @@ function ovim#plugin#begin(arg)
         set rtp+=$VIM_PATH/dein.vim
         let g:dein#auto_recache = 1
         if !isdirectory(g:vim_path.'/dein.vim')
-            if executable('git')
-                call ovim#utils#log('downloading dein.vim...')
-                call system('git clone https://github.com/Shougo/dein.vim.git '.g:vim_path.'/dein.vim')
-            else
-                call ovim#utils#log('download dein.vim manually')
-            endif
+            call ovim#utils#warning('download dein.vim from https://github.com/Shougo/dein.vim.git to '.g:vim_path.'/dein.vim manually')
+            throw 'OvimError:0002: download dein.vim from https://github.com/Shougo/dein.vim.git to '.g:vim_path.'/dein.vim manually'
         endif
         if dein#load_state(a:arg.'/dein')
             call dein#begin(a:arg.'/dein')

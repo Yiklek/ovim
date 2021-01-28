@@ -67,6 +67,17 @@ nmap <leader>bd :bd<cr>
 nmap <leader>bp :bp<cr>
 nmap <leader>bn :bn<cr>
 
+nnoremap <tab>1 :b!1<cr>
+nnoremap <tab>2 :b!2<cr>
+nnoremap <tab>3 :b!3<cr>
+nnoremap <tab>4 :b!4<cr>
+nnoremap <tab>5 :b!5<cr>
+nnoremap <tab>6 :b!6<cr>
+nnoremap <tab>7 :b!7<cr>
+nnoremap <tab>8 :b!8<cr>
+nnoremap <tab>9 :b!9<cr>
+nnoremap <tab>0 :b!10<cr>
+
 noremap [b  :bp!<cr>
 noremap ]b  :bn!<cr>
 noremap ]t  gt

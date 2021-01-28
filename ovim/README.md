@@ -15,22 +15,42 @@ module可由多个plugin配置成 预留接口
 # default
 
 ## plugin
-
-## 依赖 
+见`config/default.toml`
+## extern dependency
 
 ### python
 * pynvim
 * toml
 * python-language-server
 
+```bash
+pip install --user -U pynvim toml python-language-server
+```
+
 ### node
 * neovim
 
+```bash
+npm install -g neovim
+```
+
 ### other
 
-* Universal Ctags(for vista.vim)
-* nerd-fonts(for icon) 
-* fzf
-* rg(optional,for fuzzy search text)
-* rq(optional,for faster bootstrap)
-* rust-analyzer(for rust)
+* git
+* [Universal Ctags](https://github.com/universal-ctags/ctags)(for vista.vim gutentags.vim)
+* [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)(for icon) 
+* [fzf](https://github.com/junegunn/fzf)
+* [rg](https://github.com/BurntSushi/ripgrep)(optional,for fuzzy search text)
+* [rq](https://github.com/dflemstr/rq)(optional,for faster bootstrap)
+* [rust-analyzer](https://github.com/rust-analyzer/rust-analyzer)(for rust)
+* [youcompleteme](https://github.com/ycm-core/YouCompleteMe)(optional for autocomplete module)
+
+```bash
+#rg
+cargo install ripgrep
+#rq
+cargo install record-query
+#u-ctags
+brew tap universal-ctags/universal-ctags
+brew install --HEAD universal-ctags/universal-ctags
+```

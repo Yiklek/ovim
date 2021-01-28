@@ -28,7 +28,7 @@ tnoremap <esc><tab>k  <c-\><c-n>:FloatermKill<CR>
 vnoremap <leader>ets :FloatermSend<CR>
 
 
-call extend(g:leader_key_map.e,{'t':{'name':'+Terminal',
+call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
                                     \    ' ':[':FloatermToggle','Floaterm Toggle'],
                                     \    '[':[':FloatermPrev','Previous Terminal'],
                                     \    ']':[':FloatermNext','Next Terminal'],

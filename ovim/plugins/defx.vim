@@ -2,7 +2,7 @@
 " defx{{{
 
 nmap <silent> = :Defx<CR>
-call extend(g:space_key_map,{'=':[':Defx','defx']})
+call ovim#utils#recursive_update(g:space_key_map,{'=':[':Defx','defx']})
 call defx#custom#option('_', {
       \ 'winwidth': 40,
       \ 'split': 'vertical',
@@ -14,7 +14,9 @@ call defx#custom#option('_', {
       \ 'columns':'git:mark:indent:icons:filename:type:size:time'
       \ })
 " Avoid the white space highting issue
-autocmd FileType defx match ExtraWhitespace /^^/
+if !has('nvim')
+      autocmd FileType defx match ExtraWhitespace /^^/
+endif
 " Keymap in defx
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
