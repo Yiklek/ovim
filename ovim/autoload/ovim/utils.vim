@@ -14,18 +14,21 @@ function! ovim#utils#keymap(type, key, value, ...) abort
     " other operation
 endfun
 
-function ovim#utils#log(msg) abort
+function ovim#utils#log(...) abort
     let time = strftime('%H:%M:%S')
-    let log = '[ovim] [' . time . '] ' . a:msg
+	let l:msg = join(a:000,' ')
+    let log = '[ovim] [' . time . '] [info]:' . l:msg
     echom log
 endfun
-function ovim#utils#warning(msg) abort
+function ovim#utils#warning(...) abort
     let time = strftime('%H:%M:%S')
-    let log = '[ovim] [' . time . '] ' . a:msg
+    let l:msg = join(a:000,' ')
+    let log = '[ovim] [' . time . '] [warning]:' . l:msg
 	echohl WarningMsg
     echom log
 	echohl None
 endfun
+
 
 " 暂时使用json  后续支持toml yaml
 function ovim#utils#load_config(filename) abort
@@ -93,12 +96,12 @@ function ovim#utils#recursive_update(source,update)
        return
     endif
 	for [k,v] in items(a:update)
-		if !exists('a:source.'.k)
-			let a:source[k] = {}
-		endif
-        if type(v) != v:t_dict
-            let a:source[k] = v
+		if !has_key(a:source,k) || type(v) != v:t_dict
+			let a:source[k] = v
         else
+			if type(a:source[k]) != v:t_dict
+				let a:source[k] = {}
+			endif
             call ovim#utils#recursive_update(a:source[k],v)
         endif
     endfor

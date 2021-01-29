@@ -40,7 +40,7 @@ set shortmess=atI
 set vb t_vb=
 au GuiEnter * set t_vb=
 "set mouse=a
-
+set backspace=indent,eol,start
 
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

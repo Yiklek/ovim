@@ -1,6 +1,7 @@
 " deoplete {{{
-let g:deoplete#enable_at_startup = 0
+let g:deoplete#enable_at_startup = 1
 
+" 自动启动会卡一下，推迟到InserEnter启动
 autocmd InsertEnter * call s:setup_deoplete()
 
 function s:setup_deoplete()

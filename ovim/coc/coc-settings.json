@@ -1,0 +1,76 @@
+{
+    "languageserver": {
+        "go": {
+            "command": "gopls",
+            "rootPatterns": [
+                "go.mod"
+            ],
+            "trace.server": "verbose",
+            "filetypes": [
+                "go"
+            ]
+        },
+        "python": {
+            "command": "python3",
+            "args": [
+                "-m",
+                "pyls"
+            ],
+            "filetypes": [
+                "python"
+            ]
+        },
+        "rust": {
+            "command": "rust-analyzer",
+            "filetypes": [
+                "rust"
+            ],
+            "rootPatterns": [
+                "Cargo.toml"
+            ]
+        },
+        "cland": {
+            "command": "cland",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".git",
+                ".root",
+                "compile_commands.json",
+                "compile_flags.txt"
+            ]
+        },
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp"
+            ],
+            "rootPatterns": [
+                ".git",
+                ".root",
+                ".ccls",
+                "compile_commands.json",
+                "compile_flags.txt"
+            ]
+        },
+        "sh": {
+            "command": "bash-language-server",
+            "args": [
+                "start"
+            ],
+            "filetypes": [
+                "sh",
+                "shell"
+            ],
+            "rootPatterns": [
+                ".git",
+                ".root"
+            ]
+        }
+    }
+}
