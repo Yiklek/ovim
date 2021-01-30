@@ -21,8 +21,8 @@ function s:self.plugins() abort
       " if has node,use coc
       if executable('node')
         let s:self.method = 'coc'
-      else 
-        let s:self.method = 'deoplete'
+      else
+        let s:self.method = 'ncm2'
       endif
     endif
     let s:self.plugs = {}
@@ -31,20 +31,14 @@ function s:self.plugins() abort
 endfun
 
 function s:plugins_coc()
-  let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim", 
-                        \ "rev": "release","branch": "release", 
+  let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
+                        \ "rev": "release","branch": "release",
                         \ "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim",
                         \ "on_event":["VimEnter"]
                         \}
 endfunction
 
 function s:plugins_deoplete()
-  let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
-                                \    "build":"sh -c 'bash install.sh'","rev":"next","branch": "next",
-                                \    "on_event":["VimEnter"],
-                                \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
-                                \    "hook_post_update":"bash install.sh"
-                                \    }
         let s:self.plugs['Shougo/deoplete.nvim'] = {
     \        "repo": "Shougo/deoplete.nvim",
     \        "do": ":UpdateRemotePlugins",
@@ -52,15 +46,57 @@ function s:plugins_deoplete()
     \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-deoplete.vim"
     \    }
         let s:self.plugs['Shougo/neco-vim'] = { "repo": "Shougo/neco-vim","ft":"vim",'on_source':'deoplete.nvim'}
+    call s:plugins_lcn()
+endfunction
+
+function s:plugins_ncm2()
+    let s:self.plugs['ncm2/ncm2'] = {
+    \        "repo": "ncm2/ncm2",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-ncm2.post-source.vim"
+    \    }
+    let s:self.plugs['ncm2/ncm2-bufword'] = {
+    \        "repo": "ncm2/ncm2-bufword",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let s:self.plugs['ncm2/ncm2-path'] = {
+    \        "repo": "ncm2/ncm2-path",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let s:self.plugs['ncm2/ncm2-vim'] = {
+    \        "repo": "ncm2/ncm2-vim",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let s:self.plugs['Shougo/neco-vim'] = { "repo": "Shougo/neco-vim","ft":"vim",'on_source':'ncm2-vim'}
+    let s:self.plugs['ncm2/ncm2-ultisnips'] = {
+    \        "repo": "ncm2/ncm2-ultisnips",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let g:ovim_global_options.plugins["roxma/nvim-yarp"]['if'] = 1
+    let g:ovim_global_options.plugins["roxma/vim-hug-neovim-rpc"]['if'] = 1
+    call s:plugins_lcn()
 endfunction
 
 function s:plugins_ycm()
   let s:self.plugs['Valloric/YouCompleteMe'] = {
     \        "repo": "Valloric/YouCompleteMe",
-    \        "on_event":["VimEnter","GUIEnter"]
+    \        "on_event":["VimEnter","GUIEnter"],
     \        "hook_source":"source $OVIM_ROOT_PATH/plugins/complete-youcompleteme.vim"
-    \
-    \    })
+    \    }
+endfunction
+
+function s:plugins_lcn()
+  let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
+                                \    "build":"sh -c 'bash install.sh'","rev":"next","branch": "next",
+                                \    "on_event":["VimEnter"],
+                                \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
+                                \    "hook_post_update":"bash install.sh"
+                                \    }
 endfunction
 
 function s:self.config() abort
@@ -113,21 +149,21 @@ function s:self.config() abort
 endfun
 
 function s:config_coc()
-autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |                                                             
-                                \ let b:coc_enabled=0 |                                                                           
+autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
+                                \ let b:coc_enabled=0 |
                                 \ endif
-let g:coc_config_home = g:ovim_root_path.'/coc'
+let g:coc_config_home = g:ovim_root_path.'/config/coc'
 let g:coc_data_home = g:ovim_cacha_path.'/coc'
 imap <C-l> <Plug>(coc-snippets-expand)
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
   let g:coc_user_config = {
 \    "session": {
-\     "directory":g:ovim_cacha_path.'/coc-lists-session'  
+\     "directory":g:ovim_cacha_path.'/coc-lists-session'
 \    },
 \}
   let g:coc_global_extensions = ['coc-marketplace','coc-json','coc-snippets',
-                    \ 'coc-python','coc-lists','coc-yank']
+                    \ 'coc-python','coc-lists','coc-yank','coc-vimlsp']
   imap <leader><space><space> <Plug>(coc-snippets-expand)
   let g:coc_snippet_next = '<c-j>'
   let g:coc_snippet_prev = '<c-k>'
@@ -169,7 +205,16 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 endfunction
 
 function s:config_deoplete()
-let g:ovim#modules#autocomplete.func_manual = function('deoplete#manual_complete')
+    let g:ovim#modules#autocomplete.func_manual = function('deoplete#manual_complete')
+    call s:config_lcn()
+endfunction
+
+function s:config_ncm2()
+    let g:ovim#modules#autocomplete.func_manual = function('ncm2#force_trigger')
+    call s:config_lcn()
+endfunction
+
+function s:config_lcn()
     let g:ovim#modules#autocomplete.func_show_doc = function('LanguageClient#textDocument_hover')
     let g:ovim#modules#autocomplete.func_go_to_def = function('LanguageClient#textDocument_definition')
     let g:ovim#modules#autocomplete.func_go_to_typedef = function('LanguageClient#textDocument_typeDefinition')

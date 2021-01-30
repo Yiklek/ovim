@@ -28,7 +28,7 @@ command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
 " when a {path} given,specified file will be loaded
 function! ovim#init(...) abort
     let g:ovim_global_options = {'plugins':{}}
-    let g:ovim_global_options = s:options(exists("a:1") ? a:1: 'default')
+    let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
     if exists('g:ovim_global_options.modules')
             call s:modules(g:ovim_global_options.modules)
     endif

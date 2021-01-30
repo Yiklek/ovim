@@ -54,3 +54,8 @@ cargo install record-query
 brew tap universal-ctags/universal-ctags
 brew install --HEAD universal-ctags/universal-ctags
 ```
+
+
+# TODO
+
+os适配
