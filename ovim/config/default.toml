@@ -1,4 +1,6 @@
 hook_before_setup_plugin = """set updatetime=1000
+set wildmenu
+set lazyredraw
 let &t_ut=''"""
 hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
@@ -17,6 +19,7 @@ level = 0
 repo = "arakashic/nvim-colors-solarized"
 if = 0
 
+# colorscheme gruvbox
 [plugins."morhetz/gruvbox"]
 level = 0
 repo = "morhetz/gruvbox"
@@ -25,13 +28,43 @@ repo = "morhetz/gruvbox"
 level = 0
 repo = "miconda/lucariox.vim"
 
+# colorscheme oceanic_material
 [plugins."hardcoreplayers/oceanic-material"]
 level = 0
 repo = "hardcoreplayers/oceanic-material"
-
+# colorscheme OceanicNext
 [plugins."mhartington/oceanic-next"]
 level = 0
 repo = "mhartington/oceanic-next"
+
+# set background=dark
+# colorscheme one
+[plugins."rakr/vim-one"]
+level = 0
+repo = "rakr/vim-one"
+
+#" Dark
+#set background=dark
+#colorscheme vim-material
+
+#" Palenight
+#let g:material_style='palenight'
+#set background=dark
+#colorscheme vim-material
+
+#" Oceanic
+#let g:material_style='oceanic'
+#set background=dark
+#colorscheme vim-material
+
+#" Light
+#set background=light
+#colorscheme vim-material
+#airline
+#let g:airline_theme='material'
+[plugins."hzchirs/vim-material"]
+level = 0
+repo = "hzchirs/vim-material"
 
 [plugins."https://gitee.com/yelgors/vim-togglemouse.git"]
 level = 0
@@ -397,6 +430,18 @@ on = ["VimspectorInstall","VimspectorUpdate",
         "<Plug>VimspectorStepInto","<Plug>VimspectorStepOut",
         "<Plug>VimspectorRunToCursor",]
 hook_add = "source $OVIM_ROOT_PATH/plugins/vimspector.add.vim"
+
+[plugins."jmcantrell/vim-virtualenv"]
+level = 2
+repo = "jmcantrell/vim-virtualenv"
+on_ft = ["python"]
+for = ["python"]
+
+[plugins."lambdalisue/vim-pyenv"]
+level = 2
+repo = "lambdalisue/vim-pyenv"
+on_ft = ["python"]
+for = ["python"]
 
 #if has node,use coc
 [modules.autocomplete]

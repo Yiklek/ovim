@@ -8,7 +8,8 @@
             "trace.server": "verbose",
             "filetypes": [
                 "go"
-            ]
+            ],
+            "ignoredRootPaths": ["~"]
         },
         "python": {
             "command": "python3",
@@ -18,7 +19,8 @@
             ],
             "filetypes": [
                 "python"
-            ]
+            ],
+            "ignoredRootPaths": ["~"]
         },
         "rust": {
             "command": "rust-analyzer",
@@ -27,7 +29,8 @@
             ],
             "rootPatterns": [
                 "Cargo.toml"
-            ]
+            ],
+            "ignoredRootPaths": ["~"]
         },
         "cland": {
             "command": "cland",
@@ -38,25 +41,27 @@
                 "objcpp"
             ],
             "rootPatterns": [
-                ".git",
-                ".root",
                 "compile_commands.json",
-                "compile_flags.txt"
-            ]
+                "compile_flags.txt",
+                ".git"
+            ],
+            "ignoredRootPaths": ["~"]
         },
         "ccls": {
             "command": "ccls",
             "filetypes": [
                 "c",
-                "cpp"
+                "cpp",
+                "objc",
+                "objcpp"
             ],
             "rootPatterns": [
-                ".git",
-                ".root",
-                ".ccls",
                 "compile_commands.json",
-                "compile_flags.txt"
-            ]
+                ".ccls",
+                ".ccls-root",
+                ".git"
+            ],
+            "ignoredRootPaths": ["~"]
         },
         "sh": {
             "command": "bash-language-server",
@@ -70,7 +75,8 @@
             "rootPatterns": [
                 ".git",
                 ".root"
-            ]
+            ],
+            "ignoredRootPaths": ["~"]
         }
     }
 }

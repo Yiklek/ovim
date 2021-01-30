@@ -22,9 +22,11 @@ if !exists('g:leader_key_map')
 endif
 
 command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
-" give 'default','custom' or {path} to choose config file.
+" give 'default','custom','override' or {path} to choose config file.
 " when 'default' given,the default config will be loaded.
 " when 'custom' given,config file at your $MYVIMRC's directory config/custom.[json|toml] will be loaded
+" when 'override' given,config file at your $MYVIMRC's directory config/custom.[json|toml] 
+" and default will be both loaded.specified option will override default.this maybe cause startup slowly.
 " when a {path} given,specified file will be loaded
 function! ovim#init(...) abort
     let g:ovim_global_options = {'plugins':{}}
@@ -47,6 +49,13 @@ function! s:options(config) abort
         let l:options = ovim#utils#load_default()
     elseif a:config == 'custom'
         let l:options = ovim#utils#load_custom()
+    elseif a:config == 'override'
+        let l:options = ovim#utils#load_default()
+        "try
+            let l:options_custom = ovim#utils#load_custom()
+            call ovim#utils#recursive_update(l:options,l:options_custom)
+        "catch
+        "endtry
     else
         let l:options = ovim#utils#load_config(a:config)
     endif

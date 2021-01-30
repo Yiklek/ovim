@@ -163,7 +163,7 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 \    },
 \}
   let g:coc_global_extensions = ['coc-marketplace','coc-json','coc-snippets',
-                    \ 'coc-python','coc-lists','coc-yank','coc-vimlsp']
+                    \ 'coc-python','coc-lists','coc-yank','coc-vimlsp',"coc-toml"]
   imap <leader><space><space> <Plug>(coc-snippets-expand)
   let g:coc_snippet_next = '<c-j>'
   let g:coc_snippet_prev = '<c-k>'

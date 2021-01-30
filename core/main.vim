@@ -152,7 +152,8 @@ endif
 " vim 在iterm2下一半启动时间都在加载主题  nvim很快
 let g:oceanic_material_allow_underline = 1
 " silent! colorscheme solarized
-silent! colorscheme gruvbox
+"silent! colorscheme gruvbox
+silent! colorscheme one
 " if !has("gui_running")
 "     hi Normal guibg=NONE ctermbg=NONE
 " endif
