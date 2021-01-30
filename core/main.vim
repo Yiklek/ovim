@@ -28,6 +28,7 @@ set ts=4
 set shiftwidth=4
 set expandtab
 set encoding=utf-8
+autocmd BufEnter * set formatoptions-=o
 "set noexpandtab
 "set noautoindent
 set autochdir
@@ -39,7 +40,7 @@ set shortmess=atI
 "set cursorcolumn
 set vb t_vb=
 au GuiEnter * set t_vb=
-"set mouse=a
+set mouse=a
 set backspace=indent,eol,start
 
 " 缓存设置

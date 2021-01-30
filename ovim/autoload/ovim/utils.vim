@@ -84,6 +84,8 @@ function s:toml2json(toml)
 		let l:cmd = 'rq --input-toml --output-json --format indented'
 	elseif executable('python3')
 		let l:cmd = 'python3 -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
+	elseif executable('python')
+		let l:cmd = 'python -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
 	else
 		throw "OvimError:0000: one of python3 toml or rq required!"
 	endif

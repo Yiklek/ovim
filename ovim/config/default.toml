@@ -186,6 +186,15 @@ repo = "skywind3000/asyncrun.vim"
 hook_add = "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
 on = [ "AsyncRun",]
 on_cmd = [ "AsyncRun",]
+on_func = ["asyncrun#"]
+
+[plugins."skywind3000/asynctasks.vim"]
+level = 2
+repo = "skywind3000/asynctasks.vim"
+hook_add = "source $OVIM_ROOT_PATH/plugins/asynctasks.add.vim"
+on_cmd = ["AsyncTask","AsyncTaskEdit","AsyncTaskMacro","AsyncTaskProfile"]
+on = ["AsyncTask","AsyncTaskEdit","AsyncTaskMacro","AsyncTaskProfile"]
+
 
 [plugins."pseewald/vim-anyfold"]
 level = 1
@@ -362,6 +371,32 @@ for = ["markdown","pandoc.markdown","rmd"]
 level = 1
 repo = "yianwillis/vimcdoc"
 on_cmd = ['h','help']
+
+[plugins."sheerun/vim-polyglot"]
+level = 2
+repo = "sheerun/vim-polyglot"
+on_event = ["VimEnter"]
+if = 0
+
+[plugins."tpope/vim-unimpaired"]
+level = 2
+repo = "tpope/vim-unimpaired"
+on_event = ["VimEnter"]
+
+[plugins."puremourning/vimspector"]
+level = 2
+repo = "puremourning/vimspector"
+on_map = "<Plug>Vimspector"
+on_func = ["vimspector#"]
+on_cmd = ["VimspectorInstall","VimspectorUpdate"]
+on = ["VimspectorInstall","VimspectorUpdate",
+        "<Plug>VimspectorContinue","<Plug>VimspectorStop",
+        "<Plug>VimspectorRestart","<Plug>VimspectorPause",
+        "<Plug>VimspectorToggleBreakpoint","<Plug>VimspectorToggleConditionalBreakpoint",
+        "<Plug>VimspectorAddFunctionBreakpoint","<Plug>VimspectorStepOver",
+        "<Plug>VimspectorStepInto","<Plug>VimspectorStepOut",
+        "<Plug>VimspectorRunToCursor",]
+hook_add = "source $OVIM_ROOT_PATH/plugins/vimspector.add.vim"
 
 #if has node,use coc
 [modules.autocomplete]
