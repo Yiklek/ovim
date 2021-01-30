@@ -5,6 +5,9 @@ my_config_path="$HOME/.oh-my-config"
 tmux_config_path="$HOME/.tmux"
 zsh_config_path="$HOME/.oh-my-zsh"
 vim_plug_file="$HOME/.vim/autoload/plug.vim"
+vim_dein_dir="$HOME/.vim/dein.vim"
+nvim_plug_file="$HOME/.config/nvim/autoload/plug.vim"
+nvim_dein_dir="$HOME/.config/nvim/dein.vim"
 flag_my_config=false
 flag_tmux=false
 flag_vim=false
@@ -117,12 +120,18 @@ install_nvim_config(){
     #        log_error 'install vim config failed.'
     #        exit
     #    fi
-    if [ ! -f $HOME/.config/nvim/autoload/plug.vim ]
+    if [ ! -f $nvim_plug_file ]
     then
         curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-                else
-                    log_error "install vim-plug failed."$vim_plug_file" has existed"
+    else
+        log_error "install vim-plug failed."$nvim_plug_file" has existed"
+    fi
+    if [ ! -d $nvim_dein_dir ]
+    then
+        git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/dein.vim
+    else
+        log_error "install dein.vim failed."$nvim_dein_dir" has existed"
     fi
     #if [ ! -f $HOME/.config/nvim/config-help.txt  ]
     #then
@@ -193,10 +202,16 @@ install_vim_config(){
     #    fi
     if [ ! -f $vim_plug_file ]
     then
-        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        curl -fLo $vim_plug_file --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-                else
-                    log_error "install vim-plug failed."$vim_plug_file" has existed"
+    else
+        log_error "install vim-plug failed."$vim_plug_file" has existed"
+    fi
+    if [ ! -d $vim_dein_dir ]
+    then
+        git clone https://github.com/Shougo/dein.vim $vim_dein_dir
+    else
+        log_error "install dein.vim failed."$vim_dein_dir" has existed"
     fi
     #if [ ! -f $HOME/.vim/config-help.txt  ]
     #then

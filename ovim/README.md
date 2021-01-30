@@ -58,4 +58,5 @@ brew install --HEAD universal-ctags/universal-ctags
 
 # TODO
 
-os适配
+* os适配
+* 快捷键修改
