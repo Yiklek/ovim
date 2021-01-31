@@ -22,6 +22,19 @@ if !exists('g:leader_key_map')
 endif
 
 command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
+
+" both two command receive, expand and eval input string.
+" if you want to source directly,use `source`
+" examples:
+" OvimSource g:var.'/path/to/vim'
+" OvimSource "$ENV/path/to/vim"
+" source like doesn't support:
+" source $ENV/path/to/vim
+command -nargs=1 -complete=expression OvimSource call ovim#utils#source(eval(expand(<q-args>)))
+command -nargs=1 -complete=expression OvimTrySource call ovim#utils#try_source(eval(expand(<q-args>)))
+
+command -nargs=* -complete=expression OvimLogInfo call ovim#utils#log(<f-args>)
+command -nargs=* -complete=expression OvimLogWarn call ovim#utils#warn(<f-args>)
 " give 'default','custom','override' or {path} to choose config file.
 " when 'default' given,the default config will be loaded.
 " when 'custom' given,config file at your $MYVIMRC's directory config/custom.[json|toml] will be loaded
@@ -40,7 +53,7 @@ function! ovim#init(...) abort
         endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
-    autocmd VimEnter * call ovim#utils#source(g:ovim_root_path.'/keymaps/global.vim')
+    autocmd VimEnter * OvimSource g:ovim_root_path.'/keymaps/global.vim'
 endfunction
 
 

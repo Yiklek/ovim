@@ -25,13 +25,15 @@ module可由多个plugin配置成 预留接口
 
 ```bash
 pip install --user -U pynvim toml python-language-server
+python3 -m pip install --user -U -r requirements.txt
 ```
 
 ### node
 * neovim
+* bash-language-server
 
 ```bash
-npm install -g neovim
+npm install -g neovim bash-language-server
 ```
 
 ### other
@@ -60,3 +62,7 @@ brew install --HEAD universal-ctags/universal-ctags
 
 * os适配
 * 快捷键修改
+* kitty
+* i3
+* vim bookmark manager
+* module sub plugin batch config

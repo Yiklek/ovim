@@ -16,17 +16,19 @@ endfun
 
 function ovim#utils#log(...) abort
     let time = strftime('%H:%M:%S')
-	let l:msg = join(a:000,' ')
-    let log = '[ovim] [' . time . '] [info]:' . l:msg
-    echom log
+	let tmp = copy(a:000)
+    let tmp = map(tmp, 'eval(v:val)')
+	let l:msg = join(tmp,' ')
+    let log = '[ovim][' . time . '][info]:' . l:msg
+	echom log
 endfun
-function ovim#utils#warning(...) abort
+function ovim#utils#warn(...) abort
     let time = strftime('%H:%M:%S')
-    let l:msg = join(a:000,' ')
-    let log = '[ovim] [' . time . '] [warning]:' . l:msg
-	echohl WarningMsg
-    echom log
-	echohl None
+	let tmp = copy(a:000)
+    let tmp = map(tmp, 'eval(v:val)')
+	let l:msg = join(tmp,' ')
+    let log = '[ovim][' . time . '][warn]:' . l:msg
+	echohl WarningMsg | echom log | echohl None
 endfun
 
 
@@ -78,6 +80,13 @@ endfun
 function ovim#utils#source(filename) abort
 	exe 'source '.a:filename
 endfun
+function ovim#utils#try_source(filename) abort
+	try
+		exe 'source '.a:filename
+	cache
+		call ovim#utils#warn(v:errmsg)
+	endtry
+endfun
 
 function s:toml2json(toml)
 	if executable('rq')
@@ -119,8 +128,8 @@ function ovim#utils#dein_sourced()
 			call add(l:sourced,v.name)
 		endif
 	endfor
-	echo l:count len(l:ps)
-	echo l:sourced
+	OvimLogInfo l:count len(l:ps)
+	OvimLogInfo l:sourced
 endfunction
 
 function ovim#utils#copy_config()
