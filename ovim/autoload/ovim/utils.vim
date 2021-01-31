@@ -16,18 +16,14 @@ endfun
 
 function ovim#utils#log(...) abort
     let time = strftime('%H:%M:%S')
-	let tmp = copy(a:000)
-    let tmp = map(tmp, 'eval(v:val)')
-	let l:msg = join(tmp,' ')
+	let l:msg = join(a:000,' ')
     let log = '[ovim][' . time . '][info]:' . l:msg
 	echom log
 endfun
 function ovim#utils#warn(...) abort
     let time = strftime('%H:%M:%S')
-	let tmp = copy(a:000)
-    let tmp = map(tmp, 'eval(v:val)')
-	let l:msg = join(tmp,' ')
-    let log = '[ovim][' . time . '][warn]:' . l:msg
+	let l:msg = join(a:000,' ')
+    let log = '[ovim][' . time . '][info]:' . l:msg
 	echohl WarningMsg | echom log | echohl None
 endfun
 
@@ -91,6 +87,8 @@ endfun
 function s:toml2json(toml)
 	if executable('rq')
 		let l:cmd = 'rq --input-toml --output-json --format indented'
+	elseif executable(expand('~/.cache/venv/vim/bin/python3'))
+		let l:cmd = expand('~/.cache/venv/vim/bin/python3').' -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
 	elseif executable('python3')
 		let l:cmd = 'python3 -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
 	elseif executable('python')
@@ -132,12 +130,16 @@ function ovim#utils#dein_sourced()
 	OvimLogInfo l:sourced
 endfunction
 
-function ovim#utils#copy_config()
-	if !filewritable(g:vim_path.'/config/custom.toml')
-		if !isdirectory(g:vim_path.'/config')
-			silent! call mkdir(g:vim_path.'/config', 'p')
+function ovim#utils#copy(src,dst)
+	if !filewritable(a:dst)
+		if !isdirectory(fnamemodify(a:dst,":p:h"))
+			silent! call mkdir(fnamemodify(a:dst,":p:h"), 'p')
 		endif
-		let l:config_str = readfile(g:ovim_root_path.'/config/default.toml')
-        call writefile(l:config_str,g:vim_path.'/config/custom.toml')
+		let l:str = readfile(a:src)
+        call writefile(l:str,a:dst)
 	endif
+endfunction
+
+function ovim#utils#copy_config()
+	call ovim#utils#copy(g:ovim_root_path.'/config/default.toml',g:vim_path.'/config/custom.toml')
 endfunction

@@ -22,6 +22,7 @@ if !exists('g:leader_key_map')
 endif
 
 command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
+command -nargs=0 OvimCopyDotSpector call ovim#utils#copy(g:ovim_root_path.'/config/vimspector/.vimspector.json','./.vimspector.json')
 
 " both two command receive, expand and eval input string.
 " if you want to source directly,use `source`
@@ -38,12 +39,13 @@ command -nargs=* -complete=expression OvimLogWarn call ovim#utils#warn(<f-args>)
 " give 'default','custom','override' or {path} to choose config file.
 " when 'default' given,the default config will be loaded.
 " when 'custom' given,config file at your $MYVIMRC's directory config/custom.[json|toml] will be loaded
-" when 'override' given,config file at your $MYVIMRC's directory config/custom.[json|toml] 
+" when 'override' given,config file at your $MYVIMRC's directory config/custom.[json|toml]
 " and default will be both loaded.specified option will override default.this maybe cause startup slowly.
 " when a {path} given,specified file will be loaded
 function! ovim#init(...) abort
     let g:ovim_global_options = {'plugins':{}}
     let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
+    call s:setup_python()
     if exists('g:ovim_global_options.modules')
             call s:modules(g:ovim_global_options.modules)
     endif
@@ -56,6 +58,29 @@ function! ovim#init(...) abort
     autocmd VimEnter * OvimSource g:ovim_root_path.'/keymaps/global.vim'
 endfunction
 
+function! s:setup_python()
+    if exists('g:python3_host_prog') && has('python3') && !exists('g:python3_setup')
+        set rtp+=$VIM_PATH/site-packages
+        if has('win64') || has('win32') || has('win16') || has('win95')
+            let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
+            let &rtp = python3_home.'/Lib,'.&rtp
+            let $PATH = python3_home.'/bin;'.$PATH
+        else
+            let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
+            let &rtp = python3_home.'/lib,'.&rtp
+            let $PATH = python3_home.'/bin:'.$PATH
+        endif
+"python3 << EOF
+"import sys,vim,os,glob
+"python3_host_prog = vim.eval('expand(g:python3_host_prog)')
+"version = sys.version_info
+"path = os.path.abspath(python3_host_prog + '/../..')
+"sys.path.append(os.path.join(path,"lib",'python{}.{}'.format(version.major,version.minor), "site-packages"))
+"sys.path.append(os.path.join(path,"Lib",'site-packages'))
+"EOF
+    let g:python3_setup = 1
+    endif
+endfunction
 
 function! s:options(config) abort
     if a:config == 'default'

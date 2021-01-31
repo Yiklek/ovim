@@ -12,7 +12,7 @@ config_level = 2
 ovim_plug_manager = "dein"
 
 [var]
-python3_host_prog = "~/miniconda3/envs/vim/bin/python"
+python3_host_prog = "~/.cache/venv/vim/bin/python"
 
 [plugins."arakashic/nvim-colors-solarized"]
 level = 0
@@ -436,12 +436,15 @@ level = 2
 repo = "jmcantrell/vim-virtualenv"
 on_ft = ["python"]
 for = ["python"]
+hook_source = "let g:virtualenv_directory = '~/.cache/venv'"
 
 [plugins."lambdalisue/vim-pyenv"]
 level = 2
 repo = "lambdalisue/vim-pyenv"
 on_ft = ["python"]
 for = ["python"]
+hook_source = """let g:pyenv#auto_assign_ctags = 0
+let g:pyenv#auto_activate = 0"""
 
 #if has node,use coc
 [modules.autocomplete]
