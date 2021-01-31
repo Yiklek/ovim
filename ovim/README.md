@@ -25,7 +25,14 @@ module可由多个plugin配置成 预留接口
 
 ```bash
 pip install --user -U pynvim toml python-language-server
-python3 -m pip install --user -U -r requirements.txt
+python3 -m pip install -t ~/.cache/venv/vim -U -r requirements.txt
+```
+
+python统一使用`$HOME/.cache/venv/vim`下的虚拟环境，依赖也安装在虚拟环境中
+同时`python3_host_prog`也需要对应
+使用脚本快速安装
+```bash
+./config.sh dep vim_python
 ```
 
 ### node

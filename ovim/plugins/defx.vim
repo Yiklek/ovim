@@ -1,8 +1,8 @@
 
 " defx{{{
 
-nmap <silent> = :Defx<CR>
-call ovim#utils#recursive_update(g:space_key_map,{'=':[':Defx','defx']})
+nmap <silent> == :Defx<CR>
+call ovim#utils#recursive_update(g:space_key_map,{'==':[':Defx','defx']})
 call defx#custom#option('_', {
       \ 'winwidth': 40,
       \ 'split': 'vertical',
