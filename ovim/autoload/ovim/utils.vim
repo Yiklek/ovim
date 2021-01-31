@@ -86,7 +86,7 @@ endfun
 
 function s:toml2json(toml)
 	if executable('rq')
-		let l:cmd = 'rq --input-toml --output-json --format indented'
+		let l:cmd = 'rq --input-toml --output-json'
 	elseif executable(expand('~/.cache/venv/vim/bin/python3'))
 		let l:cmd = expand('~/.cache/venv/vim/bin/python3').' -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
 	elseif executable('python3')
