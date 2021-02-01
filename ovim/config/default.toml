@@ -404,6 +404,7 @@ for = ["markdown","pandoc.markdown","rmd"]
 level = 1
 repo = "yianwillis/vimcdoc"
 on_cmd = ['h','help']
+if = "!has('nvim')"
 
 [plugins."sheerun/vim-polyglot"]
 level = 2
