@@ -61,7 +61,7 @@ endfunction
 function! s:setup_python()
     if !exists('g:python3_setup')
         if has('win64') || has('win32') || has('win16') || has('win95')
-            let g:python3_host_prog = get(g:,'python3_host_prog',expand('~/.cache/venv/vim/Sripts/python.exe'))
+            let g:python3_host_prog = get(g:,'python3_host_prog',expand('~/.cache/venv/vim/Scripts/python.exe'))
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
             let $PATH = python3_home.'/bin;'.$PATH
