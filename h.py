@@ -6,15 +6,18 @@ import argparse
 from os.path import join, isfile, isdir, abspath
 basedir = abspath(os.path.dirname(__file__))
 homedir = abspath(os.getenv('HOME'))
-configdir = join(homedir,'.config')
+xdgconfigdir = os.getenv('XDG_CONFIG_HOME')
 venvdir = join(homedir,'.cache','venv')
 vim_env_dir = join(venvdir,'vim')
+
 if os.name == 'nt':
     lib = 'Lib'
     vim_dep_source = join(vim_env_dir,lib,'site-packages')
+    configdir = join(homedir,'AppData','Local')
 else:
     lib = 'lib'
     vim_dep_source = join(vim_env_dir,lib,'python3.{}'.format(sys.version_info.minor),'site-packages')
+    configdir = join(homedir,'.config')
 
 vim_link = join(vim_env_dir,lib,'python3')
 vim_py = join(vim_env_dir,'bin','python')
@@ -40,6 +43,8 @@ def install(parser,args):
         vim_config_path = join(homedir,'.vim')
         vim_config_init = join(vim_config_path,'vimrc')
     elif target =='nvim':
+        global configdir
+        configdir =  configdir if xdgconfigdir is None else xdgconfigdir
         vim_config_path = join(configdir,'nvim')
         vim_config_init = join(vim_config_path,'init.vim')
 
@@ -81,7 +86,10 @@ def create_arg_parser():
 def main(args):
     parser = create_arg_parser()
     arg = parser.parse_args(args)
-    arg.func(parser, arg)
+    if arg.command is None:
+        parser.print_help()
+    else:
+        arg.func(parser, arg)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
