@@ -26,7 +26,7 @@ def depend(parser,args):
         os.system('{} -m pip install -r {} -U'.format(vim_py,vim_requirements))
         if os.path.exists(vim_link):
             os.remove(vim_link)
-        os.symlink(vim_dep_source,vim_link)
+        os.symlink(vim_dep_source,vim_link,target_is_directory=isdir(vim_dep_source))
     if args.node:
         os.system('npm install -g neovim bash-language-server')
 
