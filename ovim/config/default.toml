@@ -11,9 +11,6 @@ make_json = 0
 config_level = 2
 ovim_plug_manager = "dein"
 
-[var]
-python3_host_prog = "~/.cache/venv/vim/bin/python"
-
 [plugins."arakashic/nvim-colors-solarized"]
 level = 0
 repo = "arakashic/nvim-colors-solarized"

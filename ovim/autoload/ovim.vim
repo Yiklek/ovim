@@ -59,13 +59,14 @@ function! ovim#init(...) abort
 endfunction
 
 function! s:setup_python()
-    if exists('g:python3_host_prog') && has('python3') && !exists('g:python3_setup')
-        set rtp+=$VIM_PATH/site-packages
+    if !exists('g:python3_setup')
         if has('win64') || has('win32') || has('win16') || has('win95')
+            let g:python3_host_prog = get(g:,'python3_host_prog','~/.cache/venv/vim/python.exe')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
             let $PATH = python3_home.'/bin;'.$PATH
         else
+            let g:python3_host_prog = get(g:,'python3_host_prog','~/.cache/venv/vim/bin/python')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
             let &rtp = python3_home.'/lib,'.&rtp
             let $PATH = python3_home.'/bin:'.$PATH

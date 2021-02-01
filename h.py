@@ -14,13 +14,14 @@ if os.name == 'nt':
     lib = 'Lib'
     vim_dep_source = join(vim_env_dir,lib,'site-packages')
     configdir = join(homedir,'AppData','Local')
+    vim_py = join(vim_env_dir,'Scripts','python.exe')
 else:
     lib = 'lib'
     vim_dep_source = join(vim_env_dir,lib,'python3.{}'.format(sys.version_info.minor),'site-packages')
     configdir = join(homedir,'.config')
+    vim_py = join(vim_env_dir,'bin','python')
 
 vim_link = join(vim_env_dir,lib,'python3')
-vim_py = join(vim_env_dir,'bin','python')
 vim_requirements = join(basedir,'ovim','requirements.txt')
 def depend(parser,args):
     if not args.ignore_python:
