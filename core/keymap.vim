@@ -85,6 +85,9 @@ noremap [t  gT
 
 tnoremap <esc><esc><esc>  <C-W>N
 
+" 行首尾切换
+nnoremap <expr> .  col('.') == '1' ? '$':'0'
+vnoremap <expr> .  col('.') == '1' ? '$':'0'
 
 " for vim-which-key
 if exists('g:space_key_map')

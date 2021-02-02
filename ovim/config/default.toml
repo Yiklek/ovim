@@ -319,7 +319,8 @@ level = 1
 repo = "rhysd/accelerated-jk"
 on = [ "<Plug>(accelerated_jk_gj)", "<Plug>(accelerated_jk_gk)",]
 on_map = [ "<Plug>(accelerated",]
-hook_add = "nmap j <Plug>(accelerated_jk_gj)\nnmap k <Plug>(accelerated_jk_gk)\n"
+on_event = ["VimEnter"]
+hook_source = "nmap j <Plug>(accelerated_jk_gj)\nnmap k <Plug>(accelerated_jk_gk)\n"
 
 [plugins."junegunn/vim-peekaboo"]
 level = 2

@@ -146,7 +146,9 @@ set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
 " set t_Co=256
-if (has("termguicolors"))
+if has("termguicolors")
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 " vim 在iterm2下一半启动时间都在加载主题  nvim很快

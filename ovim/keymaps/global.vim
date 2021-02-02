@@ -10,6 +10,3 @@ let s:leader_key_map = {'x':{'name':'+编辑'},'f':{'name':'+文件',},
 
 call ovim#utils#recursive_update(g:leader_key_map,s:leader_key_map)
 
-" 行首尾切换
-nnoremap <expr> .  col('.') == '1' ? '$':'0'
-vnoremap <expr> .  col('.') == '1' ? '$':'0'
