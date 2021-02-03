@@ -11,6 +11,11 @@ make_json = 0
 config_level = 2
 ovim_plug_manager = "dein"
 
+[var]
+root_marker = [".git",".hg",".svn",".root",".project",
+                "compile_commands.json","CMakeLists.txt",
+                "Makefile","makefile"]
+
 [plugins."arakashic/nvim-colors-solarized"]
 level = 0
 repo = "arakashic/nvim-colors-solarized"
@@ -245,8 +250,10 @@ on_event = [ "VimEnter",]
 [plugins."ludovicchabant/vim-gutentags"]
 level = 1
 repo = "ludovicchabant/vim-gutentags"
-hook_source = "source $OVIM_ROOT_PATH/plugins/gutentags.vim"
+hook_source = "source $OVIM_ROOT_PATH/plugins/gutentags.source.vim"
+on_cmd = ['GutentagsUpdate','GutentagsToggleEnabled','GutentagsToggleTrace']
 on_event = [ "VimEnter",]
+hook_post_source = 'source $OVIM_ROOT_PATH/plugins/gutentags.post-source.vim'
 
 [plugins."skywind3000/gutentags_plus"]
 level = 1

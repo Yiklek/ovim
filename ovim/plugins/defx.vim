@@ -29,7 +29,6 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> yy defx#do_action('multi',['copy','yank_path'])
     nnoremap <silent><buffer><expr> dd defx#do_action('move')
     nnoremap <silent><buffer><expr> pp defx#do_action('paste')
-    nnoremap <silent><buffer><expr> l defx#do_action('open')
     nnoremap <silent><buffer><expr> v defx#do_action('open', 'vsplit')
     nnoremap <silent><buffer><expr> s defx#do_action('drop', 'split')
     nnoremap <silent><buffer><expr> \ defx#do_action('open', 'vsplit')
@@ -56,6 +55,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> ;  defx#do_action('repeat')
     nnoremap <silent><buffer><expr> h  defx#is_opened_tree() ? defx#do_action('close_tree') :defx#do_action('cd', ['..'])
     nnoremap <silent><buffer><expr> ~  defx#do_action('cd')
+    nnoremap <silent><buffer><expr> gh  defx#do_action('cd')
     nnoremap <silent><buffer><expr> q  defx#do_action('quit')
     nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select')
     nnoremap <silent><buffer><expr> v  defx#do_action('toggle_select_all')
@@ -65,11 +65,49 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> <C-g>  defx#do_action('print')
     nnoremap <silent><buffer><expr> cd  defx#do_action('change_vim_cwd')
 
-	call defx#custom#column('mark', {
+    call defx#custom#column('mark', {
 	      \ 'readonly_icon': '✗',
 	      \ 'selected_icon': '✓',
 	      \ })
-
+    let b:ovim_defx_help = {  "<CR>":{"name":"Edit"},
+            \ "yy":{"name":"Yank"},
+            \ "dd":{"name":"Delete"},
+            \ "pp":{"name":"Paste"},
+            \ "l":{"name":"OpenTree"},
+            \ "\\":{"name":"Vsplit"},
+            \ "-":{"name":"Split"},
+            \ "t":{"name":"OpenTab"},
+            \ "o":{"name":"OpenTree"},
+            \ "O":{"name":"OpenTreeRecursive"},
+            \ "K":{"name":"NewDirectory"},
+            \ "e":{"name":"NewFile"},
+            \ "ed":{"name":"NewDirectory"},
+            \ "E":{"name":"NewMultiFiles"},
+            \ "C":{"name":"ToggleColumns"},
+            \ "S":{"name":"ToggleSortTime"},
+            \ "dD":{"name":"Delete"},
+            \ "r":{"name":"Rename"},
+            \ "cw":{"name":"Rename"},
+            \ "!":{"name":"ExCommand"},
+            \ "x":{"name":"ExSystem"},
+            \ "yp":{"name":"YankPah"},
+            \ ".":{"name":"ToggleHide"},
+            \ "<c-h>":{"name":"ToggleHide"},
+            \ "<bs>":{"name":"ToggleHide"},
+            \ ";":{"name":"Repeat"},
+            \ "h":{"name":"CloseTree"},
+            \ "~":{"name":"CdHome"},
+            \ "gh":{"name":"CdHome"},
+            \ "q":{"name":"Quit"},
+            \ " ":{"name":"ToggleSelect"},
+            \ "v":{"name":"ToggleSelectAll"},
+            \ "j":{"name":"Down"},
+            \ "k":{"name":"Up"},
+            \ "R":{"name":"Redraw"},
+            \ "<c-g>":{"name":"Print"},
+            \ "cd":{"name":"ChangeVimCwd"},
+            \ }
+      nnoremap <silent><buffer> ? :WhichKey! b:ovim_defx_help<CR>
 endfunction
 
 " Defx git

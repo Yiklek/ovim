@@ -15,7 +15,7 @@ if len(g:gutentags_modules) == 0
 endif
 
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+let g:gutentags_project_root = get(g:,'root_markers',['.root', '.svn', '.git', '.hg', '.project'])
 
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
@@ -58,6 +58,16 @@ nmap <leader>ecf :vertical rightbelow scs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <leader>eci :vertical rightbelow scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <leader>ecd :vertical rightbelow scs find d <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>eca :vertical rightbelow scs find a <C-R>=expand("<cword>")<CR><CR>
+
+nmap <leader>ecS :vertical rightbelow scs find s<space>
+nmap <leader>ecG :vertical rightbelow scs find g<space>
+nmap <leader>ecC :vertical rightbelow scs find c<space>
+nmap <leader>ecT :vertical rightbelow scs find t<space>
+nmap <leader>ecE :vertical rightbelow scs find e<space>
+nmap <leader>ecF :vertical rightbelow scs find f<space>
+nmap <leader>ecI :vertical rightbelow scs find i<space>
+nmap <leader>ecD :vertical rightbelow scs find d<space>
+nmap <leader>ecA :vertical rightbelow scs find a<space>
 let s:leader_key_map = {'e':{'c':{'name':'+cscope',
                                 \ 's':'查找本 C 符号',
                                 \ 'g':'查找本定义',
@@ -68,6 +78,15 @@ let s:leader_key_map = {'e':{'c':{'name':'+cscope',
                                 \ 'f':'查找本文件',
                                 \ 'i':'查找包含本文件的文件',
                                 \ 'a':'查找此符号被赋值的位置',
+                                \ 'S':'查找 C 符号',
+                                \ 'G':'查找定义',
+                                \ 'D':'查找函数调用的函数',
+                                \ 'C':'查找调用本函数的函数',
+                                \ 'T':'查找字符串',
+                                \ 'E':'查找 egrep 模式',
+                                \ 'F':'查找文件',
+                                \ 'I':'查找包含本文件的文件',
+                                \ 'A':'查找符号被赋值的位置',
                                 \ }}}
 call ovim#utils#recursive_update(g:leader_key_map,s:leader_key_map)
 " }}}

@@ -43,7 +43,10 @@
             "rootPatterns": [
                 "compile_commands.json",
                 "compile_flags.txt",
-                ".git"
+                ".git",
+                "Makefile",
+                "makefile",
+                "CMakeLists.txt"
             ],
             "ignoredRootPaths": ["~"]
         },
@@ -59,7 +62,10 @@
                 "compile_commands.json",
                 ".ccls",
                 ".ccls-root",
-                ".git"
+                ".git",
+                "Makefile",
+                "makefile",
+                "CMakeLists.txt"
             ],
             "ignoredRootPaths": ["~"]
         },
