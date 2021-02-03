@@ -28,6 +28,7 @@ set ts=4
 set shiftwidth=4
 set expandtab
 set encoding=utf-8
+autocmd BufEnter * set formatoptions-=o
 "set noexpandtab
 "set noautoindent
 set autochdir
@@ -39,8 +40,8 @@ set shortmess=atI
 "set cursorcolumn
 set vb t_vb=
 au GuiEnter * set t_vb=
-"set mouse=a
-
+set mouse=a
+set backspace=indent,eol,start
 
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -145,13 +146,16 @@ set background=dark
 let g:solarized_italic=0
 "let g:solarized_termtrans = 1
 " set t_Co=256
-if (has("termguicolors"))
+if has("termguicolors")
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 " vim 在iterm2下一半启动时间都在加载主题  nvim很快
 let g:oceanic_material_allow_underline = 1
 " silent! colorscheme solarized
-silent! colorscheme gruvbox
+"silent! colorscheme gruvbox
+silent! colorscheme one
 " if !has("gui_running")
 "     hi Normal guibg=NONE ctermbg=NONE
 " endif

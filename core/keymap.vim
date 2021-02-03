@@ -13,8 +13,8 @@ noremap <c-j> <down>
 noremap <c-k> <up>
 noremap <c-l> <right>
 nnoremap <esc><esc> :silent! nohlsearch<cr>
-nnoremap <leader>fve<space> :edit $MYVIMRC<cr>
-nnoremap <leader>fvs :source $MYVIMRC<cr>
+nnoremap <leader>ve<space> :edit $MYVIMRC<cr>
+nnoremap <leader>vs :source $MYVIMRC<cr>
 "粘贴模式
 set pastetoggle=<F4>
 nmap <F5> :redraw!<cr>
@@ -85,6 +85,9 @@ noremap [t  gT
 
 tnoremap <esc><esc><esc>  <C-W>N
 
+" 行首尾切换
+nnoremap <expr> .  col('.') == '1' ? '$':'0'
+vnoremap <expr> .  col('.') == '1' ? '$':'0'
 
 " for vim-which-key
 if exists('g:space_key_map')
@@ -128,7 +131,7 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       'p':[':bp','上一个buffer'],
                         \       'n':[':bn','下一个buffer']
                         \   },
-                        \ 'f':{'v':{'name':'+vim相关','e':{'name':'编辑配置',' ':[':tabe $MYVIMRC','MYVIMRC']},'s':[':source $MYVIMRC','重新加载配置文件']}},
+                        \ 'v':{'name':'+vim相关','e':{'name':'编辑配置',' ':[':tabe $MYVIMRC','MYVIMRC']},'s':[':source $MYVIMRC','重新加载配置文件']},
                     \}
 if exists('g:leader_key_map')
     call extend(g:leader_key_map,s:leader_key_map)

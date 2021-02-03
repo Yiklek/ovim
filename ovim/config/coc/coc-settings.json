@@ -1,0 +1,88 @@
+{
+    "languageserver": {
+        "go": {
+            "command": "gopls",
+            "rootPatterns": [
+                "go.mod"
+            ],
+            "trace.server": "verbose",
+            "filetypes": [
+                "go"
+            ],
+            "ignoredRootPaths": ["~"]
+        },
+        "python": {
+            "command": "python3",
+            "args": [
+                "-m",
+                "pyls"
+            ],
+            "filetypes": [
+                "python"
+            ],
+            "ignoredRootPaths": ["~"]
+        },
+        "rust": {
+            "command": "rust-analyzer",
+            "filetypes": [
+                "rust"
+            ],
+            "rootPatterns": [
+                "Cargo.toml"
+            ],
+            "ignoredRootPaths": ["~"]
+        },
+        "cland": {
+            "command": "cland",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                "compile_commands.json",
+                "compile_flags.txt",
+                ".git",
+                "Makefile",
+                "makefile",
+                "CMakeLists.txt"
+            ],
+            "ignoredRootPaths": ["~"]
+        },
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                "compile_commands.json",
+                ".ccls",
+                ".ccls-root",
+                ".git",
+                "Makefile",
+                "makefile",
+                "CMakeLists.txt"
+            ],
+            "ignoredRootPaths": ["~"]
+        },
+        "sh": {
+            "command": "bash-language-server",
+            "args": [
+                "start"
+            ],
+            "filetypes": [
+                "sh",
+                "shell"
+            ],
+            "rootPatterns": [
+                ".git",
+                ".root"
+            ],
+            "ignoredRootPaths": ["~"]
+        }
+    }
+}

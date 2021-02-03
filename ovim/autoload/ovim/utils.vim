@@ -14,18 +14,19 @@ function! ovim#utils#keymap(type, key, value, ...) abort
     " other operation
 endfun
 
-function ovim#utils#log(msg) abort
+function ovim#utils#log(...) abort
     let time = strftime('%H:%M:%S')
-    let log = '[ovim] [' . time . '] ' . a:msg
-    echom log
+	let l:msg = join(a:000,' ')
+    let log = '[ovim][' . time . '][info]:' . l:msg
+	echom log
 endfun
-function ovim#utils#warning(msg) abort
+function ovim#utils#warn(...) abort
     let time = strftime('%H:%M:%S')
-    let log = '[ovim] [' . time . '] ' . a:msg
-	echohl WarningMsg
-    echom log
-	echohl None
+	let l:msg = join(a:000,' ')
+    let log = '[ovim][' . time . '][info]:' . l:msg
+	echohl WarningMsg | echom log | echohl None
 endfun
+
 
 " 暂时使用json  后续支持toml yaml
 function ovim#utils#load_config(filename) abort
@@ -75,12 +76,23 @@ endfun
 function ovim#utils#source(filename) abort
 	exe 'source '.a:filename
 endfun
+function ovim#utils#try_source(filename) abort
+	try
+		exe 'source '.a:filename
+	cache
+		call ovim#utils#warn(v:errmsg)
+	endtry
+endfun
 
 function s:toml2json(toml)
 	if executable('rq')
-		let l:cmd = 'rq --input-toml --output-json --format indented'
+		let l:cmd = 'rq --input-toml --output-json'
+	elseif executable(expand('~/.cache/venv/vim/bin/python3'))
+		let l:cmd = expand('~/.cache/venv/vim/bin/python3').' -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
 	elseif executable('python3')
 		let l:cmd = 'python3 -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
+	elseif executable('python')
+		let l:cmd = 'python -c "import json,toml,sys; t = toml.loads(sys.stdin.read()); print(json.dumps(t))" '
 	else
 		throw "OvimError:0000: one of python3 toml or rq required!"
 	endif
@@ -93,12 +105,12 @@ function ovim#utils#recursive_update(source,update)
        return
     endif
 	for [k,v] in items(a:update)
-		if !exists('a:source.'.k)
-			let a:source[k] = {}
-		endif
-        if type(v) != v:t_dict
-            let a:source[k] = v
+		if !has_key(a:source,k) || type(v) != v:t_dict
+			let a:source[k] = v
         else
+			if type(a:source[k]) != v:t_dict
+				let a:source[k] = {}
+			endif
             call ovim#utils#recursive_update(a:source[k],v)
         endif
     endfor
@@ -114,16 +126,20 @@ function ovim#utils#dein_sourced()
 			call add(l:sourced,v.name)
 		endif
 	endfor
-	echo l:count len(l:ps)
-	echo l:sourced
+	OvimLogInfo l:count len(l:ps)
+	OvimLogInfo l:sourced
+endfunction
+
+function ovim#utils#copy(src,dst)
+	if !filewritable(a:dst)
+		if !isdirectory(fnamemodify(a:dst,":p:h"))
+			silent! call mkdir(fnamemodify(a:dst,":p:h"), 'p')
+		endif
+		let l:str = readfile(a:src)
+        call writefile(l:str,a:dst)
+	endif
 endfunction
 
 function ovim#utils#copy_config()
-	if !filewritable(g:vim_path.'/config/custom.toml')
-		if !isdirectory(g:vim_path.'/config')
-			silent! call mkdir(g:vim_path.'/config', 'p')
-		endif
-		let l:config_str = readfile(g:ovim_root_path.'/config/default.toml')
-        call writefile(l:config_str,g:vim_path.'/config/custom.toml')
-	endif
+	call ovim#utils#copy(g:ovim_root_path.'/config/default.toml',g:vim_path.'/config/custom.toml')
 endfunction

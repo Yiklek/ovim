@@ -4,7 +4,7 @@ let s:self = ovim#modules#new()
 
 function ovim#modules#autocomplete#load(...) abort
     let s:self.name = 'autocomplete'
-    let s:self.method = 'deoplete'
+    let s:self.method = 'auto'
     if exists('a:1') && type(a:1) == v:t_dict
         for [k,v] in items(a:1)
             if k !=# 'name'
@@ -17,35 +17,87 @@ function ovim#modules#autocomplete#load(...) abort
 endfun
 
 function s:self.plugins() abort
-
+    if s:self.method ==# 'auto'
+      " if has node,use coc
+      if executable('node')
+        let s:self.method = 'coc'
+      else
+        let s:self.method = 'ncm2'
+      endif
+    endif
     let s:self.plugs = {}
-    if s:self.method ==# 'coc'
-        let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim", "rev": "release","branch": "release", "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim"}
-    elseif s:self.method ==# 'deoplete'
-        let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
-                                \    "build":"sh -c 'bash install.sh'","rev":"next","branch": "next",
-                                \    "on_event":["InsertEnter","CursorHold"],
-                                \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
-                                \    "hook_post_update":"bash install.sh"
-                                \    }
+    call s:plugins_{s:self.method}()
+    return s:self.plugs
+endfun
+
+function s:plugins_coc()
+  let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
+                        \ "rev": "release","branch": "release",
+                        \ "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim",
+                        \ "on_event":["VimEnter"]
+                        \}
+endfunction
+
+function s:plugins_deoplete()
         let s:self.plugs['Shougo/deoplete.nvim'] = {
     \        "repo": "Shougo/deoplete.nvim",
     \        "do": ":UpdateRemotePlugins",
-    \        "on_event":['InsertEnter'],
+    \        "on_event":["VimEnter"],
     \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-deoplete.vim"
     \    }
         let s:self.plugs['Shougo/neco-vim'] = { "repo": "Shougo/neco-vim","ft":"vim",'on_source':'deoplete.nvim'}
+    call s:plugins_lcn()
+endfunction
 
-    elseif s:self.method ==# 'ycm'
-        let s:self.plugs['Valloric/YouCompleteMe'] = {
+function s:plugins_ncm2()
+    let s:self.plugs['ncm2/ncm2'] = {
+    \        "repo": "ncm2/ncm2",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-ncm2.post-source.vim"
+    \    }
+    let s:self.plugs['ncm2/ncm2-bufword'] = {
+    \        "repo": "ncm2/ncm2-bufword",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let s:self.plugs['ncm2/ncm2-path'] = {
+    \        "repo": "ncm2/ncm2-path",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let s:self.plugs['ncm2/ncm2-vim'] = {
+    \        "repo": "ncm2/ncm2-vim",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let s:self.plugs['Shougo/neco-vim'] = { "repo": "Shougo/neco-vim","ft":"vim",'on_source':'ncm2-vim'}
+    let s:self.plugs['ncm2/ncm2-ultisnips'] = {
+    \        "repo": "ncm2/ncm2-ultisnips",
+    \        "do": ":UpdateRemotePlugins",
+    \        "on_event":["VimEnter"],
+    \    }
+    let g:ovim_global_options.plugins["roxma/nvim-yarp"]['if'] = 1
+    let g:ovim_global_options.plugins["roxma/vim-hug-neovim-rpc"]['if'] = 1
+    call s:plugins_lcn()
+endfunction
+
+function s:plugins_ycm()
+  let s:self.plugs['Valloric/YouCompleteMe'] = {
     \        "repo": "Valloric/YouCompleteMe",
-    \        "on_event":['InsertEnter']
+    \        "on_event":["VimEnter","GUIEnter"],
     \        "hook_source":"source $OVIM_ROOT_PATH/plugins/complete-youcompleteme.vim"
-    \
-    \    })
-    endif
-    return s:self.plugs
-endfun
+    \    }
+endfunction
+
+function s:plugins_lcn()
+  let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
+                                \    "build":"sh -c 'bash install.sh'","rev":"next","branch": "next",
+                                \    "on_event":["VimEnter"],
+                                \    "hook_source":"source $OVIM_ROOT_PATH/plugins/languageclient.vim",
+                                \    "hook_post_update":"bash install.sh"
+                                \    }
+endfunction
 
 function s:self.config() abort
     set completeopt-=preview
@@ -57,74 +109,7 @@ function s:self.config() abort
 
     inoremap <expr> <CR> pumvisible() ?  "\<C-y>" : "\<CR>"
 
-    if s:self.method ==# 'coc'
-        let g:coc_user_config = {
-                                \ "languageserver": {
-                                \   "go": {
-                                \           "command": "gopls",
-                                \           "rootPatterns": ["go.mod"],
-                                \           "trace.server": "verbose",
-                                \           "filetypes": ["go"]
-                                \       },
-                                \   "python":{
-                                \           "command":"python3",
-                                \           "args":["-m","pyls"],
-                                \           "filetypes":["python"]
-                                \       },
-                                \   "rust":{'command':'rust-analyzer','filetypes':['rust'],'rootPatterns':['Cargo.toml']}
-                                \ }
-                                \ }
-        let g:coc_global_extensions = ['coc-marketplace','coc-json','coc-python']
-          function! g:ovim#modules#autocomplete.func_show_doc() abort
-            call CocActionAsync('doHover')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_go_to_def() abort
-            call CocAction('jumpDefinition')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_go_to_declaration() abort
-            call CocAction('jumpDeclaration')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_go_to_typedef() abort
-            call CocAction('jumpTypeDefinition')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_go_to_impl() abort
-            call CocAction('jumpImplementation')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_refactor() abort
-            call CocActionAsync('refactor')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_rename() abort
-            call CocActionAsync('rename')
-          endfunction
-
-          function! g:ovim#modules#autocomplete.func_references() abort
-            call CocAction('jumpReferences')
-          endfunction
-          function! g:ovim#modules#autocomplete.func_format() abort
-            call CocAction('format')
-          endfunction
-         let g:ovim#modules#autocomplete.func_manual = function('coc#refresh')
-    endif
-
-    if s:self.method ==# 'deoplete'
-        let g:ovim#modules#autocomplete.func_manual = function('deoplete#manual_complete')
-        let g:ovim#modules#autocomplete.func_show_doc = function('LanguageClient#textDocument_hover')
-        let g:ovim#modules#autocomplete.func_go_to_def = function('LanguageClient#textDocument_definition')
-        let g:ovim#modules#autocomplete.func_go_to_typedef = function('LanguageClient#textDocument_typeDefinition')
-        let g:ovim#modules#autocomplete.func_go_to_impl = function('LanguageClient#textDocument_implementation')
-        let g:ovim#modules#autocomplete.func_rename = function('LanguageClient#textDocument_rename')
-        let g:ovim#modules#autocomplete.func_references = function('LanguageClient#textDocument_references')
-        let g:ovim#modules#autocomplete.func_go_to_declaration = function('LanguageClient#textDocument_declaration')
-        let g:ovim#modules#autocomplete.func_document_symbol = function('LanguageClient#textDocument_documentSymbol')
-        let g:ovim#modules#autocomplete.func_refactor = function('empty')
-        let g:ovim#modules#autocomplete.func_format = function('LanguageClient#textDocument_formatting')
-    endif
+    call s:config_{s:self.method}()
 
     if s:self.method != 'ycm'
         inoremap <silent><expr> <leader><TAB>
@@ -163,8 +148,84 @@ function s:self.config() abort
     call ovim#utils#recursive_update(g:leader_key_map,{'<tab>':'Trigger Complete(Insert Mode)'})
 endfun
 
+function s:config_coc()
+autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
+                                \ let b:coc_enabled=0 |
+                                \ endif
+let g:coc_config_home = g:ovim_root_path.'/config/coc'
+let g:coc_data_home = g:ovim_cacha_path.'/coc'
+imap <C-l> <Plug>(coc-snippets-expand)
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  let g:coc_user_config = {
+\    "session": {
+\     "directory":g:ovim_cacha_path.'/coc-lists-session'
+\    },
+\}
+  let g:coc_global_extensions = ['coc-marketplace','coc-json','coc-snippets',
+                    \ 'coc-python','coc-lists','coc-yank','coc-vimlsp',"coc-toml"]
+  imap <leader><space><space> <Plug>(coc-snippets-expand)
+  let g:coc_snippet_next = '<c-j>'
+  let g:coc_snippet_prev = '<c-k>'
+    function! g:ovim#modules#autocomplete.func_show_doc() abort
+      call CocActionAsync('doHover')
+    endfunction
 
+    function! g:ovim#modules#autocomplete.func_go_to_def() abort
+      call CocActionAsync('jumpDefinition')
+    endfunction
 
+    function! g:ovim#modules#autocomplete.func_go_to_declaration() abort
+      call CocActionAsync('jumpDeclaration')
+    endfunction
+
+    function! g:ovim#modules#autocomplete.func_go_to_typedef() abort
+      call CocActionAsync('jumpTypeDefinition')
+    endfunction
+
+    function! g:ovim#modules#autocomplete.func_go_to_impl() abort
+      call CocActionAsync('jumpImplementation')
+    endfunction
+
+    function! g:ovim#modules#autocomplete.func_refactor() abort
+      call CocActionAsync('refactor')
+    endfunction
+
+    function! g:ovim#modules#autocomplete.func_rename() abort
+      call CocActionAsync('rename')
+    endfunction
+
+    function! g:ovim#modules#autocomplete.func_references() abort
+      call CocActionAsync('jumpReferences')
+    endfunction
+    function! g:ovim#modules#autocomplete.func_format() abort
+      call CocActionAsync('format')
+    endfunction
+    let g:ovim#modules#autocomplete.func_manual = function('coc#refresh')
+endfunction
+
+function s:config_deoplete()
+    let g:ovim#modules#autocomplete.func_manual = function('deoplete#manual_complete')
+    call s:config_lcn()
+endfunction
+
+function s:config_ncm2()
+    let g:ovim#modules#autocomplete.func_manual = function('ncm2#force_trigger')
+    call s:config_lcn()
+endfunction
+
+function s:config_lcn()
+    let g:ovim#modules#autocomplete.func_show_doc = function('LanguageClient#textDocument_hover')
+    let g:ovim#modules#autocomplete.func_go_to_def = function('LanguageClient#textDocument_definition')
+    let g:ovim#modules#autocomplete.func_go_to_typedef = function('LanguageClient#textDocument_typeDefinition')
+    let g:ovim#modules#autocomplete.func_go_to_impl = function('LanguageClient#textDocument_implementation')
+    let g:ovim#modules#autocomplete.func_rename = function('LanguageClient#textDocument_rename')
+    let g:ovim#modules#autocomplete.func_references = function('LanguageClient#textDocument_references')
+    let g:ovim#modules#autocomplete.func_go_to_declaration = function('LanguageClient#textDocument_declaration')
+    let g:ovim#modules#autocomplete.func_document_symbol = function('LanguageClient#textDocument_documentSymbol')
+    let g:ovim#modules#autocomplete.func_refactor = function('empty')
+    let g:ovim#modules#autocomplete.func_format = function('LanguageClient#textDocument_formatting')
+endfunction
 
 function! s:check_back_space() abort "{{{
     let col = col('.') - 1
