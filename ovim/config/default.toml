@@ -87,7 +87,6 @@ hook_post_source = "source $OVIM_ROOT_PATH/plugins/defx.vim"
 [plugins."kristijanhusak/defx-git"]
 level = 1
 repo = "kristijanhusak/defx-git"
-on_source = [ "defx.nvim",]
 
 [plugins."kristijanhusak/defx-icons"]
 level = 1
@@ -353,14 +352,10 @@ on_event = [ "VimEnter",]
 [plugins."cespare/vim-toml"]
 level = 1
 repo = "cespare/vim-toml"
-for = "toml"
-on_ft = "toml"
 
 [plugins."elzr/vim-json"]
 level = 1
 repo = "elzr/vim-json"
-for = "json"
-on_ft = "json"
 
 [plugins."mg979/vim-visual-multi"]
 level = 2
