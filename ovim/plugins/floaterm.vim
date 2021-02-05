@@ -13,9 +13,9 @@ nnoremap <leader>etn :FloatermNew --wintype=float --position=center --width=0.8 
 nnoremap <leader>et0 :FloatermFirst<CR>
 nnoremap <leader>et9 :FloatermLast<CR>
 nnoremap <leader>etk :FloatermKill<CR>
-nnoremap <leader>etw<space> :FloatermNew --wintype=normal --position=right --width=0.3<CR>
-nnoremap <leader>etwnr :FloatermNew --wintype=normal --position=right --width=0.3<CR>
-nnoremap <leader>etwnb :FloatermNew --wintype=normal --position=bottom --width=0.3<CR>
+nnoremap <leader>etw<space> :FloatermNew --wintype=vsplit --position=right --width=0.3<CR>
+nnoremap <leader>etwnr :FloatermNew --wintype=vsplit --position=right --width=0.3<CR>
+nnoremap <leader>etwnb :FloatermNew --wintype=split --position=bottom --width=0.3<CR>
 
 tnoremap <esc><tab><space>  <c-\><c-n>:FloatermToggle<CR>
 tnoremap <esc><tab>[  <c-\><c-n>:FloatermPrev<CR>
@@ -39,9 +39,9 @@ call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
                                     \    '?':[':echo "in terminal,prefix is <esc><tab>"','help'],
                                     \    'w':{'name':'+Normal Window',
                                     \           'n':{'name':'+New',
-                                    \               ' ':[':FloatermNew --wintype=normal --position=right --width=0.3','Right Window Terminal'],
-                                    \               'r':[':FloatermNew --wintype=normal --position=right --width=0.3','Right Window Terminal'],
-                                    \               'b':[':FloatermNew --wintype=normal --position=bottom --width=0.3','Bottom Window Terminal'],
+                                    \               ' ':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
+                                    \               'r':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
+                                    \               'b':[':FloatermNew --wintype=split --position=bottom --width=0.3','Bottom Window Terminal'],
                                     \               },
                                     \           ' ':[':FloatermNew --wintype=normal --position=right --width=0.3','Right Window Terminal'],
                                     \       }
