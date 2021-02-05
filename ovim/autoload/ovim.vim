@@ -6,6 +6,11 @@ let $VIM_PATH  = g:vim_path
 
 let g:ovim_cacha_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
 
+if has('win64') || has('win32') || has('win16') || has('win95')
+    let g:ovim_default_python_path = g:ovim_cacha_path.'/python3-venv/Scripts/python.exe'
+else
+    let g:ovim_default_python_path = g:ovim_cacha_path.'/python3-venv/bin/python'
+endif
 
 let g:ovim_global_options = {}
 
