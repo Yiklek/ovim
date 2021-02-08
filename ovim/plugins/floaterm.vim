@@ -43,6 +43,6 @@ call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
                                     \               'r':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
                                     \               'b':[':FloatermNew --wintype=split --position=bottom --width=0.3','Bottom Window Terminal'],
                                     \               },
-                                    \           ' ':[':FloatermNew --wintype=normal --position=right --width=0.3','Right Window Terminal'],
+                                    \           ' ':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
                                     \       }
                                 \ }})
