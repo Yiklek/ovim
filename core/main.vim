@@ -42,6 +42,8 @@ set vb t_vb=
 au GuiEnter * set t_vb=
 set mouse=a
 set backspace=indent,eol,start
+set splitright
+set splitbelow
 
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
