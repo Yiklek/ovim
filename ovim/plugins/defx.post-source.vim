@@ -14,7 +14,7 @@ let s:defx_options = {
       \ 'columns':'git:mark:indent:icons:filename:type:size:time',
       \ }
 if has('nvim')
-      s:defx_options['floating_preview'] = 1
+     let s:defx_options['floating_preview'] = 1
 endif
 call defx#custom#option('_', s:defx_options)
 " Avoid the white space highting issue
