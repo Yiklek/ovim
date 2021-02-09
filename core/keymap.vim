@@ -1,3 +1,8 @@
+" File: keymap.vim
+" Author: Yiklek
+" Description: keymap
+" Last Modified: 二月 09, 2021
+" Copyright (c) 2021 Yiklek
 
 " basic keymap {{{
 map <Left> <Nop>
@@ -113,7 +118,6 @@ let s:leader_key_map = {'<CR>':'换行',
                         \       's':['5<c-w>-','高度减小'],
                         \       'a':['5<c-w><','宽度减小'],
                         \       'd':['5<c-w>>','宽度增加'],
-                        \       'z':['Zoom()','最大化窗口']
                         \   },
                         \ 't':{'name':'+标签',
                         \       'q':[':tabc','关闭当前标签'],

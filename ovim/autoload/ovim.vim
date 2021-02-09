@@ -1,3 +1,8 @@
+" File: ovim.vim
+" Author: Yiklek
+" Description: ovim init
+" Last Modified: 二月 09, 2021
+" Copyright (c) 2021 Yiklek
 
 let g:ovim_root_path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let $OVIM_ROOT_PATH = g:ovim_root_path
@@ -60,9 +65,12 @@ function! ovim#init(...) abort
         endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
+
+    autocmd VimEnter * call s:addons(g:ovim_global_options.addons)
     autocmd VimEnter * OvimSource g:ovim_root_path.'/keymaps/global.vim'
 endfunction
 
+" must be invoked after read config
 function! s:setup_python()
     if !exists('g:python3_setup')
         if has('win64') || has('win32') || has('win16') || has('win95')
@@ -74,14 +82,6 @@ function! s:setup_python()
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
             let &rtp = python3_home.'/lib,'.&rtp
         endif
-"python3 << EOF
-"import sys,vim,os,glob
-"python3_host_prog = vim.eval('expand(g:python3_host_prog)')
-"version = sys.version_info
-"path = os.path.abspath(python3_host_prog + '/../..')
-"sys.path.append(os.path.join(path,"lib",'python{}.{}'.format(version.major,version.minor), "site-packages"))
-"sys.path.append(os.path.join(path,"Lib",'site-packages'))
-"EOF
     let g:python3_setup = 1
     endif
 endfunction
@@ -117,16 +117,26 @@ endfunction
 
 function! s:modules(mdls) abort
     for m in values(a:mdls)
-        if get(g:ovim_global_options,'config_level',10) < get(m,'level',0)
+        if !ovim#utils#check_level_and_enable(m)
             continue
         endif
-        if exists('m.enable') && m.enable == v:false
-        else
-            let module = ovim#modules#load(m.name,m)
-            let l:module_plugins = module.plugins()
-            call extend(g:ovim_global_options['plugins'],l:module_plugins)
-            call module.config()
-        endif
-
+        let module = ovim#modules#load(m.name,m)
+        let l:module_plugins = module.plugins()
+        call extend(g:ovim_global_options['plugins'],l:module_plugins)
+        call module.config()
     endfor
 endfunction
+
+function! s:addons(addons) abort
+    if get(g:,"ovim_addons_loaded",0)
+        return
+    endif
+    for [key,addon] in items(a:addons)
+        if !ovim#utils#check_level_and_enable(addon)
+            continue
+        endif
+        call ovim#addons#load(key,addon)
+    endfor 
+    let g:ovim_addons_loaded = 1
+endfunction
+

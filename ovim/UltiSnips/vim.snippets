@@ -1,0 +1,8 @@
+snippet header "vim header with copyright" b
+" File: ${1:`!v expand('%:t')`}
+" Author: ${2:ovim}
+" Description: ${3}
+" Last Modified: ${4:`!v strftime("%m %d, %Y")`}
+" Copyright (c) ${5:`!v strftime("%Y")`} ${6:ovim}
+${0}
+endsnippet

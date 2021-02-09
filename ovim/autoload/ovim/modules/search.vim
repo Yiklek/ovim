@@ -1,8 +1,10 @@
-"require rg fzf
-"
-"
-"
-"
+" File: search.vim
+" Author: Yiklek
+" Description: module fuzzy seach
+" Last Modified: 二月 09, 2021
+" Copyright (c) 2021 Yiklek
+
+" require rg fzf
 
 let s:self = ovim#modules#new()
 
@@ -135,7 +137,7 @@ function s:self.config() abort
         call s:keymap_list('f',s:fzf_cmds)
     endif
     if index(self.method,'leaderf') >= 0
-        let g:space_key_map.flf = [':Leaderf rg','LeaderfRg']
+        let g:space_key_map.flf = [':Leaderf file','LeaderfFile']
         nnoremap flf :LeaderfFile<CR>
         nnoremap <space>flf :LeaderfFile<CR>
 

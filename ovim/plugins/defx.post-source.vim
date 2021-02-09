@@ -3,7 +3,7 @@
 
 nmap <silent> == :Defx<CR>
 call ovim#utils#recursive_update(g:space_key_map,{'==':[':Defx','defx']})
-call defx#custom#option('_', {
+let s:defx_options = {
       \ 'winwidth': 40,
       \ 'split': 'vertical',
       \ 'show_ignored_files': 0,
@@ -11,8 +11,12 @@ call defx#custom#option('_', {
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1,
-      \ 'columns':'git:mark:indent:icons:filename:type:size:time'
-      \ })
+      \ 'columns':'git:mark:indent:icons:filename:type:size:time',
+      \ }
+if has('nvim')
+      s:defx_options['floating_preview'] = 1
+endif
+call defx#custom#option('_', s:defx_options)
 " Avoid the white space highting issue
 if !has('nvim')
       autocmd FileType defx match ExtraWhitespace /^^/
@@ -64,6 +68,7 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> R  defx#do_action('redraw')
     nnoremap <silent><buffer><expr> <C-g>  defx#do_action('print')
     nnoremap <silent><buffer><expr> cd  defx#do_action('change_vim_cwd')
+    nnoremap <silent><buffer><expr> <c-p>  defx#do_action('preview')
 
     call defx#custom#column('mark', {
 	      \ 'readonly_icon': '✗',
@@ -106,6 +111,7 @@ function! s:defx_my_settings() abort
             \ "R":{"name":"Redraw"},
             \ "<c-g>":{"name":"Print"},
             \ "cd":{"name":"ChangeVimCwd"},
+            \ "<c-p>":{"name":"Preview"},
             \ }
       nnoremap <silent><buffer> ? :WhichKey! b:ovim_defx_help<CR>
 endfunction

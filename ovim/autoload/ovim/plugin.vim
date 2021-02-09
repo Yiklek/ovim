@@ -1,5 +1,8 @@
-
-" option: plug dein(todo)
+" File: plugin.vim
+" Author: Yiklek
+" Description: plugin manager
+" Last Modified: 二月 09, 2021
+" Copyright (c) 2021 Yiklek
 
 function ovim#plugin#begin(arg)
     let g:ovim_plug_manager = get(g:ovim_global_options,'ovim_plug_manager','dein')
@@ -103,7 +106,7 @@ function s:_plug_will_load(plugin)
     if exists('a:plugin._will_load')
         return a:plugin._will_load
     endif
-    let l:level =  get(g:ovim_global_options,'config_level',10) < get(a:plugin,'level',0) ? 0 : 1
+    let l:level = ovim#utils#check_level(a:plugin)
     let l:if = !(exists('a:plugin.if')
         \ && (type(a:plugin['if']) == v:t_number && a:plugin.if == 0
             \ || type(a:plugin['if']) == v:t_string && !eval(a:plugin['if'])))

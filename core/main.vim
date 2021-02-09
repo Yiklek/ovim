@@ -1,3 +1,9 @@
+" File: main.vim
+" Author: Yiklek
+" Description: main
+" Last Modified: 二月 09, 2021
+" Copyright (c) 2021 Yiklek
+
 " keymaps:
 " F2 file tree
 " F3 tag list
@@ -192,43 +198,6 @@ function! WSLClip()
 endfunction
 " }}}
 
-" zoom {{{
-function! Zoom ()
-    " check if is the zoomed state (tabnumber > 1 && window == 1)
-    if tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1
-        let l:cur_winview = winsaveview()
-        let l:cur_bufname = bufname('')
-        tabclose
-
-        " restore the view
-        if l:cur_bufname == bufname('')
-            call winrestview(cur_winview)
-        endif
-    else
-        tab split
-    endif
-endfunction
-
-nmap <leader>wz :call Zoom()<CR>
-" }}}
-
-" remove whitespace {{{
-" Remove trailing whitespace when writing a buffer, but not for diff files.
-" From: Vigil
-" @see http://blog.bs2.to/post/EdwardLee/17961
-function! RemoveTrailingWhitespace()
-    let ignore_filetypes = ['diff', 'markdown']
-    if index(ignore_filetypes,&ft) < 0
-        let b:curcol = col(".")
-        let b:curline = line(".")
-        silent! %s/\s\+$//
-        silent! %s/\(\s*\n\)\+\%$//
-        call cursor(b:curline, b:curcol)
-    endif
-endfunction
-autocmd BufWritePre * call RemoveTrailingWhitespace()
-" }}}
-
 " max window {{{
 function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
@@ -263,7 +232,7 @@ function! DisplayHelp()
 endfunction
 nmap <F9> :call DisplayHelp()<cr>
 try
-let g:space_key_map['<F9>'] = ['<F6>','Show Help(todo)']
+let g:space_key_map['<F9>'] = [':call DisplayHelp()','Show Help(todo)']
 catch
 endtry
 " }}}
@@ -273,6 +242,6 @@ endtry
 
 
 " 定位到退出位置并移动到屏幕中央
-if has("autocmd")
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif | normal! zvzz
-endif
+"if has("autocmd")
+    "au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif | normal! zvzz
+"endif

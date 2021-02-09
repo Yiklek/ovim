@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+# File: h.py
+# Author: Yiklek
+# Description: helper for installing vim config
+# Last Modified: 二月 09, 2021
+# Copyright (c) 2021 Yiklek
+
 import argparse
 import os
 import sys
@@ -37,7 +43,7 @@ def depend(_, args):
         os.symlink(vim_dep_source, vim_link,
                    target_is_directory=isdir(vim_dep_source))
     if args.node:
-        os.system('npm install -g neovim bash-language-server')
+        os.system('npm install -g neovim bash-language-server yarn')
 
 
 def install(parser, args):

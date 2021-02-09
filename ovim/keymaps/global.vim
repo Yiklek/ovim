@@ -1,3 +1,9 @@
+" File: global.vim
+" Author: Yiklek
+" Description: global keymaps
+" Last Modified: 02 10, 2021
+" Copyright (c) 2021 Yiklek
+
 let s:leader_ve = {'m':[':tabe $OVIM_ROOT_PATH/../core/main.vim','main'],
   \  'o':[':tabe $OVIM_ROOT_PATH/autoload/ovim.vim','ovim'],
   \  'c':[':tabe $OVIM_ROOT_PATH/config/default.toml','ovim config'],

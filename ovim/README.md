@@ -40,7 +40,7 @@ python统一使用`$HOME/.cache/venv/vim`下的虚拟环境，依赖也安装在
 * bash-language-server
 
 ```bash
-npm install -g neovim bash-language-server
+npm install -g neovim bash-language-server yarn
 ```
 
 ### other
@@ -68,8 +68,7 @@ brew install --HEAD universal-ctags/universal-ctags
 # TODO
 
 * os适配
-* 快捷键修改
-* kitty
-* i3
 * vim bookmark manager
 * module sub plugin batch config
+* tmux
+* denite

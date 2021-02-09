@@ -1,3 +1,8 @@
+" File: autocomplete.vim
+" Author: Yiklek
+" Description: module autocomplete
+" Last Modified: 02 10, 2021
+" Copyright (c) 2021 Yiklek
 
 
 let s:self = ovim#modules#new()

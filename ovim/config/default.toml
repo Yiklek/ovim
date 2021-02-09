@@ -1,7 +1,9 @@
 hook_before_setup_plugin = """set updatetime=1000
 set wildmenu
 set lazyredraw
-let &t_ut=''"""
+let &t_ut=''
+set timeoutlen=300
+"""
 hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
 make_json = 0
@@ -82,8 +84,8 @@ level = 2
 repo = "Shougo/defx.nvim"
 do = ":UpdateRemotePlugins"
 on_cmd = "Defx"
-hook_add = "source $OVIM_ROOT_PATH/keymaps/defx.vim"
-hook_post_source = "source $OVIM_ROOT_PATH/plugins/defx.vim"
+hook_add = "source $OVIM_ROOT_PATH/keymaps/defx.add.vim"
+hook_post_source = "source $OVIM_ROOT_PATH/plugins/defx.post-source.vim"
 
 [plugins."kristijanhusak/defx-git"]
 level = 2
@@ -399,7 +401,7 @@ level = 3
 repo = "iamcco/markdown-preview.nvim"
 on_ft = ["markdown","pandoc.markdown","rmd"]
 for = ["markdown","pandoc.markdown","rmd"]
-#build = "sh -c 'cd app && yarn install'"
+build = "sh -c 'cd app && yarn install'"
 
 [plugins."yianwillis/vimcdoc"]
 level = 1
@@ -467,3 +469,15 @@ level = 2
 name = "search"
 method = [ "leaderf", "ctrlp", "fzf",]
 leader_prefix = "s"
+
+[addons.common]
+level = 0
+enable = 1
+
+[addons.edit]
+level = 0
+enable = 1
+
+[addons.window]
+level = 0
+enable = 1

@@ -1,3 +1,9 @@
+" File: utils.vim
+" Author: Yiklek
+" Description: utilities
+" Last Modified: 二月 09, 2021
+" Copyright (c) 2021 Yiklek
+
 let g:ovim_keymap_order = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
 					\ 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 					\ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
@@ -23,7 +29,7 @@ endfun
 function ovim#utils#warn(...) abort
     let time = strftime('%H:%M:%S')
 	let l:msg = join(a:000,' ')
-    let log = '[ovim][' . time . '][info]:' . l:msg
+    let log = '[ovim][' . time . '][warn]:' . l:msg
 	echohl WarningMsg | echom log | echohl None
 endfun
 
@@ -155,4 +161,17 @@ function! ovim#utils#get_hightlight(group)
     endif
   endfor
   return dict
+endfunction
+
+function! ovim#utils#check_level(arg)
+    return get(g:ovim_global_options,'config_level',10) < get(a:arg,'level',0) ? 0 : 1
+endfunction
+
+" check pass return 1.else return 0
+function ovim#utils#check_level_and_enable(arg)
+    if !ovim#utils#check_level(a:arg)
+        \ || !get(a:arg,'enable',1)
+        return 0
+    endif
+    return 1
 endfunction

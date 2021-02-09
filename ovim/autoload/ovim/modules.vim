@@ -1,3 +1,8 @@
+" File: modules.vim
+" Author: Yiklek
+" Description: ovim modules
+" Last Modified: 02 10, 2021
+" Copyright (c) 2021 Yiklek
 
 
 "{name:'','plugins':[{ 'name':'name',option:{} }]}
