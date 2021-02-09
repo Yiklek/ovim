@@ -117,7 +117,7 @@ endfunction
 
 function! s:modules(mdls) abort
     for m in values(a:mdls)
-        if get(g:ovim_global_options,'config_level',2) < get(m,'level',0)
+        if get(g:ovim_global_options,'config_level',10) < get(m,'level',0)
             continue
         endif
         if exists('m.enable') && m.enable == v:false

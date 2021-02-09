@@ -143,3 +143,16 @@ endfunction
 function ovim#utils#copy_config()
 	call ovim#utils#copy(g:ovim_root_path.'/config/default.toml',g:vim_path.'/config/custom.toml')
 endfunction
+
+function! ovim#utils#get_hightlight(group)
+  let output = execute('hi ' . a:group)
+  let list = split(output, '\s\+')
+  let dict = {}
+  for item in list
+    if match(item, '=') > 0
+      let splited = split(item, '=')
+      let dict[substitute(splited[0],'\s\|\n','','')] = substitute(splited[1],'\s\|\n','','')
+    endif
+  endfor
+  return dict
+endfunction
