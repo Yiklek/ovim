@@ -1,9 +1,8 @@
 hook_before_setup_plugin = """set updatetime=1000
+set timeoutlen=300
 set wildmenu
 set lazyredraw
-let &t_ut=''
-set timeoutlen=300
-"""
+let &t_ut=''"""
 hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
 make_json = 0

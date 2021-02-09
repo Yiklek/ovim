@@ -77,10 +77,12 @@ function! s:setup_python()
             let g:python3_host_prog = get(g:,'python3_host_prog',g:ovim_cacha_path.'/python3-venv/Scripts/python.exe')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
+            let $PATH = $PATH.';'.expand(python3_home.'/bin')
         else
             let g:python3_host_prog = get(g:,'python3_host_prog',g:ovim_cacha_path.'/python3-venv/bin/python')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
             let &rtp = python3_home.'/lib,'.&rtp
+            let $PATH = $PATH.":".python3_home.'/bin'
         endif
     let g:python3_setup = 1
     endif
