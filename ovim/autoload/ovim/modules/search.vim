@@ -107,7 +107,15 @@ function s:method_plugins_fzf() abort
 \    },
 \}
 endfun
-
+let s:denite_cmds = ["Denite"]
+function s:method_plugins_denite() abort
+    return {'Shougo/denite.nvim':{
+\    "repo" : "Shougo/denite.nvim",
+\    "on_cmd" : s:denite_cmds,
+\    "hook_source": "source $OVIM_ROOT_PATH/plugins/denite.post-source.vim"
+\    },
+\}
+endfun
 
 function s:self.config() abort
     "todo config
