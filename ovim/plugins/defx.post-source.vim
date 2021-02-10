@@ -1,8 +1,6 @@
 
 " defx{{{
 
-nmap <silent> == :Defx<CR>
-call ovim#utils#recursive_update(g:space_key_map,{'==':[':Defx','defx']})
 let s:defx_options = {
       \ 'winwidth': 40,
       \ 'split': 'vertical',
@@ -22,8 +20,8 @@ if !has('nvim')
       autocmd FileType defx match ExtraWhitespace /^^/
 endif
 " Keymap in defx
-autocmd FileType defx call s:defx_my_settings()
-function! s:defx_my_settings() abort
+autocmd FileType defx call s:defx_settings()
+function! s:defx_settings() abort
     setl nonumber
     setl norelativenumber
     setl listchars=
@@ -39,8 +37,8 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> - defx#do_action('drop', 'split')
     nnoremap <silent><buffer><expr> t defx#do_action('drop', 'tabe')
     nnoremap <silent><buffer><expr> o defx#do_action('open_tree')
-    nnoremap <silent><buffer><expr> O defx#do_action('open_tree_recursive')
-    nnoremap <silent><buffer><expr> l defx#do_action('open_or_close_tree')
+    nnoremap <silent><buffer><expr> O defx#do_action('open_tree',['recursive'])
+    nnoremap <silent><buffer><expr> l defx#do_action('open_tree',['toggle'])
     nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> e defx#do_action('new_file')
     nnoremap <silent><buffer><expr> ed defx#do_action('new_directory')
@@ -55,9 +53,11 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> yp defx#do_action('yank_path')
     nnoremap <silent><buffer><expr> .  defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> <c-h>  defx#do_action('toggle_ignored_files')
-    nnoremap <silent><buffer><expr> <bs>  defx#do_action('toggle_ignored_files')
+    "nnoremap <silent><buffer><expr> <bs>  defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> <bs>  defx#do_action('cd',['..'])
     nnoremap <silent><buffer><expr> ;  defx#do_action('repeat')
-    nnoremap <silent><buffer><expr> h  defx#is_opened_tree() ? defx#do_action('close_tree') :defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr> h defx#do_action('open_tree',['toggle'])
+    "nnoremap <silent><buffer><expr> h  defx#is_opened_tree() ? defx#do_action('close_tree') : defx#do_action('cd',['..'])
     nnoremap <silent><buffer><expr> ~  defx#do_action('cd')
     nnoremap <silent><buffer><expr> gh  defx#do_action('cd')
     nnoremap <silent><buffer><expr> q  defx#do_action('quit')
@@ -98,7 +98,7 @@ function! s:defx_my_settings() abort
             \ "yp":{"name":"YankPah"},
             \ ".":{"name":"ToggleHide"},
             \ "<c-h>":{"name":"ToggleHide"},
-            \ "<bs>":{"name":"ToggleHide"},
+            \ "<bs>":{"name":"Parent"},
             \ ";":{"name":"Repeat"},
             \ "h":{"name":"CloseTree"},
             \ "~":{"name":"CdHome"},

@@ -38,9 +38,12 @@ endfun
 function s:plugins_coc()
   let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
                         \ "rev": "release","branch": "release",
-                        \ "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.vim",
+                        \ "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.source.vim",
                         \ "on_event":["VimEnter"]
                         \}
+    " disable defx
+    let l:disable_list = ["Shougo/defx.nvim","kristijanhusak/defx-git","kristijanhusak/defx-icons"]
+    call ovim#plugin#disable(l:disable_list)
 endfunction
 
 function s:plugins_deoplete()
@@ -82,8 +85,8 @@ function s:plugins_ncm2()
     \        "do": ":UpdateRemotePlugins",
     \        "on_event":["VimEnter"],
     \    }
-    let g:ovim_global_options.plugins["roxma/nvim-yarp"]['if'] = 1
-    let g:ovim_global_options.plugins["roxma/vim-hug-neovim-rpc"]['if'] = 1
+    let l:enable_list = ["roxma/nvim-yarp","roxma/vim-hug-neovim-rpc"]
+    call ovim#plugin#enable(l:enable_list)
     call s:plugins_lcn()
 endfunction
 
@@ -154,24 +157,6 @@ function s:self.config() abort
 endfun
 
 function s:config_coc()
-autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
-                                \ let b:coc_enabled=0 |
-                                \ endif
-let g:coc_config_home = g:ovim_root_path.'/config/coc'
-let g:coc_data_home = g:ovim_cacha_path.'/coc'
-imap <C-l> <Plug>(coc-snippets-expand)
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-  let g:coc_user_config = {
-\    "session": {
-\     "directory":g:ovim_cacha_path.'/coc-lists-session'
-\    },
-\}
-  let g:coc_global_extensions = ['coc-marketplace','coc-json','coc-snippets',
-                    \ 'coc-python','coc-lists','coc-yank','coc-vimlsp',"coc-toml"]
-  imap <leader><space><space> <Plug>(coc-snippets-expand)
-  let g:coc_snippet_next = '<c-j>'
-  let g:coc_snippet_prev = '<c-k>'
     function! g:ovim#modules#autocomplete.func_show_doc() abort
       call CocActionAsync('doHover')
     endfunction

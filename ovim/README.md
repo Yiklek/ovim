@@ -53,6 +53,8 @@ npm install -g neovim bash-language-server yarn
 * [rq](https://github.com/dflemstr/rq)(optional,for faster bootstrap)
 * [rust-analyzer](https://github.com/rust-analyzer/rust-analyzer)(for rust)
 * [youcompleteme](https://github.com/ycm-core/YouCompleteMe)(optional for autocomplete module)
+* rustfmt
+* clang-formt
 
 ```bash
 #rg

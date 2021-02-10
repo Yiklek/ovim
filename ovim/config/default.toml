@@ -18,6 +18,24 @@ root_marker = [".git",".hg",".svn",".root",".project",
                 "compile_commands.json","CMakeLists.txt",
                 "Makefile","makefile"]
 
+[plugins."tweekmonster/startuptime.vim"]
+level = 0
+repo = "tweekmonster/startuptime.vim"
+on = "StartupTime"
+on_cmd = "StartupTime"
+
+[plugins."wsdjeg/dein-ui.vim"]
+level = 0
+repo = "wsdjeg/dein-ui.vim"
+if = "g:ovim_plug_manager ==# 'dein'"
+on_cmd = "DeinUpdate"
+
+[plugins."haya14busa/dein-command.vim"]
+level = 0
+repo = "haya14busa/dein-command.vim"
+if = "g:ovim_plug_manager ==# 'dein'"
+on_cmd = "Dein"
+
 [plugins."arakashic/nvim-colors-solarized"]
 level = 1
 repo = "arakashic/nvim-colors-solarized"
@@ -292,23 +310,6 @@ hook_add = "source $OVIM_ROOT_PATH/plugins/vista.vim"
 on = [ "Vista", "Vista!", "Vista!!",]
 on_cmd = [ "Vista", "Vista!", "Vista!!",]
 
-[plugins."tweekmonster/startuptime.vim"]
-level = 0
-repo = "tweekmonster/startuptime.vim"
-on = "StartupTime"
-on_cmd = "StartupTime"
-
-[plugins."wsdjeg/dein-ui.vim"]
-level = 0
-repo = "wsdjeg/dein-ui.vim"
-if = "g:ovim_plug_manager ==# 'dein'"
-on_cmd = "DeinUpdate"
-
-[plugins."haya14busa/dein-command.vim"]
-level = 0
-repo = "haya14busa/dein-command.vim"
-if = "g:ovim_plug_manager ==# 'dein'"
-on_cmd = "Dein"
 
 [plugins."glepnir/dashboard-nvim"]
 level = 2
@@ -457,6 +458,7 @@ on = ["<Plug>(choosewin)"]
 on_map = ["<Plug>(choosewin)"]
 hook_source = "source $OVIM_ROOT_PATH/plugins/vim-choosewin.source.vim"
 
+#### modules
 #if has node,use coc
 [modules.autocomplete]
 level = 2
@@ -469,6 +471,7 @@ name = "search"
 method = [ "leaderf", "ctrlp", "fzf",]
 leader_prefix = "s"
 
+#### build-in addons
 [addons.common]
 level = 0
 enable = 1

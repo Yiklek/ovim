@@ -10,12 +10,11 @@ function ovim#plugin#begin(arg)
         exe g:ovim_global_options.hook_before_setup_plugin
     endif
     if g:ovim_plug_manager ==# 'plug'
-    if !filereadable(g:vim_path.'/autoload/plug.vim')
-        call ovim#utils#warn('download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually')
-        throw 'OvimError:0002: download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually'
-    endif
-        call plug#begin(a:arg.'/plugged')
-        return 1
+        if !filereadable(g:vim_path.'/autoload/plug.vim')
+            call ovim#utils#warn('download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually')
+            throw 'OvimError:0002: download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually'
+        endif
+            call plug#begin(a:arg.'/plugged')
     elseif g:ovim_plug_manager ==# 'dein'
         set rtp+=$VIM_PATH/dein.vim
         let g:dein#auto_recache = 1
@@ -27,11 +26,15 @@ function ovim#plugin#begin(arg)
             call dein#begin(a:arg.'/dein')
             call dein#add(g:vim_path.'/dein.vim',{ 'on_func':'dein#' })
             let g:dein_loading = 1
-            return 1
         else
             return 0
         endif
     endif
+    " disable low priority
+    call s:batch_set_plugins_attr(s:disable_plugins,'if',0) 
+    " enable high priority
+    call s:batch_set_plugins_attr(s:enable_plugins,'if',1) 
+    return 1
 endfun
 
 function ovim#plugin#end(plugins)
@@ -113,3 +116,43 @@ function s:_plug_will_load(plugin)
     let a:plugin._will_load = l:level && l:if
     return a:plugin._will_load
 endfun
+
+function s:append_list(target,...)
+    if type(a:target) != v:t_list
+        call ovim#utils#warn('plugin append_list: target list required.')
+        return
+    endif
+    if len(a:000) > 0 
+        for p in a:000
+            if type(p) == v:t_string 
+                call add(a:target,p)
+            elseif type(p) == v:t_list
+                for i in p
+                    call s:append_list(a:target,i)
+                endfor
+            else
+                call ovim#utils#warn("plugin append_list:args string or list require.")
+            endif
+        endfor
+    endif
+endfunction
+
+function s:batch_set_plugins_attr(plugins,attr,value)
+    for p in a:plugins
+        try
+            let g:ovim_global_options.plugins[p][a:attr] = a:value
+        catch
+            call ovim#utils#warn("plugin batch_set_plugins_attr: ".v:exception." --> ".v:throwpoint)
+        endtry
+    endfor
+endfunction
+
+let s:disable_plugins = []
+function ovim#plugin#disable(...)
+    call s:append_list(s:disable_plugins,a:000)
+endfunction
+
+let s:enable_plugins = []
+function ovim#plugin#enable(...)
+    call s:append_list(s:enable_plugins,a:000)
+endfunction

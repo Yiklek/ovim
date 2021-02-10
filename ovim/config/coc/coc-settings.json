@@ -1,4 +1,6 @@
 {
+    "suggest.echodocSupport": true,
+    "rust-analyzer.server.path":"~/.local/bin/rust-analyzer",
     "languageserver": {
         "go": {
             "command": "gopls",
@@ -9,7 +11,9 @@
             "filetypes": [
                 "go"
             ],
-            "ignoredRootPaths": ["~"]
+            "ignoredRootPaths": [
+                "~"
+            ]
         },
         "python": {
             "command": "python3",
@@ -20,7 +24,9 @@
             "filetypes": [
                 "python"
             ],
-            "ignoredRootPaths": ["~"]
+            "ignoredRootPaths": [
+                "~"
+            ]
         },
         "rust": {
             "command": "rust-analyzer",
@@ -30,7 +36,9 @@
             "rootPatterns": [
                 "Cargo.toml"
             ],
-            "ignoredRootPaths": ["~"]
+            "ignoredRootPaths": [
+                "~"
+            ]
         },
         "cland": {
             "command": "cland",
@@ -48,7 +56,9 @@
                 "makefile",
                 "CMakeLists.txt"
             ],
-            "ignoredRootPaths": ["~"]
+            "ignoredRootPaths": [
+                "~"
+            ]
         },
         "ccls": {
             "command": "ccls",
@@ -67,7 +77,23 @@
                 "makefile",
                 "CMakeLists.txt"
             ],
-            "ignoredRootPaths": ["~"]
+            "ignoredRootPaths": [
+                "~"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "~/.cache/ovim/coc/lsp/ccls"
+                },
+                "clang": {
+                    "resourceDir": "/Library/Developer/CommandLineTools/usr/lib/clang/11.0.3",
+                    "extraArgs": [
+                        "-isystem",
+                        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
+                        "-I",
+                        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"
+                    ]
+                }
+            }
         },
         "sh": {
             "command": "bash-language-server",
@@ -82,7 +108,164 @@
                 ".git",
                 ".root"
             ],
-            "ignoredRootPaths": ["~"]
+            "ignoredRootPaths": [
+                "~"
+            ]
         }
+    },
+    "explorer.icon.enableNerdfont": true,
+    "explorer.icon.enableVimDevicons": true,
+    "explorer.keyMappings.global": {
+        "*": "toggleSelection",
+        "<tab>": "actionMenu",
+        "gk": [
+            "wait",
+            "expandablePrev"
+        ],
+        "gj": [
+            "wait",
+            "expandableNext"
+        ],
+        "h": [
+            "wait",
+            "collapse"
+        ],
+        "l": [
+            "wait",
+            "expandable?",
+            "expand",
+            "open"
+        ],
+        "J": [
+            "wait",
+            "toggleSelection",
+            "normal:j"
+        ],
+        "K": [
+            "wait",
+            "toggleSelection",
+            "normal:k"
+        ],
+        "gl": [
+            "wait",
+            "expand:recursive"
+        ],
+        "gh": [
+            "wait",
+            "collapse:recursive"
+        ],
+        "<2-LeftMouse>": [
+            "expandable?",
+            [
+                "expanded?",
+                "collapse",
+                "expand"
+            ],
+            "open"
+        ],
+        "o": [
+            "wait",
+            "expanded?",
+            "collapse",
+            "expand"
+        ],
+        "<cr>": [
+            "wait",
+            "expandable?",
+            "cd",
+            "open"
+        ],
+        "s": "open:split",
+        "v": "open:vsplit",
+        "-": "open:split",
+        "\\": "open:vsplit",
+        "t": "open:tab",
+        "<bs>": [
+            "wait",
+            "gotoParent"
+        ],
+        "gs": [
+            "wait",
+            "reveal:select"
+        ],
+        "il": "preview:labeling",
+        "ic": "preview:content",
+        "Il": "previewOnHover:toggle:labeling",
+        "Ic": "previewOnHover:toggle:content",
+        "II": "previewOnHover:disable",
+        "yp": "copyFilepath",
+        "yn": "copyFilename",
+        "yy": "copyFile",
+        "dd": "cutFile",
+        "pp": "pasteFile",
+        "dD": "delete",
+        "dF": "deleteForever",
+        "e": "addFile",
+        "ed": "addDirectory",
+        "r": "rename",
+        "zh": "toggleHidden",
+        "<dot>": "toggleHidden",
+        "<c-h>": "toggleHidden",
+        "g<dot>": "toggleHidden",
+        "R": "refresh",
+        "?": "help",
+        "q": "quit",
+        "<esc>": "esc",
+        "X": "systemExecute",
+        "gd": "listDrive",
+        "f": "search",
+        "F": "searchRecursive",
+        "gf": "gotoSource:file",
+        "gb": "gotoSource:buffer",
+        "[[": [
+            "wait",
+            "sourcePrev"
+        ],
+        "]]": [
+            "wait",
+            "sourceNext"
+        ],
+        "[i": [
+            "wait",
+            "indentPrev"
+        ],
+        "]i": [
+            "wait",
+            "indentNext"
+        ],
+        "[m": [
+            "wait",
+            "markPrev:modified"
+        ],
+        "]m": [
+            "wait",
+            "markNext:modified"
+        ],
+        "[d": [
+            "wait",
+            "markPrev:diagnosticError:diagnosticWarning"
+        ],
+        "]d": [
+            "wait",
+            "markNext:diagnosticError:diagnosticWarning"
+        ],
+        "[D": [
+            "wait",
+            "markPrev:diagnosticError"
+        ],
+        "]D": [
+            "wait",
+            "markNext:diagnosticError"
+        ],
+        "[c": [
+            "wait",
+            "markPrev:git"
+        ],
+        "]c": [
+            "wait",
+            "markNext:git"
+        ],
+        "<<": "gitStage",
+        ">>": "gitUnstage"
     }
 }
