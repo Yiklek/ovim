@@ -12,8 +12,8 @@ nnoremap <leader>jl :AnyJumpLastResults<CR>
 
 
 let s:leader_key_map = {' ':[':AnyJump','AnyJump'],
-                        \ 'b':[':AnyJump','AnyJump'],
-                        \ 'l':[':AnyJump','AnyJump'],
+                        \ 'b':[':AnyJumpBack','AnyJumpBack'],
+                        \ 'l':[':AnyJumpLastResults','AnyJumpLastResults'],
                         \ }
 call ovim#utils#recursive_update(g:leader_key_map.j,s:leader_key_map)
 

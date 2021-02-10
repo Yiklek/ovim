@@ -289,6 +289,21 @@ on = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
 on_cmd = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
 on_event = [ "BufReadPost", "BufWritePost",]
 
+[plugins."tpope/vim-fugitive"]
+level = 2
+repo = "tpope/vim-fugitive"
+hook_source = "source $OVIM_ROOT_PATH/plugins/fugitive.source.vim"
+on = ["Git","G"]
+on_cmd = ["Git","G"]
+on_event = ["VimEnter"]
+
+[plugins."rhysd/committia.vim"]
+level = 2
+repo = "rhysd/committia.vim"
+for = ['gitcommit','gitrebase',"vim-plug"]
+on_ft = ['gitcommit','gitrebase']
+on_path = ["COMMIT_EDITMSG","MERGE_MSG"]
+
 [plugins."liuchengxu/vim-which-key"]
 level = 2
 repo = "liuchengxu/vim-which-key"
@@ -322,6 +337,12 @@ repo = "junegunn/vim-easy-align"
 on_map = [ "<Plug>(EasyAlign)",]
 on = [ "<Plug>(EasyAlign)",]
 hook_add = "xmap ga <Plug>(EasyAlign)\nnmap ga <Plug>(EasyAlign)\n"
+
+[plugins."godlygeek/tabular"]
+level = 3
+repo = "godlygeek/tabular"
+on = ["Tabularize","Tab"]
+on_cmd = ["Tabularize","Tab"]
 
 [plugins."rhysd/accelerated-jk"]
 level = 2
@@ -393,14 +414,14 @@ highlight link EchoDocFloat Pmenu"""
 level = 3
 repo = "plasticboy/vim-markdown"
 on_ft = "markdown"
-for = "markdown"
+for = ["markdown","vim-plug"]
 hook_source = "source $OVIM_ROOT_PATH/plugins/markdown.vim"
 
 [plugins."iamcco/markdown-preview.nvim"]
 level = 3
 repo = "iamcco/markdown-preview.nvim"
 on_ft = ["markdown","pandoc.markdown","rmd"]
-for = ["markdown","pandoc.markdown","rmd"]
+for = ["markdown","pandoc.markdown","rmd","vim-plug"]
 build = "sh -c 'cd app && yarn install'"
 
 [plugins."yianwillis/vimcdoc"]
@@ -439,14 +460,14 @@ hook_add = "source $OVIM_ROOT_PATH/plugins/vimspector.add.vim"
 level = 3
 repo = "jmcantrell/vim-virtualenv"
 on_ft = ["python"]
-for = ["python"]
+for = ["python","vim-plug"]
 hook_source = "let g:virtualenv_directory = '~/.cache/venv'"
 
 [plugins."lambdalisue/vim-pyenv"]
 level = 3
 repo = "lambdalisue/vim-pyenv"
 on_ft = ["python"]
-for = ["python"]
+for = ["python","vim-plug"]
 hook_source = """let g:pyenv#auto_assign_ctags = 0
 let g:pyenv#auto_activate = 0"""
 
@@ -468,7 +489,7 @@ method = "auto"
 [modules.search]
 level = 2
 name = "search"
-method = [ "leaderf", "ctrlp", "fzf",]
+method = [ "leaderf", "ctrlp", "fzf","far"]
 leader_prefix = "s"
 
 #### build-in addons

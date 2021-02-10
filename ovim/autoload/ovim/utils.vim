@@ -85,8 +85,8 @@ endfun
 function ovim#utils#try_source(filename) abort
 	try
 		exe 'source '.a:filename
-	cache
-		call ovim#utils#warn(v:errmsg)
+	catch
+		call ovim#utils#warn(v:errmsg,'-->',v:throwpoint)
 	endtry
 endfun
 
@@ -174,4 +174,8 @@ function ovim#utils#check_level_and_enable(arg)
         return 0
     endif
     return 1
+endfunction
+
+function ovim#utils#has_win()
+    return has('win64') || has('win32') || has('win16') || has('win95')
 endfunction

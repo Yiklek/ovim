@@ -19,3 +19,4 @@ let g:dashboard_custom_header = [
 \ ' ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
 \ '',
 \ ] 
+autocmd VimLeavePre * if &ft !~? '^git' | SessionSave | endif

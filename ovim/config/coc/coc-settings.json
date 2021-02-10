@@ -169,6 +169,12 @@
             "collapse",
             "expand"
         ],
+        "O": [
+            "wait",
+            "expanded?",
+            "collapse:recursive",
+            "expand:recursive"
+        ],
         "<cr>": [
             "wait",
             "expandable?",
@@ -197,6 +203,7 @@
         "yn": "copyFilename",
         "yy": "copyFile",
         "dd": "cutFile",
+        "p": false,
         "pp": "pasteFile",
         "dD": "delete",
         "dF": "deleteForever",

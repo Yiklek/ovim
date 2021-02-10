@@ -73,7 +73,7 @@ endfunction
 " must be invoked after read config
 function! s:setup_python()
     if !exists('g:python3_setup')
-        if has('win64') || has('win32') || has('win16') || has('win95')
+        if ovim#utils#has_win()
             let g:python3_host_prog = get(g:,'python3_host_prog',g:ovim_cacha_path.'/python3-venv/Scripts/python.exe')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
@@ -84,7 +84,7 @@ function! s:setup_python()
             let &rtp = python3_home.'/lib,'.&rtp
             let $PATH = $PATH.":".python3_home.'/bin'
         endif
-    let g:python3_setup = 1
+        let g:python3_setup = 1
     endif
 endfunction
 

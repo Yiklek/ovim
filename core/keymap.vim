@@ -72,6 +72,8 @@ nmap <leader>bd :bd<cr>
 nmap <leader>bp :bp<cr>
 nmap <leader>bn :bn<cr>
 
+nnoremap <leader>q :q<cr>
+
 nnoremap <tab>1 :b!1<cr>
 nnoremap <tab>2 :b!2<cr>
 nnoremap <tab>3 :b!3<cr>
@@ -101,6 +103,7 @@ endif
 let s:leader_key_map = {'<CR>':'换行',
                         \ '\': [':vsplit ','竖线分割'],
                         \ '-':[':split ','横线分割'],
+                        \ 'q':[':q','退出'],
                         \ 'w':{'name':'+窗口操作',
                         \       'h':[':wincmd h','焦点左移'],
                         \       'l':[':wincmd l','焦点右移'],

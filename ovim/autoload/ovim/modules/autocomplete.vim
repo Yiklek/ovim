@@ -123,7 +123,6 @@ function s:self.config() abort
         inoremap <silent><expr> <leader><TAB>
                         \ pumvisible() ? "\<C-n>" :
                         \ <SID>check_back_space() ? "\<TAB>" : g:ovim#modules#autocomplete.func_manual()
-                        "\ g:ovim#modules#autocomplete.method ==# 'deoplete' ? deoplete#manual_complete() : coc#refresh()
 
         nnoremap <leader>g<space> <esc>:call ovim#modules#autocomplete.func_show_doc()<cr>
         nnoremap <leader>gd <esc>:call ovim#modules#autocomplete.func_go_to_def()<cr>
@@ -135,16 +134,16 @@ function s:self.config() abort
         nnoremap <leader>gs <esc>:call ovim#modules#autocomplete.func_document_symbol()<cr>
         nnoremap <leader>gr <esc>:call ovim#modules#autocomplete.func_refactor()<cr>
         nnoremap <leader>gf <esc>:call ovim#modules#autocomplete.func_format()<cr>
-        let l:leader_key_map = {'g':{'name':'LSP',' ':['call ovim#modules#autocomplete.func_show_doc()','Doc'],
-                                                \ 'd':['call ovim#modules#autocomplete.func_go_to_def()','Define'],
-                                                \ 't':['call ovim#modules#autocomplete.func_go_to_typedef()','Type Define'],
-                                                \ 'i':['call ovim#modules#autocomplete.func_go_to_impl()','Impl'],
-                                                \ 'n':['call ovim#modules#autocomplete.func_rename()','Rename'],
-                                                \ 'u':['call ovim#modules#autocomplete.func_references()','References'],
-                                                \ 'c':['call ovim#modules#autocomplete.func_go_to_declaration()','Declaration'],
-                                                \ 's':['call ovim#modules#autocomplete.func_document_symbol()','Doc Symbol'],
-                                                \ 'r':['call ovim#modules#autocomplete.func_refactor()','Refactor'],
-                                                \ 'f':['call ovim#modules#autocomplete.func_format()','Format'],
+        let l:leader_key_map = {'g':{'name':'LSP',' ':[':call ovim#modules#autocomplete.func_show_doc()','Doc'],
+                                                \ 'd':[':call ovim#modules#autocomplete.func_go_to_def()','Define'],
+                                                \ 't':[':call ovim#modules#autocomplete.func_go_to_typedef()','Type Define'],
+                                                \ 'i':[':call ovim#modules#autocomplete.func_go_to_impl()','Impl'],
+                                                \ 'n':[':call ovim#modules#autocomplete.func_rename()','Rename'],
+                                                \ 'u':[':call ovim#modules#autocomplete.func_references()','References'],
+                                                \ 'c':[':call ovim#modules#autocomplete.func_go_to_declaration()','Declaration'],
+                                                \ 's':[':call ovim#modules#autocomplete.func_document_symbol()','Doc Symbol'],
+                                                \ 'r':[':call ovim#modules#autocomplete.func_refactor()','Refactor'],
+                                                \ 'f':[':call ovim#modules#autocomplete.func_format()','Format'],
                               \ }}
         call ovim#utils#recursive_update(g:leader_key_map,l:leader_key_map)
     endif

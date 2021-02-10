@@ -14,7 +14,7 @@ autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
 
 let g:coc_user_config = {
 \    "session": {
-\     "directory":g:ovim_cacha_path.'/coc-lists-session'
+\     "directory":g:ovim_cacha_path.'/coc/lists-session'
 \    },
 \}
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",
@@ -52,7 +52,7 @@ nnoremap <silent> <leader>ee<space>  :<C-u>CocList<cr>
 let s:space_key_map = {"==":[":CocCommand explorer","Explorer"]}
 call ovim#utils#recursive_update(g:space_key_map,s:space_key_map)
 " key map <leader>ee
-let s:leader_key_map = {"e":{"e":{"name":"Coc",
+let s:leader_key_map = {"e":{"e":{"name":"+Coc",
                                 \ " ":[":CocList","List"],
                                 \ "y":[":CocList -A --normal yank","Yank"],
                                 \ }}}

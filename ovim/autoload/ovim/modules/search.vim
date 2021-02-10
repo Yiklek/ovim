@@ -119,51 +119,69 @@ function s:method_plugins_denite() abort
 \}
 endfun
 
+let s:far_cmds = ["Far","F","Farr","Farf","Fardo","Farundo","Refar"]
+function s:method_plugins_far() abort
+    return {"brooth/far.vim":{
+\    "repo" : "brooth/far.vim",
+\    "on" : s:far_cmds,
+\    "on_cmd" : s:far_cmds,
+\    },
+\}
+endfun
 function s:self.config() abort
     "todo config
     let g:leader_key_map[self.leader_prefix] = get(g:leader_key_map,self.leader_prefix,{'name':'+Search'})
-    if index(self.method,'fzf') >= 0
-        let g:leader_key_map[self.leader_prefix].f = {'name':'fzf',' ':[':Files','Files']}
-        exe 'nnoremap <leader>'.self.leader_prefix.'f<space> :Files<CR>'
-
-        let g:space_key_map.fzf = [':FZF','fzf']
-        nnoremap fzf :Files<CR>
-        nnoremap <space>fzf :Files<CR>
-
-        let g:space_key_map.ffr = [':Rg','Rg']
-        nnoremap ffr :Rg<CR>
-        nnoremap <space>ffr :Rg<CR>
-
-        call s:keymap_list('f',s:fzf_cmds)
-    endif
-    if index(self.method,'leaderf') >= 0
-        let g:space_key_map.flf = [':Leaderf file','LeaderfFile']
-        nnoremap flf :LeaderfFile<CR>
-        nnoremap <space>flf :LeaderfFile<CR>
-
-        let g:space_key_map.flr = [':Leaderf rg','LeaderfRg']
-        nnoremap flr :Leaderf rg<CR>
-        nnoremap <space>flr :Leaderf rg<CR>
-
-        let g:leader_key_map[self.leader_prefix].l = {'name':'Leaderf',' ':[':LeaderfFile','LeaderfFile']}
-        exe 'nnoremap <leader>'.self.leader_prefix.'l<space> :LeaderfFile<CR>'
-        call s:keymap_list('l',s:leader_cmds)
-    endif
-    if index(self.method,'ctrlp') >= 0
-        let g:leader_key_map[self.leader_prefix].p = {'name':'CtrlP',' ':[':CtrlP','CtrlP']}
-        exe 'nnoremap <leader>'.self.leader_prefix.'p<space> :CtrlP<CR>'
-        let g:leader_key_map[self.leader_prefix].p['J'] = ["execute('CtrlPFunky ' . expand('<cword>'))","CtrlPFunky Word"]
-        exe 'nnoremap <leader>'.self.leader_prefix."pJ :execute 'CtrlPFunky ' . expand('<cword>')<CR>"
-        call s:keymap_list('p',add(deepcopy(s:ctrlp_cmds),"CtrlPFunky"))
-    endif
+    for m in self.method
+        call s:config_{m}()
+    endfor
 endfun
 
+function s:config_fzf()
+    let g:leader_key_map[s:self.leader_prefix].f = {"name":"+fzf"," ":[":Files","Files"]}
+    exe "nnoremap <leader>".s:self.leader_prefix."f<space> :Files<CR>"
+
+    let g:space_key_map.fzf = [":FZF","fzf"]
+    nnoremap fzf :Files<CR>
+    nnoremap <space>fzf :Files<CR>
+
+    let g:space_key_map.ffr = [":Rg","Rg"]
+    nnoremap ffr :Rg<CR>
+    nnoremap <space>ffr :Rg<CR>
+
+    call s:keymap_list("f",s:fzf_cmds)
+endfunction
+
+function s:config_leaderf()
+    let g:space_key_map.flf = [":Leaderf file","LeaderfFile"]
+    nnoremap flf :LeaderfFile<CR>
+    nnoremap <space>flf :LeaderfFile<CR>
+
+    let g:space_key_map.flr = [":Leaderf rg","LeaderfRg"]
+    nnoremap flr :Leaderf rg<CR>
+    nnoremap <space>flr :Leaderf rg<CR>
+
+    let g:leader_key_map[s:self.leader_prefix].l = {"name":"+Leaderf"," ":[":LeaderfFile","LeaderfFile"]}
+    exe "nnoremap <leader>".s:self.leader_prefix."l<space> :LeaderfFile<CR>"
+    call s:keymap_list("l",s:leader_cmds)
+endfunction
+function s:config_ctrlp()
+    let g:leader_key_map[s:self.leader_prefix].p = {"name":"+CtrlP"," ":[":CtrlP","CtrlP"]}
+    exe "nnoremap <leader>".s:self.leader_prefix."p<space> :CtrlP<CR>"
+    let g:leader_key_map[s:self.leader_prefix].p["J"] = ['execute("CtrlPFunky " . expand("<cword>"))',"CtrlPFunky Word"]
+    exe "nnoremap <leader>".s:self.leader_prefix.'pJ :execute "CtrlPFunky " . expand("<cword>")<CR>'
+    call s:keymap_list("p",add(deepcopy(s:ctrlp_cmds),"CtrlPFunky"))
+endfunction
+function s:config_far()
+endfunction
+function s:config_denite()
+
+endfunction
 function s:keymap_list(key,map_list)
     let l:index = 0
     let l:len = len(a:map_list)
     while l:index < l:len && l:index < len(g:ovim_keymap_order)
-        exe 'nnoremap <leader>'.s:self.leader_prefix.''.a:key.''.g:ovim_keymap_order[l:index].' :'.a:map_list[l:index].'<CR>'
-        let g:leader_key_map[s:self.leader_prefix][a:key][g:ovim_keymap_order[l:index]] =  [':'.a:map_list[l:index],a:map_list[l:index]]
+        exe "nnoremap <leader>".s:self.leader_prefix."".a:key."".g:ovim_keymap_order[l:index]." :".a:map_list[l:index]."<CR>"
+        let g:leader_key_map[s:self.leader_prefix][a:key][g:ovim_keymap_order[l:index]] =  [":".a:map_list[l:index],a:map_list[l:index]]
         let l:index = l:index + 1
     endwhile
 endfun

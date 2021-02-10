@@ -6,7 +6,15 @@
 
 function! ovim#addons#edit#load(addon)
     noremap <leader>xa :call ovim#addons#edit#remove_white_space()<CR>
-    let l:leader_key_map = {'x':{'a':[':call ovim#addons#edit#remove_white_space()','RemoveWhiteSpace']}}
+    noremap <leader>xw :w<CR>
+    noremap <leader>xW :w !sudo tee %<CR>
+    let l:leader_key_map = {'x': {'a':[':call ovim#addons#edit#remove_white_space()','去除尾部空白'],
+                                \ 'w':[':w','保存'],
+                                \ }}
+    if !ovim#utils#has_win()
+        noremap <leader>xW :w !sudo tee %<CR>
+        let l:leader_key_map["x"]["W"] = [':w !sudo tee %','保存(sudo)']
+    endif
     call ovim#utils#recursive_update(g:leader_key_map,l:leader_key_map)
 endfunction
 
