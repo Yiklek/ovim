@@ -20,13 +20,13 @@ vim_py3_env_dir = join(ovim_dir, 'python3-venv')
 if os.name == 'nt':
     lib = 'Lib'
     vim_dep_source = join(vim_py3_env_dir, lib, 'site-packages')
-    config_dir = join(homedir, 'AppData', 'Local')
+    config_dir = xdg_config_dir or join(homedir, 'AppData', 'Local')
     vim_py = join(vim_py3_env_dir, 'Scripts', 'python.exe')
 else:
     lib = 'lib'
     vim_dep_source = join(vim_py3_env_dir, lib, 'python3.{}'.format(
         sys.version_info.minor), 'site-packages')
-    config_dir = join(homedir, '.config')
+    config_dir = xdg_config_dir or join(homedir, '.config')
     vim_py = join(vim_py3_env_dir, 'bin', 'python')
 
 vim_link = join(vim_py3_env_dir, lib, 'python3')
@@ -55,7 +55,6 @@ def install(parser, args):
         vim_config_path = join(homedir, '.vim')
         vim_config_init = join(vim_config_path, 'vimrc')
     elif target == 'nvim':
-        config_dir = config_dir if xdg_config_dir is None else xdg_config_dir
         vim_config_path = join(config_dir, 'nvim')
         vim_config_init = join(vim_config_path, 'init.vim')
 

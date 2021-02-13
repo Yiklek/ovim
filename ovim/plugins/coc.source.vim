@@ -14,7 +14,7 @@ autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
 
 let g:coc_user_config = {
 \    "session": {
-\     "directory":g:ovim_cacha_path.'/coc/lists-session'
+\     "directory":g:ovim_cacha_path.'/session',
 \    },
 \}
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",
