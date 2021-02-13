@@ -24,6 +24,13 @@ repo = "tweekmonster/startuptime.vim"
 on = "StartupTime"
 on_cmd = "StartupTime"
 
+[plugins."dstein64/vim-startuptime"]
+level = 0
+repo = "dstein64/vim-startuptime"
+on = "StartupTime"
+on_cmd = "StartupTime"
+if = 0
+
 [plugins."wsdjeg/dein-ui.vim"]
 level = 0
 repo = "wsdjeg/dein-ui.vim"
@@ -494,6 +501,10 @@ leader_prefix = "s"
 
 #### build-in addons
 [addons.common]
+level = 0
+enable = 1
+
+[addons.keymap]
 level = 0
 enable = 1
 

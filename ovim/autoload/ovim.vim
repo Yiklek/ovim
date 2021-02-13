@@ -65,9 +65,7 @@ function! ovim#init(...) abort
         endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
-
-    autocmd VimEnter * call s:addons(g:ovim_global_options.addons)
-    autocmd VimEnter * OvimSource g:ovim_root_path.'/keymaps/global.vim'
+    autocmd VimEnter * call s:addons(get(g:ovim_global_options,'addons',{}))
 endfunction
 
 " must be invoked after read config
@@ -95,11 +93,8 @@ function! s:options(config) abort
         let l:options = ovim#utils#load_custom()
     elseif a:config == 'override'
         let l:options = ovim#utils#load_default()
-        "try
-            let l:options_custom = ovim#utils#load_custom()
-            call ovim#utils#recursive_update(l:options,l:options_custom)
-        "catch
-        "endtry
+        let l:options_custom = ovim#utils#load_custom()
+        call ovim#utils#recursive_update(l:options,l:options_custom)
     else
         let l:options = ovim#utils#load_config(a:config)
     endif

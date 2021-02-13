@@ -10,7 +10,7 @@ nnoremap <leader>rr :AsyncTask project-run<CR>
 nnoremap <leader>rp :AsyncTask project-build<CR>
 let s:leader_key_map = {'r':{"x":[':AsyncTask file-run','file-run'],
                     \ "b":[':AsyncTask file-build','file-build'],
-                    \ "r":[':AsyncTask project-run','file-run'],
+                    \ "r":[':AsyncTask project-run','project-run'],
                     \ "p":[':AsyncTask project-build','project-build'],
                     \}}
 call ovim#utils#recursive_update(g:leader_key_map,s:leader_key_map)
