@@ -493,6 +493,11 @@ level = 2
 name = "autocomplete"
 method = "auto"
 
+[modules.lsp]
+level = 2
+name = "lsp"
+method = "auto"
+
 [modules.search]
 level = 2
 name = "search"

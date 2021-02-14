@@ -9,6 +9,9 @@
 let s:self = ovim#modules#new()
 
 function ovim#modules#search#load(...) abort
+    if get(s:self,'loaded',0)
+        return s:self
+    endif
     let s:self.name = 'search'
     let s:self.method = ['leaderf','ctrlp']
     if exists('a:1') && type(a:1) == v:t_dict
@@ -16,6 +19,7 @@ function ovim#modules#search#load(...) abort
                let s:self[k] = v
         endfor
     endif
+    let s:self.loaded = 1
     let g:ovim#modules#{s:self.name} = s:self
     return s:self
 endfun

@@ -17,14 +17,13 @@ function ovim#plugin#begin(arg)
             call plug#begin(a:arg.'/plugged')
     elseif g:ovim_plug_manager ==# 'dein'
         set rtp+=$VIM_PATH/dein.vim
-        let g:dein#auto_recache = 1
         if !isdirectory(g:vim_path.'/dein.vim')
             call ovim#utils#warn('download dein.vim from https://github.com/Shougo/dein.vim.git to '.g:vim_path.'/dein.vim manually')
             throw 'OvimError:0002: download dein.vim from https://github.com/Shougo/dein.vim.git to '.g:vim_path.'/dein.vim manually'
         endif
         if dein#load_state(a:arg.'/dein')
             call dein#begin(a:arg.'/dein')
-            call dein#add(g:vim_path.'/dein.vim',{ 'on_func':'dein#' })
+            call dein#add(g:vim_path.'/dein.vim',{ 'on_func':'dein#' ,"hook_add":"source $OVIM_ROOT_PATH/plugins/dein.add.vim"})
             let g:dein_loading = 1
         else
             return 0
