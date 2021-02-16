@@ -46,9 +46,13 @@ nnoremap <silent> ==  :<C-u>CocCommand explorer<cr>
 nnoremap <silent> <space>==  :<C-u>CocCommand explorer<cr>
 
 " coc-lists
-
 nnoremap <silent> <leader>ee<space>  :<C-u>CocList<cr>
 
+" coc-pairs
+autocmd FileType markdown let b:coc_pairs_disabled = ['`']
+autocmd FileType lisp let b:coc_pairs_disabled = ['`',"'",'"']
+
+" keymaps
 let s:space_key_map = {"==":[":CocCommand explorer","Explorer"]}
 call ovim#utils#recursive_update(g:space_key_map,s:space_key_map)
 " key map <leader>ee
