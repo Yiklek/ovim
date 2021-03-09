@@ -86,8 +86,17 @@ noremap ]b  :bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
-tnoremap <esc><esc><esc>  <C-W>N
-
+tnoremap <esc><esc><esc>  <C-\><C-N>
+if has("nvim")
+    tnoremap <C-W>h  <C-\><C-N><C-W>h
+    tnoremap <C-W>j  <C-\><C-N><C-W>j
+    tnoremap <C-W>k  <C-\><C-N><C-W>k
+    tnoremap <C-W>l  <C-\><C-N><C-W>l
+    tnoremap <C-W><C-H>  <C-\><C-N><C-W><C-H>
+    tnoremap <C-W><C-J>  <C-\><C-N><C-W><C-J>
+    tnoremap <C-W><C-K>  <C-\><C-N><C-W><C-K>
+    tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
+endif
 " 行首尾切换
 nnoremap <expr> .  col('.') == '1' ? '$':'0'
 vnoremap <expr> .  col('.') == '1' ? '$':'0'

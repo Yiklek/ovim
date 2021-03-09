@@ -336,6 +336,8 @@ on_cmd = [ "Vista", "Vista!", "Vista!!",]
 [plugins."glepnir/dashboard-nvim"]
 level = 2
 repo = "glepnir/dashboard-nvim"
+rev = "7cdd2288d5aaf986f6f23c58fa27c50311636142"
+commit = "7cdd2288d5aaf986f6f23c58fa27c50311636142"
 hook_source = "source $OVIM_ROOT_PATH/plugins/dashboard.vim"
 
 [plugins."junegunn/vim-easy-align"]

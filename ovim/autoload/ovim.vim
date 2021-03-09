@@ -11,11 +11,12 @@ let $VIM_PATH  = g:vim_path
 
 let g:ovim_cacha_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
 
-if has('win64') || has('win32') || has('win16') || has('win95')
+if ovim#utils#has_win()
     let g:ovim_default_python_path = g:ovim_cacha_path.'/python3-venv/Scripts/python.exe'
 else
     let g:ovim_default_python_path = g:ovim_cacha_path.'/python3-venv/bin/python'
 endif
+let g:python3_host_prog = get(g:,'python3_host_prog', g:ovim_default_python_path)
 
 let g:ovim_global_options = {}
 
@@ -65,6 +66,9 @@ function! ovim#init(...) abort
         endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
+    if has("nvim-0.5")
+        lua require "ovim"
+    endif
     autocmd VimEnter * call s:addons(get(g:ovim_global_options,'addons',{}))
 endfunction
 
@@ -72,12 +76,10 @@ endfunction
 function! s:setup_python()
     if !exists('g:python3_setup')
         if ovim#utils#has_win()
-            let g:python3_host_prog = get(g:,'python3_host_prog',g:ovim_cacha_path.'/python3-venv/Scripts/python.exe')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
             let $PATH = $PATH.';'.expand(python3_home.'/bin')
         else
-            let g:python3_host_prog = get(g:,'python3_host_prog',g:ovim_cacha_path.'/python3-venv/bin/python')
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
             let &rtp = python3_home.'/lib,'.&rtp
             let $PATH = $PATH.":".python3_home.'/bin'
