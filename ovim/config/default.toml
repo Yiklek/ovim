@@ -488,6 +488,11 @@ on = ["<Plug>(choosewin)"]
 on_map = ["<Plug>(choosewin)"]
 hook_source = "source $OVIM_ROOT_PATH/plugins/vim-choosewin.source.vim"
 
+[plugins."wbthomason/packer.nvim"]
+level = 3
+repo = "wbthomason/packer.nvim"
+if = "has('nvim')"
+
 #### modules
 #if has node,use coc
 [modules.autocomplete]
