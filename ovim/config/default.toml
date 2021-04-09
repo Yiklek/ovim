@@ -488,10 +488,16 @@ on = ["<Plug>(choosewin)"]
 on_map = ["<Plug>(choosewin)"]
 hook_source = "source $OVIM_ROOT_PATH/plugins/vim-choosewin.source.vim"
 
+[plugins."lambdalisue/suda.vim"]
+level = 3
+repo = "lambdalisue/suda.vim"
+on = ["SudaRead","SudaWrite"]
+on_cmd = ["SudaRead","SudaWrite"]
+
 [plugins."wbthomason/packer.nvim"]
 level = 3
 repo = "wbthomason/packer.nvim"
-if = "has('nvim')"
+if = "has('nvim-0.5')"
 
 #### modules
 #if has node,use coc
