@@ -336,9 +336,17 @@ on_cmd = [ "Vista", "Vista!", "Vista!!",]
 [plugins."glepnir/dashboard-nvim"]
 level = 2
 repo = "glepnir/dashboard-nvim"
+hook_source = "source $OVIM_ROOT_PATH/plugins/dashboard.vim"
+if = "has('nvim')"
+
+[plugins."glepnir/dashboard-vim"]
+level = 2
+repo = "glepnir/dashboard-nvim"
+# vim can not use packer.nvim. use old version
 rev = "7cdd2288d5aaf986f6f23c58fa27c50311636142"
 commit = "7cdd2288d5aaf986f6f23c58fa27c50311636142"
 hook_source = "source $OVIM_ROOT_PATH/plugins/dashboard.vim"
+if = "!has('nvim')"
 
 [plugins."junegunn/vim-easy-align"]
 level = 3

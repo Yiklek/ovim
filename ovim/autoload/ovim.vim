@@ -3,6 +3,7 @@
 " Description: ovim init
 " Last Modified: 二月 09, 2021
 " Copyright (c) 2021 Yiklek
+" MacVim 8.2-patch-1-2164+ or Neovim 0.4+
 
 let g:ovim_root_path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let $OVIM_ROOT_PATH = g:ovim_root_path
@@ -58,7 +59,7 @@ function! ovim#init(...) abort
     let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
     call s:setup_python()
     if exists('g:ovim_global_options.modules')
-            call s:modules(g:ovim_global_options.modules)
+        call s:modules(g:ovim_global_options.modules)
     endif
     if ovim#plugin#begin(g:ovim_cacha_path)
         if exists('g:ovim_global_options.plugins')
