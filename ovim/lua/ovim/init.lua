@@ -1,5 +1,3 @@
-print("ovim lua init start")
-
 function string:split_lite(sep)
     local splits = {}
     
@@ -39,9 +37,9 @@ else
 end
 --[[ 尝试调一个function 这个function可以带可变参数
 如果被调用的函数有异常 返回false，退出此方法继续执行其他代码并打印出异常信息；]]
-function trycall(func, ...)
+function trycall(func, callback, ...)
     local args = { ... };
-    return xpcall(function() func(compat_unpack(args)) end, __TRACKBACK__);
+    return xpcall(function() func(compat_unpack(args)) end, callback);
 end
 --测试代码：
-return trycall(function() return require('packer').startup(empty) end , __TRACKBACK__)
+return trycall(function() return require('packer').startup(empty) end, function() end)
