@@ -1,9 +1,8 @@
-# oh-my-config
+# ovim
 ## install
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Yiklek/oh-my-config/master/config-install.sh)"
+git clone https://github.com/Yiklek/ovim
+cd ovim
+python3 h.py install nvim
 ```
 
-```
-sh -c "$(wget https://raw.githubusercontent.com/Yiklek/oh-my-config/master/config-install.sh -O -)"
-```
