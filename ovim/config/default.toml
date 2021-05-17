@@ -478,7 +478,9 @@ level = 3
 repo = "jmcantrell/vim-virtualenv"
 on_ft = ["python"]
 for = ["python","vim-plug"]
-hook_source = "let g:virtualenv_directory = '~/.cache/venv'"
+hook_source = """let g:virtualenv_directory = '~/.cache/venv'
+let g:virtualenv_auto_activate = 0
+"""
 
 [plugins."lambdalisue/vim-pyenv"]
 level = 3
