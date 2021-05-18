@@ -224,13 +224,13 @@ hook_source = "source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
 on_event = ["BufEnter","BufReadPost", "BufWritePost",]
 
 [plugins."SirVer/ultisnips"]
-level = 3
+level = 2
 repo = "SirVer/ultisnips"
 hook_source = "source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
 on_event = [ "VimEnter",]
 
 [plugins."honza/vim-snippets"]
-level = 3
+level = 2
 repo = "honza/vim-snippets"
 on_event = [ "VimEnter",]
 
