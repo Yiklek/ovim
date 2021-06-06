@@ -105,7 +105,7 @@ vnoremap <expr> .  col('.') == '1' ? '$':'0'
 if exists('g:space_key_map')
     let g:space_key_map['<F5>'] = [':redraw!','刷新']
 endif
-let s:leader_key_map = {'<CR>':'换行',
+let s:leader_key_map = {'<CR>':{'name':'换行'},
                         \ '\':[':vsplit ', '竖线分割'] ,
                         \ '-':[':split ',  '横线分割'] ,
                         \ 'q':[':q',       '退出']     ,

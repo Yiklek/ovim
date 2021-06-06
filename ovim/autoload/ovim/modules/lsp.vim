@@ -75,7 +75,7 @@ function s:self.config() abort
                                             \ 's':[':call g:ovim#modules#lsp.func_document_symbol()','Doc Symbol'],
                                             \ 'r':[':call g:ovim#modules#lsp.func_refactor()','Refactor'],
                                             \ 'f':[':call g:ovim#modules#lsp.func_format()','Format'],
-                          \ }, "<TAB>":"Trigger Complete(Insert Mode)"}
+                          \ }}
     call ovim#utils#recursive_update(g:leader_key_map,l:leader_key_map)
 endfun
 

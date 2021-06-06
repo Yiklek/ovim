@@ -118,7 +118,7 @@ function s:self.config() abort
         inoremap <silent><expr> <leader><TAB>
                         \ pumvisible() ? "\<C-n>" :
                         \ <SID>check_back_space() ? "\<TAB>" : g:ovim#modules#autocomplete.func_manual()
-
+        let g:leader_key_map["<TAB>"] = [":call g:ovim#modules#autocomplete#func_manual()","Trigger Complete(Insert Mode)"]
     endif
 endfun
 
