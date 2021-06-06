@@ -527,6 +527,11 @@ name = "search"
 method = [ "leaderf", "ctrlp", "fzf","far"]
 leader_prefix = "s"
 
+[modules.ime]
+level = 3
+name = "ime"
+method = 'auto'
+
 #### build-in addons
 [addons.common]
 level = 0
