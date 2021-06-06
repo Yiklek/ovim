@@ -50,16 +50,25 @@ let g:gutentags_cscope_build_inverted_index = 1
 " let g:gutentags_auto_add_gtags_cscope = 0
 " let g:gutentags_auto_add_cscope = 0
 
+nmap <Plug>OvimFindSmbl       :vertical   rightbelow   scs   find   s   <C-R>=expand("<cword>")<CR><CR>
+nmap <Plug>OvimFindDef        :vertical   rightbelow   scs   find   g   <C-R>=expand("<cword>")<CR><CR>
+nmap <Plug>OvimFindUse        :vertical   rightbelow   scs   find   c   <C-R>=expand("<cword>")<CR><CR>
+nmap <Plug>OvimFindStr        :vertical   rightbelow   scs   find   t   <C-R>=expand("<cword>")<CR><CR>
+nmap <Plug>OvimFindEGrep      :vertical   rightbelow   scs   find   e   <C-R>=expand("<cword>")<CR><CR>
+nmap <Plug>OvimFindFile       :vertical   rightbelow   scs   find   f   <C-R>=expand("<cfile>")<CR><CR>
+nmap <Plug>OvimFindHaveFile   :vertical   rightbelow   scs   find   i   ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <Plug>OvimFindInvk       :vertical   rightbelow   scs   find   d   <C-R>=expand("<cword>")<CR><CR>
+nmap <Plug>OvimFindAssign     :vertical   rightbelow   scs   find   a   <C-R>=expand("<cword>")<CR><CR>
 
-nmap <leader>ecs :vertical rightbelow scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ecg :vertical rightbelow scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ecc :vertical rightbelow scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ect :vertical rightbelow scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ece :vertical rightbelow scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ecf :vertical rightbelow scs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <leader>eci :vertical rightbelow scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <leader>ecd :vertical rightbelow scs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>eca :vertical rightbelow scs find a <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ecs <Plug>OvimFindSmbl
+nmap <leader>ecg <Plug>OvimFindDef
+nmap <leader>ecc <Plug>OvimFindUse
+nmap <leader>ect <Plug>OvimFindStr
+nmap <leader>ece <Plug>OvimFindEGrep
+nmap <leader>ecf <Plug>OvimFindFile
+nmap <leader>eci <Plug>OvimFindHaveFile
+nmap <leader>ecd <Plug>OvimFindInvk
+nmap <leader>eca <Plug>OvimFindAssign
 
 nmap <leader>ecS :vertical rightbelow scs find s<space>
 nmap <leader>ecG :vertical rightbelow scs find g<space>
@@ -71,24 +80,24 @@ nmap <leader>ecI :vertical rightbelow scs find i<space>
 nmap <leader>ecD :vertical rightbelow scs find d<space>
 nmap <leader>ecA :vertical rightbelow scs find a<space>
 let s:leader_key_map = {'e':{'c':{'name':'+cscope',
-                                \ 's':'查找本 C 符号',
-                                \ 'g':'查找本定义',
-                                \ 'd':'查找本函数调用的函数',
-                                \ 'c':'查找调用本函数的函数',
-                                \ 't':'查找本字符串',
-                                \ 'e':'查找本 egrep 模式',
-                                \ 'f':'查找本文件',
-                                \ 'i':'查找包含本文件的文件',
-                                \ 'a':'查找此符号被赋值的位置',
-                                \ 'S':'查找 C 符号',
-                                \ 'G':'查找定义',
-                                \ 'D':'查找函数调用的函数',
-                                \ 'C':'查找调用本函数的函数',
-                                \ 'T':'查找字符串',
-                                \ 'E':'查找 egrep 模式',
-                                \ 'F':'查找文件',
-                                \ 'I':'查找包含本文件的文件',
-                                \ 'A':'查找符号被赋值的位置',
+                                \ 's':[':execute "normal \<Plug>OvimFindSmbl"'     , '本C符号']            ,
+                                \ 'g':[':execute "normal \<Plug>OvimFindDef"'      , '本定义']             ,
+                                \ 'd':[':execute "normal \<Plug>OvimFindInvk"'     , '本函数调用的函数']   ,
+                                \ 'c':[':execute "normal \<Plug>OvimFindUse"'      , '调用本函数的函数']   ,
+                                \ 't':[':execute "normal \<Plug>OvimFindStr"'      , '本字符串']           ,
+                                \ 'e':[':execute "normal \<Plug>OvimFindEGrep"'    , '本 egrep 模式']      ,
+                                \ 'f':[':execute "normal \<Plug>OvimFindFile"'     , '本文件']             ,
+                                \ 'i':[':execute "normal \<Plug>OvimFindHaveFile"' , '包含本文件的文件']   ,
+                                \ 'a':[':execute "normal \<Plug>OvimFindAssign"'   , '此符号被赋值的位置'] ,
+                                \ 'S':[':execute "normal \<Plug>OvimFindSmbl"'     , ' C 符号']            ,
+                                \ 'G':[':execute "normal \<Plug>OvimFindDef"'      , '定义']               ,
+                                \ 'D':[':execute "normal \<Plug>OvimFindUse"'      , '函数调用的函数']     ,
+                                \ 'C':[':execute "normal \<Plug>OvimFindStr"'      , '调用本函数的函数']   ,
+                                \ 'T':[':execute "normal \<Plug>OvimFindEGrep"'    , '字符串']             ,
+                                \ 'E':[':execute "normal \<Plug>OvimFindFile"'     , 'egrep 模式']         ,
+                                \ 'F':[':execute "normal \<Plug>OvimFindHaveFile"' , '文件']               ,
+                                \ 'I':[':execute "normal \<Plug>OvimFindInvk"'     , '包含本文件的文件']   ,
+                                \ 'A':[':execute "normal \<Plug>OvimFindAssign"'   , '此符号被赋值的位置'] ,
                                 \ }}}
 call ovim#utils#recursive_update(g:leader_key_map,s:leader_key_map)
 " }}}
