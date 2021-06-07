@@ -48,10 +48,10 @@ def depend(_, args):
         os.makedirs(ovim_dir, exist_ok=True)
         venv.main([vim_py3_env_dir])
         os.system('{} -m pip install -r {} -U'.format(vim_py, vim_requirements))
-        if os.path.exists(vim_link):
-            os.remove(vim_link)
-        os.symlink(vim_dep_source, vim_link,
-                   target_is_directory=isdir(vim_dep_source))
+        # if os.path.exists(vim_link):
+        #     os.remove(vim_link)
+        # os.symlink(vim_dep_source, vim_link,
+        #            target_is_directory=isdir(vim_dep_source))
     if args.node:
         with open(vim_packages, "r") as f:
             packages = f.read()
@@ -67,7 +67,7 @@ def install(parser, args):
     vim_config_init = ''
     if target == 'vim':
         vim_config_path = join(homedir, vim_root_name)
-        vim_config_init = join(vim_config_path, nvim_init_file)
+        vim_config_init = join(vim_config_path, vim_init_file)
     elif target == 'nvim':
         vim_config_path = join(config_dir, nvim_root_name)
         vim_config_init = join(vim_config_path, nvim_init_file)

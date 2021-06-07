@@ -79,11 +79,11 @@ function! s:setup_python()
         if ovim#utils#has_win()
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
-            let $PATH = $PATH.';'.expand(python3_home.'/bin')
+            let $PATH = expand(python3_home.'/bin').";".$PATH
         else
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
             let &rtp = python3_home.'/lib,'.&rtp
-            let $PATH = $PATH.":".python3_home.'/bin'
+            let $PATH = expand(python3_home.'/bin').":".$PATH
         endif
         let g:python3_setup = 1
     endif
