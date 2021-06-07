@@ -23,7 +23,7 @@ let s:lsp_servers = {
       \ 'objc' : ['clangd'],
       \ 'objcpp' : ['clangd'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
-      \ 'python' : ['python3' , '-m' ,'pyls'],
+      \ 'python' : ['python3' , '-m' ,'pylsp'],
       \ 'crystal' : ['scry'],
       \ 'rust' : ['rust-analyzer'],
       \ 'scala' : ['metals-vim'],
@@ -35,25 +35,3 @@ let s:lsp_servers = {
 " 为语言指定Language server和server的参数
 let g:LanguageClient_serverCommands = s:lsp_servers
 
-
-"nnoremap <space>li :call LanguageClient_textDocument_implementation()<CR>
-"nnoremap <space>ld :call LanguageClient#textDocument_definition()<CR>
-"nnoremap <space>lr :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <space>lf :call LanguageClient#textDocument_formatting()<CR>
-"nnoremap <space>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-"nnoremap <space>lx :call LanguageClient#textDocument_references()<CR>
-"nnoremap <space>la :call LanguageClient_workspace_applyEdit()<CR>
-"nnoremap <space>lh :call LanguageClient#textDocument_hover()<CR>
-"nnoremap <space>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-"nnoremap <space>lc :call LanguageClient_textDocument_codeAction()<CR>
-"nnoremap <space>lu :call *LanguageClient#textDocument_documentHighlight()<CR>
-"nnoremap <space>lm :call LanguageClient_contextMenu()<CR>
-"nnoremap <space>pc :pc<CR>
-
-" autocmd VimEnter *  call s:start_server()
-
-" function s:start_server()
-"       if !LanguageClient#isServerRunning()
-"             silent! call LanguageClient#startServer()
-"       endif
-" endfunction

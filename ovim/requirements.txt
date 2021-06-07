@@ -1,4 +1,4 @@
 pynvim
 toml
-python-language-server
+python-lsp-server[all]
 autopep8

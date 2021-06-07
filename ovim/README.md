@@ -21,18 +21,18 @@ module可由多个plugin配置成 预留接口
 ### python
 * pynvim
 * toml
-* python-language-server
+* python-lsp-server
 
 ```bash
-pip install --user -U pynvim toml python-language-server
-python3 -m pip install -t ~/.cache/venv/vim -U -r requirements.txt
+pip install --user -U pynvim toml python-lsp-server[all]
+python3 -m pip install -t ~/.cache/ovim/python3-venv -U -r requirements.txt
 ```
 
-python统一使用`$HOME/.cache/venv/vim`下的虚拟环境，依赖也安装在虚拟环境中
+python统一使用`$HOME/.cache/ovim/python3-venv`下的虚拟环境，依赖也安装在虚拟环境中
 同时`python3_host_prog`也需要对应
 使用脚本快速安装
 ```bash
-./config.sh dep vim_python
+python3 h.py depend
 ```
 
 ### node

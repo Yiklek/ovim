@@ -19,7 +19,7 @@
             "command": "python3",
             "args": [
                 "-m",
-                "pyls"
+                "pylsp"
             ],
             "filetypes": [
                 "python"
