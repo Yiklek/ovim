@@ -14,7 +14,7 @@ config_level = 3
 ovim_plug_manager = "dein"
 
 [var]
-root_marker = [".git",".hg",".svn",".root",".project",
+root_markers = [".git",".hg",".svn",".root",".project",
                 "compile_commands.json","CMakeLists.txt",
                 "Makefile","makefile"]
 
