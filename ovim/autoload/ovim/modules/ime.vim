@@ -40,7 +40,7 @@ function s:plugins_base()
   let s:self.plugs['ZSaberLv0/ZFVimIM'] = { "repo": "ZSaberLv0/ZFVimIM",
                                 \    "on_event":["VimEnter"],
                                 \    "hook_post_source":"nnoremap <expr><silent> ;' ZFVimIME_keymap_next_n()\ninoremap <expr><silent> ;' ZFVimIME_keymap_next_i()\nvnoremap <expr><silent> ;' ZFVimIME_keymap_next_v()",
-                                \    "hook_source":"let g:ZFVimIM_cloudAsync_enable = 1\nlet g:ZFVimIM_cloudSync_enable = 0\nlet g:ZFVimIM_cachePath = g:ovim_cacha_path . '/ZFVimIM'",
+                                \    "hook_source":"let g:ZFVimIM_cloudAsync_enable = 1\nlet g:ZFVimIM_cloudSync_enable = 0\nlet g:ZFVimIM_cachePath = g:ovim_cache_path . '/ZFVimIM'",
                                 \    }
   let s:self.plugs['ZSaberLv0/ZFVimJob'] = { "repo": "ZSaberLv0/ZFVimJob",
                                 \    "on_event":["VimEnter"],

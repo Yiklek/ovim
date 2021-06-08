@@ -5,7 +5,7 @@
 " Copyright (c) 2021 Yiklek
 
 let g:coc_config_home = g:ovim_root_path.'/config/coc'
-let g:coc_data_home = g:ovim_cacha_path.'/coc'
+let g:coc_data_home = g:ovim_cache_path.'/coc'
 
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
                                 \ let b:coc_enabled=0 |
@@ -14,7 +14,7 @@ autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
 
 let g:coc_user_config = {
 \    "session": {
-\     "directory":g:ovim_cacha_path.'/session',
+\     "directory":g:ovim_cache_path.'/session',
 \    },
 \}
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",

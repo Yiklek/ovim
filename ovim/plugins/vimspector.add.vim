@@ -1,4 +1,4 @@
-let g:vimspector_base_dir=g:ovim_cacha_path."/vimspector-config"
+let g:vimspector_base_dir=g:ovim_cache_path."/vimspector-config"
 let g:vimspector_install_gadgets = [ "debugpy","vscode-cpptools" ]
 
 nmap <leader>ed<space>   <Plug>VimspectorContinue

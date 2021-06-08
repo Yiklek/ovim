@@ -23,7 +23,7 @@ let g:gutentags_project_root = get(g:,'root_markers',['.root', '.svn', '.git', '
 " let g:gutentags_ctags_tagfile = 'tags'
 
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = g:ovim_cacha_path.'/tags'
+let s:vim_tags = g:ovim_cache_path.'/tags'
 let g:gutentags_cache_dir = s:vim_tags
 
 " 检测 ~/.cache/ovim/tags 不存在就新建

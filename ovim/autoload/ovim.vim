@@ -10,12 +10,12 @@ let $OVIM_ROOT_PATH = g:ovim_root_path
 let g:vim_path = fnamemodify(expand('$MYVIMRC'), ':h')
 let $VIM_PATH  = g:vim_path
 
-let g:ovim_cacha_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
+let g:ovim_cache_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
 
 if ovim#utils#has_win()
-    let g:ovim_default_python_path = g:ovim_cacha_path.'/python3-venv/Scripts/python.exe'
+    let g:ovim_default_python_path = g:ovim_cache_path.'/python3-venv/Scripts/python.exe'
 else
-    let g:ovim_default_python_path = g:ovim_cacha_path.'/python3-venv/bin/python'
+    let g:ovim_default_python_path = g:ovim_cache_path.'/python3-venv/bin/python'
 endif
 let g:python3_host_prog = get(g:,'python3_host_prog', g:ovim_default_python_path)
 
@@ -61,7 +61,7 @@ function! ovim#init(...) abort
     if exists('g:ovim_global_options.modules')
         call s:modules(g:ovim_global_options.modules)
     endif
-    if ovim#plugin#begin(g:ovim_cacha_path)
+    if ovim#plugin#begin(g:ovim_cache_path)
         if exists('g:ovim_global_options.plugins')
             call s:plugins(g:ovim_global_options.plugins)
         endif
