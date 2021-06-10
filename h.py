@@ -8,9 +8,9 @@
 import argparse
 import os
 import sys
-import venv
 from os.path import join, isfile, isdir, abspath
 import shutil
+import platform
 
 basedir = abspath(os.path.dirname(__file__))
 homedir = abspath(os.getenv('HOME'))
@@ -41,12 +41,83 @@ nvim_root_name = 'nvim'
 vim_link = join(vim_py3_env_dir, lib, 'python3')
 vim_requirements = join(basedir, 'ovim', 'requirements.txt')
 vim_packages = join(basedir, 'ovim', 'packages.txt')
+vim_cargo = join(basedir, 'ovim', 'cargo.txt')
+platform_module = 'ovim.platform'
+platform_module_mac = 'ovim.platform.MacRunner'
+platform_module_win = 'ovim.platform.WinRunner'
+
+sys.dont_write_bytecode = True
+sys.path.append(join(basedir, 'ovim', 'python3'))
+
+from ovim.log import logger
+
+def import_module(module):
+    import importlib
+    try:
+        modules = module.split('.')
+        if len(modules) == 1:
+            return getattr(globals(), modules[-1], None) \
+                or importlib.import_module(modules[-1])
+        elif len(modules) > 1:
+            module_path = ".".join(modules[:-1])
+            m = importlib.import_module(module_path)
+            return getattr(m, modules[-1])
+        else:
+            raise RuntimeError
+    except (ImportError, RuntimeError, AttributeError) as e:
+        exit = 1
+        logger.error("{} not found.reason: {}\nexit {}".format(module, e, exit))
+        sys.exit(exit)
+
+
+def depend_check_env(args):
+    if not args.ignore_python:
+        args.venv = import_module("venv")
+
+    if args.node:
+        logger.info("finding npm")
+        if os.system("npm --version"):
+            logger.error("npm not found. exit 0")
+            sys.exit(0)
+
+    if args.cargo:
+        logger.info("finding cargo")
+        if os.system("cargo --version"):
+            logger.error("cargo not found. exit 0")
+            sys.exit(0)
+    if args.auto_platform:
+        s = platform.system()
+        if s == 'Darwin':
+            args.platform = platform_module_mac
+        elif s == 'Linux':
+            out = os.popen("cat /etc/*release")
+            out = out.split("\n")
+            for o in out:
+                o = o.split('=')
+                if o[0] == 'ID':
+                    runner_name = o[1].lower()
+                    runner_name = runner_name[0].upper() + runner_name[1:] + "Runner"
+                    args.platform = os.path.join(
+                        "{}.{}".format(platform_module, runner_name))
+                    break
+
+    if args.platform:
+        args.platform = import_module(args.platform)
+        args.platform.check_env() 
+        
 
 
 def depend(_, args):
+    if args.all:
+        args.ignore_python = False
+        args.node = True
+        args.cargo = True
+        args.auto_platform = True
+    depend_check_env(args)
+
     if not args.ignore_python:
         os.makedirs(ovim_dir, exist_ok=True)
-        venv.main([vim_py3_env_dir])
+        args.venv.main([vim_py3_env_dir])
         os.system('{} -m pip install -r {} -U'.format(vim_py, vim_requirements))
         # this symlink is for vim python dependency.
         # vim will search python/python3 module in all of runtimepath.
@@ -61,8 +132,18 @@ def depend(_, args):
         with open(vim_packages, "r") as f:
             packages = f.read()
         packages = " ".join(packages.split('\n'))
-        print("install node packages: {}".format(packages))
+        logger.info("install node packages: {}".format(packages))
         os.system('npm install -g {}'.format(packages))
+
+    if args.cargo:
+        with open(vim_cargo, "r") as f:
+            crates = f.read()
+        crates = " ".join(crates.split('\n'))
+        logger.info("install cargo crates: {}".format(crates))
+        os.system('cargo install {}'.format(crates))
+
+    if args.platform:
+        args.platform.run()
 
 
 def install(parser, args):
@@ -78,7 +159,7 @@ def install(parser, args):
         vim_config_init = join(vim_config_path, nvim_init_file)
 
     os.makedirs(vim_config_path, exist_ok=True)
-    print('create path %s successfully.')
+    logger.info('create path %s successfully.')
     if not isfile(vim_config_init):
         os.symlink(join(basedir, 'vimrc'), vim_config_init)
     if not isfile(join(vim_config_path, 'autoload', 'plug.vim')):
@@ -86,7 +167,7 @@ def install(parser, args):
             join(vim_config_path, 'autoload', 'plug.vim'))
         os.system(cmd)
     else:
-        print('plug.vim exist.')
+        logger.info('plug.vim exist.')
     if not isdir(join(vim_config_path, 'dein.vim')):
         cmd = 'git clone https://github.com/Shougo/dein.vim {}'.format(
             join(vim_config_path, 'dein.vim'))
@@ -112,16 +193,16 @@ def uninstall(parser, args):
         vim_config_path = join(config_dir, nvim_root_name)
     try:
         shutil.rmtree(vim_config_path)
-        print("delete config dir %s successfully." % vim_config_path)
+        logger.info("delete config dir %s successfully." % vim_config_path)
     except:
-        print("delete config dir %s failed. please remove %s manually." %
+        logger.warn("delete config dir %s failed. please remove %s manually." %
               (vim_config_path, vim_config_path))
     if args.remove_cache:
         try:
             shutil.rmtree(ovim_cache_dir)
-            print("delete config dir %s successfully." % ovim_cache_dir)
+            logger.info("delete config dir %s successfully." % ovim_cache_dir)
         except:
-            print("delete config dir %s failed. please remove %s manually." %
+            logger.warn("delete config dir %s failed. please remove %s manually." %
                   (ovim_cache_dir, ovim_cache_dir))
 
 
@@ -152,6 +233,16 @@ def create_arg_parser():
                             help='python dependency. default: False', default=False, action='store_true')
     parser_dep.add_argument(
         '-n', '--node', help='node dependency', default=False, action='store_true')
+    parser_dep.add_argument(
+        '-c', '--cargo', help='cargo dependency', default=False, action='store_true')
+    parser_dep.add_argument(
+        '--after-shell', help='run shell script after all finished', default=None, type=str)
+    parser_dep.add_argument(
+        '--platform', help='platform dependency', default=None, type=str)
+    parser_dep.add_argument(
+        '--auto-platform', help='auto detect platform shell dependency', default=False, action='store_true')
+    parser_dep.add_argument(
+        '--all', help='ignore-python=False,node=True,cargo=True,auto-platform=True', default=False, action='store_true')
     parser_dep.set_defaults(func=depend)
     return parser
 
@@ -166,4 +257,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    try:
+        main(sys.argv[1:])
+    except BaseException as e:
+        logger.error(e)

@@ -1,24 +1,37 @@
-# 需求
+# ovim
+
+## 基本功能
+
 支持自定义配置module、plugin
 keymap全部经过统一接口便于生成速查
 
-
-# 启动流程
+## 启动流程
 
 module可由多个plugin配置成 预留接口
 
-常量初始化
-加载合并modules配置
-加载合并plugins配置
-调用包管理器
+常量初始化  
+加载合并modules配置  
+加载合并plugins配置  
+加载合并addons配置  
+调用包管理器  
 
-# default
+## default
 
-## plugin
+### plugin
+
 见`config/default.toml`
-## extern dependency
 
-### python
+### Extern dependency
+
+```bash
+# all dependencies
+python3 h.py depand --node --cargo 
+# all dependencies and platform specified script
+python3 h.py depend --all
+```
+
+#### python
+
 * pynvim
 * toml
 * python-lsp-server
@@ -31,16 +44,25 @@ python3 -m pip install -t ~/.cache/ovim/python3-venv -U -r requirements.txt
 python统一使用`$HOME/.cache/ovim/python3-venv`下的虚拟环境，依赖也安装在虚拟环境中
 同时`python3_host_prog`也需要对应
 使用脚本快速安装
+
 ```bash
 python3 h.py depend
 ```
 
-### node
+#### node
+
 * neovim
 * bash-language-server
+* yarn
+* js-beautify
+* standard
+* eslint
+* typescript-formatterr
 
 ```bash
 npm install -g neovim bash-language-server yarn
+# or
+python h.py depend --node
 ```
 
 ### other
@@ -66,8 +88,7 @@ brew tap universal-ctags/universal-ctags
 brew install --HEAD universal-ctags/universal-ctags
 ```
 
-
-# TODO
+## TODO
 
 * os适配
 * vim bookmark manager
