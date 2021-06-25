@@ -43,58 +43,6 @@ repo = "haya14busa/dein-command.vim"
 if = "g:ovim_plug_manager ==# 'dein'"
 on_cmd = "Dein"
 
-[plugins."arakashic/nvim-colors-solarized"]
-level = 1
-repo = "arakashic/nvim-colors-solarized"
-if = 0
-
-# colorscheme gruvbox
-[plugins."morhetz/gruvbox"]
-level = 1
-repo = "morhetz/gruvbox"
-
-[plugins."miconda/lucariox.vim"]
-level = 1
-repo = "miconda/lucariox.vim"
-
-# colorscheme oceanic_material
-[plugins."hardcoreplayers/oceanic-material"]
-level = 1
-repo = "hardcoreplayers/oceanic-material"
-# colorscheme OceanicNext
-[plugins."mhartington/oceanic-next"]
-level = 1
-repo = "mhartington/oceanic-next"
-
-# set background=dark
-# colorscheme one
-[plugins."rakr/vim-one"]
-level = 1
-repo = "rakr/vim-one"
-
-#" Dark
-#set background=dark
-#colorscheme vim-material
-
-#" Palenight
-#let g:material_style='palenight'
-#set background=dark
-#colorscheme vim-material
-
-#" Oceanic
-#let g:material_style='oceanic'
-#set background=dark
-#colorscheme vim-material
-
-#" Light
-#set background=light
-#colorscheme vim-material
-#airline
-#let g:airline_theme='material'
-[plugins."hzchirs/vim-material"]
-level = 1
-repo = "hzchirs/vim-material"
-
 [plugins."https://gitee.com/yelgors/vim-togglemouse.git"]
 level = 1
 repo = "https://gitee.com/yelgors/vim-togglemouse.git"
@@ -197,6 +145,7 @@ level = 3
 repo = "Yggdroot/indentLine"
 hook_source = "source $OVIM_ROOT_PATH/plugins/indentLine.vim"
 on_event = [ "BufReadPost", "BufWritePost",]
+if = "!has('nvim')"
 
 [plugins."scrooloose/nerdcommenter"]
 level = 3
@@ -504,12 +453,43 @@ repo = "lambdalisue/suda.vim"
 on = ["SudaRead","SudaWrite"]
 on_cmd = ["SudaRead","SudaWrite"]
 
-[plugins."wbthomason/packer.nvim"]
-level = 3
-repo = "wbthomason/packer.nvim"
-if = "has('nvim-0.5')"
 
 #### modules
+[modules.theme]
+level = 1
+name = "theme"
+use = ["one","zephyr","gruvbox","oceanic_material","oceanic_next","lucariox","vim-material","solarized"]
+
+[modules.theme.options]
+theme-one = {repo = 'rakr/vim-one'}
+theme-next = {repo = "mhartington/oceanic-next"}
+theme-material = {repo = "hardcoreplayers/oceanic-material"}
+theme-gruvbox = {repo = "morhetz/gruvbox"}
+theme-lucariox = {repo = "miconda/lucariox.vim"}
+#" Dark
+#set background=dark
+#colorscheme vim-material
+
+#" Palenight
+#let g:material_style='palenight'
+#set background=dark
+#colorscheme vim-material
+
+#" Oceanic
+#let g:material_style='oceanic'
+#set background=dark
+#colorscheme vim-material
+
+#" Light
+#set background=light
+#colorscheme vim-material
+#airline
+#let g:airline_theme='material'
+theme-vim-material = {repo = "hzchirs/vim-material"}
+theme-nvim-colors-solarized = {repo = "arakashic/nvim-colors-solarized"}
+theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
+
+
 #if has node,use coc
 [modules.autocomplete]
 level = 2

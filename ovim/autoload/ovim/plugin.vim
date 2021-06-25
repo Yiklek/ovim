@@ -10,20 +10,13 @@ function ovim#plugin#begin(arg)
         exe g:ovim_global_options.hook_before_setup_plugin
     endif
     if g:ovim_plug_manager ==# 'plug'
-        if !filereadable(g:vim_path.'/autoload/plug.vim')
-            call ovim#utils#warn('download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually')
-            throw 'OvimError:0002: download plug.vim from https://github.com/junegunn/vim-plug to '.g:vim_path.'/autoload/plug.vim manually'
-        endif
-            call plug#begin(a:arg.'/plugged')
+        packadd vim-plug 
+        call plug#begin(a:arg.'/plugged')
     elseif g:ovim_plug_manager ==# 'dein'
-        set rtp+=$VIM_PATH/dein.vim
-        if !isdirectory(g:vim_path.'/dein.vim')
-            call ovim#utils#warn('download dein.vim from https://github.com/Shougo/dein.vim.git to '.g:vim_path.'/dein.vim manually')
-            throw 'OvimError:0002: download dein.vim from https://github.com/Shougo/dein.vim.git to '.g:vim_path.'/dein.vim manually'
-        endif
+        packadd dein.vim
         if dein#load_state(a:arg.'/dein')
             call dein#begin(a:arg.'/dein')
-            call dein#add(g:vim_path.'/dein.vim',{ 'on_func':'dein#' ,"hook_add":"source $OVIM_ROOT_PATH/plugins/dein.add.vim"})
+            call dein#add(g:ovim_cache_path.'/pack/ovim/opt/dein.vim',{ 'on_func':'dein#' ,"hook_add":"source $OVIM_ROOT_PATH/plugins/dein.add.vim"})
             let g:dein_loading = 1
         else
             return 0

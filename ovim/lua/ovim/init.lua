@@ -1,25 +1,7 @@
-function string:split_lite(sep)
-    local splits = {}
-    
-    if sep == nil then
-        -- return table with whole str
-        table.insert(splits, self)
-    elseif sep == "" then
-        -- return table with each single character
-        local len = #self
-        for i = 1, len do
-            table.insert(splits, self:sub(i, i))
-        end
-    else
-        -- normal split use gmatch
-        local pattern = "[^" .. sep .. "]+"
-        for str in string.gmatch(self, pattern) do
-            table.insert(splits, str)
-        end
-    end
-    
-    return splits
-end
+ovim = {}
+ovim.compat = require('ovim.compat')
+ovim.sys = require('ovim.sys')
+ovim.pkg = require('ovim.pkg')
 -- 打印错误信息
 local function __TRACKBACK__(errmsg)
     local track_text = debug.traceback(tostring(errmsg), 6);
@@ -30,16 +12,15 @@ local function __TRACKBACK__(errmsg)
     return false;
 end
 
-if tonumber(_VERSION:split_lite(" ")[2]) > 5.1 then
-    compat_unpack = table.unpack
-else 
-    compat_unpack = unpack
-end
+
+ovim.pkg:ensure_plugins()
+ovim.pkg:load_compile()
 --[[ 尝试调一个function 这个function可以带可变参数
 如果被调用的函数有异常 返回false，退出此方法继续执行其他代码并打印出异常信息；]]
 function trycall(func, callback, ...)
     local args = { ... };
-    return xpcall(function() func(compat_unpack(args)) end, callback);
+    return xpcall(function() func(ovim.compat.unpack(args)) end, callback);
 end
 --测试代码：
-return trycall(function() return require('packer').startup(empty) end, function() end)
+--trycall(function() return require('packer').startup({packer_startup,config = packer_config}) end, __TRACKBACK__)
+return 1

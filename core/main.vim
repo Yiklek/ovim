@@ -71,34 +71,20 @@ set autoread            " 文件在vim之外修改过，自动重新读入
 " }}}
 
 " os config {{{
-let g:_config_python_home=''
-let g:dotvimd=expand('~/.vim.d')
 let g:config_root=fnamemodify(expand('<sfile>'), ':h')
+let g:real_ovim_path= fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 if has('win32')    "  windows
     " 设置 alt 键不映射到菜单栏
     set winaltkeys=no
     set backspace=indent,eol,start whichwrap+=<,>,[,]
     autocmd GUIEnter * simalt ~x
-
-    let g:_config_python_home=''
-    let g:python_interpreter = g:_config_python_home.'python'
-    let g:binary_suffix = 'exe'
-    vnoremap <leader>c :w! $HOME/%.temp<cr>:call WSLClip()<cr>
 elseif has('mac')      " macos
-
-    let g:_config_python_home=expand('~/.pyenv/versions/3.7.4')
-    let g:python_interpreter = g:_config_python_home. '/bin/python3.7'
     au GUIEnter * call MaximizeWindow()
-    let g:binary_suffix = 'out'
 else                " linux
-    let g:_config_python_home=''
-    let g:python_interpreter = g:_config_python_home.'python3'
     au GUIEnter * call MaximizeWindow()
-    let g:binary_suffix = 'out'
 endif
 " }}}
 
-let g:dotvim = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 " gui {{{
 if has('gui_running')
     " gvim-only stuff
@@ -134,7 +120,7 @@ endif
 "  set clipboard+=unnamed
 " endif
 " 插件无关map
-let &rtp=&rtp.','.g:dotvim.'/ovim,'.g:dotvimd
+let &rtp=&rtp.','.g:real_ovim_path.'/ovim'
 
 call ovim#init()
 
@@ -150,44 +136,9 @@ function! s:has_colorscheme(name) abort
 endfunction
 
 syntax enable
-set background=dark
-let g:solarized_italic=0
-"let g:solarized_termtrans = 1
-" set t_Co=256
-if has("termguicolors")
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-" vim 在iterm2下一半启动时间都在加载主题  nvim很快
-let g:oceanic_material_allow_underline = 1
-" silent! colorscheme solarized
-"silent! colorscheme gruvbox
-silent! colorscheme one
-" if !has("gui_running")
-"     hi Normal guibg=NONE ctermbg=NONE
-" endif
-" silent! colorscheme oceanic_material
-" silent! colorscheme OceanicNext
-" hi CursorLine cterm=NONE
-" if s:has_colorscheme('gruvbox')
-"     colorscheme gruvbox
-" elseif s:has_colorscheme('solarized')
-"     colorscheme solarized
-" endif
-let g:solarized_termcolors=256
 " }}}
 
 
-" make {{{
-if has('win32')
-    auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.exe\ %
-    auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.exe\ %
-else
-    auto FileType  cpp set makeprg=g++\ -Wall\ -O\ -g\ -o\ %<.out\ %
-    auto FileType  c set makeprg=gcc\ -Wall\ -O\ -g\ -o\ %<.out\ %
-endif
-" }}}
 
 " clip {{{
 function! WSLClip()
@@ -214,7 +165,7 @@ endfunction
 
 " {{{ DisplayHelp
 function! DisplayHelp()
-    let help_file = g:dotvim."/config-help.txt"
+    let help_file = g:real_ovim_path."/config-help.txt"
     let bnr = bufwinnr(help_file)
     if bnr > 0
         let g:opening = 1
@@ -236,12 +187,3 @@ let g:space_key_map['<F9>'] = [':call DisplayHelp()','Show Help(todo)']
 catch
 endtry
 " }}}
-
-" 剩余的窗口都不是文件编辑窗口时，自动退出当前tab
-"autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | q! | endif
-
-
-" 定位到退出位置并移动到屏幕中央
-"if has("autocmd")
-    "au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif | normal! zvzz
-"endif

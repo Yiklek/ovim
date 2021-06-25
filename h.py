@@ -66,7 +66,8 @@ def import_module(module):
             raise RuntimeError
     except (ImportError, RuntimeError, AttributeError) as e:
         exit = 1
-        logger.error("{} not found.reason: {}\nexit {}".format(module, e, exit))
+        logger.error(
+            "{} not found.reason: {}\nexit {}".format(module, e, exit))
         sys.exit(exit)
 
 
@@ -96,15 +97,15 @@ def depend_check_env(args):
                 o = o.split('=')
                 if o[0] == 'ID':
                     runner_name = o[1].lower()
-                    runner_name = runner_name[0].upper() + runner_name[1:] + "Runner"
+                    runner_name = runner_name[0].upper(
+                    ) + runner_name[1:] + "Runner"
                     args.platform = os.path.join(
                         "{}.{}".format(platform_module, runner_name))
                     break
 
     if args.platform:
         args.platform = import_module(args.platform)
-        args.platform.check_env() 
-        
+        args.platform.check_env()
 
 
 def depend(_, args):
@@ -159,21 +160,30 @@ def install(parser, args):
         vim_config_init = join(vim_config_path, nvim_init_file)
 
     os.makedirs(vim_config_path, exist_ok=True)
-    logger.info('create path %s successfully.')
+    logger.info('create path {} successfully.'.format(vim_config_path))
     if not isfile(vim_config_init):
         os.symlink(join(basedir, 'vimrc'), vim_config_init)
-    if not isfile(join(vim_config_path, 'autoload', 'plug.vim')):
+    vim_plug_path = join(ovim_cache_dir, 'pack', 'ovim',
+                         'opt', 'vim-plug', 'autoload', 'plug.vim')
+    if not isfile(vim_plug_path):
         cmd = 'curl -fLo {} --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'.format(
-            join(vim_config_path, 'autoload', 'plug.vim'))
+            vim_plug_path)
         os.system(cmd)
     else:
         logger.info('plug.vim exist.')
-    if not isdir(join(vim_config_path, 'dein.vim')):
-        cmd = 'git clone https://github.com/Shougo/dein.vim {}'.format(
-            join(vim_config_path, 'dein.vim'))
+
+    dein_path = join(ovim_cache_dir, 'pack', 'ovim', 'opt', 'dein.vim')
+    if not isdir(dein_path):
+        cmd = 'git clone https://github.com/Shougo/dein.vim {}'.format(dein_path)
         os.system(cmd)
     else:
         print('dein.vim exist.')
+    packer_path = join(ovim_cache_dir, 'pack', 'packer', 'opt', 'packer.nvim')
+    if not isdir(packer_path):
+        cmd = 'git clone https://github.com/wbthomason/packer.nvim {}'.format(packer_path)
+        os.system(cmd)
+    else:
+        print('packer.vim exist.')
 
     if args.install_depend:
         new_args = ['depend']
@@ -196,14 +206,14 @@ def uninstall(parser, args):
         logger.info("delete config dir %s successfully." % vim_config_path)
     except:
         logger.warn("delete config dir %s failed. please remove %s manually." %
-              (vim_config_path, vim_config_path))
+                    (vim_config_path, vim_config_path))
     if args.remove_cache:
         try:
             shutil.rmtree(ovim_cache_dir)
             logger.info("delete config dir %s successfully." % ovim_cache_dir)
         except:
             logger.warn("delete config dir %s failed. please remove %s manually." %
-                  (ovim_cache_dir, ovim_cache_dir))
+                        (ovim_cache_dir, ovim_cache_dir))
 
 
 def create_arg_parser():

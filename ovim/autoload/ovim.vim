@@ -11,6 +11,7 @@ let g:vim_path = fnamemodify(expand('$MYVIMRC'), ':h')
 let $VIM_PATH  = g:vim_path
 
 let g:ovim_cache_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
+let $OVIM_CACHE_PATH = g:ovim_cache_path
 
 if ovim#utils#has_win()
     let g:ovim_default_python_path = g:ovim_cache_path.'/python3-venv/Scripts/python.exe'
@@ -18,6 +19,7 @@ else
     let g:ovim_default_python_path = g:ovim_cache_path.'/python3-venv/bin/python'
 endif
 let g:python3_host_prog = get(g:,'python3_host_prog', g:ovim_default_python_path)
+let g:mapleader = get(g:,'mapleader', ',')
 
 let g:ovim_global_options = {}
 
@@ -57,6 +59,7 @@ command -nargs=* -complete=expression OvimLogWarn call ovim#utils#warn(<f-args>)
 function! ovim#init(...) abort
     let g:ovim_global_options = {'plugins':{}}
     let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
+    call s:setup_pack()
     call s:setup_python()
     if exists('g:ovim_global_options.modules')
         call s:modules(g:ovim_global_options.modules)
@@ -86,6 +89,13 @@ function! s:setup_python()
             let $PATH = expand(python3_home.'/bin').":".$PATH
         endif
         let g:python3_setup = 1
+    endif
+endfunction
+
+function! s:setup_pack()
+    if !exists('g:pack_setup')
+        let &packpath = g:ovim_cache_path.','.&packpath
+        let g:pack_setup = 1
     endif
 endfunction
 
