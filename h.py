@@ -92,10 +92,11 @@ def depend_check_env(args):
             args.platform = platform_module_mac
         elif s == 'Linux':
             out = os.popen("cat /etc/*release")
-            out = out.split("\n")
+            out = out.readlines()
             for o in out:
                 o = o.split('=')
                 if o[0] == 'ID':
+                    o[1] = o[1].strip()
                     runner_name = o[1].lower()
                     runner_name = runner_name[0].upper(
                     ) + runner_name[1:] + "Runner"
