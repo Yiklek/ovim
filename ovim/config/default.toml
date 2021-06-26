@@ -188,6 +188,7 @@ level = 3
 repo = "chiel92/vim-autoformat"
 on = "Autoformat"
 on_cmd = "Autoformat"
+on_event = "VimEnter"
 hook_add = "source $OVIM_ROOT_PATH/plugins/autoformat.vim"
 
 [plugins."skywind3000/asyncrun.vim"]
