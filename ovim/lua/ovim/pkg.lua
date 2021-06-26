@@ -24,7 +24,7 @@ function pkg.load_packer()
     packer.reset()
     local use = packer.use
     use {"wbthomason/packer.nvim", opt = true }
-    use {'glepnir/indent-guides.nvim', event = "VimEnter" , config = [[require('indent_guides').setup({exclude_filetypes = {'help','dashboard','dashpreview','NvimTree','vista','sagahover','coc-explorer','floaterm'}})]]}
+    use {'glepnir/indent-guides.nvim', event = "VimEnter" , config = [[require('indent_guides').setup({exclude_filetypes = {'help','dashboard','dashpreview','NvimTree','vista','sagahover','coc-explorer','floaterm','packer'}})]]}
     use {
         "nvim-treesitter/nvim-treesitter",
         event = "VimEnter",
@@ -35,6 +35,7 @@ function pkg.load_packer()
     --    use(repo)
     --end 
 end
+
 function pkg.ensure_plugins()
    pkg.load_packer() 
    packer.install()
@@ -46,16 +47,21 @@ function pkg.load_compile()
     else
         assert('Missing packer compile file Run PackerCompile Or PackerInstall to fix')
     end
-    vim.cmd [[command! PackerCompile lua require('packer').compile()]]
-    vim.cmd [[command! PackerInstall lua require('packer').install()]]
-    vim.cmd [[command! PackerUpdate lua require('packer').update()]]
-    vim.cmd [[command! PackerSync lua require('packer').sync()]]
-    vim.cmd [[command! PackerClean lua require('packer').clean()]]
+    vim.cmd [[command! PackerCompile lua require('ovim.pkg').compile()]]
+    vim.cmd [[command! PackerInstall lua require('ovim.pkg').install()]]
+    vim.cmd [[command! PackerUpdate lua require('ovim.pkg').update()]]
+    vim.cmd [[command! PackerSync lua require('ovim.pkg').sync()]]
+    vim.cmd [[command! PackerClean lua require('ovim.pkg').clean()]]
     --vim.cmd [[autocmd User PackerComplete lua require('ovim.pkg').magic_compile()]]
-    vim.cmd [[command! PackerStatus  lua require('packer').status()]]  
+    vim.cmd [[command! PackerStatus  lua require('ovim.pkg').status()]]  
 end
 
-
+pkg = setmetatable(pkg,{ __index = function(o,key)
+    return function(...)
+        pkg.load_packer() 
+        packer[key](...)
+    end
+end})
 
 
 return pkg

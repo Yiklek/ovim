@@ -10,7 +10,7 @@ let g:ovim_keymap_order = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'
 					\ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
 					\ 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 					\ '!', '@', '#', '$', '%', '&', '&', '*', '(',')',]
-let s:ovim_config_suffix = ['json','toml']
+let s:ovim_config_suffix = ["json","toml"]
 " a:1 unite desc
 " a:2 unite cmd
 " a:3 guide desc
@@ -37,6 +37,9 @@ endfun
 " 暂时使用json  后续支持toml yaml
 function ovim#utils#load_config(filename) abort
 	let l:filename = expand(a:filename)
+    if !filereadable(l:filename)
+        return ''
+    endif
     " Parse YAML/JSON config file fast than yaml
 	let l:config_str = has('nvim') ? readfile(l:filename) : join(readfile(l:filename),"\n")
 	if l:filename =~# '\.json$'
@@ -54,12 +57,11 @@ endfun
 
 function ovim#utils#load_default() abort
 	for i in s:ovim_config_suffix
-		if filereadable(g:ovim_root_path.'/config/default.'.i)
-			let l:r = ovim#utils#load_config(g:ovim_root_path.'/config/default.'.i)
-			if i != 'json' && get(l:r,'make_json',0)
-				call writefile([json_encode(l:r)],g:ovim_root_path.'/config/default.json')
-			endif
-			return r
+        let l:option_path = g:ovim_root_path.'/config/default.'.i
+		if filereadable(l:option_path)
+			let l:options = ovim#utils#load_config(l:option_path)
+            let l:options._option_path = l:option_path
+			return l:options
 		endif
 	endfor
 	throw 'OvimError:0001: default config not found.'
@@ -67,17 +69,22 @@ endfun
 
 function ovim#utils#load_custom() abort
 	for i in s:ovim_config_suffix
-		if filereadable(g:vim_path.'/config/custom.'.i)
-			let l:r = ovim#utils#load_config(g:vim_path.'/config/custom.'.i)
-			if i != 'json' && get(l:r,'make_json',0)
-				call writefile([json_encode(l:r)],g:vim_path.'/config/custom.json')
-			endif
-			return r
+        let l:option_path = g:vim_path.'/config/custom.'.i
+		if filereadable(l:option_path)
+			let l:options = ovim#utils#load_config(l:option_path)
+            let l:options._option_path = l:option_path
+			return l:options
 		endif
 	endfor
 	call ovim#utils#log('cannot find custom config. use default.')
 	return ovim#utils#load_default()
 endfun
+
+function ovim#utils#make_option_cache(path)
+    let l:options = ovim#utils#load_config(g:ovim_global_options._option_path)
+    let l:options._option_path = g:ovim_global_options._option_path
+	call writefile([json_encode(l:options)], a:path)
+endfunction
 
 function ovim#utils#source(filename) abort
 	exe 'source '.a:filename

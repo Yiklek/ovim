@@ -12,6 +12,7 @@ let $VIM_PATH  = g:vim_path
 
 let g:ovim_cache_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
 let $OVIM_CACHE_PATH = g:ovim_cache_path
+let g:ovim_option_cache_path = g:ovim_cache_path . "/ovim_option_cache.json"
 
 if ovim#utils#has_win()
     let g:ovim_default_python_path = g:ovim_cache_path.'/python3-venv/Scripts/python.exe'
@@ -36,6 +37,10 @@ if !exists('g:leader_key_map')
 endif
 
 command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
+command -nargs=0 OvimRmOptionCache call delete(g:ovim_option_cache_path)
+command -nargs=0 OvimMakeOptionCache call ovim#utils#make_option_cache(g:ovim_option_cache_path)
+            \ | if g:ovim_plug_manager ==# 'dein' | call dein#clear_state() 
+            \ | endif
 command -nargs=0 OvimCopyDotSpector call ovim#utils#copy(g:ovim_root_path.'/config/vimspector/.vimspector.json','./.vimspector.json')
 
 " both two command receive, expand and eval input string.
@@ -57,10 +62,12 @@ command -nargs=* -complete=expression OvimLogWarn call ovim#utils#warn(<f-args>)
 " and default will be both loaded.specified option will override default.this maybe cause startup slowly.
 " when a {path} given,specified file will be loaded
 function! ovim#init(...) abort
-    let g:ovim_global_options = {'plugins':{}}
-    let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
     call s:setup_pack()
     call s:setup_python()
+    let g:ovim_global_options = s:options(g:ovim_option_cache_path)
+    if type(g:ovim_global_options) == v:t_string && g:ovim_global_options == '' 
+        let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
+    endif
     if exists('g:ovim_global_options.modules')
         call s:modules(g:ovim_global_options.modules)
     endif
