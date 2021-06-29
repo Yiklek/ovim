@@ -101,6 +101,7 @@ if = 0
 level = 1
 repo = "glepnir/spaceline.vim"
 hook_source = "source $OVIM_ROOT_PATH/plugins/spaceline.source.vim"
+if = 0
 
 [plugins."ryanoasis/vim-devicons"]
 level = 1
@@ -109,7 +110,9 @@ repo = "ryanoasis/vim-devicons"
 [plugins."itchyny/lightline.vim"]
 level = 2
 repo = "itchyny/lightline.vim"
-if = 0
+hook_source = "source $OVIM_ROOT_PATH/plugins/lightline.source.vim"
+on_event = "VimEnter"
+
 
 [plugins."hardcoreplayers/vim-buffet"]
 level = 2
@@ -495,7 +498,7 @@ theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
 [modules.autocomplete]
 level = 2
 name = "autocomplete"
-method = "auto"
+method = "coc"
 
 [modules.lsp]
 level = 2
