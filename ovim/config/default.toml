@@ -498,7 +498,7 @@ theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
 [modules.autocomplete]
 level = 2
 name = "autocomplete"
-method = "coc"
+method = "auto"
 
 [modules.lsp]
 level = 2
