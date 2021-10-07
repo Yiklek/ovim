@@ -85,7 +85,7 @@ endfunction
 
 " must be invoked after read config
 function! s:setup_python()
-    if !exists('g:python3_setup')
+    if !exists('g:python3_setup') && !has("nvim")
         if ovim#utils#has_win()
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
             let &rtp = python3_home.'/Lib,'.&rtp
