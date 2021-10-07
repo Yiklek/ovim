@@ -114,7 +114,7 @@
         }
     },
     "explorer.icon.enableNerdfont": true,
-    "explorer.icon.enableVimDevicons": true,
+    "explorer.icon.source": "vim-devicons",
     "explorer.keyMappings.global": {
         "*": "toggleSelection",
         "<tab>": "actionMenu",
