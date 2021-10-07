@@ -85,15 +85,19 @@ endfunction
 
 " must be invoked after read config
 function! s:setup_python()
-    if !exists('g:python3_setup') && !has("nvim")
+    if !exists('g:python3_setup')
         if ovim#utils#has_win()
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h')
-            let &rtp = python3_home.'/Lib,'.&rtp
-            let $PATH = expand(python3_home.'/bin').";".$PATH
+            if !has('nvim')
+                let &rtp = python3_home.'/Lib,'.&rtp
+            endif
+            let $PATH = expand(python3_home.'/vbin').";".$PATH
         else
             let python3_home = fnamemodify(expand(g:python3_host_prog),':p:h:h')
-            let &rtp = python3_home.'/lib,'.&rtp
-            let $PATH = expand(python3_home.'/bin').":".$PATH
+            if !has('nvim')
+                let &rtp = python3_home.'/lib,'.&rtp
+            endif
+            let $PATH = expand(python3_home.'/vbin').":".$PATH
         endif
         let g:python3_setup = 1
     endif

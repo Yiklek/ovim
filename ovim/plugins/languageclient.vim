@@ -23,7 +23,7 @@ let s:lsp_servers = {
       \ 'objc' : ['clangd'],
       \ 'objcpp' : ['clangd'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
-      \ 'python' : ['python3' , '-m' ,'pylsp'],
+      \ 'python' : [g:python3_host_prog , '-m' ,'pylsp'],
       \ 'crystal' : ['scry'],
       \ 'rust' : ['rust-analyzer'],
       \ 'scala' : ['metals-vim'],

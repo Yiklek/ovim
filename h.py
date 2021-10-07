@@ -16,29 +16,34 @@ basedir = abspath(os.path.dirname(__file__))
 homedir = abspath(os.getenv('HOME'))
 xdg_config_dir = os.getenv('XDG_CONFIG_HOME')
 xdg_cache_dir = os.getenv('XDG_CACHE_HOME')
-ovim_dir = join(homedir, '.cache', 'ovim')
-vim_py3_env_dir = join(ovim_dir, 'python3-venv')
-cache_dir = xdg_cache_dir or join(homedir, '.cache')
-ovim_cache_dir = join(cache_dir, 'ovim')
+ovim_cache_dir = xdg_cache_dir or join(homedir, '.cache')
+ovim_cache_dir = join(ovim_cache_dir, 'ovim')
+vim_py3_home = join(ovim_cache_dir, 'python3-venv')
+ovim_py_vpath = os.path.join(vim_py3_home, 'vbin')
+ovim_py_bin_list = ['autopep8', 'yapf', 'pylsp']
 
 if os.name == 'nt':
     lib = 'Lib'
-    vim_dep_source = join(vim_py3_env_dir, lib, 'site-packages')
+    path = "Scripts"
+    vim_dep_source = join(vim_py3_home, lib, 'site-packages')
     config_dir = xdg_config_dir or join(homedir, 'AppData', 'Local')
-    vim_py = join(vim_py3_env_dir, 'Scripts', 'python.exe')
+    ovim_py_path = os.path.join(vim_py3_home, path)
+    vim_py = join(ovim_py_path, 'python.exe')
     vim_root_name = 'vimfiles'
 else:
     lib = 'lib'
-    vim_dep_source = join(vim_py3_env_dir, lib, 'python3.{}'.format(
+    path = "bin"
+    vim_dep_source = join(vim_py3_home, lib, 'python3.{}'.format(
         sys.version_info.minor), 'site-packages')
     config_dir = xdg_config_dir or join(homedir, '.config')
-    vim_py = join(vim_py3_env_dir, 'bin', 'python')
+    ovim_py_path = os.path.join(vim_py3_home, path)
+    vim_py = join(ovim_py_path, 'python')
     vim_root_name = '.vim'
 
 vim_init_file = 'vimrc'
 nvim_init_file = 'init.vim'
 nvim_root_name = 'nvim'
-vim_link = join(vim_py3_env_dir, lib, 'python3')
+vim_rtp_link = join(vim_py3_home, lib, 'python3')
 vim_requirements = join(basedir, 'ovim', 'requirements.txt')
 vim_packages = join(basedir, 'ovim', 'packages.txt')
 vim_cargo = join(basedir, 'ovim', 'cargo.txt')
@@ -50,6 +55,7 @@ sys.dont_write_bytecode = True
 sys.path.append(join(basedir, 'ovim', 'python3'))
 
 from ovim.log import logger
+
 
 def import_module(module):
     import importlib
@@ -118,18 +124,28 @@ def depend(_, args):
     depend_check_env(args)
 
     if not args.ignore_python:
-        os.makedirs(ovim_dir, exist_ok=True)
-        args.venv.main([vim_py3_env_dir])
+        os.makedirs(ovim_cache_dir, exist_ok=True)
+        args.venv.main([vim_py3_home])
         os.system('{} -m pip install -r {} -U'.format(vim_py, vim_requirements))
         # this symlink is for vim python dependency.
         # vim will search python/python3 module in all of runtimepath.
         # python site-packages path is different between on unix/linux and on windows
         # so create a symlink(python3) at Lib/lib, and set Lib/lib as vim runtimepath.
         # noevim does't need this symlink, but it does't matter.
-        if os.path.exists(vim_link):
-            os.remove(vim_link)
-        os.symlink(vim_dep_source, vim_link,
+        if os.path.exists(vim_rtp_link):
+            os.remove(vim_rtp_link)
+        os.symlink(vim_dep_source, vim_rtp_link,
                    target_is_directory=isdir(vim_dep_source))
+
+        # these symlinks will be added into vim/nvim $PATH
+        # in order to run exe in vim/nvim
+        os.makedirs(ovim_py_vpath, exist_ok=True)
+        for b in ovim_py_bin_list:
+            source = os.path.join(ovim_py_path, b)
+            target = os.path.join(ovim_py_vpath, b)
+            if not os.path.exists(target):
+                os.symlink(source, target, target_is_directory=isdir(source))
+
     if args.node:
         with open(vim_packages, "r") as f:
             packages = f.read()
@@ -205,14 +221,14 @@ def uninstall(parser, args):
     try:
         shutil.rmtree(vim_config_path)
         logger.info("delete config dir %s successfully." % vim_config_path)
-    except:
+    except Exception:
         logger.warn("delete config dir %s failed. please remove %s manually." %
                     (vim_config_path, vim_config_path))
     if args.remove_cache:
         try:
             shutil.rmtree(ovim_cache_dir)
             logger.info("delete config dir %s successfully." % ovim_cache_dir)
-        except:
+        except Exception:
             logger.warn("delete config dir %s failed. please remove %s manually." %
                         (ovim_cache_dir, ovim_cache_dir))
 
