@@ -17,6 +17,13 @@ let g:coc_user_config = {
 \     "directory":g:ovim_cache_path.'/session',
 \    },
 \}
+call coc#config("languageserver", {
+    \ "python": {
+    \   "command": [g:python3_host_prog,"-m","pylsp"],
+    \   "filetypes": ["python"],
+    \   "ignoredRootPaths": ["~"]
+    \ }
+    \})
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",
                 \ "coc-python","coc-lists","coc-yank","coc-vimlsp","coc-toml",
                 \ "coc-explorer","coc-git","coc-highlight","coc-ultisnips",
