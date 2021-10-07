@@ -26,7 +26,7 @@ call coc#config("languageserver", {
     \ }
     \})
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",
-                \ "coc-python","coc-lists","coc-yank","coc-vimlsp","coc-toml",
+                \ "coc-pyright","coc-lists","coc-yank","coc-vimlsp","coc-toml",
                 \ "coc-explorer","coc-git","coc-highlight","coc-ultisnips",
                 \ "coc-html","coc-tag","coc-cmake","coc-go"
                 \ ]
