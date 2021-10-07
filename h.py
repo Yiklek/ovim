@@ -20,7 +20,6 @@ ovim_cache_dir = xdg_cache_dir or join(homedir, '.cache')
 ovim_cache_dir = join(ovim_cache_dir, 'ovim')
 vim_py3_home = join(ovim_cache_dir, 'python3-venv')
 ovim_py_vpath = os.path.join(vim_py3_home, 'vbin')
-ovim_py_bin_list = ['autopep8', 'yapf', 'pylsp']
 
 if os.name == 'nt':
     lib = 'Lib'
@@ -140,10 +139,11 @@ def depend(_, args):
         # these symlinks will be added into vim/nvim $PATH
         # in order to run exe in vim/nvim
         os.makedirs(ovim_py_vpath, exist_ok=True)
-        for b in ovim_py_bin_list:
+        bins = os.listdir(ovim_py_path)
+        for b in bins:
             source = os.path.join(ovim_py_path, b)
             target = os.path.join(ovim_py_vpath, b)
-            if not os.path.exists(target):
+            if not b.startswith("python"):
                 os.symlink(source, target, target_is_directory=isdir(source))
 
     if args.node:

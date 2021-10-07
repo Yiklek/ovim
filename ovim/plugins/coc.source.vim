@@ -19,7 +19,8 @@ let g:coc_user_config = {
 \}
 call coc#config("languageserver", {
     \ "python": {
-    \   "command": join([g:python3_host_prog,"-m","pylsp"]," "),
+    \   "command": g:python3_host_prog,
+    \   "args": ["-m", "pylsp"],
     \   "filetypes": ["python"],
     \   "ignoredRootPaths": ["~"]
     \ }
