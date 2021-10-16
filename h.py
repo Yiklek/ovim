@@ -13,7 +13,7 @@ import shutil
 import platform
 
 basedir = abspath(os.path.dirname(__file__))
-homedir = abspath(os.getenv('HOME'))
+homedir = abspath(os.getenv('HOME') or os.getenv('USERPROFILE'))
 xdg_config_dir = os.getenv('XDG_CONFIG_HOME')
 xdg_cache_dir = os.getenv('XDG_CACHE_HOME')
 ovim_cache_dir = xdg_cache_dir or join(homedir, '.cache')
@@ -143,7 +143,7 @@ def depend(_, args):
         for b in bins:
             source = os.path.join(ovim_py_path, b)
             target = os.path.join(ovim_py_vpath, b)
-            if not b.startswith("python"):
+            if not b.startswith("python") and not os.path.exists(target):
                 os.symlink(source, target, target_is_directory=isdir(source))
 
     if args.node:

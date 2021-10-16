@@ -15,6 +15,7 @@ autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
 let g:coc_user_config = {
 \    "session": {
 \     "directory":g:ovim_cache_path.'/session',
+\     "saveOnVimLeave": ovim#utils#has_win() ?  0 : 1,
 \    },
 \}
 call coc#config("languageserver", {
