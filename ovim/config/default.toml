@@ -457,7 +457,17 @@ repo = "lambdalisue/suda.vim"
 on = ["SudaRead","SudaWrite"]
 on_cmd = ["SudaRead","SudaWrite"]
 
+[plugins."lervag/vimtex"]
+level = 3
+repo = "lervag/vimtex"
+on_ft = ["markdown","latex","tex"]
+for = ["markdown","latex","tex","vim-plug"]
 
+[plugins."DanilaMihailov/beacon.nvim"]
+level = 3
+repo = "DanilaMihailov/beacon.nvim"
+on_event = ['VimEnter']
+if = 0
 #### modules
 [modules.theme]
 level = 1
