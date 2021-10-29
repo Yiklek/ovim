@@ -2,7 +2,9 @@
 
 > ATTENTION! this framework is under developing and not stable.  
 
-ovim is a (neo)vim config and plugins manage framework.  
+> ATTENTION! ovim is now compatible with vim
+
+ovim is a neovim config and plugins manage framework.  
 ovim provides themes, completion, lsp, ime and other useful plugins.  
 
 ## install

@@ -41,6 +41,7 @@ command -nargs=0 OvimRmOptionCache call delete(g:ovim_option_cache_path)
 command -nargs=0 OvimMakeOptionCache call ovim#utils#make_option_cache(g:ovim_option_cache_path)
             \ | if g:ovim_plug_manager ==# 'dein' | call dein#clear_state() 
             \ | endif
+            \ | if get(g:, 'pack_setup', 0) == 1 | exe 'PackerCompile' | endif
 command -nargs=0 OvimCopyDotSpector call ovim#utils#copy(g:ovim_root_path.'/config/vimspector/.vimspector.json','./.vimspector.json')
 
 " both two command receive, expand and eval input string.

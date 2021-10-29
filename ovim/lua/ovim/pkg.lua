@@ -24,13 +24,15 @@ function pkg.load_packer()
     packer.reset()
     local use = packer.use
     use {"wbthomason/packer.nvim", opt = true }
-    use {'glepnir/indent-guides.nvim', event = "VimEnter" , config = [[require('indent_guides').setup({exclude_filetypes = {'help','dashboard','dashpreview','NvimTree','vista','sagahover','coc-explorer','floaterm','packer'}})]]}
+    use {'glepnir/indent-guides.nvim', event = "VimEnter" , config = [[require"ovim.pkgs.indent-guides"]]}
     use {
         "nvim-treesitter/nvim-treesitter",
         event = "VimEnter",
+        config = [[require"ovim.pkgs.nvim-treesitter"]]
     }
     use {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"}
     use {"p00f/nvim-ts-rainbow", after = "nvim-treesitter"}
+    use {"nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter"}
     --for _,repo in ipairs(self.repos) do
     --    use(repo)
     --end 
