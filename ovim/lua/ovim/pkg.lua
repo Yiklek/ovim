@@ -33,21 +33,15 @@ function pkg.ensure_plugins()
     packer.install()
 end
 
-function pkg.check_and_require(plugin, module)
-    if packer_plugins[plugin] and packer_plugins[plugin].loaded then
-        require(module)
-    end
-end
-function pkg.require(plugin, module)
-    return function()
-        pkg.check_and_require(plugin, module)
-    end
-end
-
-function pkg.check_and_call(plugin, callback)
-    if packer_plugins[plugin] and packer_plugins[plugin].loaded then
-        callback()
-    end
+function pkg.require(module)
+    try {
+        function()
+            require(module)
+        end,
+        function(e)
+            
+        end
+    }
 end
 
 function pkg.load_compile()

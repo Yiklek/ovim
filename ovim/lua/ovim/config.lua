@@ -1,17 +1,16 @@
-local pkg_require = require("ovim.pkg").require
 local plugins = {
     ["wbthomason/packer.nvim"] = {"wbthomason/packer.nvim", opt = true},
     ["glepnir/indent-guides.nvim"] = {
         "glepnir/indent-guides.nvim",
         event = "VimEnter",
         opt = true,
-        config = [[require("ovim.pkg").check_and_require("indent_guides", "ovim.pkgs.indent_guides")]]
+        config = [[require("ovim.pkg").require("ovim.pkgs.indent-guides")]]
     },
     ["nvim-treesitter/nvim-treesitter"] = {
         "nvim-treesitter/nvim-treesitter",
         event = "VimEnter",
         opt = true,
-        config = [[require("ovim.pkg").check_and_require("nvim-treesitter", "ovim.pkgs.nvim-treesitter")]]
+        config = [[require("ovim.pkg").require("ovim.pkgs.nvim-treesitter")]]
     },
     ["nvim-treesitter/nvim-treesitter-textobjects"] = {
         "nvim-treesitter/nvim-treesitter-textobjects",
