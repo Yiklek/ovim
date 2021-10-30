@@ -2,7 +2,7 @@
 
 > ATTENTION! this framework is under developing and not stable.  
 
-> ATTENTION! ovim is now compatible with vim
+> ATTENTION! ovim is not compatible with vim from v0.1.4.  
 
 ovim is a neovim config and plugins manage framework.  
 ovim provides themes, completion, lsp, ime and other useful plugins.  
