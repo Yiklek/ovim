@@ -57,6 +57,8 @@ function ovim#plugin#add(repo,...)
     if !s:_plug_will_load(a:1)
         return
     endif
+    call s:_merge_custom(a:1, 'hook_add')
+    call s:_merge_custom(a:1, 'hook_source')
     if g:ovim_plug_manager ==# 'plug'
         if s:_plug_will_load(a:1)
             call s:_plug_add(a:1)
@@ -68,7 +70,12 @@ function ovim#plugin#add(repo,...)
         endif
     endif
 endfun
-
+function s:_merge_custom(config, target)
+    let l:target_custom = a:target . '_custom'
+    if exists('a:config.' . target_custom)
+        let a:config[a:target] = get(a:config, a:target, '') . "\n" . a:config[l:target_custom]
+    endif
+endfunction
 function s:_plug_source(plugins)
     for p in a:plugins
         if s:_plug_will_load(p)

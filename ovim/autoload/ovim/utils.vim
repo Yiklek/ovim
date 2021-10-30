@@ -79,9 +79,30 @@ function ovim#utils#load_custom() abort
 	call ovim#utils#log('cannot find custom config. use default.')
 	return ovim#utils#load_default()
 endfun
+function ovim#utils#load_list(config_list) abort
+    if type(a:config_list) == v:t_string
+        return ovim#utils#load_config(a:config_list)
+    endif
+    let l:options = {}
+    let l:options_path = []
+	for i in a:config_list
+		if filereadable(i)
+			let l:o = ovim#utils#load_config(i)
+            call ovim#utils#recursive_update(l:options, l:o)
+            call add(l:options_path, i)
+		endif
+	endfor
+    let l:options._option_path = l:options_path
+    if len(l:options._option_path) == 0
+        call ovim#utils#log('cannot find custom config. use default.')
+        return ovim#utils#load_default()
+    else
+        return l:options
+    endif
+endfun
 
 function ovim#utils#make_option_cache(path)
-    let l:options = ovim#utils#load_config(g:ovim_global_options._option_path)
+    let l:options = ovim#utils#load_list(g:ovim_global_options._option_path)
     let l:options._option_path = g:ovim_global_options._option_path
 	call writefile([json_encode(l:options)], a:path)
 endfunction

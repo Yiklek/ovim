@@ -122,7 +122,7 @@ endif
 " 插件无关map
 let &rtp=&rtp.','.g:real_ovim_path.'/ovim'
 
-call ovim#init()
+call ovim#init('override')
 
 execute 'source' g:config_root.'/keymap.vim'
 

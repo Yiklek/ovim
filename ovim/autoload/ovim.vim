@@ -119,9 +119,11 @@ function! s:options(config) abort
     elseif a:config == 'override'
         let l:options = ovim#utils#load_default()
         let l:options_custom = ovim#utils#load_custom()
-        call ovim#utils#recursive_update(l:options,l:options_custom)
+        let l:options_path = [l:options._option_path, l:options_custom._option_path]
+        call ovim#utils#recursive_update(l:options, l:options_custom)
+        let l:options._option_path = l:options_path
     else
-        let l:options = ovim#utils#load_config(a:config)
+        let l:options = ovim#utils#load_list(a:config)
     endif
     if exists('l:options.var')
         for [k,v] in items(l:options.var)
