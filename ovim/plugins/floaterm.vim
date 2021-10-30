@@ -27,6 +27,15 @@ tnoremap <esc><tab>k  <c-\><c-n>:FloatermKill<CR>
 
 vnoremap <leader>ets :FloatermSend<CR>
 
+if ovim#utils#has_win()
+    let win_shells = ['pwsh.exe','powershell.exe','cmd.exe']
+    for i in win_shells
+        if executable(i)
+            let g:floaterm_shell = i
+            break
+        endif
+    endfor
+endif
 
 call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
                                     \    ' ':[':FloatermToggle','Floaterm Toggle'],
