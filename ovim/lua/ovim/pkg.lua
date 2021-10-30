@@ -63,6 +63,7 @@ function pkg.load_compile()
     vim.cmd [[command! PackerClean lua require('ovim.pkg').clean()]]
     --vim.cmd [[autocmd User PackerComplete lua require('ovim.pkg').magic_compile()]]
     vim.cmd [[command! PackerStatus  lua require('ovim.pkg').status()]]
+    vim.g.ovim_packer_setup = 1
 end
 
 pkg =
