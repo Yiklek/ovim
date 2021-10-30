@@ -13,6 +13,7 @@ let $VIM_PATH  = g:vim_path
 let g:ovim_cache_path = $XDG_CACHE_HOME != '' ? $XDG_CACHE_HOME.'/ovim' : expand('~/.cache/ovim')
 let $OVIM_CACHE_PATH = g:ovim_cache_path
 let g:ovim_option_cache_path = g:ovim_cache_path . "/ovim_option_cache.json"
+let g:ovim_packer_compiled_path = g:ovim_cache_path . "/packer/compiled.vim"
 
 if ovim#utils#has_win()
     let g:ovim_default_python_path = g:ovim_cache_path.'/python3-venv/Scripts/python.exe'
@@ -37,7 +38,7 @@ if !exists('g:leader_key_map')
 endif
 
 command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
-command -nargs=0 OvimRmOptionCache call delete(g:ovim_option_cache_path)
+command -nargs=0 OvimRmOptionCache call delete(g:ovim_option_cache_path) | call delete(g:ovim_packer_compiled_path)
 command -nargs=0 OvimMakeOptionCache call ovim#utils#make_option_cache(g:ovim_option_cache_path)
             \ | if g:ovim_plug_manager ==# 'dein' | call dein#clear_state() 
             \ | endif

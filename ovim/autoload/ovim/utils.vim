@@ -86,10 +86,10 @@ function ovim#utils#load_list(config_list) abort
     let l:options = {}
     let l:options_path = []
 	for i in a:config_list
+        call add(l:options_path, i)
 		if filereadable(i)
 			let l:o = ovim#utils#load_config(i)
             call ovim#utils#recursive_update(l:options, l:o)
-            call add(l:options_path, i)
 		endif
 	endfor
     let l:options._option_path = l:options_path
