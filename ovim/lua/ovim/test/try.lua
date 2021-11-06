@@ -1,6 +1,6 @@
 
 print("test try start")
-try = require("ovim.try")
+try = require("ovim.misc.try")
 
 local r1,r2 = nil,nil
 r1,r2 = pcall(try,{

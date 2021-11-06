@@ -4,13 +4,13 @@ local plugins = {
         "glepnir/indent-guides.nvim",
         event = "VimEnter",
         opt = true,
-        config = [[require("ovim.pkg").require("ovim.pkgs.indent-guides")]]
+        config = [[require("ovim.pack").require("ovim.pkgs.indent-guides")]]
     },
     ["nvim-treesitter/nvim-treesitter"] = {
         "nvim-treesitter/nvim-treesitter",
         event = "VimEnter",
         opt = true,
-        config = [[require("ovim.pkg").require("ovim.pkgs.nvim-treesitter")]]
+        config = [[require("ovim.pack").require("ovim.pkgs.nvim-treesitter")]]
     },
     ["nvim-treesitter/nvim-treesitter-textobjects"] = {
         "nvim-treesitter/nvim-treesitter-textobjects",

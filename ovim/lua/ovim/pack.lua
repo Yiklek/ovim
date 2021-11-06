@@ -1,7 +1,7 @@
 local sys = require("ovim.sys")
 
-local pkg = {}
-pkg.__index = pkg
+local this = {}
+this.__index = this
 
 local packer_config = {
     package_root = sys.g.ovim_cache_path .. "/pack",
@@ -14,7 +14,7 @@ local packer_config = {
         end
     }
 }
-function pkg.load_packer()
+function this.load_packer()
     if not packer then
         sys.cmd [[packadd packer.nvim]]
         packer = require("packer")
@@ -28,12 +28,12 @@ function pkg.load_packer()
     end
 end
 
-function pkg.ensure_plugins()
-    pkg.load_packer()
+function this.ensure_plugins()
+    this.load_packer()
     packer.install()
 end
 
-function pkg.require(module)
+function this.require(module)
     try {
         function()
             require(module)
@@ -44,33 +44,33 @@ function pkg.require(module)
     }
 end
 
-function pkg.load_compile()
+function this.load_compile()
     if sys.fn.filereadable(packer_config.compile_path) == 1 then
         sys.cmd("source " .. packer_config.compile_path)
     else
-        pkg.load_packer()
+        this.load_packer()
     end
-    vim.cmd [[command! PackerCompile lua require('ovim.pkg').compile()]]
-    vim.cmd [[command! PackerInstall lua require('ovim.pkg').install()]]
-    vim.cmd [[command! PackerUpdate lua require('ovim.pkg').update()]]
-    vim.cmd [[command! PackerSync lua require('ovim.pkg').sync()]]
-    vim.cmd [[command! PackerClean lua require('ovim.pkg').clean()]]
-    --vim.cmd [[autocmd User PackerComplete lua require('ovim.pkg').magic_compile()]]
-    vim.cmd [[command! PackerStatus  lua require('ovim.pkg').status()]]
+    vim.cmd [[command! PackerCompile lua require("ovim.pack").compile()]]
+    vim.cmd [[command! PackerInstall lua require("ovim.pack").install()]]
+    vim.cmd [[command! PackerUpdate lua require("ovim.pack").update()]]
+    vim.cmd [[command! PackerSync lua require("ovim.pack").sync()]]
+    vim.cmd [[command! PackerClean lua require("ovim.pack").clean()]]
+    --vim.cmd [[autocmd User PackerComplete lua require("ovim.pack").magic_compile()]]
+    vim.cmd [[command! PackerStatus  lua require("ovim.pack").status()]]
     vim.g.ovim_packer_setup = 1
 end
 
-pkg =
+this =
     setmetatable(
-    pkg,
+    this,
     {
         __index = function(o, key)
             return function(...)
-                pkg.load_packer()
+                this.load_packer()
                 packer[key](...)
             end
         end
     }
 )
 
-return pkg
+return this
