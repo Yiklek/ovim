@@ -23,8 +23,19 @@ function this.load_packer()
     packer.reset()
     local use = packer.use
     local config = require("ovim.config")
+    local util = require("ovim.misc.util")
+    local modules = util.detect_modules()
+    for i, module in pairs(modules) do
+        local m = require(util.module(module))
+        local level = m.level or 0
+        if level < 4 then
+            config.plugins = vim.tbl_extend("force", config.plugins, m.plugins)
+        end
+    end
     for i, repo in pairs(config.plugins) do
-        use(repo)
+        if repo.level or 1 < 4 then
+            use(repo)
+        end
     end
 end
 
@@ -39,7 +50,6 @@ function this.require(module)
             require(module)
         end,
         function(e)
-            
         end
     }
 end
