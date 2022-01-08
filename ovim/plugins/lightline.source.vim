@@ -148,8 +148,8 @@ function OvimLightLineLsp() abort
         endif
         return s:lcn
     endif
-    if has('nvim-0.5') && luaeval('#vim.lsp.buf_get_clients() > 0')
-        return luaeval("require('lsp-status').status()")
-    endif
+    "if has('nvim-0.5') && luaeval('#vim.lsp.buf_get_clients() > 0')
+        "return luaeval("require('lsp-status').status()")
+    "endif
     return '' 
 endfunction

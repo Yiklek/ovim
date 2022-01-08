@@ -39,6 +39,8 @@ function s:self.plugins() abort
     return s:self.plugs
 endfun
 
+function s:plugins_nvim_cmp()
+endfunction
 function s:plugins_coc()
   let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
                         \ "rev": "release","branch": "release",
@@ -102,23 +104,25 @@ function s:plugins_ycm()
 endfunction
 
 function s:self.config() abort
-    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-    set completeopt-=preview
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
-    inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-
-    inoremap <expr> <CR> pumvisible() ?  "\<C-y>" : "\<CR>"
-
-    call s:config_{s:self.method}()
-    " ycm 仅由hook配置
     if s:self.method != 'ycm'
-        inoremap <silent><expr> <leader><TAB>
-                        \ pumvisible() ? "\<C-n>" :
-                        \ <SID>check_back_space() ? "\<TAB>" : g:ovim#modules#autocomplete.func_manual()
-        let g:leader_key_map["<TAB>"] = [":call g:ovim#modules#autocomplete#func_manual()","Trigger Complete(Insert Mode)"]
+        autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+        set completeopt-=preview
+        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+        inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+        inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
+
+        inoremap <expr> <CR> pumvisible() ?  "\<C-y>" : "\<CR>"
+
+        call s:config_{s:self.method}()
+        " ycm 仅由hook配置
+        if s:self.method != 'ycm'
+            inoremap <silent><expr> <leader><TAB>
+                            \ pumvisible() ? "\<C-n>" :
+                            \ <SID>check_back_space() ? "\<TAB>" : g:ovim#modules#autocomplete.func_manual()
+            let g:leader_key_map["<TAB>"] = [":call g:ovim#modules#autocomplete#func_manual()","Trigger Complete(Insert Mode)"]
+        endif
     endif
 endfun
 
@@ -132,6 +136,8 @@ endfunction
 
 function s:config_ncm2()
     let g:ovim#modules#autocomplete.func_manual = function('ncm2#force_trigger')
+endfunction
+function s:config_nvim_cmp()
 endfunction
 
 

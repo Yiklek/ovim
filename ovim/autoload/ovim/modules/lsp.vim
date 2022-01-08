@@ -43,6 +43,10 @@ function s:plugins_coc()
     " plugins have been specified in autocomplete module
 endfunction
 
+function s:plugins_nvim_lsp()
+    " plugins have been specified in lua
+endfunction
+
 function s:plugins_lcn()
   let s:self.plugs['autozimu/LanguageClient-neovim'] = { "repo": "autozimu/LanguageClient-neovim","do":"bash install.sh",
                                 \    "build":"sh -c 'bash install.sh'","rev":"next","branch": "next",
@@ -96,6 +100,18 @@ function s:config_coc()
 endfunction
 
 function s:config_lcn()
+    let s:self.func_show_doc          = function("LanguageClient#textDocument_hover")
+    let s:self.func_go_to_def         = function("LanguageClient#textDocument_definition")
+    let s:self.func_go_to_typedef     = function("LanguageClient#textDocument_typeDefinition")
+    let s:self.func_go_to_impl        = function("LanguageClient#textDocument_implementation")
+    let s:self.func_rename            = function("LanguageClient#textDocument_rename")
+    let s:self.func_references        = function("LanguageClient#textDocument_references")
+    let s:self.func_go_to_declaration = function("LanguageClient#textDocument_declaration")
+    let s:self.func_document_symbol   = function("LanguageClient#textDocument_documentSymbol")
+    let s:self.func_refactor          = function("ovim#utils#warn",["no define action"])
+    let s:self.func_format            = function("LanguageClient#textDocument_formatting")
+endfunction
+function s:config_nvim_lsp()
     let s:self.func_show_doc          = function("LanguageClient#textDocument_hover")
     let s:self.func_go_to_def         = function("LanguageClient#textDocument_definition")
     let s:self.func_go_to_typedef     = function("LanguageClient#textDocument_typeDefinition")
