@@ -1,6 +1,7 @@
 return {
     name = "lsp",
     level = 1,
+    condition = "vim.g['ovim#modules#lsp'] and vim.g['ovim#modules#lsp'].method == 'nvim_lsp'",
     plugins = {
         ["neovim/nvim-lspconfig"] = {
             "neovim/nvim-lspconfig",
