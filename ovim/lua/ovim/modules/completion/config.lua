@@ -1,6 +1,3 @@
-local function nvim_lsp()
-    require("ovim.modules.completion.lspconfig")
-end
 local function nvim_cmp()
     vim.cmd [[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]]
     vim.cmd [[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]]
@@ -161,7 +158,6 @@ local function lua_snip()
     require("luasnip/loaders/from_vscode").load()
 end
 return {
-    nvim_lsp = nvim_lsp,
     cmp = nvim_cmp,
     lua_snip = lua_snip
 }

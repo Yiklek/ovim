@@ -207,3 +207,7 @@ endfunction
 function ovim#utils#has_win()
     return has('win64') || has('win32') || has('win16') || has('win95')
 endfunction
+
+function ovim#utils#check_lua() abort
+    return has('nvim-0.5') && get(g:ovim_global_options, 'ovim_lua', 0)
+endfunction

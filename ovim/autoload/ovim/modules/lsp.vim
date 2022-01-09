@@ -24,7 +24,8 @@ function ovim#modules#lsp#load(...) abort
     if s:self.method ==# 'auto' && exists('g:ovim_global_options.modules.autocomplete')
             \ && ovim#utils#check_level_and_enable(g:ovim_global_options.modules.autocomplete)
         let l:autocomplete_config = ovim#modules#load('autocomplete',g:ovim_global_options.modules.autocomplete)
-        let s:self.method = l:autocomplete_config.method ==# "coc" ? "coc" : "lcn"
+        let s:self.method = l:autocomplete_config.method ==# "nvim_cmp" ? "nvim_lsp" : 
+                                            \ l:autocomplete_config.method ==# "coc" ? "coc" : "lcn"
     else
         call ovim#utils#warn("can't auto select lsp from autocomplete module.")
     endif
@@ -44,7 +45,7 @@ function s:plugins_coc()
 endfunction
 
 function s:plugins_nvim_lsp()
-    " plugins have been specified in lua
+    " plugins have been specified in autocomplete module
 endfunction
 
 function s:plugins_lcn()
@@ -112,14 +113,4 @@ function s:config_lcn()
     let s:self.func_format            = function("LanguageClient#textDocument_formatting")
 endfunction
 function s:config_nvim_lsp()
-    let s:self.func_show_doc          = function("LanguageClient#textDocument_hover")
-    let s:self.func_go_to_def         = function("LanguageClient#textDocument_definition")
-    let s:self.func_go_to_typedef     = function("LanguageClient#textDocument_typeDefinition")
-    let s:self.func_go_to_impl        = function("LanguageClient#textDocument_implementation")
-    let s:self.func_rename            = function("LanguageClient#textDocument_rename")
-    let s:self.func_references        = function("LanguageClient#textDocument_references")
-    let s:self.func_go_to_declaration = function("LanguageClient#textDocument_declaration")
-    let s:self.func_document_symbol   = function("LanguageClient#textDocument_documentSymbol")
-    let s:self.func_refactor          = function("ovim#utils#warn",["no define action"])
-    let s:self.func_format            = function("LanguageClient#textDocument_formatting")
 endfunction

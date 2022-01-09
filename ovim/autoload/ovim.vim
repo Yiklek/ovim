@@ -79,7 +79,7 @@ function! ovim#init(...) abort
         endif
     endif
     call ovim#plugin#end(g:ovim_global_options.plugins)
-    if has("nvim-0.5")
+    if ovim#utils#check_lua()
         lua require "ovim"
     endif
     autocmd VimEnter * call s:addons(get(g:ovim_global_options,'addons',{}))

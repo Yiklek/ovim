@@ -1,0 +1,99 @@
+{
+    "go": {
+        "command": "gopls",
+        "rootPatterns": [
+            "go.mod"
+        ],
+        "trace.server": "verbose",
+        "filetypes": [
+            "go"
+        ],
+        "ignoredRootPaths": [
+            "~"
+        ]
+    },
+    "rust": {
+        "command": "rust-analyzer",
+        "filetypes": [
+            "rust"
+        ],
+        "rootPatterns": [
+            "Cargo.toml"
+        ],
+        "ignoredRootPaths": [
+            "~"
+        ]
+    },
+    "cland": {
+        "command": "cland",
+        "filetypes": [
+            "c",
+            "cpp",
+            "objc",
+            "objcpp"
+        ],
+        "rootPatterns": [
+            "compile_commands.json",
+            "compile_flags.txt",
+            ".git",
+            "Makefile",
+            "makefile",
+            "CMakeLists.txt"
+        ],
+        "ignoredRootPaths": [
+            "~"
+        ]
+    },
+    "ccls": {
+        "command": "ccls",
+        "filetypes": [
+            "c",
+            "cpp",
+            "objc",
+            "objcpp"
+        ],
+        "rootPatterns": [
+            "compile_commands.json",
+            ".ccls",
+            ".ccls-root",
+            ".git",
+            "Makefile",
+            "makefile",
+            "CMakeLists.txt"
+        ],
+        "ignoredRootPaths": [
+            "~"
+        ],
+        "initializationOptions": {
+            "cache": {
+                "directory": "~/.cache/ovim/coc/lsp/ccls"
+            },
+            "clang": {
+                "resourceDir": "/Library/Developer/CommandLineTools/usr/lib/clang/11.0.3",
+                "extraArgs": [
+                    "-isystem",
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
+                    "-I",
+                    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"
+                ]
+            }
+        }
+    },
+    "sh": {
+        "command": "bash-language-server",
+        "args": [
+            "start"
+        ],
+        "filetypes": [
+            "sh",
+            "shell"
+        ],
+        "rootPatterns": [
+            ".git",
+            ".root"
+        ],
+        "ignoredRootPaths": [
+            "~"
+        ]
+    }
+}

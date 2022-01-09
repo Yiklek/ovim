@@ -22,7 +22,9 @@ function ovim#modules#autocomplete#load(...) abort
     endif
     if s:self.method ==# 'auto'
       " if has node,use coc
-      if executable('node')
+      if ovim#utils#check_lua()
+        let s:self.method = 'nvim_cmp'
+      elseif executable('node')
         let s:self.method = 'coc'
       else
         let s:self.method = 'ncm2'
@@ -39,8 +41,6 @@ function s:self.plugins() abort
     return s:self.plugs
 endfun
 
-function s:plugins_nvim_cmp()
-endfunction
 function s:plugins_coc()
   let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
                         \ "rev": "release","branch": "release",
@@ -61,6 +61,18 @@ function s:plugins_deoplete()
     \        "hook_post_source":"source $OVIM_ROOT_PATH/plugins/complete-deoplete.vim"
     \    }
         let s:self.plugs['Shougo/neco-vim'] = { "repo": "Shougo/neco-vim","ft":"vim",'on_source':'deoplete.nvim'}
+endfunction
+
+function s:plugins_nvim_cmp()
+  let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
+                        \ "rev": "release","branch": "release",
+                        \ "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.source.vim",
+                        \ "on_event":["VimEnter"]
+                        \}
+    " disable defx
+    let l:disable_list = ["Shougo/defx.nvim","kristijanhusak/defx-git","kristijanhusak/defx-icons",
+                        \ ]
+    call ovim#plugin#disable(l:disable_list)
 endfunction
 
 function s:plugins_ncm2()
@@ -137,9 +149,9 @@ endfunction
 function s:config_ncm2()
     let g:ovim#modules#autocomplete.func_manual = function('ncm2#force_trigger')
 endfunction
+
 function s:config_nvim_cmp()
 endfunction
-
 
 function! s:check_back_space() abort "{{{
     let col = col('.') - 1

@@ -12,6 +12,7 @@ make_json = 0
 # level 3 enhanced: motion multi-line align jump
 config_level = 3
 ovim_plug_manager = "dein"
+ovim_lua = true
 
 [var]
 root_markers = [".git",".hg",".svn",".root",".project",
@@ -508,12 +509,12 @@ theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
 [modules.autocomplete]
 level = 2
 name = "autocomplete"
-method = "nvim_cmp"
+method = "auto"
 
 [modules.lsp]
 level = 2
 name = "lsp"
-method = "nvim_lsp"
+method = "auto"
 
 [modules.search]
 level = 2

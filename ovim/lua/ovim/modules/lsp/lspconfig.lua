@@ -47,17 +47,17 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {"documentation", "detail", "additionalTextEdits"}
 }
 
-----local function custom_attach()
---    --require("lsp_signature").on_attach({
---        --bind = true,
---        --use_lspsaga = false,
---        --floating_window = true,
---        --fix_pos = true,
---        --hint_enable = true,
---        --hi_parameter = "Search",
---        --handler_opts = {"double"}
---    --})
-----end
+local function custom_attach()
+    require("lsp_signature").on_attach({
+        bind = true,
+        use_lspsaga = false,
+        floating_window = true,
+        fix_pos = true,
+        hint_enable = true,
+        hi_parameter = "Search",
+        handler_opts = {"double"}
+    })
+end
 
 local function switch_source_header_splitcmd(bufnr, splitcmd)
     bufnr = nvim_lsp.util.validate_bufnr(bufnr)
@@ -116,7 +116,7 @@ lsp_installer.on_server_ready(function(server)
     end
     opts.capabilities = capabilities
     opts.flags = {debounce_text_changes = 500}
-    --opts.on_attach = custom_attach
+    opts.on_attach = custom_attach
     server:setup(opts)
 end)
 
@@ -131,5 +131,5 @@ nvim_lsp.html.setup {
     single_file_support = true,
     flags = {debounce_text_changes = 500},
     capabilities = capabilities,
-    --on_attach = custom_attach
+    on_attach = custom_attach
 }

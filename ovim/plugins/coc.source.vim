@@ -12,20 +12,40 @@ autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
                                 \ endif
 
 
-let g:coc_user_config = {
+let s:check_lua = ovim#utils#check_lua()
+let g:coc_user_config = ovim#utils#load_config(g:coc_config_home.'/settings.json')
+let s:config = {
 \    "session": {
-\     "directory":g:ovim_cache_path.'/session',
+\     "directory": g:ovim_cache_path.'/session',
 \     "saveOnVimLeave": ovim#utils#has_win() ?  0 : 1,
 \    },
+\    "suggest.autoTrigger": s:check_lua ? "none": "always",
+\    "diagnostic.enable": !s:check_lua,
+\    "signature.enable": !s:check_lua,
 \}
-call coc#config("languageserver", {
+call ovim#utils#recursive_update(g:coc_user_config, s:config)
+
+
+let s:coc_lsp_server = ovim#utils#load_config(g:coc_config_home.'/language-server.json')
+let s:servers = {
     \ "python": {
     \   "command": g:python3_host_prog,
     \   "args": ["-m", "pylsp"],
     \   "filetypes": ["python"],
     \   "ignoredRootPaths": ["~"]
-    \ }
-    \})
+    \ },
+    \}
+call ovim#utils#recursive_update(s:coc_lsp_server, s:servers)
+
+for [key, value] in items(s:coc_lsp_server)
+    let value['enable'] = !s:check_lua
+    let value['disableDiagnostics'] = s:check_lua
+    let value['disableCompletion'] = s:check_lua
+endfor
+
+call coc#config("languageserver", s:coc_lsp_server)
+
+
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",
                 \ "coc-pyright","coc-lists","coc-yank","coc-vimlsp","coc-toml",
                 \ "coc-explorer","coc-git","coc-highlight","coc-ultisnips",
