@@ -139,17 +139,15 @@ function OvimLightLineLsp() abort
     if s:is_tmp_file()
         return ''
     endif
-    if get(g:, 'coc_enabled', 0)
+    if g:ovim#modules#lsp.method == 'nvim_lsp'
+        return luaeval("require('lsp-status').status()")
+    elseif g:ovim#modules#lsp.method == 'coc'
         return coc#status().get(b:,"coc_current_function","")
-    endif
-    if exists('g:LanguageClient_loaded')
+    elseif g:ovim#modules#lsp.method == 'lcn'
         if !exists('s:timer')
             let s:timer = timer_start(200, function('s:OnFrame'), {'repeat': -1})
         endif
         return s:lcn
     endif
-    "if has('nvim-0.5') && luaeval('#vim.lsp.buf_get_clients() > 0')
-        "return luaeval("require('lsp-status').status()")
-    "endif
     return '' 
 endfunction
