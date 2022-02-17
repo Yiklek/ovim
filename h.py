@@ -13,13 +13,13 @@ import shutil
 import platform
 import importlib
 
+basedir = abspath(os.path.dirname(__file__))
+homedir = abspath(os.getenv('HOME') or os.getenv('USERPROFILE'))
 sys.dont_write_bytecode = True
 sys.path.append(join(basedir, 'ovim', 'python3'))
 
 logger = importlib.import_module("ovim.log").logger
 
-basedir = abspath(os.path.dirname(__file__))
-homedir = abspath(os.getenv('HOME') or os.getenv('USERPROFILE'))
 xdg_config_dir = os.getenv('XDG_CONFIG_HOME')
 xdg_cache_dir = os.getenv('XDG_CACHE_HOME')
 ovim_cache_dir = xdg_cache_dir or join(homedir, '.cache')
