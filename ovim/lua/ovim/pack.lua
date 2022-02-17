@@ -45,17 +45,6 @@ function this.ensure_plugins()
     packer.install()
 end
 
-function this.require(module)
-    return try {
-        function()
-            return require(module)
-        end,
-        function(e)
-            print('require '..module..'failed.')
-        end
-    }
-end
-
 function this.load_compile()
     if sys.fn.filereadable(packer_config.compile_path) == 1 then
         sys.cmd("source " .. packer_config.compile_path)

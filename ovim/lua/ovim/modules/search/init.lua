@@ -12,7 +12,7 @@ return {
             opt = true,
             cmd = "Telescope",
             module = "telescope",
-            config = [[require("ovim.modules.search.config").telescope()]]
+            config = [[require("ovim.misc.safe_require")("ovim.modules.search.config").telescope()]]
         },
         ["nvim-telescope/telescope-fzf-native.nvim"] = {
             "nvim-telescope/telescope-fzf-native.nvim",

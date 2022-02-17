@@ -5,7 +5,7 @@ return {
     plugins = {
         ["hrsh7th/nvim-cmp"] = {
             "hrsh7th/nvim-cmp",
-            config = [[require("ovim.modules.completion.config").cmp()]],
+            config = [[require("ovim.misc.safe_require")("ovim.modules.completion.config").cmp()]],
             event = "InsertEnter",
             opt = true,
             requires = {
@@ -30,7 +30,7 @@ return {
             "L3MON4D3/LuaSnip",
             after = "nvim-cmp",
             opt = true,
-            config = [[require("ovim.modules.completion.config").lua_snip()]],
+            config = [[require("ovim.misc.safe_require")("ovim.modules.completion.config").lua_snip()]],
             requires = "rafamadriz/friendly-snippets"
         },
     }

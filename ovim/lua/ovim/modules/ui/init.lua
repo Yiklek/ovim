@@ -6,13 +6,13 @@ return {
             "glepnir/indent-guides.nvim",
             event = "VimEnter",
             opt = true,
-            config = [[require("ovim.pack").require("ovim.modules.ui.config").indent_guides()]]
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_guides()]]
         },
         ["nvim-treesitter/nvim-treesitter"] = {
             "nvim-treesitter/nvim-treesitter",
             event = "VimEnter",
             opt = true,
-            config = [[require("ovim.pack").require("ovim.modules.ui.config").nvim_treesitter()]]
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").nvim_treesitter()]]
         },
         ["nvim-treesitter/nvim-treesitter-textobjects"] = {
             "nvim-treesitter/nvim-treesitter-textobjects",
@@ -33,13 +33,13 @@ return {
             "SmiteshP/nvim-gps",
             opt = true,
             after = "nvim-treesitter",
-            config = [[require("ovim.pack").require("ovim.modules.ui.config").nvim_gps()]]
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").nvim_gps()]]
         },
         ["hoob3rt/lualine.nvim"] = {
             "hoob3rt/lualine.nvim",
             opt = true,
             after = "lualine-lsp-progress",
-            config = [[require("ovim.pack").require("ovim.modules.ui.config").lualine()]]
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").lualine()]]
         },
         ["arkav/lualine-lsp-progress"] = {
             "arkav/lualine-lsp-progress",

@@ -8,7 +8,7 @@ return {
             level = 1,
             opt = true,
             event = "VimEnter",
-            config = [[require("ovim.modules.lsp.config").nvim_lsp()]]
+            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").nvim_lsp()]]
         },
         ["williamboman/nvim-lsp-installer"] = {
             "williamboman/nvim-lsp-installer",
