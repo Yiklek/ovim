@@ -1,3 +1,7 @@
+-- File: search/config.lua
+-- Author: Yiklek
+-- Description: search config
+-- Copyright (c) 2022 Yiklek
 local function telescope()
     vim.cmd([[packadd sqlite.lua]])
     vim.cmd([[packadd telescope-fzf-native.nvim]])

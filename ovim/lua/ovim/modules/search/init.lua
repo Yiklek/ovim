@@ -1,3 +1,7 @@
+-- File: search/init.lua
+-- Author: Yiklek
+-- Description: search init
+-- Copyright (c) 2022 Yiklek
 return {
     name = "search",
     level = 1,

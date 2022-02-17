@@ -1,3 +1,7 @@
+-- File: util.lua
+-- Author: Yiklek
+-- Description: util
+-- Copyright (c) 2022 Yiklek
 local detect_modules = function()
     local list = {}
     local modules_dir = vim.g.ovim_root_path .. '/lua/ovim/modules'
@@ -11,7 +15,7 @@ end
 local module = function(module)
     return string.format('ovim.modules.%s', module)
 end
-obj = {}
+local obj = {}
 obj.detect_modules = detect_modules
 obj.module = module
 return obj

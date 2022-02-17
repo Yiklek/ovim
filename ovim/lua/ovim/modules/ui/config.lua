@@ -1,3 +1,7 @@
+-- File: ui/config.lua
+-- Author: Yiklek
+-- Description: ui config
+-- Copyright (c) 2022 Yiklek
 local function nvim_treesitter()
     require "nvim-treesitter.configs".setup {
         ensure_installed = {

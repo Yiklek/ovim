@@ -1,3 +1,7 @@
+-- File: completion/config.lua
+-- Author: Yiklek
+-- Description: completion config
+-- Copyright (c) 2022 Yiklek
 local function nvim_cmp()
     vim.cmd [[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]]
     vim.cmd [[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]]

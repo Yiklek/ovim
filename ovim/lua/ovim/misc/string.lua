@@ -1,6 +1,10 @@
+-- File: string.lua
+-- Author: Yiklek
+-- Description: string util
+-- Copyright (c) 2022 Yiklek
 function string:split_lite(sep)
     local splits = {}
-    
+
     if sep == nil then
         -- return table with whole str
         table.insert(splits, self)
@@ -17,7 +21,7 @@ function string:split_lite(sep)
             table.insert(splits, str)
         end
     end
-    
+
     return splits
 end
 

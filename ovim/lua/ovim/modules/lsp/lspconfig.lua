@@ -1,3 +1,7 @@
+-- File: lsp/lspconfig.lua
+-- Author: Yiklek
+-- Description: lspconfig
+-- Copyright (c) 2022 Yiklek
 if not packer_plugins["nvim-lspconfig"].loaded then
     vim.cmd [[packadd nvim-lspconfig]]
 end

@@ -1,3 +1,7 @@
+-- File: ui/init.lua
+-- Author: Yiklek
+-- Description: ui init
+-- Copyright (c) 2022 Yiklek
 return {
     name = "ui",
     level = 1,

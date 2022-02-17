@@ -1,3 +1,7 @@
+-- File: completion/init.lua
+-- Author: Yiklek
+-- Description: completion
+-- Copyright (c) 2022 Yiklek
 return {
     name = "completion",
     level = 1,

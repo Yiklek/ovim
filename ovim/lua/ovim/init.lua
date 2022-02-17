@@ -1,3 +1,7 @@
+-- File: init.lua
+-- Author: Yiklek
+-- Description: entry
+-- Copyright (c) 2022 Yiklek
 ovim = {}
 ovim.compat = require('ovim.misc.compat')
 ovim.sys = require('ovim.sys')

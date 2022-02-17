@@ -1,3 +1,7 @@
+-- File: lsp/init.lua
+-- Author: Yiklek
+-- Description: lsp
+-- Copyright (c) 2022 Yiklek
 return {
     name = "lsp",
     level = 1,

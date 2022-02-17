@@ -1,4 +1,7 @@
-
+-- File: test/try.lua
+-- Author: Yiklek
+-- Description: test try
+-- Copyright (c) 2022 Yiklek
 print("test try start")
 try = require("ovim.misc.try")
 

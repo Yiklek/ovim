@@ -1,3 +1,7 @@
+-- File: pack.lua
+-- Author: Yiklek
+-- Description: pack
+-- Copyright (c) 2022 Yiklek
 local sys = require("ovim.sys")
 
 local this = {}

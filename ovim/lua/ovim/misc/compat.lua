@@ -1,3 +1,7 @@
+-- File: compat.lua
+-- Author: Yiklek
+-- Description: compat util for different version lua
+-- Copyright (c) 2022 Yiklek
 require('ovim.misc.string')
 local obj = {}
 function compat_unpack()

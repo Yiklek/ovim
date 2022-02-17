@@ -1,4 +1,7 @@
-
+-- File: try.lua
+-- Author: Yiklek
+-- Description: try
+-- Copyright (c) 2022 Yiklek
 local function try(body)
     -- body
     if body == nil or body[1] == nil then
