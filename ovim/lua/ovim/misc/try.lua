@@ -2,7 +2,7 @@
 local function try(body)
     -- body
     if body == nil or body[1] == nil then
-       return 
+       return
     end
     local catch = body['catch'] or body[2] or nil
     local finally = body['finally'] or body[3] or nil
@@ -10,17 +10,17 @@ local function try(body)
     local err_dict = {}
     local catch_success, catch_result = nil ,nil
     local final_success, final_result = nil ,nil
-    local error_process = function(err_store) 
-        return function(err)  
+    local error_process = function(err_store)
+        return function(err)
             err_dict[err_store] = debug.traceback(err,2)
         end
     end
     local call_success, call_result = xpcall(body[1], error_process("call"))
     if not call_success and catch ~= nil then
-        catch_success, catch_result = xpcall(function() return catch() end,error_process("catch")) 
+        catch_success, catch_result = xpcall(function() return catch() end,error_process("catch"))
     end
     if finally ~= nil then
-        final_success, final_result = xpcall(function() return finally() end,error_process("final")) 
+        final_success, final_result = xpcall(function() return finally() end,error_process("final"))
     end
 
 

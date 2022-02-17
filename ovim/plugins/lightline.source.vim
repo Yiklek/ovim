@@ -140,7 +140,7 @@ function OvimLightLineLsp() abort
         return ''
     endif
     if g:ovim#modules#lsp.method == 'nvim_lsp'
-        return luaeval("require('lsp-status').status()")
+        return ''
     elseif g:ovim#modules#lsp.method == 'coc'
         return coc#status().get(b:,"coc_current_function","")
     elseif g:ovim#modules#lsp.method == 'lcn'

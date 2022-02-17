@@ -6,7 +6,7 @@ require "nvim-treesitter.configs".setup {
         "rust",
         "vim",
         "javascript",
-        "lua",
+        --"lua",
         "toml",
         "json",
         "go",
@@ -18,6 +18,6 @@ require "nvim-treesitter.configs".setup {
     highlight = {
         enable = true,
         -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false
+        additional_vim_regex_highlighting = true
     }
 }

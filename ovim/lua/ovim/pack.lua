@@ -46,11 +46,12 @@ function this.ensure_plugins()
 end
 
 function this.require(module)
-    try {
+    return try {
         function()
-            require(module)
+            return require(module)
         end,
         function(e)
+            print('require '..module..'failed.')
         end
     }
 end

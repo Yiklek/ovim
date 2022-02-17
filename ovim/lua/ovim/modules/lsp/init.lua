@@ -20,11 +20,6 @@ return {
             "ray-x/lsp_signature.nvim",
             opt = true,
             after = "nvim-lspconfig"
-        },
-        ["nvim-lua/lsp-status.nvim"] = {
-            "nvim-lua/lsp-status.nvim",
-            opt = true,
-            event = "VimEnter"
         }
     }
 }
