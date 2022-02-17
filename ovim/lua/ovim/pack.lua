@@ -21,7 +21,7 @@ local packer_config = {
 function this.load_packer()
     if not packer then
         sys.cmd [[packadd packer.nvim]]
-        packer = require("packer")
+        _G.packer = require("packer")
     end
     packer.init(packer_config)
     packer.reset()

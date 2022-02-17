@@ -2,11 +2,11 @@
 -- Author: Yiklek
 -- Description: entry
 -- Copyright (c) 2022 Yiklek
-ovim = {}
+_G.ovim = {}
 ovim.compat = require('ovim.misc.compat')
 ovim.sys = require('ovim.sys')
 ovim.pack = require('ovim.pack')
-try = require('ovim.misc.try')
+_G.try = require('ovim.misc.try')
 
 local disable_distribution_plugins = function()
     vim.g.loaded_gzip = 1
