@@ -11,6 +11,12 @@ import sys
 from os.path import join, isfile, isdir, abspath
 import shutil
 import platform
+import importlib
+
+sys.dont_write_bytecode = True
+sys.path.append(join(basedir, 'ovim', 'python3'))
+
+logger = importlib.import_module("ovim.log").logger
 
 basedir = abspath(os.path.dirname(__file__))
 homedir = abspath(os.getenv('HOME') or os.getenv('USERPROFILE'))
@@ -49,11 +55,6 @@ vim_cargo = join(basedir, 'ovim', 'cargo.txt')
 platform_module = 'ovim.platform'
 platform_module_mac = 'ovim.platform.MacRunner'
 platform_module_win = 'ovim.platform.WinRunner'
-
-sys.dont_write_bytecode = True
-sys.path.append(join(basedir, 'ovim', 'python3'))
-
-from ovim.log import logger
 
 
 def import_module(module):
