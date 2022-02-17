@@ -21,7 +21,11 @@ return {
                 {"hrsh7th/cmp-path", after = "cmp-tmux"},
                 {"f3fora/cmp-spell", after = "cmp-path"},
                 {"hrsh7th/cmp-buffer", after = "cmp-spell"},
-                {"kdheepak/cmp-latex-symbols", after = "cmp-buffer"}
+                {"kdheepak/cmp-latex-symbols", after = "cmp-buffer"},
+                {
+                    "quangnguyen30192/cmp-nvim-ultisnips",
+                    config = [[require("ovim.misc.safe_require")("cmp_nvim_ultisnips").setup{}]]
+                }
                 -- {
                 --     'tzachar/cmp-tabnine',
                 --     run = './install.sh',
@@ -36,6 +40,6 @@ return {
             opt = true,
             config = [[require("ovim.misc.safe_require")("ovim.modules.completion.config").lua_snip()]],
             requires = "rafamadriz/friendly-snippets"
-        },
+        }
     }
 }

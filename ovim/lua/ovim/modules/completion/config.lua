@@ -149,8 +149,8 @@ local function nvim_cmp()
             {name = "tmux"},
             {name = "orgmode"},
             {name = "buffer"},
-            {name = "latex_symbols"}
-            -- {name = 'cmp_tabnine'}
+            {name = "latex_symbols"},
+            {name = 'ultisnips'}
         }
     }
 end
