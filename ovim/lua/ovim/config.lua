@@ -23,6 +23,9 @@ return {
                 },
                 devicons = {
                     enable = true
+                },
+                indent = {
+                    enable = true
                 }
             }
         }

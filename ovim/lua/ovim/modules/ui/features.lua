@@ -69,5 +69,23 @@ return {
             opt = true,
             event = "VimEnter"
         }
+    end,
+    indent = function(p, opts)
+        if opts.use == nil or opts.use == "blankline" then
+            p["lukas-reineke/indent-blankline.nvim"] = {
+                "lukas-reineke/indent-blankline.nvim",
+                opt = true,
+                event = "BufRead",
+                config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_blankline()]]
+            }
+        end
+        if opts.use == "guides" then
+            p["glepnir/indent-guides.nvim"] = {
+                "glepnir/indent-guides.nvim",
+                event = "VimEnter",
+                opt = true,
+                config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_guides()]]
+            }
+        end
     end
 }
