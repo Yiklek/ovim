@@ -49,6 +49,13 @@ return {
             "arkav/lualine-lsp-progress",
             opt = true,
             after = "nvim-gps"
+        },
+        ["akinsho/bufferline.nvim"] = {
+            "akinsho/bufferline.nvim",
+            opt = true,
+            event = "VimEnter",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").bufferline()]]
+
         }
     }
 }

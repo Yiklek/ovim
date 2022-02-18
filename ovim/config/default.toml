@@ -128,6 +128,7 @@ level = 2
 repo = "pacha/vem-tabline"
 on_event = [ "BufRead", "BufAdd", "BufNew",]
 hook_source = "source $OVIM_ROOT_PATH/plugins/vem-tabline.vim"
+if = "!ovim#utils#check_lua()"
 
 [plugins."bling/vim-bufferline"]
 level = 1
