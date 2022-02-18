@@ -62,5 +62,12 @@ return {
             event = "BufRead",
             config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").nvim_tree()]]
         }
+    end,
+    devicons = function(p, opts)
+        p["kyazdani42/nvim-web-devicons"] = {
+            "kyazdani42/nvim-web-devicons",
+            opt = true,
+            event = "VimEnter"
+        }
     end
 }

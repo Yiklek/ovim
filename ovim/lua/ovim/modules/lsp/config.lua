@@ -5,6 +5,10 @@
 local function nvim_lsp()
     require("ovim.misc.safe_require")("ovim.modules.lsp.lsp_config")
 end
+local function trouble()
+    require("trouble").setup {}
+end
 return {
     nvim_lsp = nvim_lsp,
+    trouble = trouble
 }

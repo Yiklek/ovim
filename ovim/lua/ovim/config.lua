@@ -20,6 +20,9 @@ return {
                 },
                 fileTree = {
                     enable = true
+                },
+                devicons = {
+                    enable = true
                 }
             }
         }

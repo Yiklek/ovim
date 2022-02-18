@@ -24,6 +24,12 @@ return {
             "ray-x/lsp_signature.nvim",
             opt = true,
             after = "nvim-lspconfig"
+        },
+        ["folke/trouble.nvim"] = {
+            "folke/trouble.nvim",
+            opt = true,
+            event = "BufReadPost",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").trouble()]]
         }
     }
 }
