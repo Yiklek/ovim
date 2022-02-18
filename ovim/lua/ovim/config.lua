@@ -2,9 +2,23 @@
 -- Author: Yiklek
 -- Description: global config
 -- Copyright (c) 2022 Yiklek
-local plugins = {
-    ["wbthomason/packer.nvim"] = {"wbthomason/packer.nvim", opt = true},
-}
 return {
-    plugins = plugins
+    plugins = {},
+    modules = {
+        ui = {
+            features = {
+                statusline = {
+                    enable = true,
+                    use = "lualine"
+                },
+                tabline = {
+                    enable = true,
+                    use = "bufferline"
+                },
+                treesitter = {
+                    enable = true,
+                },
+            }
+        }
+    }
 }
