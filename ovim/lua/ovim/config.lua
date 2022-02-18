@@ -16,8 +16,11 @@ return {
                     use = "bufferline"
                 },
                 treesitter = {
-                    enable = true,
+                    enable = true
                 },
+                fileTree = {
+                    enable = true
+                }
             }
         }
     }

@@ -1,3 +1,9 @@
+-- File: features.lua
+-- Author: ovim
+-- Description: features
+-- Last Modified: 02 18, 2022
+-- Copyright (c) 2022 ovim
+
 local function setup_module_features(plugins, config_features, registered_features)
     for key, value in pairs(config_features) do
         if registered_features[key] == nil then

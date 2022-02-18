@@ -1,3 +1,9 @@
+-- File: features.lua
+-- Author: ovim
+-- Description: ui features
+-- Last Modified: 02 18, 2022
+-- Copyright (c) 2022 ovim
+
 return {
     statusline = function(p, opts)
         p["hoob3rt/lualine.nvim"] = {
@@ -47,6 +53,14 @@ return {
             "nvim-treesitter/nvim-treesitter-refactor",
             opt = true,
             after = "nvim-treesitter"
+        }
+    end,
+    fileTree = function(p, opts)
+        p["kyazdani42/nvim-tree.lua"] = {
+            "kyazdani42/nvim-tree.lua",
+            opt = true,
+            event = "BufRead",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").nvim_tree()]]
         }
     end
 }
