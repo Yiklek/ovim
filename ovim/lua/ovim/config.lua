@@ -28,6 +28,13 @@ return {
                     enable = true
                 }
             }
+        },
+        editor = {
+            features = {
+                autopairs = {
+                    enable = true
+                }
+            }
         }
     }
 }

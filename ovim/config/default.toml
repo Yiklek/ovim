@@ -177,6 +177,7 @@ level = 3
 repo = "jiangmiao/auto-pairs"
 hook_source = "source $OVIM_ROOT_PATH/plugins/auto-pairs.vim"
 on_event = ["BufEnter","BufReadPost", "BufWritePost",]
+if = "!ovim#utils#check_lua()"
 
 [plugins."SirVer/ultisnips"]
 level = 2
