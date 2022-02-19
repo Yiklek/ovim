@@ -293,6 +293,17 @@ local function indent_blankline()
     -- because lazy load indent-blankline so need readd this autocmd
     vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 end
+local function luasaga()
+    local saga = require("lspsaga")
+    saga.init_lsp_saga(
+        {
+            error_sign = "",
+            warn_sign = "",
+            hint_sign = "",
+            infor_sign = ""
+        }
+    )
+end
 return {
     nvim_treesitter = nvim_treesitter,
     indent_guides = indent_guides,
@@ -300,5 +311,6 @@ return {
     lualine = lualine,
     bufferline = bufferline,
     nvim_tree = nvim_tree,
-    indent_blankline = indent_blankline
+    indent_blankline = indent_blankline,
+    luasaga = luasaga
 }
