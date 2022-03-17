@@ -42,8 +42,9 @@ for [key, value] in items(s:coc_lsp_server)
     let value['disableDiagnostics'] = s:check_lua
     let value['disableCompletion'] = s:check_lua
 endfor
-
-call coc#config("languageserver", s:coc_lsp_server)
+if !s:check_lua
+    call coc#config("languageserver", s:coc_lsp_server)
+endif
 
 
 let g:coc_global_extensions = ["coc-marketplace","coc-json","coc-snippets",
