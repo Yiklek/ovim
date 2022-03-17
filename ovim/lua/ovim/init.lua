@@ -29,7 +29,7 @@ local disable_distribution_plugins = function()
     vim.g.loaded_netrwFileHandlers = 1
 end
 local neovide_config = function()
-    vim.o.guifont = "DejaVuSansMono NF:h16, CaskaydiaCove Nerd Font Mono:h16"
+    vim.o.guifont = "DejaVuSansMono NF:h16,CaskaydiaCove Nerd Font Mono:h16"
     --vim.g.neovide_cursor_vfx_mode = "railgun"
     vim.g.neovide_no_idle = true
     vim.g.neovide_cursor_animation_length = 0.03

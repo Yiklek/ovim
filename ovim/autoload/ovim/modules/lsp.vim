@@ -59,29 +59,31 @@ endfunction
 
 function s:self.config() abort
     call s:config_{s:self.method}()
-    nnoremap <leader>g<space>    <esc>:call g:ovim#modules#lsp.func_show_doc()<cr>
-    nnoremap <leader>gd          <esc>:call g:ovim#modules#lsp.func_go_to_def()<cr>
-    nnoremap <leader>gt          <esc>:call g:ovim#modules#lsp.func_go_to_typedef()<cr>
-    nnoremap <leader>gi          <esc>:call g:ovim#modules#lsp.func_go_to_impl()<cr>
-    nnoremap <leader>gn          <esc>:call g:ovim#modules#lsp.func_rename()<cr>
-    nnoremap <leader>gu          <esc>:call g:ovim#modules#lsp.func_references()<cr>
-    nnoremap <leader>gc          <esc>:call g:ovim#modules#lsp.func_go_to_declaration()<cr>
-    nnoremap <leader>gs          <esc>:call g:ovim#modules#lsp.func_document_symbol()<cr>
-    nnoremap <leader>gr          <esc>:call g:ovim#modules#lsp.func_refactor()<cr>
-    nnoremap <leader>gf          <esc>:call g:ovim#modules#lsp.func_format()<cr>
+    if s:self.method != "nvim_lsp"
+        nnoremap <leader>g<space>    <esc>:call g:ovim#modules#lsp.func_show_doc()<cr>
+        nnoremap <leader>gd          <esc>:call g:ovim#modules#lsp.func_go_to_def()<cr>
+        nnoremap <leader>gt          <esc>:call g:ovim#modules#lsp.func_go_to_typedef()<cr>
+        nnoremap <leader>gi          <esc>:call g:ovim#modules#lsp.func_go_to_impl()<cr>
+        nnoremap <leader>gn          <esc>:call g:ovim#modules#lsp.func_rename()<cr>
+        nnoremap <leader>gu          <esc>:call g:ovim#modules#lsp.func_references()<cr>
+        nnoremap <leader>gc          <esc>:call g:ovim#modules#lsp.func_go_to_declaration()<cr>
+        nnoremap <leader>gs          <esc>:call g:ovim#modules#lsp.func_document_symbol()<cr>
+        nnoremap <leader>gr          <esc>:call g:ovim#modules#lsp.func_refactor()<cr>
+        nnoremap <leader>gf          <esc>:call g:ovim#modules#lsp.func_format()<cr>
 
-    let l:leader_key_map = {'g':{'name':'+LSP',' ':[':call g:ovim#modules#lsp.func_show_doc()','Doc'],
-                                            \ 'd':[':call g:ovim#modules#lsp.func_go_to_def()','Define'],
-                                            \ 't':[':call g:ovim#modules#lsp.func_go_to_typedef()','Type Define'],
-                                            \ 'i':[':call g:ovim#modules#lsp.func_go_to_impl()','Impl'],
-                                            \ 'n':[':call g:ovim#modules#lsp.func_rename()','Rename'],
-                                            \ 'u':[':call g:ovim#modules#lsp.func_references()','References'],
-                                            \ 'c':[':call g:ovim#modules#lsp.func_go_to_declaration()','Declaration'],
-                                            \ 's':[':call g:ovim#modules#lsp.func_document_symbol()','Doc Symbol'],
-                                            \ 'r':[':call g:ovim#modules#lsp.func_refactor()','Refactor'],
-                                            \ 'f':[':call g:ovim#modules#lsp.func_format()','Format'],
-                          \ }}
-    call ovim#utils#recursive_update(g:leader_key_map,l:leader_key_map)
+        let l:leader_key_map = {'g':{'name':'+LSP',' ':[':call g:ovim#modules#lsp.func_show_doc()','Doc'],
+                                                \ 'd':[':call g:ovim#modules#lsp.func_go_to_def()','Define'],
+                                                \ 't':[':call g:ovim#modules#lsp.func_go_to_typedef()','Type Define'],
+                                                \ 'i':[':call g:ovim#modules#lsp.func_go_to_impl()','Impl'],
+                                                \ 'n':[':call g:ovim#modules#lsp.func_rename()','Rename'],
+                                                \ 'u':[':call g:ovim#modules#lsp.func_references()','References'],
+                                                \ 'c':[':call g:ovim#modules#lsp.func_go_to_declaration()','Declaration'],
+                                                \ 's':[':call g:ovim#modules#lsp.func_document_symbol()','Doc Symbol'],
+                                                \ 'r':[':call g:ovim#modules#lsp.func_refactor()','Refactor'],
+                                                \ 'f':[':call g:ovim#modules#lsp.func_format()','Format'],
+                              \ }}
+        call ovim#utils#recursive_update(g:leader_key_map,l:leader_key_map)
+    endif
 endfun
 
 function s:config_coc()

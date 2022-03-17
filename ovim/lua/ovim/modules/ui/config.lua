@@ -2,6 +2,10 @@
 -- Author: Yiklek
 -- Description: ui config
 -- Copyright (c) 2022 Yiklek
+
+
+local keymap = require("ovim.modules.ui.keymap")
+
 local function nvim_treesitter()
     require "nvim-treesitter.configs".setup {
         ensure_installed = {
@@ -197,46 +201,54 @@ local function bufferline()
             diagnostics = "nvim_lsp"
         }
     }
+    require("ovim.misc.keymap").nvim_load_mapping(keymap.bufferline())
 end
 
 local function nvim_tree()
-    require("ovim.misc.safe_require")("nvim-tree").setup(
-        {
-            disable_netrw = true,
-            hijack_netrw = true,
-            open_on_setup = false,
-            ignore_ft_on_setup = {},
-            auto_close = true,
-            open_on_tab = false,
-            hijack_cursor = true,
-            update_cwd = false,
-            update_to_buf_dir = {enable = true, auto_open = true},
-            diagnostics = {
-                enable = false,
-                icons = {hint = "", info = "", warning = "", error = ""}
-            },
-            update_focused_file = {
-                enable = true,
-                update_cwd = true,
-                ignore_list = {}
-            },
-            system_open = {cmd = nil, args = {}},
-            filters = {dotfiles = false, custom = {}},
-            git = {enable = true, ignore = true, timeout = 500},
-            view = {
-                width = 30,
-                height = 30,
-                hide_root_folder = false,
-                side = "left",
-                auto_resize = false,
-                mappings = {custom_only = false, list = {}},
-                number = false,
-                relativenumber = false,
-                signcolumn = "yes"
-            },
-            trash = {cmd = "trash", require_confirm = true}
-        }
-    )
+    local keymap_list = {
+        { key = "l", action = "edit" },
+        { key = "e", action = "edit_in_place" },
+        { key = "v", action = "vsplit" },
+        { key = "x", action = "split" },
+        { key = "t", action = "tabnew" },
+        { key = "h", action = "close_node" },
+    }
+    require("ovim.misc.safe_require")("nvim-tree").setup{
+        disable_netrw = true,
+        hijack_netrw = true,
+        open_on_setup = false,
+        ignore_ft_on_setup = {},
+        auto_close = true,
+        open_on_tab = false,
+        hijack_cursor = true,
+        update_cwd = false,
+        update_to_buf_dir = {enable = true, auto_open = true},
+        diagnostics = {
+            enable = false,
+            icons = {hint = "", info = "", warning = "", error = ""}
+        },
+        update_focused_file = {
+            enable = true,
+            update_cwd = true,
+            ignore_list = {}
+        },
+        system_open = {cmd = nil, args = {}},
+        filters = {dotfiles = false, custom = {}},
+        git = {enable = true, ignore = true, timeout = 500},
+        view = {
+            width = 40,
+            height = 30,
+            hide_root_folder = false,
+            side = "left",
+            auto_resize = false,
+            mappings = {custom_only = false, list = keymap_list },
+            number = false,
+            relativenumber = false,
+            signcolumn = "yes"
+        },
+        trash = {cmd = "trash", require_confirm = true}
+    }
+    require("ovim.misc.keymap").nvim_load_mapping(keymap.nvim_tree())
 end
 local function indent_blankline()
     vim.opt.termguicolors = true

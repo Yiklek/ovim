@@ -155,3 +155,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
         virtual_text = false
     }
 )
+local keymap = require("ovim.modules.lsp.keymap")
+require("ovim.misc.keymap").nvim_load_mapping(keymap.lsp())
