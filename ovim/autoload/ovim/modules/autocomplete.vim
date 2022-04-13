@@ -64,15 +64,9 @@ function s:plugins_deoplete()
 endfunction
 
 function s:plugins_nvim_cmp()
-  let s:self.plugs['neoclide/coc.nvim'] = {"repo": "neoclide/coc.nvim",
-                        \ "rev": "release","branch": "release",
-                        \ "hook_source":"source $OVIM_ROOT_PATH/plugins/coc.source.vim",
-                        \ "on_event":["VimEnter"]
-                        \}
-    " disable defx
-    let l:disable_list = ["Shougo/defx.nvim","kristijanhusak/defx-git","kristijanhusak/defx-icons",
-                        \ ]
-    call ovim#plugin#disable(l:disable_list)
+    if executable('node')
+        call s:plugins_coc()
+    endif
 endfunction
 
 function s:plugins_ncm2()

@@ -51,6 +51,7 @@ branch = "dev"
 rev = "dev"
 hook_post_source = """call toggle_mouse#map("<F7>")
 let g:space_key_map['<F7>'] = ['<F7>','Toogle Mouse(todo)']"""
+if = 0
 
 [plugins."Shougo/defx.nvim"]
 level = 2
