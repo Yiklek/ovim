@@ -7,7 +7,7 @@ local plugins = {
         "tami5/lspsaga.nvim",
         opt = true,
         after = "nvim-lspconfig",
-        --event = "BufRead",
+        event = "BufRead",
         config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").luasaga()]]
     }
 }

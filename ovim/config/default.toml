@@ -24,6 +24,7 @@ level = 0
 repo = "tweekmonster/startuptime.vim"
 on = "StartupTime"
 on_cmd = "StartupTime"
+if = "!ovim#utils#check_lua()"
 
 [plugins."dstein64/vim-startuptime"]
 level = 0
@@ -44,15 +45,6 @@ repo = "haya14busa/dein-command.vim"
 if = "g:ovim_plug_manager ==# 'dein'"
 on_cmd = "Dein"
 
-[plugins."https://gitee.com/yelgors/vim-togglemouse.git"]
-level = 1
-repo = "https://gitee.com/yelgors/vim-togglemouse.git"
-branch = "dev"
-rev = "dev"
-hook_post_source = """call toggle_mouse#map("<F7>")
-let g:space_key_map['<F7>'] = ['<F7>','Toogle Mouse(todo)']"""
-if = 0
-
 [plugins."Shougo/defx.nvim"]
 level = 2
 repo = "Shougo/defx.nvim"
@@ -69,14 +61,6 @@ repo = "kristijanhusak/defx-git"
 level = 2
 repo = "kristijanhusak/defx-icons"
 on_source = [ "defx.nvim",]
-
-[plugins."scrooloose/nerdtree"]
-level = 2
-repo = "scrooloose/nerdtree"
-on = [ "NERDTreeToggle", "NERDTree",]
-on_cmd = [ "NERDTreeToggle", "NERDTree",]
-hook_add = "source $OVIM_ROOT_PATH/plugins/nerdtree.vim"
-if = 0
 
 [plugins."roxma/nvim-yarp"]
 level = 2
@@ -108,6 +92,7 @@ if = 0
 [plugins."ryanoasis/vim-devicons"]
 level = 1
 repo = "ryanoasis/vim-devicons"
+if = "!ovim#utils#check_lua()"
 
 [plugins."itchyny/lightline.vim"]
 level = 2
@@ -166,13 +151,6 @@ on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCom
 on_map = { nv = "<Plug>NERDCommenter" }
 on_func = "NERDComment"
 
-[plugins."majutsushi/tagbar"]
-level = 3
-repo = "majutsushi/tagbar"
-on = [ "Tagbar", "TagbarToggle",]
-on_cmd = [ "Tagbar",]
-hook_add = "source $OVIM_ROOT_PATH/plugins/tarbar.vim"
-
 [plugins."jiangmiao/auto-pairs"]
 level = 3
 repo = "jiangmiao/auto-pairs"
@@ -185,11 +163,13 @@ level = 2
 repo = "SirVer/ultisnips"
 hook_source = "source $OVIM_ROOT_PATH/plugins/ultisnips.vim"
 on_event = [ "VimEnter",]
+if = "!ovim#utils#check_lua()"
 
 [plugins."honza/vim-snippets"]
 level = 2
 repo = "honza/vim-snippets"
 on_event = [ "VimEnter",]
+if = "!ovim#utils#check_lua()"
 
 [plugins."chiel92/vim-autoformat"]
 level = 3

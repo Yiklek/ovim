@@ -69,6 +69,11 @@ return {
             opt = true,
             event = "VimEnter"
         }
+        p["ryanoasis/vim-devicons"] = {
+            "ryanoasis/vim-devicons",
+            opt = true,
+            event = "VimEnter"
+        }
     end,
     indent = function(p, opts)
         if opts.use == nil or opts.use == "blankline" then
