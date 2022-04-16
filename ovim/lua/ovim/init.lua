@@ -6,7 +6,7 @@ _G.ovim = {}
 ovim.compat = require('ovim.misc.compat')
 ovim.sys = require('ovim.sys')
 ovim.pack = require('ovim.pack')
-ovim.debug = true
+ovim.debug = false
 _G.try = require('ovim.misc.try')
 
 local disable_distribution_plugins = function()

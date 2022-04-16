@@ -97,7 +97,8 @@ return {
         p["folke/which-key.nvim"] = {
             "folke/which-key.nvim",
             config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").which_key()]],
-            opt = false
+            opt = true,
+            event = {"InsertChange","InsertEnter","InsertLeave","ModeChanged","CursorMoved","CursorMovedI","CursorHold"}
         }
     end
 }

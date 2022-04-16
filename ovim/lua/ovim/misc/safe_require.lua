@@ -8,8 +8,8 @@ local function safe_require(module)
             return require(module)
         end,
         function(e)
-            print('require '..module..' failed.')
             if ovim.debug then
+                print('require '..module..' failed.')
                 print(e)
                 print(debug.traceback("safe_require"))
             end

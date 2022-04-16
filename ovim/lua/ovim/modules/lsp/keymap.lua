@@ -36,7 +36,7 @@ function K.lsp()
         ["n|<leader>gn"] = map_cr("Lspsaga rename"):with_display("Rename"):with_noremap():with_silent(),
         ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()"):with_display("Declaration"):with_noremap():with_silent(),
         ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()"):with_display("References"):with_noremap():with_silent(),
-        ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()"):with_display("Rormat"):with_noremap():with_silent(),
+        ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()"):with_display("Format"):with_noremap():with_silent(),
     }
 end 
 return K

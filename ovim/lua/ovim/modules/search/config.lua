@@ -3,6 +3,8 @@
 -- Description: search config
 -- Copyright (c) 2022 Yiklek
 local C = {}
+local km = require("ovim.misc.keymap")
+local keymap = require("ovim.modules.search.keymap")
 function C.telescope()
     vim.cmd([[packadd sqlite.lua]])
     vim.cmd([[packadd telescope-fzf-native.nvim]])
@@ -70,6 +72,7 @@ function C.telescope()
     require("telescope").load_extension("project")
     require("telescope").load_extension("zoxide")
     require("telescope").load_extension("frecency")
+    km.load(keymap.telescope())
 end
 
 return C

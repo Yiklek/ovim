@@ -95,6 +95,15 @@ function pbind.display(display_string)
 end
 
 local wk = require("ovim.misc.safe_require")('which-key')
+local cache_keymaps = {}
+
+function pbind.register_which_key()
+    wk = require("ovim.misc.safe_require")('which-key')
+    for m,key in pairs(cache_keymaps) do
+                    wk.register(key, { mode = m })
+    end  
+    cache_keymaps = {}
+end
 
 function pbind.load(mapping)
 	for key, value in pairs(mapping) do
@@ -102,10 +111,25 @@ function pbind.load(mapping)
 		if type(value) == "table" then
 			local rhs = value.cmd
 			local options = value.options
-            if value._display and wk then
-                wk.register({
-                    [keymap] = {value.display},
-                }, { mode = mode })
+            -- if wk == nil then
+            --     vim.cmd [[packadd which-key.nvim]]
+            --     wk = require("ovim.misc.safe_require")('which-key')
+            -- end
+            if value._display then
+                if wk then 
+                    wk.register({
+                        [keymap] = {value.display},
+                    }, { mode = mode })
+                else
+                    local m = cache_keymaps[mode]
+                    if m == nil then
+                        m = {}
+                    end
+                    m = vim.tbl_extend("force", m, {
+                        [keymap] = {value.display},
+                    })
+                    cache_keymaps[mode] = m
+                end
             end
             if rhs ~= "" then
 			    vim.api.nvim_set_keymap(mode, keymap, rhs, options)

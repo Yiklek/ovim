@@ -317,12 +317,19 @@ function C.luasaga()
 end
 function C.which_key()
     require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-      ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "<Plug>", "<plug>"}, -- hide mapping boilerplate
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+        ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
+        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "<Plug>", "<plug>"}, -- hide mapping boilerplate
+        key_labels = {
+            -- override the label used to display some keys. It doesn't effect WK in any other way.
+            -- For example:
+            ["<space>"] = "SPC",
+            ["<cr>"] = "RET",
+            ["<tab>"] = "TAB",
+        },
     }
-
+    require("ovim.misc.keymap").register_which_key()
 end
 return C
