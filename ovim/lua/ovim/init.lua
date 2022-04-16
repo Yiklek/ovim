@@ -6,6 +6,7 @@ _G.ovim = {}
 ovim.compat = require('ovim.misc.compat')
 ovim.sys = require('ovim.sys')
 ovim.pack = require('ovim.pack')
+ovim.debug = true
 _G.try = require('ovim.misc.try')
 
 local disable_distribution_plugins = function()
@@ -45,5 +46,5 @@ if vim.fn.exists("g:neovide") ~= 0 then
     neovide_config()
 end
 ovim.pack.load_compile()
-
+require("ovim.keymap")
 return ovim

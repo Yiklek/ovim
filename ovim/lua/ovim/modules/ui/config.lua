@@ -3,10 +3,10 @@
 -- Description: ui config
 -- Copyright (c) 2022 Yiklek
 
-
+local C = {}
 local keymap = require("ovim.modules.ui.keymap")
 
-local function nvim_treesitter()
+function C.nvim_treesitter()
     require "nvim-treesitter.configs".setup {
         ensure_installed = {
             "c",
@@ -31,7 +31,7 @@ local function nvim_treesitter()
         }
     }
 end
-local function indent_guides()
+function C.indent_guides()
     require("indent_guides").setup(
         {
             exclude_filetypes = {
@@ -48,7 +48,7 @@ local function indent_guides()
         }
     )
 end
-local function nvim_gps()
+function C.nvim_gps()
     require("nvim-gps").setup(
         {
             icons = {
@@ -71,7 +71,7 @@ local function nvim_gps()
         }
     )
 end
-local function lualine()
+function C.lualine()
     local gps = require("nvim-gps")
 
     local function gps_content()
@@ -176,7 +176,7 @@ local function lualine()
         }
     )
 end
-local function bufferline()
+function C.bufferline()
     require("bufferline").setup {
         options = {
             numbers = "both",
@@ -201,10 +201,10 @@ local function bufferline()
             diagnostics = "nvim_lsp"
         }
     }
-    require("ovim.misc.keymap").nvim_load_mapping(keymap.bufferline())
+    require("ovim.misc.keymap").load(keymap.bufferline())
 end
 
-local function nvim_tree()
+function C.nvim_tree()
     local keymap_list = {
         { key = "l", action = "edit" },
         { key = "e", action = "edit_in_place" },
@@ -247,9 +247,9 @@ local function nvim_tree()
         },
         trash = {cmd = "trash", require_confirm = true}
     }
-    require("ovim.misc.keymap").nvim_load_mapping(keymap.nvim_tree())
+    require("ovim.misc.keymap").load(keymap.nvim_tree())
 end
-local function indent_blankline()
+function C.indent_blankline()
     vim.opt.termguicolors = true
     vim.opt.list = true
     require("indent_blankline").setup(
@@ -304,7 +304,7 @@ local function indent_blankline()
     -- because lazy load indent-blankline so need readd this autocmd
     vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 end
-local function luasaga()
+function C.luasaga()
     local saga = require("lspsaga")
     saga.init_lsp_saga(
         {
@@ -315,13 +315,14 @@ local function luasaga()
         }
     )
 end
-return {
-    nvim_treesitter = nvim_treesitter,
-    indent_guides = indent_guides,
-    nvim_gps = nvim_gps,
-    lualine = lualine,
-    bufferline = bufferline,
-    nvim_tree = nvim_tree,
-    indent_blankline = indent_blankline,
-    luasaga = luasaga
-}
+function C.which_key()
+    require("which-key").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
+      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "<Plug>", "<plug>"}, -- hide mapping boilerplate
+    }
+
+end
+return C

@@ -11,5 +11,12 @@ return {
             after = "nvim-cmp",
             config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_autopairs()]]
         }
-    end
+    end,
+    comment = function(p, opts)
+        p["terrortylor/nvim-comment"] = {
+            "terrortylor/nvim-comment",
+            event = "BufReadPost",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_comment()]]
+        }
+    end,
 }

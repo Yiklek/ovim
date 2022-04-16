@@ -150,6 +150,7 @@ on = [ "<Plug>NERDCommenterComment", "<Plug>NERDCommenterNested", "<Plug>NERDCom
         "<Plug>NERDCommenterAlignBoth", "<Plug>NERDCommenterUncomment",]
 on_map = { nv = "<Plug>NERDCommenter" }
 on_func = "NERDComment"
+if = "!ovim#utils#check_lua()"
 
 [plugins."jiangmiao/auto-pairs"]
 level = 3
@@ -253,6 +254,7 @@ on_path = ["COMMIT_EDITMSG","MERGE_MSG"]
 level = 2
 repo = "liuchengxu/vim-which-key"
 hook_post_source = "source $OVIM_ROOT_PATH/plugins/vim-which-key.vim"
+if = 0
 
 [plugins."voldikss/vim-floaterm"]
 level = 2

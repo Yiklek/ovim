@@ -20,10 +20,10 @@ local function try(body)
     end
     local call_success, call_result = xpcall(body[1], error_process("call"))
     if not call_success and catch ~= nil then
-        catch_success, catch_result = xpcall(function() return catch() end,error_process("catch"))
+        catch_success, catch_result = xpcall(function(e) return catch(e) end, error_process("catch"))
     end
     if finally ~= nil then
-        final_success, final_result = xpcall(function() return finally() end,error_process("final"))
+        final_success, final_result = xpcall(function(e) return finally(e) end, error_process("final"))
     end
 
 

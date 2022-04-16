@@ -26,12 +26,18 @@ return {
                 },
                 indent = {
                     enable = true
+                },
+                which_key = {
+                    enable = true
                 }
             }
         },
         editor = {
             features = {
                 autopairs = {
+                    enable = true
+                },
+                comment = {
                     enable = true
                 }
             }

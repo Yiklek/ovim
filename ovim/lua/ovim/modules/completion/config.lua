@@ -2,7 +2,8 @@
 -- Author: Yiklek
 -- Description: completion config
 -- Copyright (c) 2022 Yiklek
-local function nvim_cmp()
+local C = {}
+function C.nvim_cmp()
     vim.cmd [[highlight CmpItemAbbrDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]]
     vim.cmd [[highlight CmpItemKindSnippet guifg=#BF616A guibg=NONE]]
     vim.cmd [[highlight CmpItemKindUnit guifg=#D08770 guibg=NONE]]
@@ -154,14 +155,11 @@ local function nvim_cmp()
         }
     }
 end
-local function lua_snip()
+function C.lua_snip()
     require("luasnip").config.set_config {
         history = true,
         updateevents = "TextChanged,TextChangedI"
     }
     require("luasnip/loaders/from_vscode").load()
 end
-return {
-    cmp = nvim_cmp,
-    lua_snip = lua_snip
-}
+return C

@@ -9,7 +9,7 @@ return {
     plugins = {
         ["hrsh7th/nvim-cmp"] = {
             "hrsh7th/nvim-cmp",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.completion.config").cmp()]],
+            config = [[require("ovim.misc.safe_require")("ovim.modules.completion.config").nvim_cmp()]],
             event = "InsertEnter",
             opt = true,
             requires = {
@@ -22,7 +22,7 @@ return {
                 {"f3fora/cmp-spell", after = "cmp-path"},
                 {"hrsh7th/cmp-buffer", after = "cmp-spell"},
                 {"kdheepak/cmp-latex-symbols", after = "cmp-buffer"},
-                {"SirVer/ultisnips", config = [[vim.cmd("source $OVIM_ROOT_PATH/plugins/ultisnips.vim")]], event = {"VimEnter"}},
+                {"SirVer/ultisnips", setup = [[vim.cmd("source $OVIM_ROOT_PATH/plugins/ultisnips.vim")]], event = {"VimEnter"}},
                 {
                     "quangnguyen30192/cmp-nvim-ultisnips",
                     config = [[require("ovim.misc.safe_require")("cmp_nvim_ultisnips").setup{}]],

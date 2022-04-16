@@ -4,6 +4,8 @@ local rhs_options = {}
 function rhs_options:new()
 	local instance = {
 		cmd = "",
+        display = nil,
+        _display = false,
 		options = {
 			noremap = false,
 			silent = false,
@@ -18,21 +20,25 @@ end
 
 function rhs_options:map_cmd(cmd_string)
 	self.cmd = cmd_string
+    self.display = cmd_string
 	return self
 end
 
 function rhs_options:map_cr(cmd_string)
 	self.cmd = (":%s<CR>"):format(cmd_string)
+    self.display = cmd_string
 	return self
 end
 
 function rhs_options:map_args(cmd_string)
 	self.cmd = (":%s<Space>"):format(cmd_string)
+    self.display = cmd_string
 	return self
 end
 
 function rhs_options:map_cu(cmd_string)
 	self.cmd = (":<C-u>%s<CR>"):format(cmd_string)
+    self.display = cmd_string
 	return self
 end
 
@@ -53,6 +59,11 @@ end
 
 function rhs_options:with_nowait()
 	self.options.nowait = true
+	return self
+end
+function rhs_options:with_display(display_string)
+    self._display = true
+	self.display = display_string or self.display
 	return self
 end
 
@@ -78,13 +89,27 @@ function pbind.map_args(cmd_string)
 	return ro:map_args(cmd_string)
 end
 
-function pbind.nvim_load_mapping(mapping)
+function pbind.display(display_string)
+	local ro = rhs_options:new()
+	return ro:with_display(display_string)
+end
+
+local wk = require("ovim.misc.safe_require")('which-key')
+
+function pbind.load(mapping)
 	for key, value in pairs(mapping) do
 		local mode, keymap = key:match("([^|]*)|?(.*)")
 		if type(value) == "table" then
 			local rhs = value.cmd
 			local options = value.options
-			vim.api.nvim_set_keymap(mode, keymap, rhs, options)
+            if value._display and wk then
+                wk.register({
+                    [keymap] = {value.display},
+                }, { mode = mode })
+            end
+            if rhs ~= "" then
+			    vim.api.nvim_set_keymap(mode, keymap, rhs, options)
+            end
 		end
 	end
 end

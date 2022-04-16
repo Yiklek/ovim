@@ -2,7 +2,8 @@
 -- Author: Yiklek
 -- Description: search config
 -- Copyright (c) 2022 Yiklek
-local function telescope()
+local C = {}
+function C.telescope()
     vim.cmd([[packadd sqlite.lua]])
     vim.cmd([[packadd telescope-fzf-native.nvim]])
     vim.cmd([[packadd telescope-project.nvim]])
@@ -71,6 +72,4 @@ local function telescope()
     require("telescope").load_extension("frecency")
 end
 
-return {
-    telescope = telescope
-}
+return C

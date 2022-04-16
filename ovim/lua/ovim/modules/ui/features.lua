@@ -92,5 +92,12 @@ return {
                 config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_guides()]]
             }
         end
+    end,
+    which_key = function(p, opts)
+        p["folke/which-key.nvim"] = {
+            "folke/which-key.nvim",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").which_key()]],
+            opt = false
+        }
     end
 }
