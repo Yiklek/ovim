@@ -71,8 +71,7 @@ return {
         }
         p["ryanoasis/vim-devicons"] = {
             "ryanoasis/vim-devicons",
-            opt = true,
-            event = "VimEnter"
+            opt = false,
         }
     end,
     indent = function(p, opts)
@@ -98,7 +97,7 @@ return {
             "folke/which-key.nvim",
             config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").which_key()]],
             opt = true,
-            event = {"InsertChange","InsertEnter","InsertLeave","ModeChanged","CursorMoved","CursorMovedI","CursorHold"}
+            event = {"InsertChange", "InsertEnter", "InsertLeave", "CursorMoved", "CursorMovedI", "CursorHold"}
         }
     end
 }
