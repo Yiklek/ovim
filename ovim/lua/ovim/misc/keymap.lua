@@ -111,10 +111,7 @@ function pbind.load(mapping)
 		if type(value) == "table" then
 			local rhs = value.cmd
 			local options = value.options
-            -- if wk == nil then
-            --     vim.cmd [[packadd which-key.nvim]]
-            --     wk = require("ovim.misc.safe_require")('which-key')
-            -- end
+
             if value._display then
                 if wk then
                     wk.register({
