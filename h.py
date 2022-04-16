@@ -22,6 +22,7 @@ logger = importlib.import_module("ovim.log").logger
 
 xdg_config_dir = os.getenv('XDG_CONFIG_HOME')
 xdg_cache_dir = os.getenv('XDG_CACHE_HOME')
+local_dir = join(homedir, ".local")
 ovim_cache_dir = xdg_cache_dir or join(homedir, '.cache')
 ovim_cache_dir = join(ovim_cache_dir, 'ovim')
 vim_py3_home = join(ovim_cache_dir, 'python3-venv')
@@ -234,6 +235,45 @@ def uninstall(parser, args):
                         (ovim_cache_dir, ovim_cache_dir))
 
 
+def download(parser, args):
+
+    global local_dir
+    from urllib.request import urlopen
+    import json
+
+    r = urlopen("https://api.github.com/repos/neovim/neovim/releases/latest")
+    s = r.read().decode()
+    r = json.loads(s)
+    lastest = r["tag_name"]
+    print("latest version is:", lastest)
+    download_url = "https://github.com/neovim/neovim/releases/download/{}/nvim-{}.tar.gz".format(lastest, args.arch)
+    import tarfile
+    import tempfile
+    print("download from:", download_url)
+    r = urlopen(download_url)
+    fp = tempfile.TemporaryFile()
+    fp.write(r.read())
+    fp.flush()
+    fp.seek(0)
+    tempdir = tempfile.TemporaryDirectory()
+    tar = tarfile.open(fileobj=fp, mode="r:gz")
+    out = join(local_dir, "nvim")
+    tar.extractall(tempdir.name)
+    tar.close()
+    import shutil
+    if os.path.exists(out):
+        shutil.rmtree(out)
+    shutil.copytree(join(tempdir.name, "nvim-{}".format(args.arch)),
+                    join(local_dir, "nvim"))
+    tempdir.cleanup()
+    nvim_source_path = join(out, "bin", "nvim")
+    nvim_target_path = join(local_dir, "bin", "nvim")
+    if os.path.exists(nvim_target_path):
+        os.remove(nvim_target_path)
+    os.symlink(nvim_source_path, nvim_target_path)
+    print("download successfully")
+    
+
 def create_arg_parser():
     parser = argparse.ArgumentParser(description='vim config helper.')
     subparsers = parser.add_subparsers(metavar="COMMAND", dest='command')
@@ -272,6 +312,13 @@ def create_arg_parser():
     parser_dep.add_argument(
         '--all', help='ignore-python=False,node=True,cargo=True,auto-platform=True', default=False, action='store_true')
     parser_dep.set_defaults(func=depend)
+
+    parser_download = subparsers.add_parser(
+        'download', help='download and install lastest neovim')
+    parser_download.set_defaults(func=download)
+    parser_download.add_argument('-a', '--arch', choices=["linux64", "macos"],
+                                 type=str, default="linux64")
+    parser_dep.set_defaults(func=download)
     return parser
 
 

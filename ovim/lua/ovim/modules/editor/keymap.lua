@@ -1,3 +1,9 @@
+-- File: keymap.lua
+-- Author: Yiklek
+-- Description: keymap for editor
+-- Last Modified: 04 16, 2022
+-- Copyright (c) 2022 ovim
+
 local K = {}
 
 local km = require("ovim.misc.keymap")
