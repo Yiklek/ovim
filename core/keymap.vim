@@ -9,10 +9,6 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
-noremap <c-h> <left>
-noremap <c-j> <down>
-noremap <c-k> <up>
-noremap <c-l> <right>
 nnoremap <esc><esc> :silent! nohlsearch<cr>
 nnoremap <leader>ve<space> :edit $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>

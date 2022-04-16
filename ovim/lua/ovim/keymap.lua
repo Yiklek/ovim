@@ -16,8 +16,8 @@ local function basic()
         ["n|<leader>q"] = display("Exit"),
         ["n|<leader>t"] = display("Tag"),
         ["n|<leader>tq"] = display("Close"),
-        ["n|<leader>tk"] = display("Last"),
-        ["n|<leader>th"] = display("Last"),
+        ["n|<leader>tk"] = display("Prev"),
+        ["n|<leader>th"] = display("Prev"),
         ["n|<leader>tj"] = display("Next"),
         ["n|<leader>tl"] = display("Next"),
         ["n|<leader>tQ"] = display("CloseAll"),
@@ -42,7 +42,8 @@ local function basic()
         ["n|<leader>wk"] = display("Focus to Top"),
         ["n|<leader>wl"] = display("Focus to Right"),
         ["n|<leader>w<space>"] = display("Choose Window"),
-        -- the following keymapx are for plugin loading by dein or vim-plug
+
+        -- the following keymaps are for plugins loaded by dein or vim-plug
         -- and will be remove in the future
         -- Floaterm
         ["n|<leader>e"] = display("Extensions"),
@@ -90,8 +91,9 @@ local function basic()
         ["n|<leader>x"] = display("Edit"),
         ["n|<leader>xf"] = display("Format"),
         ["n|<leader>xa"] = display("RemoveTraialingSpace"),
+
     }
-end 
+end
 
 km.load(basic())
 km.load(require("ovim.modules.search.keymap").telescope())

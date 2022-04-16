@@ -92,7 +92,7 @@ assert(r2 == 3)
 
 r1,r2 = pcall(try,{
     function()
-        error(1) 
+        error(1)
     end
 })
 
@@ -100,7 +100,7 @@ assert(not r1)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     function(e)
         return 2
@@ -112,7 +112,7 @@ assert(r2 == 2)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     function(e)
     end,
@@ -126,7 +126,7 @@ assert(r2 == 3)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     nil,
     function()
@@ -138,7 +138,7 @@ assert(not r1)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     function(e)
         error(2)
@@ -150,7 +150,7 @@ assert(not r1)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     function(e)
         error(2)
@@ -161,7 +161,7 @@ assert(not r1)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     function(e)
         error(2)
@@ -174,7 +174,7 @@ assert(not r1)
 
 r1,r2 = pcall(try, {
     function()
-        error(1) 
+        error(1)
     end,
     function(e)
     end,

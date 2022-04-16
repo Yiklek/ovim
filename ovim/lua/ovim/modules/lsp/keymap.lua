@@ -26,7 +26,9 @@ function K.lsp()
         ["n|<leader>gr"] = map_cr("Lspsaga rename"):with_display():with_noremap():with_silent(),
         ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc"):with_display():with_noremap():with_silent(),
         ["n|<C-Up>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_noremap():with_silent(),
+        ["n|<C-k>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_noremap():with_silent(),
         ["n|<C-Down>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_noremap():with_silent(),
+        ["n|<C-j>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_noremap():with_silent(),
         ["n|<leader>ga"] = map_cr("Lspsaga code_action"):with_display():with_noremap():with_silent(),
         ["v|<leader>ga"] = map_cu("Lspsaga range_code_action"):with_display():with_noremap():with_silent(),
         ["n|<leader>gd"] = map_cr("Lspsaga preview_definition"):with_display():with_noremap():with_silent(),
@@ -37,6 +39,17 @@ function K.lsp()
         ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()"):with_display("Declaration"):with_noremap():with_silent(),
         ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()"):with_display("References"):with_noremap():with_silent(),
         ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()"):with_display("Format"):with_noremap():with_silent(),
+        ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics"):with_display("Show Cursor Diagnostic"):with_noremap():with_silent(),
     }
-end 
+end
+
+function K.trouble()
+    return {
+        ["n|<leader>gq"] = display("Trouble"),
+        ["n|<leader>gq<space>"] = map_cr("TroubleToggle document_diagnostics"):with_display("Trouble File"):with_noremap():with_silent(),
+        ["n|<leader>gqw"] = map_cr("TroubleToggle workspace_diagnostics"):with_display("Trouble Workspace"):with_noremap():with_silent(),
+        ["n|<leader>gqf"] = map_cr("TroubleToggle quickfix"):with_display("Trouble Quickfix"):with_noremap():with_silent(),
+    }
+end
+
 return K
