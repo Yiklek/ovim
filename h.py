@@ -318,7 +318,7 @@ def create_arg_parser():
     parser_download.set_defaults(func=download)
     parser_download.add_argument('-a', '--arch', choices=["linux64", "macos"],
                                  type=str, default="linux64")
-    parser_dep.set_defaults(func=download)
+    parser_download.set_defaults(func=download)
     return parser
 
 
