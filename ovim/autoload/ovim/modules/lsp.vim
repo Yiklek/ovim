@@ -24,7 +24,7 @@ function ovim#modules#lsp#load(...) abort
     if s:self.method ==# 'auto' && exists('g:ovim_global_options.modules.autocomplete')
             \ && ovim#utils#check_level_and_enable(g:ovim_global_options.modules.autocomplete)
         let l:autocomplete_config = ovim#modules#load('autocomplete',g:ovim_global_options.modules.autocomplete)
-        let s:self.method = l:autocomplete_config.method ==# "nvim_cmp" ? "nvim_lsp" : 
+        let s:self.method = l:autocomplete_config.method ==# "nvim_cmp" ? "nvim_lsp" :
                                             \ l:autocomplete_config.method ==# "coc" ? "coc" : "lcn"
     else
         call ovim#utils#warn("can't auto select lsp from autocomplete module.")

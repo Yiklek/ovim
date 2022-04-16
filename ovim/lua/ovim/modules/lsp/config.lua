@@ -10,6 +10,6 @@ function C.nvim_lsp()
 end
 function C.trouble()
     require("trouble").setup {}
-    km.load(keymap.trouble()) 
+    km.load(keymap.trouble())
 end
 return C

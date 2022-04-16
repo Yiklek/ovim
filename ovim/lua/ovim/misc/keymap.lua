@@ -101,7 +101,7 @@ function pbind.register_which_key()
     wk = require("ovim.misc.safe_require")('which-key')
     for m,key in pairs(cache_keymaps) do
                     wk.register(key, { mode = m })
-    end  
+    end
     cache_keymaps = {}
 end
 
@@ -116,7 +116,7 @@ function pbind.load(mapping)
             --     wk = require("ovim.misc.safe_require")('which-key')
             -- end
             if value._display then
-                if wk then 
+                if wk then
                     wk.register({
                         [keymap] = {value.display},
                     }, { mode = mode })

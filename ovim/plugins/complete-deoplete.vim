@@ -10,7 +10,7 @@ function s:setup_deoplete()
     call deoplete#custom#source('LanguageClient',
         \ 'min_pattern_length',
         \ 1)
-            
+
     " " 字符串中不补全
     " call deoplete#custom#source('_',
     "             \ 'disabled_syntaxes', ['String']

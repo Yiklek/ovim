@@ -14,8 +14,8 @@ local display = km.display
 
 function K.nvim_comment()
     return {
-        ["n|<leader>c"] = display("Comment") 
-    } 
+        ["n|<leader>c"] = display("Comment")
+    }
 end
 
 return K

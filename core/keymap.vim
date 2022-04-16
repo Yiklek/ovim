@@ -142,6 +142,6 @@ let s:leader_key_map = {'<CR>':{'name':'换行'},
                         \ 'v':{'name':'+vim相关',   'e':{'name':'编辑配置',' ':[':tabe $MYVIMRC','MYVIMRC']},'s':[':source $MYVIMRC','重新加载配置文件']},
                     \}
 if exists('g:leader_key_map')
-    call extend(g:leader_key_map,s:leader_key_map) 
+    call extend(g:leader_key_map,s:leader_key_map)
 endif
 " }}}

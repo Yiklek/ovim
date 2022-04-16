@@ -30,7 +30,7 @@ function s:self.load_theme() abort
     if t == v:t_string
         execute "colorscheme ".s:self.use
     elseif t == v:t_list
-        for u in s:self.use 
+        for u in s:self.use
             try
                 execute "colorscheme ".u
                 let s:self['theme_loaded'] = 1

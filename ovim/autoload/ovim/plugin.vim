@@ -10,7 +10,7 @@ function ovim#plugin#begin(arg)
         exe g:ovim_global_options.hook_before_setup_plugin
     endif
     if g:ovim_plug_manager ==# 'plug'
-        packadd vim-plug 
+        packadd vim-plug
         call plug#begin(a:arg.'/plugged')
     elseif g:ovim_plug_manager ==# 'dein'
         packadd dein.vim
@@ -23,9 +23,9 @@ function ovim#plugin#begin(arg)
         endif
     endif
     " disable low priority
-    call s:batch_set_plugins_attr(s:disable_plugins,'if',0) 
+    call s:batch_set_plugins_attr(s:disable_plugins,'if',0)
     " enable high priority
-    call s:batch_set_plugins_attr(s:enable_plugins,'if',1) 
+    call s:batch_set_plugins_attr(s:enable_plugins,'if',1)
     return 1
 endfun
 
@@ -121,9 +121,9 @@ function s:append_list(target,...)
         call ovim#utils#warn('plugin append_list: target list required.')
         return
     endif
-    if len(a:000) > 0 
+    if len(a:000) > 0
         for p in a:000
-            if type(p) == v:t_string 
+            if type(p) == v:t_string
                 call add(a:target,p)
             elseif type(p) == v:t_list
                 for i in p

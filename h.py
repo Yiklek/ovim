@@ -272,7 +272,7 @@ def download(parser, args):
         os.remove(nvim_target_path)
     os.symlink(nvim_source_path, nvim_target_path)
     print("download successfully")
-    
+
 
 def create_arg_parser():
     parser = argparse.ArgumentParser(description='vim config helper.')

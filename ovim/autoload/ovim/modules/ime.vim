@@ -20,7 +20,7 @@ function ovim#modules#ime#load(...) abort
     endif
 
     if s:self.method ==# 'auto'
-        let s:self.method = ["openfly","pinyin"]    
+        let s:self.method = ["openfly","pinyin"]
     endif
     let s:self.loaded = 1
     let g:ovim#modules#{s:self.name} = s:self
@@ -63,4 +63,3 @@ endfunction
 
 function s:self.config() abort
 endfun
-

@@ -40,7 +40,7 @@ endif
 command -nargs=0 OvimCopyConfig call ovim#utils#copy_config()
 command -nargs=0 OvimRmOptionCache call delete(g:ovim_option_cache_path) | call delete(g:ovim_packer_compiled_path)
 command -nargs=0 OvimMakeOptionCache call ovim#utils#make_option_cache(g:ovim_option_cache_path)
-            \ | if g:ovim_plug_manager ==# 'dein' | call dein#clear_state() 
+            \ | if g:ovim_plug_manager ==# 'dein' | call dein#clear_state()
             \ | endif
             \ | if get(g:, 'ovim_packer_setup', 0) == 1 | exe 'PackerCompile' | endif
 command -nargs=0 OvimCopyDotSpector call ovim#utils#copy(g:ovim_root_path.'/config/vimspector/.vimspector.json','./.vimspector.json')
@@ -67,7 +67,7 @@ function! ovim#init(...) abort
     call s:setup_pack()
     call s:setup_python()
     let g:ovim_global_options = s:options(g:ovim_option_cache_path)
-    if type(g:ovim_global_options) == v:t_string && g:ovim_global_options == '' 
+    if type(g:ovim_global_options) == v:t_string && g:ovim_global_options == ''
         let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
     endif
     if exists('g:ovim_global_options.modules')
@@ -161,7 +161,6 @@ function! s:addons(addons) abort
             continue
         endif
         call ovim#addons#load(key,addon)
-    endfor 
+    endfor
     let g:ovim_addons_loaded = 1
 endfunction
-

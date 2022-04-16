@@ -99,7 +99,7 @@ function! OvimLightLineBackground() abort
     endif
     let l:result = []
     if exists("*gutentags#inprogress") && len(gutentags#inprogress()) > 0
-        call add(l:result, "gutentags:".gutentags#statusline()) 
+        call add(l:result, "gutentags:".gutentags#statusline())
     endif
   return join(l:result, ',')
 endfunction
@@ -149,5 +149,5 @@ function OvimLightLineLsp() abort
         endif
         return s:lcn
     endif
-    return '' 
+    return ''
 endfunction
