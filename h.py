@@ -236,7 +236,7 @@ def uninstall(parser, args):
 
 
 def download(parser, args):
-
+    in_tar_dir_name = {"linux64": "linux64", "macos": "osx64"}
     global local_dir
     from urllib.request import urlopen
     import json
@@ -263,7 +263,7 @@ def download(parser, args):
     import shutil
     if os.path.exists(out):
         shutil.rmtree(out)
-    shutil.copytree(join(tempdir.name, "nvim-{}".format(args.arch)),
+    shutil.copytree(join(tempdir.name, "nvim-{}".format(in_tar_dir_name[args.arch])),
                     join(local_dir, "nvim"))
     tempdir.cleanup()
     nvim_source_path = join(out, "bin", "nvim")
