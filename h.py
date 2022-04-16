@@ -270,6 +270,7 @@ def download(parser, args):
     nvim_target_path = join(local_dir, "bin", "nvim")
     if os.path.exists(nvim_target_path):
         os.remove(nvim_target_path)
+    os.makedirs(os.path.dirname(nvim_target_path), exist_ok=True)
     os.symlink(nvim_source_path, nvim_target_path)
     print("download successfully")
 
