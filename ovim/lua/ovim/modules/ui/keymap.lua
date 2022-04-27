@@ -10,27 +10,35 @@ local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local display = km.display
 local K = {}
-
+local opts = {
+    display = {
+        enable = true
+    },
+    map = {
+        noremap = true,
+        silent = true
+    }
+}
 function K.bufferline()
     return {
         ["n|<leader>b"] = display("Buffer"),
-        ["n|gb"] = map_cr("BufferLinePick"):with_display():with_noremap():with_silent(),
-        ["n|<leader>bn"] = map_cr("BufferLineCycleNext"):with_display():with_noremap():with_silent(),
-        ["n|<leader>bj"] = map_cr("BufferLineCycleNext"):with_display():with_noremap():with_silent(),
-        ["n|<leader>bp"] = map_cr("BufferLineCyclePrev"):with_display():with_noremap():with_silent(),
-        ["n|<leader>bk"] = map_cr("BufferLineCyclePrev"):with_display():with_noremap():with_silent(),
+        ["n|gb"] = map_cr("BufferLinePick", opts),
+        ["n|<leader>bn"] = map_cr("BufferLineCycleNext", opts),
+        ["n|<leader>bj"] = map_cr("BufferLineCycleNext", opts),
+        ["n|<leader>bp"] = map_cr("BufferLineCyclePrev", opts),
+        ["n|<leader>bk"] = map_cr("BufferLineCyclePrev", opts),
         ["n|<A-S-j>"] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
         ["n|<A-S-k>"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
-        ["n|<leader>be"] = map_cr("BufferLineSortByExtension"):with_display():with_noremap(),
-        ["n|<leader>bd"] = map_cr("BufferLineSortByDirectory"):with_display():with_noremap(),
-        ["n|<leader>b1"] = map_cr("BufferLineGoToBuffer 1"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b2"] = map_cr("BufferLineGoToBuffer 2"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b3"] = map_cr("BufferLineGoToBuffer 3"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b4"] = map_cr("BufferLineGoToBuffer 4"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b5"] = map_cr("BufferLineGoToBuffer 5"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b6"] = map_cr("BufferLineGoToBuffer 6"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b7"] = map_cr("BufferLineGoToBuffer 7"):with_display():with_noremap():with_silent(),
-        ["n|<leader>b8"] = map_cr("BufferLineGoToBuffer 8"):with_display():with_noremap():with_silent(),
+        ["n|<leader>be"] = map_cr("BufferLineSortByExtension", opts),
+        ["n|<leader>bd"] = map_cr("BufferLineSortByDirectory", opts),
+        ["n|<leader>b1"] = map_cr("BufferLineGoToBuffer 1", opts),
+        ["n|<leader>b2"] = map_cr("BufferLineGoToBuffer 2", opts),
+        ["n|<leader>b3"] = map_cr("BufferLineGoToBuffer 3", opts),
+        ["n|<leader>b4"] = map_cr("BufferLineGoToBuffer 4", opts),
+        ["n|<leader>b5"] = map_cr("BufferLineGoToBuffer 5", opts),
+        ["n|<leader>b6"] = map_cr("BufferLineGoToBuffer 6", opts),
+        ["n|<leader>b7"] = map_cr("BufferLineGoToBuffer 7", opts),
+        ["n|<leader>b8"] = map_cr("BufferLineGoToBuffer 8", opts),
     }
 end
 function K.nvim_tree()
@@ -38,9 +46,9 @@ function K.nvim_tree()
     if vim.g.coc_enabled == nil or not vim.g.coc_enabled then
         return {
             ["n|="] = display("FileExplorer"),
-            ["n|=="] = map_cr("NvimTreeToggle"):with_display():with_noremap():with_silent(),
-            ["n|=f"] = map_cr("NvimTreeFindFile"):with_display():with_noremap():with_silent(),
-            ["n|=r"] = map_cr("NvimTreeRefresh"):with_display():with_noremap():with_silent(),
+            ["n|=="] = map_cr("NvimTreeToggle", opts),
+            ["n|=f"] = map_cr("NvimTreeFindFile", opts),
+            ["n|=r"] = map_cr("NvimTreeRefresh", opts),
         }
     end
     return {}
