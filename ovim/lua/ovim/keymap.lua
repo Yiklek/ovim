@@ -10,7 +10,7 @@ local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local display = km.display
 local function basic()
-    return {
+    local maps = {
         ["n|<leader>\\"] = display("vsplit"),
         ["n|<leader>-"] = display("split"),
         ["n|<leader>q"] = display("Exit"),
@@ -93,10 +93,12 @@ local function basic()
         ["n|<leader>xa"] = display("RemoveTraialingSpace"),
 
     }
+    return maps
 end
 
 km.load(basic())
 km.load(require("ovim.modules.search.keymap").telescope())
+km.load(require("ovim.modules.lsp.keymap").vista())
 
 return {
     basic = basic

@@ -271,6 +271,7 @@ repo = "liuchengxu/vista.vim"
 hook_add = "source $OVIM_ROOT_PATH/plugins/vista.vim"
 on = [ "Vista", "Vista!", "Vista!!",]
 on_cmd = [ "Vista", "Vista!", "Vista!!",]
+if = "!ovim#utils#check_lua()"
 
 
 [plugins."glepnir/dashboard-nvim"]

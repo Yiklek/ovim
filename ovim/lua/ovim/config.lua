@@ -41,6 +41,13 @@ return {
                     enable = true
                 }
             }
+        },
+        lsp = {
+            features = {
+                vista = {
+                    enable = true
+                }
+            }
         }
     }
 }

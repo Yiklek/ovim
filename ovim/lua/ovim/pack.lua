@@ -34,7 +34,7 @@ function this.load_packer()
         local level = m.level or 0
         local condition = vim.fn.luaeval(m.condition or true)
         if level < 4 and condition then
-            config.plugins = vim.tbl_extend("force", config.plugins, m.plugins)
+            config.plugins = vim.tbl_deep_extend("force", config.plugins, m.plugins)
         end
     end
     for _, repo in pairs(config.plugins) do

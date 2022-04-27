@@ -10,45 +10,69 @@ local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local display = km.display
 local K = {}
+local opts = {
+    display = {
+        enable = true
+    },
+    map = {
+        noremap = true,
+        silent = true,
+        nowait = true,
+    }
+}
 function K.lsp()
     return {
         ["n|<leader>l"] = display("LSP"),
         ["n|<leader>g"] = display("LSPAction"),
-        ["n|<leader>li"] = map_cr("LspInfo"):with_display():with_noremap():with_silent():with_nowait(),
-        ["n|<leader>lI"] = map_cr("LspInstallInfo"):with_display():with_noremap():with_silent():with_nowait(),
-        ["n|<leader>ll"] = map_cr("LspInstallLog"):with_display():with_noremap():with_silent():with_nowait(),
-        ["n|<leader>lr"] = map_cr("LspRestart"):with_display():with_noremap():with_silent():with_nowait(),
-        ["n|<leader>lg"] = map_cr("LspStart"):with_display():with_noremap():with_silent():with_nowait(),
-        ["n|<leader>ls"] = map_cr("LspStop"):with_display():with_noremap():with_silent():with_nowait(),
-        ["n|<leader>g]"] = map_cr("Lspsaga diagnostic_jump_next"):with_display():with_noremap():with_silent(),
-        ["n|<leader>g["] = map_cr("Lspsaga diagnostic_jump_prev"):with_display():with_noremap():with_silent(),
-        ["n|<leader>gs"] = map_cr("Lspsaga signature_help"):with_display():with_noremap():with_silent(),
-        ["n|<leader>gr"] = map_cr("Lspsaga rename"):with_display():with_noremap():with_silent(),
-        ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc"):with_display():with_noremap():with_silent(),
-        ["n|<C-Up>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_noremap():with_silent(),
-        ["n|<C-k>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_noremap():with_silent(),
-        ["n|<C-Down>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_noremap():with_silent(),
-        ["n|<C-j>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_noremap():with_silent(),
-        ["n|<leader>ga"] = map_cr("Lspsaga code_action"):with_display():with_noremap():with_silent(),
-        ["v|<leader>ga"] = map_cu("Lspsaga range_code_action"):with_display():with_noremap():with_silent(),
-        ["n|<leader>gd"] = map_cr("Lspsaga preview_definition"):with_display():with_noremap():with_silent(),
-        ["n|<leader>gD"] = map_cr("lua vim.lsp.buf.definition()"):with_display("Definition"):with_noremap():with_silent(),
-        ["n|<leader>gt"] = map_cr("lua vim.lsp.buf.type_definition()"):with_display("TypeDefinition"):with_noremap():with_silent(),
-        ["n|<leader>gi"] = map_cr("lua vim.lsp.buf.implementation()"):with_display("Implementation"):with_noremap():with_silent(),
-        ["n|<leader>gn"] = map_cr("Lspsaga rename"):with_display("Rename"):with_noremap():with_silent(),
-        ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()"):with_display("Declaration"):with_noremap():with_silent(),
-        ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()"):with_display("References"):with_noremap():with_silent(),
-        ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()"):with_display("Format"):with_noremap():with_silent(),
-        ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics"):with_display("Show Cursor Diagnostic"):with_noremap():with_silent(),
+        ["n|<leader>li"] = map_cr("LspInfo", opts),
+        ["n|<leader>lI"] = map_cr("LspInstallInfo", opts),
+        ["n|<leader>ll"] = map_cr("LspInstallLog", opts),
+        ["n|<leader>lr"] = map_cr("LspRestart", opts),
+        ["n|<leader>lg"] = map_cr("LspStart", opts),
+        ["n|<leader>ls"] = map_cr("LspStop", opts),
+        ["n|<leader>g]"] = map_cr("Lspsaga diagnostic_jump_next", opts),
+        ["n|<leader>g["] = map_cr("Lspsaga diagnostic_jump_prev", opts),
+        ["n|<leader>gs"] = map_cr("Lspsaga signature_help", opts),
+        ["n|<leader>gr"] = map_cr("Lspsaga rename", opts),
+        ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc" ,opts),
+        ["n|<C-Up>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"),
+        ["n|<C-k>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"),
+        ["n|<C-Down>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"),
+        ["n|<C-j>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"),
+        ["n|<leader>ga"] = map_cr("Lspsaga code_action", opts),
+        ["v|<leader>ga"] = map_cu("Lspsaga range_code_action", opts),
+        ["n|<leader>gd"] = map_cr("Lspsaga preview_definition", opts),
+        ["n|<leader>gD"] = map_cr("lua vim.lsp.buf.definition()", opts):with_display("Definition"),
+        ["n|<leader>gt"] = map_cr("lua vim.lsp.buf.type_definition()", opts):with_display("TypeDefinition"),
+        ["n|<leader>gi"] = map_cr("lua vim.lsp.buf.implementation()", opts):with_display("Implementation"),
+        ["n|<leader>gn"] = map_cr("Lspsaga rename", opts):with_display("Rename"),
+        ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()", opts):with_display("Declaration"),
+        ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()", opts):with_display("References"),
+        ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()", opts):with_display("Format"),
+        ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):with_display("Show Cursor Diagnostic"),
     }
 end
 
 function K.trouble()
     return {
         ["n|<leader>gq"] = display("Trouble"),
-        ["n|<leader>gq<space>"] = map_cr("TroubleToggle document_diagnostics"):with_display("Trouble File"):with_noremap():with_silent(),
-        ["n|<leader>gqw"] = map_cr("TroubleToggle workspace_diagnostics"):with_display("Trouble Workspace"):with_noremap():with_silent(),
-        ["n|<leader>gqf"] = map_cr("TroubleToggle quickfix"):with_display("Trouble Quickfix"):with_noremap():with_silent(),
+        ["n|<leader>gq<space>"] = map_cr("TroubleToggle document_diagnostics"):with_display("Trouble File"),
+        ["n|<leader>gqw"] = map_cr("TroubleToggle workspace_diagnostics"):with_display("Trouble Workspace"),
+        ["n|<leader>gqf"] = map_cr("TroubleToggle quickfix"):with_display("Trouble Quickfix"),
+    }
+end
+
+function K.vista()
+    return {
+        ["n|<leader>ev"] = display("Vista"),
+        ["n|<leader>ev<space>"] = map_cr("Vista!!", opts),
+        ["n|<leader>eva"] = map_cr("Vista ale", opts),
+        ["n|<leader>evt"] = map_cr("Vista ctags", opts),
+        ["n|<leader>evc"] = map_cr("Vista coc", opts),
+        ["n|<leader>evl"] = map_cr("Vista lcn", opts),
+        ["n|<leader>evn"] = map_cr("Vista nvim_lsp", opts),
+        ["n|<leader>evL"] = map_cr("Vista vim_lsp", opts),
+        ["n|<leader>evC"] = map_cr("Vista vim_lsc", opts),
     }
 end
 

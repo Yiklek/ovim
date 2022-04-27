@@ -4,94 +4,108 @@ local rhs_options = {}
 function rhs_options:new()
 	local instance = {
 		cmd = "",
-        display = nil,
-        _display = false,
-		options = {
-			noremap = false,
-			silent = false,
-			expr = false,
-			nowait = false,
-		},
+        opts = {
+            display = {
+                repr = nil,
+                enable = false,
+            },
+            map = {
+                noremap = false,
+                silent = false,
+                expr = false,
+                nowait = false,
+                script = false,
+                unique = false,
+            }
+        }
 	}
 	setmetatable(instance, self)
 	self.__index = self
 	return instance
 end
-
-function rhs_options:map_cmd(cmd_string)
+function rhs_options:update_opts(opts)
+    if opts ~= nil then
+        self.opts = vim.tbl_deep_extend("force", self.opts, opts)
+    end
+end
+function rhs_options:map_cmd(cmd_string, opts)
 	self.cmd = cmd_string
-    self.display = cmd_string
+    self.opts.display.repr = cmd_string
+    self:update_opts(opts)
 	return self
 end
 
-function rhs_options:map_cr(cmd_string)
+function rhs_options:map_cr(cmd_string, opts)
 	self.cmd = (":%s<CR>"):format(cmd_string)
-    self.display = cmd_string
+    self.opts.display.repr = cmd_string
+    self:update_opts(opts)
 	return self
 end
 
-function rhs_options:map_args(cmd_string)
+function rhs_options:map_args(cmd_string, opts)
 	self.cmd = (":%s<Space>"):format(cmd_string)
-    self.display = cmd_string
+    self.opts.display.repr = cmd_string
+    self:update_opts(opts)
 	return self
 end
 
-function rhs_options:map_cu(cmd_string)
+function rhs_options:map_cu(cmd_string, opts)
 	self.cmd = (":<C-u>%s<CR>"):format(cmd_string)
-    self.display = cmd_string
+    self.opts.display.repr = cmd_string
+    self:update_opts(opts)
 	return self
 end
 
 function rhs_options:with_silent()
-	self.options.silent = true
+	self.opts.map.silent = true
 	return self
 end
 
 function rhs_options:with_noremap()
-	self.options.noremap = true
+	self.opts.map.noremap = true
 	return self
 end
 
 function rhs_options:with_expr()
-	self.options.expr = true
+	self.opts.map.expr = true
 	return self
 end
 
 function rhs_options:with_nowait()
-	self.options.nowait = true
+	self.opts.map.nowait = true
 	return self
 end
 function rhs_options:with_display(display_string)
-    self._display = true
-	self.display = display_string or self.display
+    self.opts.display.enable = true
+	self.opts.display.repr = display_string or self.opts.display.repr
 	return self
 end
 
 local pbind = {}
 
-function pbind.map_cr(cmd_string)
+function pbind.map_cr(cmd_string, opts)
 	local ro = rhs_options:new()
-	return ro:map_cr(cmd_string)
+	return ro:map_cr(cmd_string, opts)
 end
 
-function pbind.map_cmd(cmd_string)
+function pbind.map_cmd(cmd_string, opts)
 	local ro = rhs_options:new()
-	return ro:map_cmd(cmd_string)
+	return ro:map_cmd(cmd_string, opts)
 end
 
-function pbind.map_cu(cmd_string)
+function pbind.map_cu(cmd_string, opts)
 	local ro = rhs_options:new()
-	return ro:map_cu(cmd_string)
+	return ro:map_cu(cmd_string, opts)
 end
 
-function pbind.map_args(cmd_string)
+function pbind.map_args(cmd_string, opts)
 	local ro = rhs_options:new()
-	return ro:map_args(cmd_string)
+	return ro:map_args(cmd_string, opts)
 end
 
-function pbind.display(display_string)
+function pbind.display(display_string, opts)
 	local ro = rhs_options:new()
-	return ro:with_display(display_string)
+	return ro:with_display(display_string, opts)
 end
 
 local wk = require("ovim.misc.safe_require")('which-key')
@@ -110,26 +124,26 @@ function pbind.load(mapping)
 		local mode, keymap = key:match("([^|]*)|?(.*)")
 		if type(value) == "table" then
 			local rhs = value.cmd
-			local options = value.options
+            local opts = value.opts
 
-            if value._display then
+            if opts.display.enable then
                 if wk then
                     wk.register({
-                        [keymap] = {value.display},
+                        [keymap] = {opts.display.repr},
                     }, { mode = mode })
                 else
                     local m = cache_keymaps[mode]
                     if m == nil then
                         m = {}
                     end
-                    m = vim.tbl_extend("force", m, {
-                        [keymap] = {value.display},
+                    m = vim.tbl_deep_extend("force", m, {
+                        [keymap] = {opts.display.repr},
                     })
                     cache_keymaps[mode] = m
                 end
             end
             if rhs ~= "" then
-			    vim.api.nvim_set_keymap(mode, keymap, rhs, options)
+			    vim.api.nvim_set_keymap(mode, keymap, rhs, opts.map)
             end
 		end
 	end

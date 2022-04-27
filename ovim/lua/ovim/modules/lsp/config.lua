@@ -12,4 +12,6 @@ function C.trouble()
     require("trouble").setup {}
     km.load(keymap.trouble())
 end
+function C.vista()
+end
 return C
