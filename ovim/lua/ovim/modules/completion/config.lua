@@ -91,7 +91,7 @@ function C.nvim_cmp()
             end
         },
         -- You can set mappings if you want
-        mapping = {
+        mapping = cmp.mapping.preset.insert {
             ["<CR>"] = cmp.mapping.confirm({select = true}),
             ["<C-p>"] = cmp.mapping.select_prev_item(),
             ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -157,20 +157,28 @@ function C.nvim_cmp()
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
-      -- mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-        { name = 'buffer' }
-      }
+        mapping = cmp.mapping.preset.cmdline(),
+        completion = {
+        ---@usage The minimum length of a word to complete on.
+            keyword_length = 2,
+        },
+        sources = {
+            { name = 'buffer' }
+        }
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(':', {
-      -- mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-        { name = 'cmdline' }
-      }, {
-        { name = 'path' }
-      })
+        mapping = cmp.mapping.preset.cmdline(),
+        completion = {
+        ---@usage The minimum length of a word to complete on.
+            keyword_length = 2,
+        },
+        sources = cmp.config.sources({
+            { name = 'cmdline' }
+            }, {
+            { name = 'path' }
+        })
     })
     vim.cmd [[set nowildmenu]]
 end
