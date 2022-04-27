@@ -302,17 +302,7 @@ function C.indent_blankline()
     -- because lazy load indent-blankline so need readd this autocmd
     vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 end
-function C.luasaga()
-    local saga = require("lspsaga")
-    saga.init_lsp_saga(
-        {
-            error_sign = "",
-            warn_sign = "",
-            hint_sign = "",
-            infor_sign = ""
-        }
-    )
-end
+
 function C.which_key()
     require("which-key").setup {
         -- your configuration comes here

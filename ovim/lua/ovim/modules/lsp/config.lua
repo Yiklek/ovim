@@ -12,6 +12,19 @@ function C.trouble()
     require("trouble").setup {}
     km.load(keymap.trouble())
 end
+
 function C.vista()
+end
+
+function C.lspsaga()
+    local saga = require("lspsaga")
+    saga.init_lsp_saga(
+        {
+            error_sign = "",
+            warn_sign = "",
+            hint_sign = "",
+            infor_sign = ""
+        }
+    )
 end
 return C

@@ -46,6 +46,9 @@ return {
             features = {
                 vista = {
                     enable = true
+                },
+                lspsaga = {
+                    enable = true
                 }
             }
         }
