@@ -9,6 +9,18 @@ local plugins = {
         level = 0,
         cmd = "StartupTime",
         opt = true
+    },
+    ["nvim-lua/plenary.nvim"] = {
+        "nvim-lua/plenary.nvim",
+        cmd = {
+            "DiffviewOpen",
+            "DiffviewClose",
+            "DiffviewToggleFiles",
+            "DiffviewFocusFiles",
+            "DiffviewRefresh",
+            "DiffviewFileHistory",
+            "Telescope",
+        }
     }
 }
 return {

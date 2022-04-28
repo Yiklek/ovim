@@ -2,6 +2,7 @@
 -- Author: Yiklek
 -- Description: util
 -- Copyright (c) 2022 Yiklek
+local obj = {}
 local detect_modules = function()
     local list = {}
     local modules_dir = vim.g.ovim_root_path .. '/lua/ovim/modules'
@@ -15,7 +16,10 @@ end
 local module = function(module)
     return string.format('ovim.modules.%s', module)
 end
-local obj = {}
+
 obj.detect_modules = detect_modules
 obj.module = module
+function obj.has_win()
+    return vim.fn.has("win64") or vim.fn.has("win32") or vim.fn.has("win16") or vim.fn.has("win95")
+end
 return obj

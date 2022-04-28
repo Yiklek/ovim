@@ -29,9 +29,8 @@ return {
             "sindrets/diffview.nvim",
             config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").diffview()]],
             cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory"},
-            requires = {
-                {"nvim-lua/plenary.nvim", cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory"}},
-            },
+            -- require plenary in basic
+            requires = nil,
         }
     end
 }

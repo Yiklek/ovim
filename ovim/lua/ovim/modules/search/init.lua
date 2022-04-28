@@ -9,7 +9,7 @@ return {
         ["nvim-telescope/telescope.nvim"] = {
             "nvim-telescope/telescope.nvim",
             requires = {
-                {"nvim-lua/plenary.nvim", cmd = "Telescope"},
+                -- require plenary in basic
                 {"nvim-lua/popup.nvim", opt = true}
             },
             level = 1,
