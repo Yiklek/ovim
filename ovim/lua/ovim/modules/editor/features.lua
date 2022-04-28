@@ -28,9 +28,9 @@ return {
         p["sindrets/diffview.nvim"] = {
             "sindrets/diffview.nvim",
             config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").diffview()]],
-            cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh"},
+            cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory"},
             requires = {
-                {"nvim-lua/plenary.nvim", cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh"}},
+                {"nvim-lua/plenary.nvim", cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory"}},
             },
         }
     end
