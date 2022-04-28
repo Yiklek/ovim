@@ -6,6 +6,7 @@ local C = {}
 local km = require("ovim.misc.keymap")
 local keymap = require("ovim.modules.search.keymap")
 function C.telescope()
+    require("packer.load")({"plenary.nvim"}, {}, _G.packer_plugins)
     vim.cmd([[packadd telescope-project.nvim]])
     vim.cmd([[packadd telescope-zoxide]])
     require("telescope").load_extension("project")
