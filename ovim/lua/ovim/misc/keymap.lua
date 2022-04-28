@@ -11,7 +11,7 @@ function rhs_options:new()
             },
             map = {
                 noremap = false,
-                silent = false,
+                silent = true,
                 expr = false,
                 nowait = false,
                 script = false,
@@ -119,12 +119,12 @@ function pbind.register_which_key()
     cache_keymaps = {}
 end
 
-function pbind.load(mapping)
+function pbind.load(mapping, extra_opts)
 	for key, value in pairs(mapping) do
 		local mode, keymap = key:match("([^|]*)|?(.*)")
 		if type(value) == "table" then
 			local rhs = value.cmd
-            local opts = value.opts
+            local opts = vim.tbl_deep_extend("force", value.opts, extra_opts or {})
 
             if opts.display.enable then
                 if wk then
@@ -143,7 +143,13 @@ function pbind.load(mapping)
                 end
             end
             if rhs ~= "" then
-			    vim.api.nvim_set_keymap(mode, keymap, rhs, opts.map)
+                if opts.map.buffer ~= nil then
+                    local bufnr = opts.map.buffer
+                    opts.map.buffer = nil
+                    vim.api.nvim_buf_set_keymap(bufnr, mode, keymap, rhs, opts.map)
+                else
+			        vim.api.nvim_set_keymap(mode, keymap, rhs, opts.map)
+                end
             end
 		end
 	end

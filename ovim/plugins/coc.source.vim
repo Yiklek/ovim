@@ -22,6 +22,7 @@ let s:config = {
 \    "suggest.autoTrigger": s:check_lua ? "none": "always",
 \    "diagnostic.enable": !s:check_lua,
 \    "signature.enable": !s:check_lua,
+\    "git.enableGutters": !s:check_lua,
 \}
 call ovim#utils#recursive_update(g:coc_user_config, s:config)
 

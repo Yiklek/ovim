@@ -39,6 +39,9 @@ return {
                 },
                 comment = {
                     enable = true
+                },
+                vcs = {
+                    enable = true
                 }
             }
         },

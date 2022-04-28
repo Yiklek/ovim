@@ -180,7 +180,7 @@ function C.nvim_cmp()
             { name = 'path' }
         })
     })
-    vim.cmd [[set nowildmenu]]
+    vim.o.wildmenu = false
 end
 function C.lua_snip()
     require("luasnip").config.set_config {

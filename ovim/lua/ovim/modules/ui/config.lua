@@ -195,6 +195,11 @@ function C.bufferline()
                     filetype = "vista",
                     text = "Vista",
                     text_align = "right"
+                },
+                {
+                    filetype = "vista_kind",
+                    text = "Vista",
+                    text_align = "right"
                 }
             },
             always_show_bufferline = false,

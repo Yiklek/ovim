@@ -19,4 +19,19 @@ return {
             config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_comment()]]
         }
     end,
+    vcs = function (p, opts)
+        p["lewis6991/gitsigns.nvim"] = {
+            "lewis6991/gitsigns.nvim",
+            event = "BufReadPost",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").gitsigns()]]
+        }
+        p["sindrets/diffview.nvim"] = {
+            "sindrets/diffview.nvim",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").diffview()]],
+            cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh"},
+            requires = {
+                {"nvim-lua/plenary.nvim", cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh"}},
+            },
+        }
+    end
 }

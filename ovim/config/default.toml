@@ -242,6 +242,7 @@ hook_source = "source $OVIM_ROOT_PATH/plugins/fugitive.source.vim"
 on = ["Git","G"]
 on_cmd = ["Git","G"]
 on_event = ["VimEnter"]
+if = "!ovim#utils#check_lua()"
 
 [plugins."rhysd/committia.vim"]
 level = 2
