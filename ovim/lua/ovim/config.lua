@@ -29,6 +29,10 @@ return {
                 },
                 which_key = {
                     enable = true
+                },
+                terminal = {
+                    use = "floaterm",
+                    enable = true
                 }
             }
         },

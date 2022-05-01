@@ -261,10 +261,13 @@ if = 0
 level = 2
 repo = "voldikss/vim-floaterm"
 hook_add = "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
-on = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew",
-        "FloatermFirst", "FloatermLast", "FloatermKill",]
-on_cmd = [ "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew",
-        "FloatermFirst", "FloatermLast", "FloatermKill",]
+on = ["FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew",
+        "FloatermFirst", "FloatermLast", "FloatermKill", "FloatermShow",
+        "FloatermHide", "FloatermUpdate"]
+on_cmd = ["FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew",
+        "FloatermFirst", "FloatermLast", "FloatermKill", "FloatermShow",
+        "FloatermHide", "FloatermUpdate"]
+if = "!ovim#utils#check_lua()"
 
 [plugins."liuchengxu/vista.vim"]
 level = 2

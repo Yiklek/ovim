@@ -325,4 +325,34 @@ function C.which_key()
     }
     require("ovim.misc.keymap").register_which_key()
 end
+
+function C.toggleterm()
+    local toggleterm = require("toggleterm")
+    toggleterm.setup{
+        size = 20,
+        open_mapping = [[<leader>et<space>]],
+        hide_numbers = false,
+        shade_filetypes = {},
+        shade_terminals = true,
+        shading_factor = 3,
+        start_in_insert = true,
+        insert_mappings = true,
+        persist_size = true,
+        direction = "float",
+        close_on_exit = true,
+        shell = vim.o.shell,
+        float_opts = {
+            border = "curved",
+            winblend = 3,
+            highlights = {
+                border = "Normal",
+                background = "Normal",
+            },
+        },
+    }
+end
+
+function C.floaterm()
+    vim.cmd "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
+end
 return C

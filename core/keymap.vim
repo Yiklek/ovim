@@ -82,7 +82,7 @@ noremap ]b  :bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
-tnoremap <esc><esc><esc>  <C-\><C-N>
+tnoremap <esc><esc> <C-\><C-N>
 if has("nvim")
     tnoremap <C-W>h  <C-\><C-N><C-W>h
     tnoremap <C-W>j  <C-\><C-N><C-W>j

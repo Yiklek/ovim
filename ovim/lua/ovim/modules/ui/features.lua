@@ -99,5 +99,28 @@ return {
             opt = true,
             event = {"InsertChange", "InsertEnter", "InsertLeave", "CursorMoved", "CursorMovedI", "CursorHold"}
         }
+    end,
+    terminal = function(p, opts)
+        if opts.use ~= nil and opts.use == "toggleterm" then
+            p["akinsho/toggleterm.nvim"] = {
+                "akinsho/toggleterm.nvim",
+                config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").toggleterm()]],
+                opt = true,
+                cmd = { "ToggleTerm",
+                        "ToggleTermToggleAll",
+                        "ToggleTermSendCurrentLine",
+                        "ToggleTermSendVisualLines",
+                        "ToggleTermSendVisualSelection",
+                }
+            }
+
+        elseif opts.use ~= nil and opts.use == "floaterm" then
+            p["voldikss/vim-floaterm"] = {
+                "voldikss/vim-floaterm",
+                opt = true,
+                cmd = { "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew","FloatermFirst", "FloatermLast", "FloatermKill", "FloatermShow", "FloatermHide", "FloatermUpdate"},
+                setup = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").floaterm()]],
+            }
+        end
     end
 }

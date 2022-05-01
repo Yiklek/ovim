@@ -5,7 +5,7 @@
 " Copyright (c) 2021 Yiklek
 
 function! ovim#addons#edit#load(addon)
-    noremap <leader>xa :call ovim#addons#edit#remove_white_space()<CR>
+    noremap <silent> <leader>xa :call ovim#addons#edit#remove_white_space()<CR>
     noremap <leader>xw :w<CR>
     noremap <leader>xW :w !sudo tee %<CR>
     let l:leader_key_map = {'x': {'a':[':call ovim#addons#edit#remove_white_space()','去除尾部空白'],

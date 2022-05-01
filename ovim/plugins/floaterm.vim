@@ -6,24 +6,55 @@ hi FloatermNC guibg=gray
 
 let g:floaterm_complete_options = {'shortcut': 'floaterm', 'priority': 5,'filter_length':[0,100]}
 
-nnoremap <leader>et<space> :FloatermToggle  --wintype=float --position=center --width=0.8 --height=0.8<CR>
-nnoremap <leader>et[ :FloatermPrev<CR>
-nnoremap <leader>et] :FloatermNext<CR>
-nnoremap <leader>etn :FloatermNew --wintype=float --position=center --width=0.8 --height=0.8<CR>
-nnoremap <leader>et0 :FloatermFirst<CR>
-nnoremap <leader>et9 :FloatermLast<CR>
-nnoremap <leader>etk :FloatermKill<CR>
-nnoremap <leader>etw<space> :FloatermNew --wintype=vsplit --position=right --width=0.3<CR>
-nnoremap <leader>etwnr :FloatermNew --wintype=vsplit --position=right --width=0.3<CR>
-nnoremap <leader>etwnb :FloatermNew --wintype=split --position=bottom --width=0.3<CR>
+" leader
+nnoremap <silent> <leader>et<space> :FloatermToggle<CR>
+nnoremap <silent> <leader>et9 :FloatermPrev<CR>
+nnoremap <silent> <leader>et0 :FloatermNext<CR>
+nnoremap <silent> <leader>etn :FloatermNew --wintype=float --position=center --width=0.8 --height=0.8<CR>
+nnoremap <silent> <leader>et; :FloatermFirst<CR>
+nnoremap <silent> <leader>et' :FloatermLast<CR>
+nnoremap <silent> <leader>etq :FloatermKill<CR>
+nnoremap <silent> <leader>etw<space> :FloatermNew --wintype=vsplit --position=right --width=0.4<CR>
+nnoremap <silent> <leader>etwr :FloatermNew --wintype=vsplit --position=right --width=0.4<CR>
+nnoremap <silent> <leader>etwb :FloatermNew --wintype=split --position=bottom --height=0.3<CR>
+nnoremap <silent> <leader>et- :FloatermUpdate --wintype=split --position=topleft --height=0.3<CR>
+nnoremap <silent> <leader>et= :FloatermUpdate --wintype=split --position=botright --height=0.3<CR>
+nnoremap <silent> <leader>et[ :FloatermUpdate --wintype=vsplit --position=topleft --width=0.4<CR>
+nnoremap <silent> <leader>et] :FloatermUpdate --wintype=vsplit --position=botright --width=0.4<CR>
+nnoremap <silent> <leader>et\ :FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8<CR>
 
-tnoremap <esc><tab><space>  <c-\><c-n>:FloatermToggle<CR>
-tnoremap <esc><tab>[  <c-\><c-n>:FloatermPrev<CR>
-tnoremap <esc><tab>]  <c-\><c-n>:FloatermNext<CR>
-tnoremap <esc><tab>n  <c-\><c-n>:FloatermNew<CR>
-tnoremap <esc><tab>0  <c-\><c-n>:FloatermFirst<CR>
-tnoremap <esc><tab>9  <c-\><c-n>:FloatermLast<CR>
-tnoremap <esc><tab>k  <c-\><c-n>:FloatermKill<CR>
+" esc
+nnoremap <silent> <esc><space> :FloatermToggle<CR>
+nnoremap <silent> <esc>9 :FloatermPrev<CR>
+nnoremap <silent> <esc>0 :FloatermNext<CR>
+nnoremap <silent> <esc>n :FloatermNew --wintype=float --position=center --width=0.8 --height=0.8<CR>
+nnoremap <silent> <esc>; :FloatermFirst<CR>
+nnoremap <silent> <esc>' :FloatermLast<CR>
+nnoremap <silent> <esc>q :FloatermKill<CR>
+nnoremap <silent> <esc>w<space> :FloatermNew --wintype=vsplit --position=right --width=0.4<CR>
+nnoremap <silent> <esc>wr :FloatermNew --wintype=vsplit --position=right --width=0.4<CR>
+nnoremap <silent> <esc>wb :FloatermNew --wintype=split --position=bottom --height=0.3<CR>
+nnoremap <silent> <esc>- :FloatermUpdate --wintype=split --position=topleft --height=0.3<CR>
+nnoremap <silent> <esc>= :FloatermUpdate --wintype=split --position=botright --height=0.3<CR>
+nnoremap <silent> <esc>[ :FloatermUpdate --wintype=vsplit --position=topleft --width=0.4<CR>
+nnoremap <silent> <esc>] :FloatermUpdate --wintype=vsplit --position=botright --width=0.4<CR>
+nnoremap <silent> <esc>\ :FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8<CR>
+
+tnoremap <silent> <esc><space>  <c-\><c-n>:FloatermToggle<CR>
+tnoremap <silent> <esc>9  <c-\><c-n>:FloatermPrev<CR>
+tnoremap <silent> <esc>0  <c-\><c-n>:FloatermNext<CR>
+tnoremap <silent> <esc>n  <c-\><c-n>:FloatermNew --wintype=float --position=center --width=0.8 --height=0.8<CR>
+tnoremap <silent> <esc>;  <c-\><c-n>:FloatermFirst<CR>
+tnoremap <silent> <esc>'  <c-\><c-n>:FloatermLast<CR>
+tnoremap <silent> <esc>q  <c-\><c-n>:FloatermKill<CR>
+tnoremap <silent> <esc>w<space> <c-\><c-n>:FloatermNew --wintype=vsplit --position=right --width=0.4<CR>
+tnoremap <silent> <esc>wr <c-\><c-n>:FloatermNew --wintype=vsplit --position=right --width=0.4<CR>
+tnoremap <silent> <esc>wb <c-\><c-n>:FloatermNew --wintype=split --position=bottom --height=0.3<CR>
+tnoremap <silent> <esc>- <c-\><c-n>:FloatermUpdate --wintype=split --position=topleft --height=0.3<CR>
+tnoremap <silent> <esc>= <c-\><c-n>:FloatermUpdate --wintype=split --position=botright --height=0.3<CR>
+tnoremap <silent> <esc>[ <c-\><c-n>:FloatermUpdate --wintype=vsplit --position=topleft --width=0.4<CR>
+tnoremap <silent> <esc>] <c-\><c-n>:FloatermUpdate --wintype=vsplit --position=botright --width=0.4<CR>
+tnoremap <silent> <esc>\ <c-\><c-n>:FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8<CR>
 
 vnoremap <leader>ets :FloatermSend<CR>
 
@@ -42,16 +73,13 @@ call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
                                     \    '[':[':FloatermPrev','Previous Terminal'],
                                     \    ']':[':FloatermNext','Next Terminal'],
                                     \    'n':[':FloatermNew --wintype=float --position=center --width=0.8 --height=0.8','New Terminal'],
-                                    \    '0':[':FloatermFirst','First Terminal'],
-                                    \    '9':[':FloatermLast','Last Terminal'],
+                                    \    '-':[':FloatermFirst','First Terminal'],
+                                    \    '=':[':FloatermLast','Last Terminal'],
                                     \    'k':[':FloatermKill','Kill Terminal'],
                                     \    '?':[':echo "in terminal,prefix is <esc><tab>"','help'],
                                     \    'w':{'name':'+Normal Window',
-                                    \           'n':{'name':'+New',
                                     \               ' ':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
                                     \               'r':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
                                     \               'b':[':FloatermNew --wintype=split --position=bottom --width=0.3','Bottom Window Terminal'],
-                                    \               },
-                                    \           ' ':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
                                     \       }
                                 \ }})
