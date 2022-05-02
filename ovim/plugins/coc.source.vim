@@ -23,6 +23,7 @@ let s:config = {
 \    "diagnostic.enable": !s:check_lua,
 \    "signature.enable": !s:check_lua,
 \    "git.enableGutters": !s:check_lua,
+\    "pyright.disableCompletion": s:check_lua,
 \}
 call ovim#utils#recursive_update(g:coc_user_config, s:config)
 
