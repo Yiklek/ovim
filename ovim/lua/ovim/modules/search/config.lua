@@ -6,15 +6,14 @@ local C = {}
 local km = require("ovim.misc.keymap")
 local keymap = require("ovim.modules.search.keymap")
 function C.telescope()
-    require("packer.load")({"plenary.nvim"}, {}, _G.packer_plugins)
-    vim.cmd([[packadd telescope-project.nvim]])
-    vim.cmd([[packadd telescope-zoxide]])
+    require("packer.load")({"plenary.nvim", "telescope-project.nvim", "telescope-zoxide"}, {}, _G.packer_plugins)
     require("telescope").load_extension("project")
     require("telescope").load_extension("zoxide")
 
+    -- telescope-fzf-native
     local fzf = nil
     if vim.fn.executable("gcc") then
-        vim.cmd([[packadd telescope-fzf-native.nvim]])
+        require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
         require("telescope").load_extension("fzf")
         fzf = {
             fuzzy = false, -- false will only do exact matching
@@ -24,20 +23,23 @@ function C.telescope()
             -- the default case_mode is "smart_case"
         }
     end
-    local frecency = nil
-    if not require("ovim.misc.util").has_win() then
-        local telescope_db = vim.g.ovim_cache_path .. "/plugins/telescope"
-        vim.fn.mkdir(telescope_db, "p")
-        vim.cmd([[packadd sqlite.lua]])
-        vim.cmd([[packadd telescope-frecency.nvim]])
-        require("telescope").load_extension("frecency")
-        frecency = {
-            db_root = telescope_db,
-            show_scores = true,
-            show_unindexed = true,
-            ignore_patterns = {"*.git/*", "*/tmp/*"}
-        }
+
+    -- telescope-frecency
+    local telescope_db = vim.g.ovim_cache_path .. "/plugins/telescope"
+    vim.fn.mkdir(telescope_db, "p")
+    require("packer.load")({"sqlite.lua", "telescope-frecency.nvim"}, {}, _G.packer_plugins)
+    require("telescope").load_extension("frecency")
+    local frecency = {
+        db_root = telescope_db,
+        show_scores = true,
+        show_unindexed = true,
+        ignore_patterns = {"*.git/*", "*/tmp/*"}
+    }
+    if require("ovim.misc.util").has_win()
+        and (vim.g.sqlite_clib_path == nil or vim.fn.filereadable(vim.g.sqlite_clib_path) == 0) then
+        frecency = nil
     end
+
     require("telescope").setup(
         {
             defaults = {
@@ -78,6 +80,22 @@ function C.telescope()
     )
 
     km.load(keymap.telescope())
+end
+
+function C.sqlite()
+    local sqlite_dir = vim.g.ovim_cache_path .. "/plugins/sqlite"
+    if require("ovim.misc.util").has_win() then
+        local sqlite_dll = sqlite_dir .. "/sqlite3.dll"
+        vim.g.sqlite_clib_path = sqlite_dll
+        if vim.fn.filereadable(sqlite_dll) == 0 then
+            vim.fn.mkdir(sqlite_dir, "p")
+            local sqlite_zip = sqlite_dir .. "/sqlite-dll-win64.zip"
+            print("download sqlite3.dll...")
+            vim.cmd(vim.fn.join({"silent !curl.exe", "https://www.sqlite.org/2022/sqlite-dll-win64-x64-3380300.zip", "-o", sqlite_zip}, " "))
+            vim.cmd(vim.fn.join({"silent !unzip.exe -d ", sqlite_dir, sqlite_zip}, " "))
+        end
+    end
+
 end
 
 return C

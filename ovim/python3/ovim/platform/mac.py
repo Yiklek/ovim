@@ -4,21 +4,18 @@ import json
 import os
 import zipfile
 import tempfile
+from .runner import BaseRunner
 
 
-class MacRunner:
-    homedir = os.path.abspath(os.getenv('HOME'))
-    local_bin = os.path.join(homedir, '.local', 'bin')
+class MacRunner(BaseRunner):
 
-    @classmethod
-    def check_env(cls):
+    def check_env(self):
         if os.system("brew --version"):
             raise RuntimeError('homebrew is not exist.')
         if os.system("curl --version"):
             raise RuntimeError('curl is not exist.')
 
-    @classmethod
-    def install_fzf(cls):
+    def install_fzf(self):
         fzf_release_url = "https://api.github.com/repos/junegunn/fzf/releases/latest"
         resp = request.urlopen(fzf_release_url)
         j = resp.read().decode()
@@ -33,14 +30,13 @@ class MacRunner:
         resp.close()
         temp_file.seek(0)
         zfile = zipfile.ZipFile(temp_file, "r")
-        os.makedirs(cls.local_bin, exist_ok=True)
-        zfile.extract('fzf', cls.local_bin)
-        logger.info("fzf extract to {}".format(cls.local_bin))
+        os.makedirs(self.local_bin, exist_ok=True)
+        zfile.extract('fzf', self.local_bin)
+        logger.info("fzf extract to {}".format(self.local_bin))
         zfile.close()
         temp_file.close()
 
-    @classmethod
-    def install_ctags(cls):
+    def install_ctags(self):
         with os.popen("brew tap") as f:
             r = f.read()
         if "universal-ctags/universal-ctags" not in r:
@@ -48,11 +44,10 @@ class MacRunner:
         os.system(
             "brew install --HEAD universal-ctags/universal-ctags/universal-ctags")
 
-    @classmethod
-    def run(cls):
+    def run(self):
         try:
             logger.info("mac runner start.")
-            cls.install_ctags()
-            cls.install_fzf()
+            self.install_ctags()
+            self.install_fzf()
         except Exception as e:
             logger.error("MacRunner occured error {}".format(e))

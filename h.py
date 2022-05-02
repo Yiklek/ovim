@@ -14,7 +14,7 @@ import platform
 import importlib
 
 basedir = abspath(os.path.dirname(__file__))
-homedir = abspath(os.getenv('HOME') or os.getenv('USERPROFILE'))
+homedir = abspath(os.path.expanduser("~"))
 sys.dont_write_bytecode = True
 sys.path.append(join(basedir, 'ovim', 'python3'))
 
@@ -77,6 +77,13 @@ def import_module(module):
             "{} not found.reason: {}\nexit {}".format(module, e, exit))
         sys.exit(exit)
 
+def _runner_name(name):
+    runner_name = name.strip().lower()
+    runner_name = runner_name[0].upper() + runner_name[1:] + "Runner"
+    return _runner_name
+
+def _runner_module_name(runner):
+    return os.path.join("{}.{}".format(platform_module, _runner_module_name(runner)))
 
 def depend_check_env(args):
     if not args.ignore_python:
@@ -97,22 +104,19 @@ def depend_check_env(args):
         s = platform.system()
         if s == 'Darwin':
             args.platform = platform_module_mac
+        elif s == 'Windows':
+            args.platform = platform_module_win
         elif s == 'Linux':
             out = os.popen("cat /etc/*release")
             out = out.readlines()
             for o in out:
                 o = o.split('=')
                 if o[0] == 'ID':
-                    o[1] = o[1].strip()
-                    runner_name = o[1].lower()
-                    runner_name = runner_name[0].upper(
-                    ) + runner_name[1:] + "Runner"
-                    args.platform = os.path.join(
-                        "{}.{}".format(platform_module, runner_name))
+                    args.platform = _runner_module_name(o[1])
                     break
 
     if args.platform:
-        args.platform = import_module(args.platform)
+        args.platform = import_module(args.platform)()
         args.platform.check_env()
 
 
@@ -337,3 +341,5 @@ if __name__ == "__main__":
         main(sys.argv[1:])
     except BaseException as e:
         logger.error(e)
+        import traceback
+        traceback.print_exception(e)

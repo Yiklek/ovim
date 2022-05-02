@@ -33,7 +33,13 @@ return {
             "nvim-telescope/telescope-frecency.nvim",
             opt = true,
             after = "telescope-project.nvim",
-            requires = {{"tami5/sqlite.lua", opt = true}}
+            requires = {
+                {
+                    "tami5/sqlite.lua", opt = true,
+                    config = [[require("ovim.misc.safe_require")("ovim.modules.search.config").sqlite()]],
+                    cmd = "Telescope"
+                }
+            }
         },
         ["jvgrootveld/telescope-zoxide"] = {
             "jvgrootveld/telescope-zoxide",

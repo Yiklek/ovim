@@ -4,18 +4,15 @@ import json
 import tarfile
 import tempfile
 import os
+from .runner import BaseRunner
 
-class UbuntuRunner:
-    homedir = os.path.abspath(os.getenv('HOME'))
-    local_bin = os.path.join(homedir, '.local', 'bin')
+class UbuntuRunner(BaseRunner):
 
-    @classmethod
-    def check_env(cls):
+    def check_env(self):
         if os.system("curl --version"):
             raise RuntimeError('curl is not exist.')
 
-    @classmethod
-    def install_fzf(cls):
+    def install_fzf(self):
         with os.popen("uname -sm") as f:
             arch = f.read()
         arch = arch.strip()
@@ -47,25 +44,31 @@ class UbuntuRunner:
         resp.close()
         temp_file.seek(0)
         tfile = tarfile.open(fileobj=temp_file, mode='r')
-        os.makedirs(cls.local_bin, exist_ok=True)
-        tfile.extract('fzf', cls.local_bin)
-        logger.info("fzf extract to {}".format(cls.local_bin))
+        os.makedirs(self.local_bin, exist_ok=True)
+        tfile.extract('fzf', self.local_bin)
+        logger.info("fzf extract to {}".format(self.local_bin))
         tfile.close()
         temp_file.close()
 
-    @classmethod
-    def install_ctags(cls):
+    def install_ctags(self):
         with os.popen("apt list --installed universal-ctags") as f:
             r = f.read()
         logger.info(r)
         if "universal-ctags" not in r:
             os.system("apt-get install universal-ctags -y")
 
-    @classmethod
-    def run(cls):
+    def install_libsqlite3(self):
+        with os.popen("apt list --installed libsqlite3-dev") as f:
+            r = f.read()
+        logger.info(r)
+        if "libsqlite3-dev" not in r:
+            os.system("apt-get install libsqlite3-dev -y")
+
+    def run(self):
         try:
             logger.info("ubuntu runner start.")
-            cls.install_ctags()
-            cls.install_fzf()
+            self.install_ctags()
+            self.install_fzf()
+            self.install_libsqlite3()
         except Exception as e:
             logger.error("UbuntuRunner occured error {}".format(e))
