@@ -77,13 +77,16 @@ def import_module(module):
             "{} not found.reason: {}\nexit {}".format(module, e, exit))
         sys.exit(exit)
 
+
 def _runner_name(name):
     runner_name = name.strip().lower()
     runner_name = runner_name[0].upper() + runner_name[1:] + "Runner"
-    return _runner_name
+    return runner_name
+
 
 def _runner_module_name(runner):
-    return os.path.join("{}.{}".format(platform_module, _runner_module_name(runner)))
+    return os.path.join("{}.{}".format(platform_module, _runner_name(runner)))
+
 
 def depend_check_env(args):
     if not args.ignore_python:
@@ -341,5 +344,3 @@ if __name__ == "__main__":
         main(sys.argv[1:])
     except BaseException as e:
         logger.error(e)
-        import traceback
-        traceback.print_exception(e)
