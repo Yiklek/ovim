@@ -12,7 +12,7 @@ function C.telescope()
 
     -- telescope-fzf-native
     local fzf = nil
-    if vim.fn.executable("gcc") then
+    if (vim.fn.executable("gcc") and vim.fn.executable("fzf")) ~= 0 then
         require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
         require("telescope").load_extension("fzf")
         fzf = {
