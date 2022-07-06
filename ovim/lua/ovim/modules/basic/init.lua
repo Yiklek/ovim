@@ -19,7 +19,6 @@ local plugins = {
             "DiffviewFocusFiles",
             "DiffviewRefresh",
             "DiffviewFileHistory",
-            "Telescope",
         }
     }
 }

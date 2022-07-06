@@ -25,19 +25,32 @@ function C.telescope()
     end
 
     -- telescope-frecency
-    local telescope_db = vim.g.ovim_cache_path .. "/plugins/telescope"
-    vim.fn.mkdir(telescope_db, "p")
-    require("packer.load")({"sqlite.lua", "telescope-frecency.nvim"}, {}, _G.packer_plugins)
-    require("telescope").load_extension("frecency")
-    local frecency = {
-        db_root = telescope_db,
-        show_scores = true,
-        show_unindexed = true,
-        ignore_patterns = {"*.git/*", "*/tmp/*"}
-    }
-    if require("ovim.misc.util").has_win()
-        and (vim.g.sqlite_clib_path == nil or vim.fn.filereadable(vim.g.sqlite_clib_path) == 0) then
-        frecency = nil
+    local use_frecency = false
+    local frecency = nil
+    if vim.fn.has("osx")
+        and (vim.fn.filereadable("/opt/homebrew/opt/sqlite/lib/libsqlite3.dylib")
+            or vim.fn.filereadable("/usr/local/opt/sqlite3/lib/libsqlite3.dylib")) ~= 0 then
+        use_frecency = true
+    elseif vim.fn.has("linux") 
+        and tonumber(vim.trim(vim.split(
+                vim.api.nvim_exec([[!ldconfig -p | grep libsqlite | tr ' ' '\n' | grep / | wc -l]], true),
+            "\r\n")[2])) ~= 0 then
+        use_frecency = true
+    elseif require("ovim.misc.util").has_win()
+        and (vim.g.sqlite_clib_path ~= nil and vim.fn.filereadable(vim.g.sqlite_clib_path) ~= 0) then
+        use_frecency = true
+    end
+    if use_frecency then
+        local telescope_db = vim.g.ovim_cache_path .. "/plugins/telescope"
+        vim.fn.mkdir(telescope_db, "p")
+        require("packer.load")({"sqlite.lua", "telescope-frecency.nvim"}, {}, _G.packer_plugins)
+        require("telescope").load_extension("frecency")
+        frecency = {
+            db_root = telescope_db,
+            show_scores = true,
+            show_unindexed = true,
+            ignore_patterns = {"*.git/*", "*/tmp/*"}
+        }
     end
 
     require("telescope").setup(

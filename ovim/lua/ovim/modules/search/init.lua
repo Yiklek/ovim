@@ -37,7 +37,6 @@ return {
                 {
                     "tami5/sqlite.lua", opt = true,
                     config = [[require("ovim.misc.safe_require")("ovim.modules.search.config").sqlite()]],
-                    cmd = "Telescope"
                 }
             }
         },
