@@ -27,7 +27,8 @@ return {
         ["nvim-telescope/telescope-project.nvim"] = {
             "nvim-telescope/telescope-project.nvim",
             opt = true,
-            after = "telescope-fzf-native.nvim"
+            after = "telescope-fzf-native.nvim",
+            run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build"
         },
         ["nvim-telescope/telescope-frecency.nvim"] = {
             "nvim-telescope/telescope-frecency.nvim",

@@ -12,7 +12,14 @@ function C.telescope()
 
     -- telescope-fzf-native
     local fzf = nil
-    if (vim.fn.executable("gcc") and vim.fn.executable("fzf")) ~= 0 then
+    if vim.fn.executable("cmake") ~= 0 then
+        local fzf_native_plugin_path = vim.g.ovim_cache_path .. "/pack/packer/opt/telescope-fzf-native.nvim"
+        local fzf_native_plugin_build_path = fzf_native_plugin_path .. "/build"
+        if vim.fn.isdirectory(fzf_native_plugin_build_path) == 0 then
+            vim.cmd(vim.fn.join({"silent !cmake", "-S", fzf_native_plugin_path, "-B", fzf_native_plugin_build_path}, " "))
+            vim.cmd(vim.fn.join({"silent !cmake", "--build", fzf_native_plugin_build_path, "--config Release"}, " "))
+            vim.cmd(vim.fn.join({"silent !cmake", "--install", fzf_native_plugin_build_path , "--install", fzf_native_plugin_build_path}, " "))
+        end
         require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
         require("telescope").load_extension("fzf")
         fzf = {
