@@ -59,10 +59,15 @@ function C.telescope()
             ignore_patterns = {"*.git/*", "*/tmp/*"}
         }
     end
-
+    local action_layout = require("telescope.actions.layout")
     require("telescope").setup(
         {
             defaults = {
+                mappings = {
+                    i = {
+                        ["<C-o>"] = action_layout.toggle_preview
+                    }
+                },
                 prompt_prefix = "🔭 ",
                 selection_caret = " ",
                 layout_config = {
