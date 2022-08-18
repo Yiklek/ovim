@@ -155,6 +155,15 @@ function C.nvim_cmp()
         }
     }
 
+    cmp.event:on("menu_opened", function()
+        -- solve conflict to vim-easy-paste
+        vim.g.paste_easy_enable = 0
+    end)
+    cmp.event:on("menu_closed", function()
+        -- solve conflict to vim-easy-paste
+        vim.g.paste_easy_enable = 1
+    end)
+
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
         mapping = cmp.mapping.preset.cmdline(),

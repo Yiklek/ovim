@@ -110,7 +110,7 @@ function s:plugins_ycm()
 endfunction
 
 function s:self.config() abort
-    if s:self.method != 'ycm'
+    if s:self.method != 'ycm' && s:self.method != 'nvim_cmp'
         autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
         set completeopt-=preview
         inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
