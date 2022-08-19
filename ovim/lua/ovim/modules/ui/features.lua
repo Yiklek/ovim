@@ -79,7 +79,7 @@ return {
             p["lukas-reineke/indent-blankline.nvim"] = {
                 "lukas-reineke/indent-blankline.nvim",
                 opt = true,
-                event = "BufRead",
+                event = "VimEnter",
                 config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_blankline()]]
             }
         end

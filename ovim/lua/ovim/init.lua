@@ -47,4 +47,11 @@ if vim.fn.exists("g:neovide") ~= 0 then
 end
 ovim.pack.load_compile()
 require("ovim.keymap")
+
+function ovim.setup(options)
+    if vim.g.ovim_plug_manager == 'dein' and vim.fn['dein#check_install']() ~= 0 then
+        vim.fn['dein#install']()
+    end
+    ovim.pack.sync()
+end
 return ovim
