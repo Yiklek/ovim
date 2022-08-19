@@ -18,6 +18,14 @@ function K.nvim_comment()
     }
 end
 
+function K.comment_dot_nvim()
+    return {
+        ["n|<leader>c"] = display("Comment"),
+        ["n|<leader>c<space>"] = display("Comment line"),
+        ["n|<leader>cb"] = display("Comment block")
+    }
+end
+
 function K.gitsigns()
     local opts = {
         display = {

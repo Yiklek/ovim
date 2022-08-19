@@ -13,6 +13,35 @@ function C.nvim_comment()
     require("ovim.misc.safe_require")('nvim_comment').setup {comment_empty = false, line_mapping = "<leader>c<space>", operator_mapping = "<leader>c"}
 end
 
+function C.comment_dot_nvim()
+    km.load(keymap.comment_dot_nvim())
+    require("ovim.misc.safe_require")('Comment').setup {
+        toggler = {
+            ---Line-comment toggle keymap
+            line = '<leader>c<space>',
+            ---Block-comment toggle keymap
+            block = '<leader>cb',
+        },
+        ---LHS of operator-pending mappings in NORMAL mode
+        ---LHS of mapping in VISUAL mode
+        ---@type table
+        opleader = {
+            ---Line-comment keymap
+            line = '<leader>c<space>',
+            ---Block-comment keymap
+            block = '<leader>cb',
+        },
+        extra = {
+            ---Add comment on the line above
+            above = '<leader>cO',
+            ---Add comment on the line below
+            below = '<leader>co',
+            ---Add comment at the end of line
+            eol = '<leader>cA',
+        },
+    }
+end
+
 function C.gitsigns()
    require("ovim.misc.safe_require")("gitsigns").setup {
         on_attach = function(bufnr)

@@ -42,7 +42,9 @@ return {
                     enable = true
                 },
                 comment = {
-                    enable = true
+                    enable = true,
+                    use = "Comment.nvim"
+                    -- use = "nvim-comment",
                 },
                 vcs = {
                     enable = true

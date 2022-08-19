@@ -13,11 +13,20 @@ return {
         }
     end,
     comment = function(p, opts)
-        p["terrortylor/nvim-comment"] = {
-            "terrortylor/nvim-comment",
-            event = "BufReadPost",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_comment()]]
-        }
+        if opts.use ~= nil and opts.use == "nvim-comment" then
+            p["terrortylor/nvim-comment"] = {
+                "terrortylor/nvim-comment",
+                event = "BufReadPost",
+                config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_comment()]]
+            }
+        end
+        if opts.use ~= nil and opts.use == "Comment.nvim" then
+            p["numToStr/Comment.nvim"] = {
+                "numToStr/Comment.nvim",
+                event = "BufReadPost",
+                config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").comment_dot_nvim()]]
+            }
+        end
     end,
     vcs = function (p, opts)
         p["lewis6991/gitsigns.nvim"] = {
