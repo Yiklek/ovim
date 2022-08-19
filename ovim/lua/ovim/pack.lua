@@ -29,8 +29,9 @@ function this.load_packer()
     local config = require("ovim.config")
     local util = require("ovim.misc.util")
     local modules = util.detect_modules()
+
     for _, module in pairs(modules) do
-        local m = require(util.module(module))
+        local m = require(module)
         local level = m.level or 0
         local condition = vim.fn.luaeval(m.condition or true)
         if level < 4 and condition then
