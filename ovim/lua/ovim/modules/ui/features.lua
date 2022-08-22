@@ -122,5 +122,13 @@ return {
                 setup = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").floaterm()]],
             }
         end
-    end
+    end,
+    lsp_progress = function(p, opts)
+        p["j-hui/fidget.nvim"] = {
+            "j-hui/fidget.nvim",
+            config = [[require("ovim.misc.safe_require")("fidget").setup()]],
+            opt = true,
+            event = {"VimEnter"}
+        }
+    end,
 }

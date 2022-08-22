@@ -33,6 +33,9 @@ return {
                 terminal = {
                     use = "floaterm",
                     enable = true
+                },
+                lsp_progress = {
+                    enable = true
                 }
             }
         },
