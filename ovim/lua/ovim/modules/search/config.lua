@@ -97,6 +97,14 @@ function C.telescope()
                 use_less = true,
                 set_env = {["COLORTERM"] = "truecolor"}
             },
+            pickers = {
+                find_files = {
+                    previewer = false
+                },
+                oldfiles = {
+                    previewer = false
+                }
+            },
             extensions = {
                 fzf = fzf,
                 frecency = frecency

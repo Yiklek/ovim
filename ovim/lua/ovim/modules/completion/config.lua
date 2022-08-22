@@ -30,6 +30,10 @@ function C.nvim_cmp()
         vim.cmd [[packadd cmp-under-comparator]]
     end
     cmp.setup {
+        window = {
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
+        },
         sorting = {
             comparators = {
                 cmp.config.compare.offset,
@@ -71,6 +75,10 @@ function C.nvim_cmp()
                     Operator = "",
                     TypeParameter = ""
                 }
+                local max_width = 0
+                if max_width ~= 0 and #vim_item.abbr > max_width then
+                    vim_item.abbr = string.sub(vim_item.abbr, 1, max_width - 1) .. "…"
+                end
                 -- load lspkind icons
                 vim_item.kind = string.format("%s %s", lspkind_icons[vim_item.kind], vim_item.kind)
 
@@ -165,12 +173,22 @@ function C.nvim_cmp()
     end)
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline('?', {
+        mapping = cmp.mapping.preset.cmdline(),
+        -- completion = {
+        -- ---@usage The minimum length of a word to complete on.
+        --     keyword_length = 2,
+        -- },
+        sources = {
+            { name = 'buffer' }
+        }
+    })
     cmp.setup.cmdline('/', {
         mapping = cmp.mapping.preset.cmdline(),
-        completion = {
-        ---@usage The minimum length of a word to complete on.
-            keyword_length = 2,
-        },
+        -- completion = {
+        -- ---@usage The minimum length of a word to complete on.
+        --     keyword_length = 2,
+        -- },
         sources = {
             { name = 'buffer' }
         }

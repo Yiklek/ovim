@@ -243,7 +243,7 @@ def uninstall(parser, args):
 
 
 def download(parser, args):
-    in_tar_dir_name = {"linux64": "linux64", "macos": "osx64"}
+    in_tar_dir_name = {"linux64": "linux64", "macos": "macos"}
     global local_dir
     from urllib.request import urlopen
     import json
