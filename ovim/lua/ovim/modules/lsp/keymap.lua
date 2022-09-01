@@ -49,6 +49,7 @@ function K.lsp()
         ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()", opts):with_display("Declaration"),
         ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()", opts):with_display("References"),
         ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()", opts):with_display("Format"),
+        ["v|<leader>gf"] = map_cr("lua vim.lsp.buf.range_formatting()", opts),
         ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):with_display("Show Cursor Diagnostic"),
     }
 end
