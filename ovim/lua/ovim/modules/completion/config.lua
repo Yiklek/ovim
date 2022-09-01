@@ -75,7 +75,7 @@ function C.nvim_cmp()
                     Operator = "",
                     TypeParameter = ""
                 }
-                local max_width = 0
+                local max_width = vim.o.columns / 2
                 if max_width ~= 0 and #vim_item.abbr > max_width then
                     vim_item.abbr = string.sub(vim_item.abbr, 1, max_width - 1) .. "…"
                 end
