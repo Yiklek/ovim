@@ -131,7 +131,7 @@
         "<c-h>": "toggleHidden",
         "g<dot>": "toggleHidden",
         "R": "refresh",
-        "?": "help",
+        "g?": "help",
         "q": "quit",
         "<esc>": "esc",
         "X": "systemExecute",
