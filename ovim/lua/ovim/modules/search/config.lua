@@ -6,9 +6,10 @@ local C = {}
 local km = require("ovim.misc.keymap")
 local keymap = require("ovim.modules.search.keymap")
 function C.telescope()
-    require("packer.load")({"plenary.nvim", "telescope-project.nvim", "telescope-zoxide"}, {}, _G.packer_plugins)
+    require("packer.load")({"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}, {}, _G.packer_plugins)
     require("telescope").load_extension("project")
     require("telescope").load_extension("zoxide")
+    require("telescope").load_extension("lsp_handlers")
 
     -- telescope-fzf-native
     local fzf = nil

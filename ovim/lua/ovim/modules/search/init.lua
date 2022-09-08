@@ -15,6 +15,7 @@ return {
             level = 1,
             opt = true,
             cmd = "Telescope",
+            event = "VimEnter",
             module = "telescope",
             config = [[require("ovim.misc.safe_require")("ovim.modules.search.config").telescope()]]
         },
@@ -45,6 +46,11 @@ return {
             "jvgrootveld/telescope-zoxide",
             opt = true,
             after = "telescope-frecency.nvim"
+        },
+        ["gbrlsnchs/telescope-lsp-handlers.nvim"] = {
+            "gbrlsnchs/telescope-lsp-handlers.nvim",
+            opt = true,
+            after = "telescope.nvim"
         }
     }
 }
