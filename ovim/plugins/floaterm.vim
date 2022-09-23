@@ -55,6 +55,10 @@ tnoremap <silent> <esc>= <c-\><c-n>:FloatermUpdate --wintype=split --position=bo
 tnoremap <silent> <esc>[ <c-\><c-n>:FloatermUpdate --wintype=vsplit --position=topleft --width=0.4<CR>
 tnoremap <silent> <esc>] <c-\><c-n>:FloatermUpdate --wintype=vsplit --position=botright --width=0.4<CR>
 tnoremap <silent> <esc>\ <c-\><c-n>:FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8<CR>
+tnoremap <silent> <esc>k <c-\><c-n><c-w>k
+tnoremap <silent> <esc>j <c-\><c-n><c-w>j
+tnoremap <silent> <esc>h <c-\><c-n><c-w>h
+tnoremap <silent> <esc>l <c-\><c-n><c-w>l
 
 vnoremap <leader>ets :FloatermSend<CR>
 
