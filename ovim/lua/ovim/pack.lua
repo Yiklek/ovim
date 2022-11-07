@@ -33,7 +33,10 @@ function this.load_packer()
     for _, module in pairs(modules) do
         local m = require(module)
         local level = m.level or 0
-        local condition = vim.fn.luaeval(m.condition or true)
+        local condition = true
+        if m.condition ~= nil and type(m.condition) == "string" then
+            condition = condition and vim.fn.luaeval(m.condition)
+        end
         if level < 4 and condition then
             config.plugins = vim.tbl_deep_extend("force", config.plugins, m.plugins)
         end
