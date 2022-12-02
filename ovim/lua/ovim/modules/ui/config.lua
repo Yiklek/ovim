@@ -237,7 +237,6 @@ function C.nvim_tree()
         git = {enable = true, ignore = true, timeout = 500},
         view = {
             width = 40,
-            height = 30,
             hide_root_folder = false,
             side = "left",
             mappings = {custom_only = false, list = keymap_list },

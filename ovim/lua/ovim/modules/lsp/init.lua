@@ -28,12 +28,11 @@ local plugins = {
             config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").trouble()]]
         }
     }
-local features = require("ovim.modules.lsp.features")
-local config_features = require("ovim.config").modules.lsp.features
-require("ovim.misc.features").setup_module_features(plugins, config_features, features)
+local features = require("ovim.misc.features").setup_module_features("lsp", plugins)
 return {
     name = "lsp",
     level = 1,
     condition = "vim.g['ovim#modules#lsp'] and vim.g['ovim#modules#lsp'].method == 'nvim_lsp'",
-    plugins = plugins
+    plugins = plugins,
+    features = features,
 }

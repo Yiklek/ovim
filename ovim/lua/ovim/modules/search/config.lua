@@ -5,15 +5,11 @@
 local C = {}
 local km = require("ovim.misc.keymap")
 local keymap = require("ovim.modules.search.keymap")
-function C.telescope()
-    require("packer.load")({"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}, {}, _G.packer_plugins)
-    require("telescope").load_extension("project")
-    require("telescope").load_extension("zoxide")
-    require("telescope").load_extension("lsp_handlers")
-
+local config_features = require("ovim.config").modules.search.features
+local function telescope_fzf_native()
     -- telescope-fzf-native
     local fzf = nil
-    if vim.fn.executable("cmake") ~= 0 then
+    if config_features["telescope-fzf-native"].enable and vim.fn.executable("cmake") ~= 0 then
         local fzf_native_plugin_path = vim.g.ovim_cache_path .. "/pack/packer/opt/telescope-fzf-native.nvim"
         local fzf_native_plugin_build_path = fzf_native_plugin_path .. "/build"
         if vim.fn.isdirectory(fzf_native_plugin_build_path) == 0 then
@@ -31,22 +27,26 @@ function C.telescope()
             -- the default case_mode is "smart_case"
         }
     end
+    return fzf
+end
 
-    -- telescope-frecency
+local function telescope_frecency()
     local use_frecency = false
     local frecency = nil
-    if vim.fn.has("osx")
-        and (vim.fn.filereadable("/opt/homebrew/opt/sqlite/lib/libsqlite3.dylib")
-            or vim.fn.filereadable("/usr/local/opt/sqlite3/lib/libsqlite3.dylib")) ~= 0 then
-        use_frecency = true
-    elseif vim.fn.has("linux") 
-        and tonumber(vim.trim(vim.split(
-                vim.api.nvim_exec([[!ldconfig -p | grep libsqlite | tr ' ' '\n' | grep / | wc -l]], true),
-            "\r\n")[2])) ~= 0 then
-        use_frecency = true
-    elseif require("ovim.misc.util").has_win()
-        and (vim.g.sqlite_clib_path ~= nil and vim.fn.filereadable(vim.g.sqlite_clib_path) ~= 0) then
-        use_frecency = true
+    if config_features["telescope-frecency"].enable then
+        if vim.fn.has("osx")
+            and (vim.fn.filereadable("/opt/homebrew/opt/sqlite/lib/libsqlite3.dylib")
+                or vim.fn.filereadable("/usr/local/opt/sqlite3/lib/libsqlite3.dylib")) ~= 0 then
+            use_frecency = true
+        elseif vim.fn.has("linux")
+            and tonumber(vim.trim(vim.split(
+                    vim.api.nvim_exec([[!ldconfig -p | grep libsqlite | tr ' ' '\n' | grep / | wc -l]], true),
+                "\r\n")[2])) ~= 0 then
+            use_frecency = true
+        elseif require("ovim.misc.util").has_win()
+            and (vim.g.sqlite_clib_path ~= nil and vim.fn.filereadable(vim.g.sqlite_clib_path) ~= 0) then
+            use_frecency = true
+        end
     end
     if use_frecency then
         local telescope_db = vim.g.ovim_cache_path .. "/plugins/telescope"
@@ -60,6 +60,20 @@ function C.telescope()
             ignore_patterns = {"*.git/*", "*/tmp/*"}
         }
     end
+    return frecency
+end
+
+function C.telescope()
+    require("packer.load")({"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}, {}, _G.packer_plugins)
+    require("telescope").load_extension("project")
+    require("telescope").load_extension("zoxide")
+    require("telescope").load_extension("lsp_handlers")
+
+    -- telescope-fzf-native
+    local fzf = telescope_fzf_native()
+
+    -- telescope-frecency
+    local frecency = telescope_frecency()
     local action_layout = require("telescope.actions.layout")
     require("telescope").setup(
         {
@@ -69,7 +83,7 @@ function C.telescope()
                         ["<C-o>"] = action_layout.toggle_preview
                     }
                 },
-                prompt_prefix = "🔭 ",
+                prompt_prefix = "🔎 ",
                 selection_caret = " ",
                 layout_config = {
                     horizontal = {prompt_position = "bottom", results_width = 0.6},

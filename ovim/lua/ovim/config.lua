@@ -63,6 +63,23 @@ return {
                     enable = true
                 }
             }
+        },
+        debug = {
+            features = {
+                dap = {
+                    enable = true
+                }
+            }
+        },
+        search = {
+            features = {
+                ["telescope-fzf-native"] = {
+                    enable = true
+                },
+                ["telescope-frecency"] = {
+                    enable = true
+                },
+            }
         }
     }
 }

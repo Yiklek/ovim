@@ -4,9 +4,7 @@
 -- Copyright (c) 2022 Yiklek
 local plugins = {
 }
-local features = require("ovim.modules.editor.features")
-local config_features = require("ovim.config").modules.editor.features
-require("ovim.misc.features").setup_module_features(plugins, config_features, features)
+local features = require("ovim.misc.features").setup_module_features("editor", plugins)
 return {
     name = "editor",
     level = 1,

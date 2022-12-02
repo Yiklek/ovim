@@ -3,9 +3,7 @@
 -- Description: ui init
 -- Copyright (c) 2022 Yiklek
 local plugins = {}
-local features = require("ovim.modules.ui.features")
-local config_features = require("ovim.config").modules.ui.features
-require("ovim.misc.features").setup_module_features(plugins, config_features, features)
+local features = require("ovim.misc.features").setup_module_features("ui", plugins)
 return {
     name = "ui",
     level = 1,
