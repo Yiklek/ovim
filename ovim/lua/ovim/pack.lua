@@ -69,6 +69,10 @@ function this.load_compile()
     vim.g.ovim_packer_setup = 1
 end
 
+function this.load(plugins)
+    require("packer.load")(plugins, {}, packer_plugins)
+end
+
 this =
     setmetatable(
     this,

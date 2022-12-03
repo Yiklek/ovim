@@ -10,8 +10,14 @@ local plugins = {
             event = "VimEnter",
             config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").nvim_lsp()]]
         },
-        ["williamboman/nvim-lsp-installer"] = {
-            "williamboman/nvim-lsp-installer",
+        ["williamboman/mason.nvim"] = {
+            "williamboman/mason.nvim",
+            level = 1,
+            opt = true,
+            after = "nvim-lspconfig"
+        },
+        ["williamboman/mason-lspconfig.nvim"] = {
+            "williamboman/mason-lspconfig.nvim",
             level = 1,
             opt = true,
             after = "nvim-lspconfig"

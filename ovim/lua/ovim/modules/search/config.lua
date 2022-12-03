@@ -64,7 +64,7 @@ local function telescope_frecency()
 end
 
 function C.telescope()
-    require("packer.load")({"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}, {}, _G.packer_plugins)
+    ovim.pack.load {"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}
     require("telescope").load_extension("project")
     require("telescope").load_extension("zoxide")
     require("telescope").load_extension("lsp_handlers")

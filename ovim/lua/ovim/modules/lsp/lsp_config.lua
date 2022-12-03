@@ -2,35 +2,28 @@
 -- Author: Yiklek
 -- Description: lspconfig
 -- Copyright (c) 2022 Yiklek
-if not packer_plugins["nvim-lspconfig"].loaded then
-    vim.cmd [[packadd nvim-lspconfig]]
-end
 
-if not packer_plugins["nvim-lsp-installer"].loaded then
-    vim.cmd [[packadd nvim-lsp-installer]]
-end
+ovim.pack.load { "nvim-lspconfig", "mason.nvim", "mason-lspconfig.nvim" }
 
---if not packer_plugins["lsp_signature.nvim"].loaded then
---vim.cmd [[packadd lsp_signature.nvim]]
---end
+local lspconfig = require("lspconfig")
+local mason = require("mason")
+local mason_config = require("mason-lspconfig")
 
---if not packer_plugins["lspsaga.nvim"].loaded then
-    --vim.cmd [[packadd lspsaga.nvim]]
---end
-
-local nvim_lsp = require("lspconfig")
-local lsp_installer = require("nvim-lsp-installer")
-
-lsp_installer.settings {
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
+mason.setup(
+    {
+        install_root_dir = vim.g.ovim_cache_path .. "/mason",
+        ui = {
+            border = "rounded",
+            icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗"
+            }
         }
-    },
-    install_root_dir = vim.g.ovim_cache_path .. "/lsp_servers"
-}
+    }
+)
+
+mason_config.setup()
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -45,10 +38,10 @@ capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
 capabilities.textDocument.completion.completionItem.deprecatedSupport = true
 capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
 capabilities.textDocument.completion.completionItem.tagSupport = {
-    valueSet = {1}
+    valueSet = { 1 }
 }
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {"documentation", "detail", "additionalTextEdits"}
+    properties = { "documentation", "detail", "additionalTextEdits" }
 }
 
 local function custom_attach()
@@ -60,96 +53,39 @@ local function custom_attach()
             fix_pos = true,
             hint_enable = true,
             hi_parameter = "Search",
-            handler_opts = {"double"}
+            handler_opts = { "double" }
         }
     )
 end
 
-local function switch_source_header_splitcmd(bufnr, splitcmd)
-    bufnr = nvim_lsp.util.validate_bufnr(bufnr)
-    local params = {uri = vim.uri_from_bufnr(bufnr)}
-    vim.lsp.buf_request(
-        bufnr,
-        "textDocument/switchSourceHeader",
-        params,
-        function(err, result)
-            if err then
-                error(tostring(err))
-            end
-            if not result then
-                print("Corresponding file can’t be determined")
-                return
-            end
-            vim.api.nvim_command(splitcmd .. " " .. vim.uri_to_fname(result))
-        end
-    )
-end
-
-lsp_installer.on_server_ready(
-    function(server)
-        local opts = {}
-
-        if (server.name == "sumneko_lua") then
-            opts.settings = {
-                Lua = {
-                    diagnostics = {globals = {"vim", "packer_plugins"}},
-                    workspace = {
-                        library = {
-                            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true
-                        },
-                        maxPreload = 100000,
-                        preloadFileSize = 10000
-                    },
-                    telemetry = {enable = false}
+local servers = {
+    sumneko_lua = require("ovim.modules.lsp.server.lua"),
+    clangd = require("ovim.modules.lsp.server.clangd"),
+    html = require("ovim.modules.lsp.server.html"),
+}
+require("mason-lspconfig").setup_handlers {
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    function(server_name) -- default handler (optional)
+        local server_config = servers[server_name]
+        if server_config ~= nil and type(server_config) == "table" then
+            server_config.on_setup(
+                lspconfig[server_name],
+                {
+                    capabilities = capabilities,
+                    flags = { debounce_text_changes = 500 },
+                    on_attach = custom_attach
                 }
-            }
-        elseif (server.name == "clangd") then
-            opts.args = {"--background-index", "-std=c++20"}
-            opts.commands = {
-                ClangdSwitchSourceHeader = {
-                    function()
-                        switch_source_header_splitcmd(0, "edit")
-                    end,
-                    description = "Open source/header in current buffer"
-                },
-                ClangdSwitchSourceHeaderVSplit = {
-                    function()
-                        switch_source_header_splitcmd(0, "vsplit")
-                    end,
-                    description = "Open source/header in a new vsplit"
-                },
-                ClangdSwitchSourceHeaderSplit = {
-                    function()
-                        switch_source_header_splitcmd(0, "split")
-                    end,
-                    description = "Open source/header in a new split"
-                }
-            }
+            )
+        else
+            lspconfig[server_name].setup {}
         end
-        opts.capabilities = capabilities
-        opts.flags = {debounce_text_changes = 500}
-        opts.on_attach = custom_attach
-        server:setup(opts)
     end
-)
-
-nvim_lsp.html.setup {
-    cmd = {"html-languageserver", "--stdio"},
-    filetypes = {"html"},
-    init_options = {
-        configurationSection = {"html", "css", "javascript"},
-        embeddedLanguages = {css = true, javascript = true}
-    },
-    settings = {},
-    single_file_support = true,
-    flags = {debounce_text_changes = 500},
-    capabilities = capabilities,
-    on_attach = custom_attach
 }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(
+vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {
         virtual_text = false

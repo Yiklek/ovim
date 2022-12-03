@@ -8,6 +8,7 @@ local km = require("ovim.misc.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
+local map_f = km.map_f
 local display = km.display
 local K = {}
 local opts = {
@@ -34,7 +35,7 @@ function K.lsp()
         ["n|<leader>g["] = map_cr("Lspsaga diagnostic_jump_prev", opts),
         ["n|<leader>gs"] = map_cr("Lspsaga signature_help", opts),
         ["n|<leader>gr"] = map_cr("Lspsaga rename", opts),
-        ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc" ,opts),
+        ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc", opts),
         ["n|<C-Up>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_silent(),
         ["n|<C-k>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_silent(),
         ["n|<C-Down>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_silent(),
@@ -48,9 +49,9 @@ function K.lsp()
         ["n|<leader>gn"] = map_cr("Lspsaga rename", opts):with_display("Rename"),
         ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()", opts):with_display("Declaration"),
         ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()", opts):with_display("References"),
-        ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.formatting()", opts):with_display("Format"),
-        ["v|<leader>gf"] = map_cr("lua vim.lsp.buf.range_formatting()", opts),
-        ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):with_display("Show Cursor Diagnostic"),
+        ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.format { async = true }", opts):with_display("Format"),
+        ["v|<leader>gf"] = map_f(vim.lsp.buf.format):with_display("Format"),
+        ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):with_display("show cursor diagnostic"),
     }
 end
 
