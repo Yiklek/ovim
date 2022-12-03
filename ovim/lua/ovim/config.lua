@@ -35,7 +35,9 @@ return {
                     enable = true
                 },
                 lsp_progress = {
-                    enable = true
+                    enable = true,
+                    use = "fidget",
+                    -- use = "lualine-lsp-progress",
                 }
             }
         },

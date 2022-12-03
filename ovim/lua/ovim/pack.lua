@@ -69,7 +69,11 @@ function this.load_compile()
     vim.g.ovim_packer_setup = 1
 end
 
+
 function this.load(plugins)
+    if type(plugins) == "string" then
+        plugins = {plugins}
+    end
     require("packer.load")(plugins, {}, packer_plugins)
 end
 

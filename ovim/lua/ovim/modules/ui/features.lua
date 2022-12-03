@@ -9,13 +9,8 @@ return {
         p["hoob3rt/lualine.nvim"] = {
             "hoob3rt/lualine.nvim",
             opt = true,
-            after = "lualine-lsp-progress",
+            event = "VimEnter",
             config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").lualine()]]
-        }
-        p["arkav/lualine-lsp-progress"] = {
-            "arkav/lualine-lsp-progress",
-            opt = true,
-            after = "nvim-gps"
         }
         p["SmiteshP/nvim-gps"] = {
             "SmiteshP/nvim-gps",
@@ -124,11 +119,19 @@ return {
         end
     end,
     lsp_progress = function(p, opts)
-        p["j-hui/fidget.nvim"] = {
-            "j-hui/fidget.nvim",
-            config = [[require("ovim.misc.safe_require")("fidget").setup()]],
-            opt = true,
-            event = {"VimEnter"}
-        }
+        if opts.use == "fidget" then
+            p["j-hui/fidget.nvim"] = {
+                "j-hui/fidget.nvim",
+                config = [[require("ovim.misc.safe_require")("fidget").setup()]],
+                opt = true,
+                event = {"VimEnter"}
+            }
+        elseif opts.use == "lualine-lsp-progress" then
+            p["arkav/lualine-lsp-progress"] = {
+                "arkav/lualine-lsp-progress",
+                opt = true,
+                event = {"VimEnter"}
+            }
+        end
     end,
 }
