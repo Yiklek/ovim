@@ -8,6 +8,7 @@ local C = {}
 function C.nvim_lsp()
     require("ovim.misc.safe_require")("ovim.modules.lsp.lsp_config")
 end
+
 function C.trouble()
     require("trouble").setup {}
     km.load(keymap.trouble())
@@ -27,4 +28,20 @@ function C.lspsaga()
         }
     )
 end
+
+function C.null_ls()
+    local null_ls = require("null-ls")
+    local formatting = null_ls.builtins.formatting
+    -- local completion = null_ls.builtins.completion
+    null_ls.setup({
+        sources = {
+            formatting.stylua,
+            formatting.autopep8,
+            formatting.clang_format,
+            formatting.gofmt,
+            formatting.fixjson,
+        },
+    })
+end
+
 return C

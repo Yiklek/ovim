@@ -32,6 +32,12 @@ local plugins = {
             opt = true,
             event = "BufReadPost",
             config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").trouble()]]
+        },
+        ["jose-elias-alvarez/null-ls.nvim"] = {
+            "jose-elias-alvarez/null-ls.nvim",
+            opt = true,
+            event = "BufReadPost",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").null_ls()]]
         }
     }
 local features = require("ovim.misc.features").setup_module_features("lsp", plugins)
