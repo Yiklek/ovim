@@ -4,7 +4,8 @@
 -- Copyright (c) 2022 Yiklek
 
 local C = {}
-local keymap = require("ovim.modules.ui.keymap")
+local km = require("ovim.misc.keymap")
+local keymap = require("ovim.modules.debug.keymap")
 
 function C.dap_install()
     local dap_install = require "dap-install"
@@ -50,16 +51,8 @@ function C.dap()
     require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'cpp' } })
     -- config per launage
     require("ovim.modules.debug.dap.cpp")
-    -- require("user.dap.di-go")
 
-    -- require("user.dap.dap-cpp")
-    -- require("user.dap.dap-go")
-    -- require("user.dap.dap-python")
-    -- require("user.dap.dap-lua")
-    -- require("user.dap.dap-cpp")
-    -- require("config.dap.python").setup()
-    -- require("config.dap.rust").setup()
-    -- require("config.dap.go").setup()
+    km.load(keymap.dap())
 end
 
 function C.dap_ui()
@@ -68,6 +61,7 @@ function C.dap_ui()
     local debug_open = function()
         dapui.open()
         vim.api.nvim_command("DapVirtualTextEnable")
+        vim.api.nvim_command("NvimTreeClose")
     end
     local debug_close = function()
         dap.repl.close()
@@ -76,16 +70,19 @@ function C.dap_ui()
         -- vim.api.nvim_command("bdelete! term:")   -- close debug temrinal
     end
 
-    dap.listeners.after.event_initialized["dapui_config"] = function()
+    dap.listeners.after.event_initialized["dapui_config"]  = function()
         debug_open()
     end
-    dap.listeners.before.event_terminated["dapui_config"] = function()
+    dap.listeners.before.event_terminated["dapui_config"]  = function()
         debug_close()
     end
-    dap.listeners.before.event_exited["dapui_config"]     = function()
+    dap.listeners.before.event_exited["dapui_config"]      = function()
         debug_close()
     end
-    dap.listeners.before.disconnect["dapui_config"]       = function()
+    dap.listeners.before.event_invalidated["dapui_config"] = function()
+        debug_close()
+    end
+    dap.listeners.before.disconnect["dapui_config"]        = function()
         debug_close()
     end
     dapui.setup({

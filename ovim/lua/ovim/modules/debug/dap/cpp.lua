@@ -6,14 +6,16 @@ dap.adapters.cppdbg = {
   type = "executable",
   command = dbg_path .. "extension/debugAdapters/bin/OpenDebugAD7",
 }
+
+-- require lldb-vscode in cache bin
 dap.adapters.lldb = {
   id = 'lldb',
   type = "executable",
-  command = "/usr/local/Cellar/llvm/13.0.0_2/bin/lldb-vscode",
+  command = vim.g.ovim_cache_path .. "/bin/lldb-vscode",
 }
 
 dap.configurations.cpp = {
-  -- launch exe
+  -- launch
   {
     name = "Launch file",
     type = "cppdbg",
