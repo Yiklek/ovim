@@ -33,6 +33,7 @@ function C.nvim_treesitter()
         }
     }
 end
+
 function C.indent_guides()
     require("indent_guides").setup(
         {
@@ -50,6 +51,7 @@ function C.indent_guides()
         }
     )
 end
+
 function C.nvim_gps()
     require("nvim-gps").setup(
         {
@@ -73,8 +75,9 @@ function C.nvim_gps()
         }
     )
 end
+
 function C.lualine()
-    ovim.pack.load({"nvim-treesitter", "nvim-gps"})
+    ovim.pack.load({ "nvim-treesitter", "nvim-gps" })
     local gps = require("nvim-gps")
     local ui_config = require("ovim.config").modules.ui
     local lualine_c = ""
@@ -90,36 +93,37 @@ function C.lualine()
             return ""
         end
     end
+
     local simple_sections = {
-        lualine_a = {"mode"},
-        lualine_b = {"filetype"},
+        lualine_a = { "mode" },
+        lualine_b = { "filetype" },
         lualine_c = {},
         lualine_x = {},
         lualine_y = {},
-        lualine_z = {"location"}
+        lualine_z = { "location" }
     }
     local aerial = {
         sections = simple_sections,
-        filetypes = {"aerial"}
+        filetypes = { "aerial" }
     }
     local dapui_scopes = {
         sections = simple_sections,
-        filetypes = {"dapui_scopes"}
+        filetypes = { "dapui_scopes" }
     }
 
     local dapui_breakpoints = {
         sections = simple_sections,
-        filetypes = {"dapui_breakpoints"}
+        filetypes = { "dapui_breakpoints" }
     }
 
     local dapui_stacks = {
         sections = simple_sections,
-        filetypes = {"dapui_stacks"}
+        filetypes = { "dapui_stacks" }
     }
 
     local dapui_watches = {
         sections = simple_sections,
-        filetypes = {"dapui_watches"}
+        filetypes = { "dapui_watches" }
     }
 
     require("lualine").setup(
@@ -129,20 +133,20 @@ function C.lualine()
                 theme = "auto",
                 disabled_filetypes = {},
                 component_separators = "|",
-                section_separators = {left = "", right = ""}
+                section_separators = { left = "", right = "" }
             },
             sections = {
-                lualine_a = {"mode"},
-                lualine_b = {{"branch"}, {"diff"}},
+                lualine_a = { "mode" },
+                lualine_b = { { "branch" }, { "diff" } },
                 lualine_c = {
                     { lualine_c },
-                    {gps_content, cond = gps.is_available}
+                    { gps_content, cond = gps.is_available }
                 },
                 lualine_x = {
                     {
                         "diagnostics",
-                        sources = {"nvim_diagnostic"},
-                        symbols = {error = " ", warn = " ", info = " "}
+                        sources = { "nvim_diagnostic" },
+                        symbols = { error = " ", warn = " ", info = " " }
                     }
                 },
                 lualine_y = {
@@ -160,13 +164,13 @@ function C.lualine()
                         }
                     }
                 },
-                lualine_z = {"progress", "location"}
+                lualine_z = { "progress", "location" }
             },
             inactive_sections = {
                 lualine_a = {},
                 lualine_b = {},
-                lualine_c = {"filename"},
-                lualine_x = {"location"},
+                lualine_c = { "filename" },
+                lualine_x = { "location" },
                 lualine_y = {},
                 lualine_z = {}
             },
@@ -185,6 +189,7 @@ function C.lualine()
         }
     )
 end
+
 function C.bufferline()
     require("bufferline").setup {
         options = {
@@ -227,7 +232,7 @@ function C.nvim_tree()
         { key = "t", action = "tabnew" },
         { key = "h", action = "close_node" },
     }
-    require("ovim.misc.safe_require")("nvim-tree").setup{
+    require("ovim.misc.safe_require")("nvim-tree").setup {
         disable_netrw = true,
         hijack_netrw = true,
         open_on_setup = false,
@@ -237,24 +242,25 @@ function C.nvim_tree()
         update_cwd = false,
         diagnostics = {
             enable = false,
-            icons = {hint = "", info = "", warning = "", error = ""}
+            icons = { hint = "", info = "", warning = "", error = "" }
         },
-        system_open = {cmd = nil, args = {}},
-        filters = {dotfiles = false, custom = {}},
-        git = {enable = true, ignore = true, timeout = 500},
+        system_open = { cmd = nil, args = {} },
+        filters = { dotfiles = false, custom = {} },
+        git = { enable = true, ignore = true, timeout = 500 },
         view = {
             width = 40,
             hide_root_folder = false,
             side = "left",
-            mappings = {custom_only = false, list = keymap_list },
+            mappings = { custom_only = false, list = keymap_list },
             number = false,
             relativenumber = false,
             signcolumn = "yes"
         },
-        trash = {cmd = "trash", require_confirm = true}
+        trash = { cmd = "trash", require_confirm = true }
     }
     require("ovim.misc.keymap").load(keymap.nvim_tree())
 end
+
 function C.indent_blankline()
     vim.opt.termguicolors = true
     vim.opt.list = true
@@ -285,7 +291,7 @@ function C.indent_blankline()
                 "flutterToolsOutline",
                 "" -- for all buffers without a file type
             },
-            buftype_exclude = {"terminal", "nofile"},
+            buftype_exclude = { "terminal", "nofile" },
             show_trailing_blankline_indent = false,
             show_current_context = true,
             context_patterns = {
@@ -317,7 +323,7 @@ function C.which_key()
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
         ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "<Plug>", "<plug>"}, -- hide mapping boilerplate
+        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "<Plug>", "<plug>" }, -- hide mapping boilerplate
         key_labels = {
             -- override the label used to display some keys. It doesn't effect WK in any other way.
             -- For example:
@@ -331,7 +337,7 @@ end
 
 function C.toggleterm()
     local toggleterm = require("toggleterm")
-    toggleterm.setup{
+    toggleterm.setup {
         size = 20,
         open_mapping = [[<leader>et<space>]],
         hide_numbers = false,
@@ -358,4 +364,197 @@ end
 function C.floaterm()
     vim.cmd "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
 end
+
+function C.dressing()
+    require('dressing').setup({
+        input = {
+            -- Set to false to disable the vim.ui.input implementation
+            enabled = true,
+
+            -- Default prompt string
+            default_prompt = "Input:",
+
+            -- Can be 'left', 'right', or 'center'
+            prompt_align = "left",
+
+            -- When true, <Esc> will close the modal
+            insert_only = true,
+
+            -- When true, input will start in insert mode.
+            start_in_insert = true,
+
+            -- These are passed to nvim_open_win
+            anchor = "SW",
+            border = "rounded",
+            -- 'editor' and 'win' will default to being centered
+            relative = "editor",
+
+            -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+            prefer_width = 40,
+            width = nil,
+            -- min_width and max_width can be a list of mixed types.
+            -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
+            max_width = { 140, 0.9 },
+            min_width = { 20, 0.2 },
+
+            buf_options = {},
+            win_options = {
+                -- Window transparency (0-100)
+                winblend = 10,
+                -- Disable line wrapping
+                wrap = false,
+            },
+
+            -- Set to `false` to disable
+            mappings = {
+                n = {
+                    ["<Esc>"] = "Close",
+                    ["<CR>"] = "Confirm",
+                },
+                i = {
+                    ["<C-c>"] = "Close",
+                    ["<CR>"] = "Confirm",
+                    ["<Up>"] = "HistoryPrev",
+                    ["<Down>"] = "HistoryNext",
+                },
+            },
+
+            override = function(conf)
+                -- This is the config that will be passed to nvim_open_win.
+                -- Change values here to customize the layout
+                return conf
+            end,
+
+            -- see :help dressing_get_config
+            get_config = nil,
+        },
+        select = {
+            -- Set to false to disable the vim.ui.select implementation
+            enabled = true,
+
+            -- Priority list of preferred vim.select implementations
+            backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+
+            -- Trim trailing `:` from prompt
+            trim_prompt = true,
+
+            -- Options for telescope selector
+            -- These are passed into the telescope picker directly. Can be used like:
+            -- telescope = require('telescope.themes').get_ivy({...})
+            telescope = nil,
+
+            -- Options for fzf selector
+            fzf = {
+                window = {
+                    width = 0.5,
+                    height = 0.4,
+                },
+            },
+
+            -- Options for fzf_lua selector
+            fzf_lua = {
+                winopts = {
+                    width = 0.5,
+                    height = 0.4,
+                },
+            },
+
+            -- Options for nui Menu
+            nui = {
+                position = "50%",
+                size = nil,
+                relative = "editor",
+                border = {
+                    style = "rounded",
+                },
+                buf_options = {
+                    swapfile = false,
+                    filetype = "DressingSelect",
+                },
+                win_options = {
+                    winblend = 10,
+                },
+                max_width = 80,
+                max_height = 40,
+                min_width = 40,
+                min_height = 10,
+            },
+
+            -- Options for built-in selector
+            builtin = {
+                -- These are passed to nvim_open_win
+                anchor = "NW",
+                border = "rounded",
+                -- 'editor' and 'win' will default to being centered
+                relative = "editor",
+
+                buf_options = {},
+                win_options = {
+                    -- Window transparency (0-100)
+                    winblend = 10,
+                },
+
+                -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+                -- the min_ and max_ options can be a list of mixed types.
+                -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
+                width = nil,
+                max_width = { 140, 0.8 },
+                min_width = { 40, 0.2 },
+                height = nil,
+                max_height = 0.9,
+                min_height = { 10, 0.2 },
+
+                -- Set to `false` to disable
+                mappings = {
+                    ["<Esc>"] = "Close",
+                    ["<C-c>"] = "Close",
+                    ["<CR>"] = "Confirm",
+                },
+
+                override = function(conf)
+                    -- This is the config that will be passed to nvim_open_win.
+                    -- Change values here to customize the layout
+                    return conf
+                end,
+            },
+
+            -- Used to override format_item. See :help dressing-format
+            format_item_override = {},
+
+            -- see :help dressing_get_config
+            get_config = nil,
+        },
+    })
+end
+
+function C.noice()
+    require("noice").setup({
+        lsp = {
+            progress = {
+                enabled = false
+            },
+            -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+            override = {
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                ["vim.lsp.util.stylize_markdown"] = true,
+                ["cmp.entry.get_documentation"] = true,
+            },
+            signature = {
+                enabled = false
+            }
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+            bottom_search = true, -- use a classic bottom cmdline for search
+            command_palette = true, -- position the cmdline and popupmenu together
+            long_message_to_split = true, -- long messages will be sent to a split
+            inc_rename = false, -- enables an input dialog for inc-rename.nvim
+            lsp_doc_border = false, -- add a border to hover docs and signature help
+        },
+        messages = {
+            enabled = false,
+        }
+    })
+end
+
 return C

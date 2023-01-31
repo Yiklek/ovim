@@ -1,7 +1,6 @@
 hook_before_setup_plugin = """set updatetime=1000
 set timeoutlen=300
 set wildmenu
-set lazyredraw
 let &t_ut=''"""
 hook_after_setup_plugin = ""
 # if use plug,set to 1 to improve bootstrap
@@ -464,7 +463,7 @@ if = 0
 [modules.theme]
 level = 1
 name = "theme"
-use = ["one","zephyr","gruvbox","oceanic_material","oceanic_next","lucariox","vim-material","solarized"]
+use = ["github_dark", "one","zephyr","gruvbox","oceanic_material","oceanic_next","lucariox","vim-material","solarized"]
 
 [modules.theme.options]
 theme-one = {repo = 'rakr/vim-one'}
@@ -494,6 +493,7 @@ theme-lucariox = {repo = "miconda/lucariox.vim"}
 theme-vim-material = {repo = "hzchirs/vim-material"}
 theme-nvim-colors-solarized = {repo = "arakashic/nvim-colors-solarized"}
 theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
+theme-github-nvim = {repo = "projekt0n/github-nvim-theme", if = "has('nvim')"}
 
 
 #if has node,use coc

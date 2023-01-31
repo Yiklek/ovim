@@ -7,6 +7,9 @@ return {
     modules = {
         ui = {
             features = {
+                basic = {
+                    enable = true,
+                },
                 statusline = {
                     enable = true,
                     use = "lualine"
@@ -37,6 +40,7 @@ return {
                 lsp_progress = {
                     enable = true,
                     use = "fidget",
+                    -- use = "noice",
                     -- use = "lualine-lsp-progress",
                 }
             }

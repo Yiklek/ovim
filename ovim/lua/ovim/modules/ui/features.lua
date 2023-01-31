@@ -5,6 +5,40 @@
 -- Copyright (c) 2022 ovim
 
 return {
+    basic = function(p, opts)
+        p["stevearc/dressing.nvim"] = {
+            "stevearc/dressing.nvim",
+            opt = true,
+            event = "VimEnter",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").dressing()]]
+        }
+        p["MunifTanjim/nui.nvim"] = {
+            "MunifTanjim/nui.nvim",
+            opt = true,
+            event = "VimEnter",
+            module = "ui-dep"
+        }
+        p["rcarriga/nvim-notify"] = {
+            "rcarriga/nvim-notify",
+            opt = true,
+            event = "VimEnter",
+            module = "ui-dep"
+        }
+        p["folke/noice.nvim"] = {
+            "folke/noice.nvim",
+            opt = true,
+            event = "VimEnter",
+            config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").noice()]],
+            requires = {
+                -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+                "MunifTanjim/nui.nvim",
+                -- OPTIONAL:
+                --   `nvim-notify` is only needed, if you want to use the notification view.
+                --   If not available, we use `mini` as the fallback
+                "rcarriga/nvim-notify",
+            }
+        }
+    end,
     statusline = function(p, opts)
         p["hoob3rt/lualine.nvim"] = {
             "hoob3rt/lualine.nvim",
@@ -92,7 +126,7 @@ return {
             "folke/which-key.nvim",
             config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").which_key()]],
             opt = true,
-            event = {"InsertChange", "InsertEnter", "InsertLeave", "CursorMoved", "CursorMovedI", "CursorHold"}
+            event = { "InsertChange", "InsertEnter", "InsertLeave", "CursorMoved", "CursorMovedI", "CursorHold" }
         }
     end,
     terminal = function(p, opts)
@@ -102,10 +136,10 @@ return {
                 config = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").toggleterm()]],
                 opt = true,
                 cmd = { "ToggleTerm",
-                        "ToggleTermToggleAll",
-                        "ToggleTermSendCurrentLine",
-                        "ToggleTermSendVisualLines",
-                        "ToggleTermSendVisualSelection",
+                    "ToggleTermToggleAll",
+                    "ToggleTermSendCurrentLine",
+                    "ToggleTermSendVisualLines",
+                    "ToggleTermSendVisualSelection",
                 }
             }
 
@@ -113,7 +147,8 @@ return {
             p["voldikss/vim-floaterm"] = {
                 "voldikss/vim-floaterm",
                 opt = true,
-                cmd = { "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew","FloatermFirst", "FloatermLast", "FloatermKill", "FloatermShow", "FloatermHide", "FloatermUpdate"},
+                cmd = { "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast",
+                    "FloatermKill", "FloatermShow", "FloatermHide", "FloatermUpdate" },
                 setup = [[require("ovim.misc.safe_require")("ovim.modules.ui.config").floaterm()]],
             }
         end
@@ -124,13 +159,13 @@ return {
                 "j-hui/fidget.nvim",
                 config = [[require("ovim.misc.safe_require")("fidget").setup()]],
                 opt = true,
-                event = {"VimEnter"}
+                event = { "VimEnter" }
             }
         elseif opts.use == "lualine-lsp-progress" then
             p["arkav/lualine-lsp-progress"] = {
                 "arkav/lualine-lsp-progress",
                 opt = true,
-                event = {"VimEnter"}
+                event = { "VimEnter" }
             }
         end
     end,
