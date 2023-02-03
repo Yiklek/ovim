@@ -552,8 +552,24 @@ function C.noice()
             lsp_doc_border = false, -- add a border to hover docs and signature help
         },
         messages = {
-            enabled = false,
-        }
+            view = "mini", -- default view for messages
+        },
+        routes = {
+            {
+                filter = {
+                    event = "msg_show",
+                    find = "%slines?%s",
+                },
+                opts = { skip = true },
+            },
+            {
+                filter = {
+                    event = "msg_show",
+                    find = "NvimTree",
+                },
+                opts = { skip = true },
+            },
+        },
     })
 end
 

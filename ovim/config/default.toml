@@ -463,7 +463,7 @@ if = 0
 [modules.theme]
 level = 1
 name = "theme"
-use = ["github_dark", "one","zephyr","gruvbox","oceanic_material","oceanic_next","lucariox","vim-material","solarized"]
+use = ["kanagawa", "github_dark", "one","zephyr","gruvbox","oceanic_material","oceanic_next","lucariox","vim-material","solarized"]
 
 [modules.theme.options]
 theme-one = {repo = 'rakr/vim-one'}
@@ -494,6 +494,7 @@ theme-vim-material = {repo = "hzchirs/vim-material"}
 theme-nvim-colors-solarized = {repo = "arakashic/nvim-colors-solarized"}
 theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
 theme-github-nvim = {repo = "projekt0n/github-nvim-theme", if = "has('nvim')"}
+theme-kanagawa = {repo = "rebelot/kanagawa.nvim", if = "has('nvim')"}
 
 
 #if has node,use coc

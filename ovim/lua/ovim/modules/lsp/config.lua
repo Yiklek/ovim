@@ -37,7 +37,7 @@ function C.null_ls()
         sources = {
             formatting.stylua,
             formatting.autopep8,
-            formatting.clang_format,
+            -- formatting.clang_format,
             formatting.gofmt,
             formatting.fixjson,
         },
