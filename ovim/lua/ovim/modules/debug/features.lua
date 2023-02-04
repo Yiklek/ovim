@@ -6,36 +6,35 @@
 
 local function dap(p, opts)
     if opts.enable == true then
-        p["ravenxrz/DAPInstall.nvim"] = {
-            "ravenxrz/DAPInstall.nvim",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.debug.config").dap_install()]],
-            opt = true,
-            event = { "VimEnter" }
-        }
         p["mfussenegger/nvim-dap"] = {
             "mfussenegger/nvim-dap",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.debug.config").dap()]],
-            opt = true,
-            after = "DAPInstall.nvim",
-            -- event = { "VimEnter" }
-        }
-        p["theHamsta/nvim-dap-virtual-text"] = {
-            "theHamsta/nvim-dap-virtual-text",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.debug.config").dap_virtual_text()]],
-            opt = true,
-            after = "nvim-dap"
-        }
-        p["rcarriga/nvim-dap-ui"] = {
-            "rcarriga/nvim-dap-ui",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.debug.config").dap_ui()]],
-            opt = true,
-            after = "nvim-dap"
-        }
-        p["nvim-telescope/telescope-dap.nvim"] = {
-            "nvim-telescope/telescope-dap.nvim",
-            -- config = [[require("ovim.misc.safe_require")("fidget").setup()]],
-            opt = true,
-            event = { "VimEnter" }
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.debug.config").dap()
+            end,
+            event = "VeryLazy",
+            dependencies = {
+                {
+                    "ravenxrz/DAPInstall.nvim",
+                    config = function()
+                        require("ovim.misc.safe_require")("ovim.modules.debug.config").dap_install()
+                    end,
+                },
+                {
+                    "theHamsta/nvim-dap-virtual-text",
+                    config = function()
+                        require("ovim.misc.safe_require")("ovim.modules.debug.config").dap_virtual_text()
+                    end,
+                },
+                {
+                    "rcarriga/nvim-dap-ui",
+                    config = function()
+                        require("ovim.misc.safe_require")("ovim.modules.debug.config").dap_ui()
+                    end,
+                },
+                {
+                    "nvim-telescope/telescope-dap.nvim",
+                }
+            }
         }
     end
 end

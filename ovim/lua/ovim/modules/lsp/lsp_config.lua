@@ -3,8 +3,6 @@
 -- Description: lspconfig
 -- Copyright (c) 2022 Yiklek
 
-ovim.pack.load { "nvim-lspconfig", "mason.nvim", "mason-lspconfig.nvim" }
-
 local lspconfig = require("lspconfig")
 local mason = require("mason")
 local mason_config = require("mason-lspconfig")

@@ -8,17 +8,24 @@ return {
     vista = function(p, opts)
         p["liuchengxu/vista.vim"] = {
             "liuchengxu/vista.vim",
-            cmd = { "Vista", "Vista!", "Vista!!",},
-            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").vista()]]
+            cmd = "Vista",
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.lsp.config").vista()
+            end
         }
     end,
     lspsaga = function(p, opts)
-        p["tami5/lspsaga.nvim"] = {
+        local lspsaga_plugin = {
             "tami5/lspsaga.nvim",
-            opt = true,
-            after = "nvim-lspconfig",
             event = "BufRead",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").lspsaga()]]
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.lsp.config").lspsaga()
+            end
         }
+        if p["neovim/nvim-lspconfig"].dependencies ~= nil then
+            p["neovim/nvim-lspconfig"].dependencies[#p["neovim/nvim-lspconfig"].dependencies + 1] = lspsaga_plugin
+        else
+            p["neovim/nvim-lspconfig"].dependencies = { lspsaga_plugin }
+        end
     end,
 }

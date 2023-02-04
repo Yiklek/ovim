@@ -3,11 +3,16 @@
 -- Description: entry
 -- Copyright (c) 2022 Yiklek
 _G.ovim = {}
+ovim.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<script>:p')), ':h:h')
+
 ovim.compat = require('ovim.misc.compat')
 ovim.sys = require('ovim.sys')
 ovim.pack = require('ovim.pack')
+ovim.lazy_pack = require('ovim.lazy')
 ovim.debug = false
 _G.try = require('ovim.misc.try')
+
+ovim.lazy_pack.init()
 
 local disable_distribution_plugins = function()
     vim.g.loaded_gzip = 1
@@ -45,7 +50,7 @@ disable_distribution_plugins()
 if vim.fn.exists("g:neovide") ~= 0 then
     neovide_config()
 end
-ovim.pack.load_compile()
+-- ovim.pack.load_compile()
 require("ovim.keymap")
 
 function ovim.setup(options)

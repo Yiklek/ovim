@@ -26,9 +26,9 @@ function C.nvim_cmp()
     end
 
     local cmp = require("cmp")
-    if not packer_plugins["cmp-under-comparator"].loaded then
-        vim.cmd [[packadd cmp-under-comparator]]
-    end
+    -- if not packer_plugins["cmp-under-comparator"].loaded then
+    --     vim.cmd [[packadd cmp-under-comparator]]
+    -- end
     cmp.setup {
         window = {
             completion = cmp.config.window.bordered(),

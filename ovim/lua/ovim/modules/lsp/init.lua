@@ -7,37 +7,41 @@ local plugins = {
             "neovim/nvim-lspconfig",
             level = 1,
             opt = true,
-            event = "VimEnter",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").nvim_lsp()]]
+            event = "VeryLazy",
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.lsp.config").nvim_lsp()
+                -- require("ovim.modules.lsp.config").nvim_lsp()
+            end,
+            dependencies = {
+                {
+                    "mason.nvim",
+                    "ray-x/lsp_signature.nvim",
+                }
+            }
         },
         ["williamboman/mason.nvim"] = {
             "williamboman/mason.nvim",
             level = 1,
-            opt = true,
-            after = "nvim-lspconfig"
-        },
-        ["williamboman/mason-lspconfig.nvim"] = {
-            "williamboman/mason-lspconfig.nvim",
-            level = 1,
-            opt = true,
-            after = "nvim-lspconfig"
-        },
-        ["ray-x/lsp_signature.nvim"] = {
-            "ray-x/lsp_signature.nvim",
-            opt = true,
-            after = "nvim-lspconfig"
+            event = "VeryLazy",
+            dependencies = {
+                {
+                    "williamboman/mason-lspconfig.nvim",
+                }
+            }
         },
         ["folke/trouble.nvim"] = {
             "folke/trouble.nvim",
-            opt = true,
             event = "BufReadPost",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").trouble()]]
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.lsp.config").trouble()
+            end
         },
         ["jose-elias-alvarez/null-ls.nvim"] = {
             "jose-elias-alvarez/null-ls.nvim",
-            opt = true,
             event = "BufReadPost",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.lsp.config").null_ls()]]
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.lsp.config").null_ls()
+            end
         }
     }
 local features = require("ovim.misc.features").setup_module_features("lsp", plugins)

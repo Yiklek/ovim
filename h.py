@@ -210,6 +210,12 @@ def install(parser, args):
         os.system(cmd)
     else:
         print('packer.vim exist.')
+    lazy_path = join(ovim_cache_dir, 'pack', 'ovim', 'opt', 'lazy.nvim')
+    if not isdir(lazy_path):
+        cmd = 'git clone https://github.com/folke/lazy.nvim {}'.format(lazy_path)
+        os.system(cmd)
+    else:
+        print('lazy.nvim exist.')
 
     if args.install_depend:
         new_args = ['depend']

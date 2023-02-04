@@ -56,7 +56,6 @@ function C.gitsigns()
 end
 
 function C.diffview()
-    require("packer.load")({"plenary.nvim"}, {}, _G.packer_plugins)
     local cb = require'diffview.config'.diffview_callback
 
     require'diffview'.setup {

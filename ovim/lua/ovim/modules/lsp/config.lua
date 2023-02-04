@@ -35,7 +35,7 @@ function C.null_ls()
     -- local completion = null_ls.builtins.completion
     null_ls.setup({
         sources = {
-            formatting.stylua,
+            -- formatting.stylua,
             formatting.autopep8,
             -- formatting.clang_format,
             formatting.gofmt,

@@ -3,6 +3,7 @@
 -- Description: global config
 -- Copyright (c) 2022 Yiklek
 return {
+    level = 4,
     plugins = {},
     modules = {
         ui = {
@@ -22,7 +23,8 @@ return {
                     enable = true
                 },
                 fileTree = {
-                    enable = true
+                    enable = true,
+                    use = "NvimTree"
                 },
                 devicons = {
                     enable = true

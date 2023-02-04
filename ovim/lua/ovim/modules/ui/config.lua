@@ -77,7 +77,7 @@ function C.nvim_gps()
 end
 
 function C.lualine()
-    ovim.pack.load({ "nvim-treesitter", "nvim-gps" })
+    -- ovim.pack.load({ "nvim-treesitter", "nvim-gps" })
     local gps = require("nvim-gps")
     local ui_config = require("ovim.config").modules.ui
     local lualine_c = ""
@@ -537,7 +537,7 @@ function C.noice()
             override = {
                 ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                 ["vim.lsp.util.stylize_markdown"] = true,
-                ["cmp.entry.get_documentation"] = true,
+                ["cmp.entry.get_documentation"] = false,
             },
             signature = {
                 enabled = false

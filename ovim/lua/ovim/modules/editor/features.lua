@@ -7,9 +7,11 @@
 return {
     autopairs = function(p, opts)
         p["windwp/nvim-autopairs"] = {
-"windwp/nvim-autopairs",
-            after = "nvim-cmp",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_autopairs()]]
+            "windwp/nvim-autopairs",
+            event = "BufReadPost",
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_autopairs()
+            end
         }
     end,
     comment = function(p, opts)
@@ -17,14 +19,18 @@ return {
             p["terrortylor/nvim-comment"] = {
                 "terrortylor/nvim-comment",
                 event = "BufReadPost",
-                config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_comment()]]
+                config = function()
+                    require("ovim.misc.safe_require")("ovim.modules.editor.config").nvim_comment()
+                end
             }
         end
         if opts.use ~= nil and opts.use == "Comment.nvim" then
             p["numToStr/Comment.nvim"] = {
                 "numToStr/Comment.nvim",
                 event = "BufReadPost",
-                config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").comment_dot_nvim()]]
+                config = function()
+                    require("ovim.misc.safe_require")("ovim.modules.editor.config").comment_dot_nvim()
+                end
             }
         end
     end,
@@ -32,14 +38,20 @@ return {
         p["lewis6991/gitsigns.nvim"] = {
             "lewis6991/gitsigns.nvim",
             event = "BufReadPost",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").gitsigns()]]
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.editor.config").gitsigns()
+            end
         }
         p["sindrets/diffview.nvim"] = {
             "sindrets/diffview.nvim",
-            config = [[require("ovim.misc.safe_require")("ovim.modules.editor.config").diffview()]],
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.editor.config").diffview()
+            end,
             cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory"},
             -- require plenary in basic
-            requires = nil,
+            dependencies = {
+                "nvim-lua/plenary.nvim"
+            },
         }
     end
 }

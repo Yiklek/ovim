@@ -42,16 +42,12 @@ function K.bufferline()
     }
 end
 function K.nvim_tree()
-    -- use coc first
-    if vim.g.coc_enabled == nil or not vim.g.coc_enabled then
-        return {
-            ["n|="] = display("FileExplorer"),
-            ["n|=="] = map_cr("NvimTreeToggle", opts),
-            ["n|=f"] = map_cr("NvimTreeFindFile", opts),
-            ["n|=r"] = map_cr("NvimTreeRefresh", opts),
-        }
-    end
-    return {}
+    return {
+        ["n|="] = display("FileExplorer"),
+        ["n|=="] = map_cr("NvimTreeToggle", opts),
+        ["n|=f"] = map_cr("NvimTreeFindFile", opts),
+        ["n|=r"] = map_cr("NvimTreeRefresh", opts),
+    }
 end
 
 return K

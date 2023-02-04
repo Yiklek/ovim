@@ -10,14 +10,14 @@ local function telescope_fzf_native()
     -- telescope-fzf-native
     local fzf = nil
     if config_features["telescope-fzf-native"].enable and vim.fn.executable("cmake") ~= 0 then
-        local fzf_native_plugin_path = vim.g.ovim_cache_path .. "/pack/packer/opt/telescope-fzf-native.nvim"
+        local fzf_native_plugin_path = vim.g.ovim_cache_path .. "/lazy/plugins/telescope-fzf-native.nvim"
         local fzf_native_plugin_build_path = fzf_native_plugin_path .. "/build"
         if vim.fn.isdirectory(fzf_native_plugin_build_path) == 0 then
             vim.cmd(vim.fn.join({"silent !cmake", "-S", fzf_native_plugin_path, "-B", fzf_native_plugin_build_path}, " "))
             vim.cmd(vim.fn.join({"silent !cmake", "--build", fzf_native_plugin_build_path, "--config Release"}, " "))
             vim.cmd(vim.fn.join({"silent !cmake", "--install", fzf_native_plugin_build_path , "--install", fzf_native_plugin_build_path}, " "))
         end
-        require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
+        -- require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
         require("telescope").load_extension("fzf")
         fzf = {
             fuzzy = false, -- false will only do exact matching
@@ -51,7 +51,7 @@ local function telescope_frecency()
     if use_frecency then
         local telescope_db = vim.g.ovim_cache_path .. "/plugins/telescope"
         vim.fn.mkdir(telescope_db, "p")
-        require("packer.load")({"sqlite.lua", "telescope-frecency.nvim"}, {}, _G.packer_plugins)
+        -- require("packer.load")({"sqlite.lua", "telescope-frecency.nvim"}, {}, _G.packer_plugins)
         require("telescope").load_extension("frecency")
         frecency = {
             db_root = telescope_db,
@@ -64,7 +64,7 @@ local function telescope_frecency()
 end
 
 function C.telescope()
-    ovim.pack.load {"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}
+    -- ovim.pack.load {"plenary.nvim", "telescope-project.nvim", "telescope-zoxide", "telescope-lsp-handlers.nvim"}
     require("telescope").load_extension("project")
     require("telescope").load_extension("zoxide")
     require("telescope").load_extension("lsp_handlers")

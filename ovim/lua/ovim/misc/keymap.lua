@@ -123,7 +123,7 @@ function pbind.display(display_string, opts)
     return ro:with_display(display_string, opts)
 end
 
-local wk = require("ovim.misc.safe_require")('which-key')
+local wk = nil --require("ovim.misc.safe_require")('which-key')
 local cache_keymaps = {}
 
 function pbind.register_which_key()
@@ -142,7 +142,7 @@ function pbind.load(mapping, extra_opts)
             local opts = vim.tbl_deep_extend("force", value.opts, extra_opts or {})
 
             if opts.display.enable then
-                if wk then
+                if wk ~= nil then
                     wk.register({
                         [keymap] = { opts.display.repr },
                     }, { mode = mode })
