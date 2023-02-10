@@ -215,7 +215,7 @@ level = 3
 repo = "DanilaMihailov/beacon.nvim"
 on_event = ['VimEnter']
 if = 0
-#### modules
+### modules
 [modules.theme]
 level = 1
 name = "theme"
@@ -288,6 +288,6 @@ theme-kanagawa = {repo = "rebelot/kanagawa.nvim", if = "has('nvim')"}
 # level = 0
 # enable = 1
 
-[addons.window]
-level = 0
-enable = 1
+# [addons.window]
+# level = 0
+# enable = 1

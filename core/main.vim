@@ -58,6 +58,7 @@ set nobackup            " 设置不备份
 set autoread            " 文件在vim之外修改过，自动重新读入
 "set autowrite           " 设置自动保存
 "set confirm             " 在处理未保存或只读文件的时候，弹出确认
+syntax enable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 编码设置
@@ -128,26 +129,9 @@ execute 'source' g:config_root.'/keymap.vim'
 
 
 
-"主题 theme {{{
-"set termguicolors
-function! s:has_colorscheme(name) abort
-    let pat = 'colors/'.a:name.'.vim'
-    return !empty(globpath(&rtp, pat))
-endfunction
-
-syntax enable
 " }}}
 
 
-
-" clip {{{
-function! WSLClip()
-    let filename = expand("%").".temp"
-    let winclip = $WINCLIP
-    exe "silent !" "cat ".$HOME.'/'.filename."|".winclip." && rm ".$HOME.'/'.filename
-    redraw!
-endfunction
-" }}}
 
 " max window {{{
 function! MaximizeWindow()
@@ -161,29 +145,3 @@ function! MaximizeWindow()
 endfunction
 " }}}
 
-
-
-" {{{ DisplayHelp
-function! DisplayHelp()
-    let help_file = g:real_ovim_path."/config-help.txt"
-    let bnr = bufwinnr(help_file)
-    if bnr > 0
-        let g:opening = 1
-    else
-        let g:opening = 0
-    endif
-    if g:opening
-        exec "bdelete ".help_file
-        let g:opening = 0
-    else
-        exec "rightbelow 50vsplit ".help_file
-        setlocal nomodifiable
-        let g:opening = 1
-    endif
-endfunction
-nmap <F9> :call DisplayHelp()<cr>
-try
-let g:space_key_map['<F9>'] = [':call DisplayHelp()','Show Help(todo)']
-catch
-endtry
-" }}}

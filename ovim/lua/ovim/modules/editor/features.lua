@@ -85,7 +85,7 @@ return {
             init = function()
                 vim.g.ZFVimIM_cloudAsync_enable = 1
                 vim.g.ZFVimIM_cloudSync_enable = 0
-                vim.g.ZFVimIM_cachePath = vim.g.ovim_cache_path .. '/ZFVimIM'
+                vim.g.ZFVimIM_cachePath = ovim.config.cache_path .. '/ZFVimIM'
             end,
             config = function()
                 vim.cmd[[nnoremap <expr><silent> ;' ZFVimIME_keymap_next_n()\ninoremap <expr><silent> ;' ZFVimIME_keymap_next_i()\nvnoremap <expr><silent> ;' ZFVimIME_keymap_next_v()]]

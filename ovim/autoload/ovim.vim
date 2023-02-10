@@ -64,25 +64,7 @@ command -nargs=* -complete=expression OvimLogWarn call ovim#utils#warn(<f-args>)
 " and default will be both loaded.specified option will override default.this maybe cause startup slowly.
 " when a {path} given,specified file will be loaded
 function! ovim#init(...) abort
-    call s:setup_pack()
-    call s:setup_python()
-    let g:ovim_global_options = s:options(g:ovim_option_cache_path)
-    if type(g:ovim_global_options) == v:t_string && g:ovim_global_options == ''
-        let g:ovim_global_options = s:options(exists("a:1") ? a:1 : 'default')
-    endif
-    if exists('g:ovim_global_options.modules')
-        call s:modules(g:ovim_global_options.modules)
-    endif
-    if ovim#plugin#begin(g:ovim_cache_path)
-        if exists('g:ovim_global_options.plugins')
-            call s:plugins(g:ovim_global_options.plugins)
-        endif
-    endif
-    call ovim#plugin#end(g:ovim_global_options.plugins)
-    if ovim#utils#check_lua()
-        lua require "ovim"
-    endif
-    autocmd VimEnter * call s:addons(get(g:ovim_global_options,'addons',{}))
+    lua require "ovim"
 endfunction
 
 " must be invoked after read config

@@ -9,6 +9,98 @@ local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local display = km.display
+
+vim.cmd[[
+inoremap <c-h> <left>
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
+nnoremap <silent> <esc><esc> :silent! nohlsearch<cr>
+nnoremap <leader>ve<space> :edit $MYVIMRC<cr>
+nnoremap <leader>vs :source $MYVIMRC<cr>
+"粘贴模式
+set pastetoggle=<F4>
+nmap <F5> :redraw!<cr>
+" 下一行
+imap <leader><CR> <esc>o
+nmap <leader><CR> <esc>o
+"窗口快捷键
+"l-\ 左右分割
+nmap <leader>\ :vsplit<space>
+" l-- 上下分割
+nmap <leader>- :split<space>
+
+" 焦点移动
+nmap <leader>wh <c-w>h
+nmap <leader>wj <c-w>j
+nmap <leader>wk <c-w>k
+nmap <leader>wl <c-w>l
+" 位置移动
+nmap <leader>wJ <c-w>J
+nmap <leader>wK <c-w>K
+nmap <leader>wH <c-w>H
+nmap <leader>wL <c-w>L
+" 大小调整
+nmap <leader>w= 5<c-w>+
+nmap <leader>w- 5<c-w>-
+nmap <leader>w, 5<c-w><
+nmap <leader>w. 5<c-w>>
+nmap <leader>ww 5<c-w>+
+nmap <leader>ws 5<c-w>-
+nmap <leader>wa 5<c-w><
+nmap <leader>wd 5<c-w>>
+" 标签
+" 关闭当前标签
+nmap <leader>tq  :tabc<CR>
+" 关闭所有标签
+nmap <leader>tQ  :tabo<CR>
+" 列出所有标签
+nmap <leader>tls :tabs<CR>
+" 在新标签中打开
+nmap <leader>to  :tabe<space>
+" 新标签打开当前文件
+nmap <leader>tsp :tab split<CR>
+" 切换标签
+nmap <leader>th gT
+nmap <leader>tj gt
+nmap <leader>tk gT
+nmap <leader>tl gt
+
+nmap <leader>bd :bd<cr>
+nmap <leader>bp :bp<cr>
+nmap <leader>bn :bn<cr>
+
+nnoremap <leader>q :q<cr>
+
+nnoremap <tab>1 :b!1<cr>
+nnoremap <tab>2 :b!2<cr>
+nnoremap <tab>3 :b!3<cr>
+nnoremap <tab>4 :b!4<cr>
+nnoremap <tab>5 :b!5<cr>
+nnoremap <tab>6 :b!6<cr>
+nnoremap <tab>7 :b!7<cr>
+nnoremap <tab>8 :b!8<cr>
+nnoremap <tab>9 :b!9<cr>
+nnoremap <tab>0 :b!10<cr>
+
+noremap [b  :bp!<cr>
+noremap ]b  :bn!<cr>
+noremap ]t  gt
+noremap [t  gT
+
+tnoremap <esc><esc> <C-\><C-N>
+if has("nvim")
+    tnoremap <C-W>h  <C-\><C-N><C-W>h
+    tnoremap <C-W>j  <C-\><C-N><C-W>j
+    tnoremap <C-W>k  <C-\><C-N><C-W>k
+    tnoremap <C-W>l  <C-\><C-N><C-W>l
+    tnoremap <C-W><C-H>  <C-\><C-N><C-W><C-H>
+    tnoremap <C-W><C-J>  <C-\><C-N><C-W><C-J>
+    tnoremap <C-W><C-K>  <C-\><C-N><C-W><C-K>
+    tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
+endif
+]]
+
 local function basic()
     local maps = {
         ["n|<leader>\\"] = display("vsplit"),

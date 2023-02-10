@@ -3,21 +3,14 @@
 -- Description: entry
 -- Copyright (c) 2022 Yiklek
 _G.ovim = {}
-ovim.config = require("ovim.config")
-ovim.config.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<script>:p')), ":h") .. "/ovim"
-ovim.config.cache_path = vim.fn.stdpath("cache") .. "/../ovim"
-
+ovim.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<script>:p')), ':h:h')
+ovim.cache_path = vim.fn.stdpath("cache")
 ovim.compat = require('ovim.misc.compat')
-ovim.util = require('ovim.misc.util')
 ovim.sys = require('ovim.sys')
 ovim.lazy_pack = require('ovim.lazy')
 ovim.debug = false
 _G.try = require('ovim.misc.try')
-vim.env.OVIM_ROOT_PATH = ovim.config.root_path
-vim.opt.packpath:append(ovim.config.cache_path)
-
-require("ovim.base")
-
+vim.o.packpath:append(ovim.cache_path)
 ovim.lazy_pack.init()
 
 local disable_distribution_plugins = function()
@@ -52,33 +45,11 @@ local neovide_config = function()
     vim.g.neovide_cursor_vfx_particle_speed = 20.0
     vim.g.neovide_cursor_vfx_particle_density = 5.0
 end
-
-local default_python_path = nil
-if ovim.util.has_win() then
-    default_python_path = ovim.config.cache_path .. "/python3-venv/Scripts/python.exe"
-else
-    default_python_path = ovim.config.cache_path .. "/python3-venv/bin/python"
-end
-
-vim.g.python3_host_prog = vim.fn.get(vim.g, "python3_host_prog", default_python_path)
-
-local function setup_python()
-    if ovim.util.has_win() then
-        local python3_home = vim.fn.fnamemodify(vim.fn.expand(vim.g.python3_host_prog), ":p:h")
-        vim.env.PATH = python3_home .. "/vbin" .. ";" .. vim.env.PATH
-    else
-        local python3_home = vim.fn.fnamemodify(vim.fn.expand(vim.g.python3_host_prog), ":p:h:h")
-        vim.env.PATH = python3_home .. "/vbin" .. ":" .. vim.env.PATH
-    end
-end
-
-setup_python()
 disable_distribution_plugins()
-
 if vim.fn.exists("g:neovide") ~= 0 then
     neovide_config()
 end
-
+-- ovim.pack.load_compile()
 require("ovim.keymap")
 
 function ovim.setup(options)

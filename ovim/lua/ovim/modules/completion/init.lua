@@ -33,7 +33,7 @@ return {
                         {
                             "SirVer/ultisnips",
                             init = function()
-                                vim.cmd("source $OVIM_ROOT_PATH/plugins/ultisnips.vim")
+				vim.g.UltiSnipsExpandTrigger = "<leader><space><space>"
                             end
                         },
                     }

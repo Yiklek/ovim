@@ -8,13 +8,13 @@ local this = {}
 this.__index = this
 
 local lazy_opts = {
-    root = vim.g.ovim_cache_path .. "/lazy/plugins",
+    root = ovim.config.cache_path .. "/lazy/plugins",
     defaults = {
         lazy = true,
     },
-    lockfile = vim.g.ovim_cache_path .. "/lazy/lazy-lock.json",
-    readme = { root = vim.g.ovim_cache_path .. "/lazy/readme" },
-    state = vim.g.ovim_cache_path .. "/lazy/state.json",
+    lockfile = ovim.config.cache_path .. "/lazy/lazy-lock.json",
+    readme = { root = ovim.config.cache_path .. "/lazy/readme" },
+    state = ovim.config.cache_path .. "/lazy/state.json",
     performance = {
         reset_packpath = false,
         rtp = {

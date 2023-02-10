@@ -60,7 +60,7 @@ end
 
 
 -- persist breakpoint
-local bp_base_dir = vim.g.ovim_cache_path .. "/dap-breakpoint/"
+local bp_base_dir = ovim.config.cache_path .. "/dap-breakpoint/"
 local breakpoints = require('dap.breakpoints')
 
 function M.store_breakpoints()

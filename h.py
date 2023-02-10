@@ -47,7 +47,7 @@ else:
     vim_root_name = '.vim'
 
 vim_init_file = 'vimrc'
-nvim_init_file = 'init.vim'
+nvim_init_file = 'init.lua'
 nvim_root_name = 'nvim'
 vim_rtp_link = join(vim_py3_home, lib, 'python3')
 vim_requirements = join(basedir, 'ovim', 'requirements.txt')
@@ -188,7 +188,7 @@ def install(parser, args):
     os.makedirs(vim_config_path, exist_ok=True)
     logger.info('create path {} successfully.'.format(vim_config_path))
     if not isfile(vim_config_init):
-        os.symlink(join(basedir, 'vimrc'), vim_config_init)
+        os.symlink(join(basedir, 'init.lua'), vim_config_init)
     vim_plug_path = join(ovim_cache_dir, 'pack', 'ovim',
                          'opt', 'vim-plug', 'autoload', 'plug.vim')
     if not isfile(vim_plug_path):
