@@ -31,7 +31,7 @@ function rhs_options:update_opts(opts)
 end
 
 function rhs_options:map_cmd(cmd_string, opts)
-    self.cmd = cmd_string
+    self.cmd = ("<cmd>%s<cr>"):format(cmd_string)
     self.opts.display.repr = cmd_string
     self:update_opts(opts)
     return self
@@ -123,11 +123,11 @@ function pbind.display(display_string, opts)
     return ro:with_display(display_string, opts)
 end
 
-local wk = nil --require("ovim.misc.safe_require")('which-key')
 local cache_keymaps = {}
 
 function pbind.register_which_key()
-    wk = require("ovim.misc.safe_require")('which-key')
+    -- must ensure which-key.nvim loaded
+    local wk = require("which-key")
     for m, key in pairs(cache_keymaps) do
         wk.register(key, { mode = m })
     end
@@ -140,27 +140,24 @@ function pbind.load(mapping, extra_opts)
         if type(value) == "table" then
             local rhs = value.cmd
             local opts = vim.tbl_deep_extend("force", value.opts, extra_opts or {})
-
             if opts.display.enable then
-                if wk ~= nil then
-                    wk.register({
-                        [keymap] = { opts.display.repr },
-                    }, { mode = mode })
-                else
-                    local m = cache_keymaps[mode]
-                    if m == nil then
-                        m = {}
-                    end
-                    m = vim.tbl_deep_extend("force", m, {
-                        [keymap] = { opts.display.repr },
-                    })
-                    cache_keymaps[mode] = m
+                local m = cache_keymaps[mode]
+                if m == nil then
+                    m = {}
                 end
+                m = vim.tbl_deep_extend("force", m, {
+                    [keymap] = { opts.display.repr },
+                })
+                cache_keymaps[mode] = m
             end
             if rhs ~= nil and rhs ~= "" then
                 vim.keymap.set(mode, keymap, rhs, opts.map)
             end
         end
+    end
+    local wk = require("ovim.misc.safe_require")("which-key")
+    if wk ~= nil then
+        pbind.register_which_key()
     end
 end
 

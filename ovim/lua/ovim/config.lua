@@ -44,10 +44,19 @@ return {
                     use = "fidget",
                     -- use = "noice",
                     -- use = "lualine-lsp-progress",
-                }
+                },
+                dashboard = {
+                    use = "dashboard-nvim",
+                    enable = true
+                },
             }
         },
         editor = {
+            remove_space = {
+                ignore_filetypes = {
+                    "diff", "markdown"
+                }
+            },
             features = {
                 autopairs = {
                     enable = true
@@ -59,6 +68,18 @@ return {
                 },
                 vcs = {
                     enable = true
+                },
+                paste = {
+                    enable = true
+                },
+                accelerated_jk = {
+                    enable = true
+                },
+                commit = {
+                    enable = true
+                },
+                ime = {
+                    enable = false
                 }
             }
         },

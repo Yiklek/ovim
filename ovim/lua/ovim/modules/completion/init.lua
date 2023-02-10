@@ -14,15 +14,6 @@ return {
             end,
             event = "VimEnter",
             dependencies = {
-                {
-                    "L3MON4D3/LuaSnip",
-                    config = function()
-                        require("ovim.misc.safe_require")("ovim.modules.completion.config").lua_snip()
-                    end,
-                    dependencies = {
-                        "rafamadriz/friendly-snippets"
-                    }
-                },
                 "lukas-reineke/cmp-under-comparator",
                 "saadparwaiz1/cmp_luasnip",
                 "hrsh7th/cmp-nvim-lsp",
@@ -48,6 +39,16 @@ return {
                     }
                 },
                 "honza/vim-snippets",
+            }
+        },
+        {
+            "L3MON4D3/LuaSnip",
+            config = function()
+                require("ovim.misc.safe_require")("ovim.modules.completion.config").lua_snip()
+            end,
+            event = "InsertEnter",
+            dependencies = {
+                "rafamadriz/friendly-snippets"
             }
         },
     }

@@ -113,7 +113,6 @@ local function basic()
 
         ["n|<leader>x"] = display("Edit"),
         ["n|<leader>xf"] = display("Format"),
-        ["n|<leader>xa"] = display("RemoveTraialingSpace"),
 
     }
     return maps

@@ -7,7 +7,6 @@ ovim.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<script>:p')),
 
 ovim.compat = require('ovim.misc.compat')
 ovim.sys = require('ovim.sys')
-ovim.pack = require('ovim.pack')
 ovim.lazy_pack = require('ovim.lazy')
 ovim.debug = false
 _G.try = require('ovim.misc.try')

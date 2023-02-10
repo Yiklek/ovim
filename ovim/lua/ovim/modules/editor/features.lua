@@ -34,7 +34,7 @@ return {
             }
         end
     end,
-    vcs = function (p, opts)
+    vcs = function(p, opts)
         p["lewis6991/gitsigns.nvim"] = {
             "lewis6991/gitsigns.nvim",
             event = "BufReadPost",
@@ -47,11 +47,56 @@ return {
             config = function()
                 require("ovim.misc.safe_require")("ovim.modules.editor.config").diffview()
             end,
-            cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory"},
+            cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh",
+                "DiffviewFileHistory" },
             -- require plenary in basic
             dependencies = {
                 "nvim-lua/plenary.nvim"
             },
         }
+    end,
+    paste = function(p, opts)
+        p["roxma/vim-paste-easy"] = {
+            "roxma/vim-paste-easy",
+            event = "InsertEnter",
+        }
+    end,
+    accelerated_jk = function(p, opts)
+        p["rainbowhxch/accelerated-jk.nvim"] = {
+            "rainbowhxch/accelerated-jk.nvim",
+            event = "BufRead",
+            config = function()
+                vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', {})
+                vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})
+            end
+        }
+    end,
+    commit = function(p, opts)
+        p["rhysd/committia.vim"] = {
+            "rhysd/committia.vim",
+            ft = { "gitcommit", "gitrebase" },
+            event = "BufReadPre"
+        }
+    end,
+    ime = function(p, opts)
+        p["ZSaberLv0/ZFVimIM"] = {
+            "ZSaberLv0/ZFVimIM",
+            event = "InsertEnter",
+            init = function()
+                vim.g.ZFVimIM_cloudAsync_enable = 1
+                vim.g.ZFVimIM_cloudSync_enable = 0
+                vim.g.ZFVimIM_cachePath = vim.g.ovim_cache_path .. '/ZFVimIM'
+            end,
+            config = function()
+                vim.cmd[[nnoremap <expr><silent> ;' ZFVimIME_keymap_next_n()\ninoremap <expr><silent> ;' ZFVimIME_keymap_next_i()\nvnoremap <expr><silent> ;' ZFVimIME_keymap_next_v()]]
+            end,
+            dependencies = {
+                "ZSaberLv0/ZFVimJob",
+                "ZSaberLv0/ZFVimIM_pinyin_base",
+                "ZSaberLv0/ZFVimIM_openapi",
+                "Yiklek/ZFVimIM_openfly",
+            }
+        }
     end
+
 }

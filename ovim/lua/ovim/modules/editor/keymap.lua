@@ -10,6 +10,7 @@ local km = require("ovim.misc.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
+local map_f = km.map_f
 local display = km.display
 
 function K.nvim_comment()
@@ -55,6 +56,14 @@ function K.gitsigns()
         ["o|ih"] = map_cu("Gitsigns select_hunk"),
         ["x|ih"] = map_cu("Gitsigns select_hunk"),
     }
+end
+
+function K.remove_space()
+    return { ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):with_display("RemoveTraialingSpace") }
+end
+
+function K.init()
+    km.load(K.remove_space())
 end
 
 return K

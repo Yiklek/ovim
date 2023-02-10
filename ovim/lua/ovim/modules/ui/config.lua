@@ -554,6 +554,9 @@ function C.noice()
         messages = {
             view = "mini", -- default view for messages
         },
+        popupmenu = {
+            enabled = false
+        },
         routes = {
             {
                 filter = {

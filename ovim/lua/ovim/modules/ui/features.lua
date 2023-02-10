@@ -36,7 +36,7 @@ return {
                 {
                     "SmiteshP/nvim-gps",
                     dependencies = {
-                        {"nvim-treesitter"}
+                        { "nvim-treesitter" }
                     },
                     config = function()
                         require("ovim.misc.safe_require")("ovim.modules.ui.config").nvim_gps()
@@ -94,7 +94,7 @@ return {
         if opts.use == nil or opts.use == "blankline" then
             p["lukas-reineke/indent-blankline.nvim"] = {
                 "lukas-reineke/indent-blankline.nvim",
-                event = "VeryLazy",
+                event = "BufRead",
                 config = function()
                     require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_blankline()
                 end
@@ -103,7 +103,7 @@ return {
         if opts.use == "guides" then
             p["glepnir/indent-guides.nvim"] = {
                 "glepnir/indent-guides.nvim",
-                event = "VeryLazy",
+                event = "BufRead",
                 config = function()
                     require("ovim.misc.safe_require")("ovim.modules.ui.config").indent_guides()
                 end
@@ -113,6 +113,7 @@ return {
     which_key = function(p, opts)
         p["folke/which-key.nvim"] = {
             "folke/which-key.nvim",
+            lazy = true,
             config = function()
                 require("ovim.misc.safe_require")("ovim.modules.ui.config").which_key()
             end,
@@ -140,7 +141,7 @@ return {
                 "voldikss/vim-floaterm",
                 cmd = { "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast",
                     "FloatermKill", "FloatermShow", "FloatermHide", "FloatermUpdate" },
-                init = function()
+                config = function()
                     require("ovim.misc.safe_require")("ovim.modules.ui.config").floaterm()
                 end,
             }
@@ -162,4 +163,46 @@ return {
             }
         end
     end,
+    dashboard = function(p, opts)
+
+        if opts.use == "dashboard-nvim" then
+            p["glepnir/dashboard-nvim"] = {
+                'glepnir/dashboard-nvim',
+                event = 'VimEnter',
+                opts = {
+                    theme = 'hyper',
+                    config = {
+                        header = {
+                            '',
+                            ' ██████╗ ██╗   ██╗██╗███╗   ███╗',
+                            '██╔═══██╗██║   ██║██║████╗ ████║',
+                            '██║   ██║██║   ██║██║██╔████╔██║',
+                            '██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+                            '╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+                            ' ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+                            '',
+                        },
+                        week_header = {
+                            enable = false,
+                        },
+                        shortcut = {
+                            { desc = ' Update', group = '@property', action = 'Lazy update', key = 'u' },
+                            {
+                                desc = ' Files',
+                                group = 'Label',
+                                action = 'Telescope find_files',
+                                key = 'f',
+                            },
+                            {
+                                desc = 'Oldfiles',
+                                action = 'Telescope oldfiles',
+                                key = 'o',
+                            },
+                        },
+                    },
+                },
+                dependencies = { { 'nvim-web-devicons' } }
+            }
+        end
+    end
 }

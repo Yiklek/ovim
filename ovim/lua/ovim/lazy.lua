@@ -43,50 +43,8 @@ function this.init()
             config.plugins = vim.tbl_deep_extend("force", config.plugins, m.plugins)
         end
     end
-    -- print(vim.inspect(vim.tbl_values(config.plugins)))
+
     ovim.lazy.setup(vim.tbl_values(config.plugins), lazy_opts)
 end
-
--- function this.ensure_plugins()
---     this.load_packer()
---     packer.install()
--- end
---
--- function this.load_compile()
---     if sys.fn.filereadable(packer_config.compile_path) == 1 then
---         sys.cmd("source " .. packer_config.compile_path)
---     else
---         this.load_packer()
---     end
---     vim.cmd [[command! PackerCompile lua require("ovim.pack").compile()]]
---     vim.cmd [[command! PackerInstall lua require("ovim.pack").install()]]
---     vim.cmd [[command! PackerUpdate lua require("ovim.pack").update()]]
---     vim.cmd [[command! PackerSync lua require("ovim.pack").sync()]]
---     vim.cmd [[command! PackerClean lua require("ovim.pack").clean()]]
---     --vim.cmd [[autocmd User PackerComplete lua require("ovim.pack").magic_compile()]]
---     vim.cmd [[command! PackerStatus  lua require("ovim.pack").status()]]
---     vim.g.ovim_packer_setup = 1
--- end
---
---
--- function this.load(plugins)
---     if type(plugins) == "string" then
---         plugins = {plugins}
---     end
---     require("packer.load")(plugins, {}, packer_plugins)
--- end
-
--- this =
---     setmetatable(
---     this,
---     {
---         __index = function(o, key)
---             return function(...)
---                 this.load_packer()
---                 packer[key](...)
---             end
---         end
---     }
--- )
 
 return this
