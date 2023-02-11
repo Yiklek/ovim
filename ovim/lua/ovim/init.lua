@@ -27,7 +27,7 @@ require "ovim.base"
 
 ovim.lazy_pack.init()
 
-local disable_distribution_plugins = function()
+local function disable_distribution_plugins()
   vim.g.loaded_gzip = 1
   vim.g.loaded_tar = 1
   vim.g.loaded_tarPlugin = 1
@@ -47,7 +47,7 @@ local disable_distribution_plugins = function()
   vim.g.loaded_netrwSettings = 1
   vim.g.loaded_netrwFileHandlers = 1
 end
-local neovide_config = function()
+local function neovide_config()
   vim.o.guifont = "DejaVuSansMono NF:h16,CaskaydiaCove Nerd Font Mono:h16"
   --vim.g.neovide_cursor_vfx_mode = "railgun"
   vim.g.neovide_no_idle = true
@@ -69,17 +69,6 @@ end
 
 vim.g.python3_host_prog = vim.fn.get(vim.g, "python3_host_prog", default_python_path)
 
-local function setup_python()
-  if ovim.util.has_win() then
-    local python3_home = vim.fn.fnamemodify(vim.fn.expand(vim.g.python3_host_prog), ":p:h")
-    vim.env.PATH = python3_home .. "/vbin" .. ";" .. vim.env.PATH
-  else
-    local python3_home = vim.fn.fnamemodify(vim.fn.expand(vim.g.python3_host_prog), ":p:h:h")
-    vim.env.PATH = python3_home .. "/vbin" .. ":" .. vim.env.PATH
-  end
-end
-
-setup_python()
 disable_distribution_plugins()
 
 if vim.fn.exists "g:neovide" ~= 0 then
