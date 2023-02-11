@@ -11,7 +11,7 @@ dap.adapters.cppdbg = {
 dap.adapters.lldb = {
   id = 'lldb',
   type = "executable",
-  command = ovim.config.cache_path .. "/bin/lldb-vscode",
+  command = ovim.const.cache_path .. "/bin/lldb-vscode",
 }
 
 dap.configurations.cpp = {

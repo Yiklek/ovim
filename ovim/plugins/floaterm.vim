@@ -1,8 +1,3 @@
-" Set floaterm window's background to black
-hi Floaterm guibg=black ctermbg=darkgreen ctermfg=darkgreen
-" Set floating window border line color to cyan, and background to orange
-hi FloatermBorder guibg=darkgreen ctermbg=darkgreen guifg=darkgreen
-hi FloatermNC guibg=gray
 
 let g:floaterm_complete_options = {'shortcut': 'floaterm', 'priority': 5,'filter_length':[0,100]}
 
@@ -72,18 +67,3 @@ if ovim#utils#has_win()
     endfor
 endif
 
-call ovim#utils#recursive_update(g:leader_key_map.e,{'t':{'name':'+Terminal',
-                                    \    ' ':[':FloatermToggle','Floaterm Toggle'],
-                                    \    '[':[':FloatermPrev','Previous Terminal'],
-                                    \    ']':[':FloatermNext','Next Terminal'],
-                                    \    'n':[':FloatermNew --wintype=float --position=center --width=0.8 --height=0.8','New Terminal'],
-                                    \    '-':[':FloatermFirst','First Terminal'],
-                                    \    '=':[':FloatermLast','Last Terminal'],
-                                    \    'k':[':FloatermKill','Kill Terminal'],
-                                    \    '?':[':echo "in terminal,prefix is <esc><tab>"','help'],
-                                    \    'w':{'name':'+Normal Window',
-                                    \               ' ':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
-                                    \               'r':[':FloatermNew --wintype=vsplit --position=right --width=0.3','Right Window Terminal'],
-                                    \               'b':[':FloatermNew --wintype=split --position=bottom --width=0.3','Bottom Window Terminal'],
-                                    \       }
-                                \ }})

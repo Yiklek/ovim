@@ -9,7 +9,7 @@ local mason_config = require("mason-lspconfig")
 
 mason.setup(
     {
-        install_root_dir = ovim.config.cache_path .. "/mason",
+        install_root_dir = ovim.const.cache_path .. "/mason",
         ui = {
             border = "rounded",
             icons = {

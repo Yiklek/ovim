@@ -15,7 +15,7 @@ return {
         }
         p["folke/noice.nvim"] = {
             "folke/noice.nvim",
-            event = "VimEnter",
+            event = "VeryLazy",
             config = function()
                 require("ovim.misc.safe_require")("ovim.modules.ui.config").noice()
             end,
@@ -28,7 +28,7 @@ return {
     statusline = function(p, opts)
         p["hoob3rt/lualine.nvim"] = {
             "hoob3rt/lualine.nvim",
-            event = "VimEnter",
+            event = "VeryLazy",
             config = function()
                 require("ovim.misc.safe_require")("ovim.modules.ui.config").lualine()
             end,
@@ -141,7 +141,7 @@ return {
                 "voldikss/vim-floaterm",
                 cmd = { "FloatermToggle", "FloatermPrev", "FloatermNext", "FloatermNew", "FloatermFirst", "FloatermLast",
                     "FloatermKill", "FloatermShow", "FloatermHide", "FloatermUpdate" },
-                config = function()
+                init = function()
                     require("ovim.misc.safe_require")("ovim.modules.ui.config").floaterm()
                 end,
             }
@@ -167,8 +167,8 @@ return {
 
         if opts.use == "dashboard-nvim" then
             p["glepnir/dashboard-nvim"] = {
-                'glepnir/dashboard-nvim',
-                event = 'VimEnter',
+                "glepnir/dashboard-nvim",
+                event = "VimEnter",
                 opts = {
                     theme = 'hyper',
                     config = {

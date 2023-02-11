@@ -3,9 +3,10 @@
 -- Description: entry
 -- Copyright (c) 2022 Yiklek
 _G.ovim = {}
-ovim.config = require("ovim.config")
-ovim.config.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<script>:p')), ":h") .. "/ovim"
-ovim.config.cache_path = vim.fn.stdpath("cache") .. "/../ovim"
+
+ovim.const = {}
+ovim.const.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<script>:p')), ":h") .. "/ovim"
+ovim.const.cache_path = vim.fn.stdpath("cache") .. "/../ovim"
 
 ovim.compat = require('ovim.misc.compat')
 ovim.util = require('ovim.misc.util')
@@ -13,8 +14,8 @@ ovim.sys = require('ovim.sys')
 ovim.lazy_pack = require('ovim.lazy')
 ovim.debug = false
 _G.try = require('ovim.misc.try')
-vim.env.OVIM_ROOT_PATH = ovim.config.root_path
-vim.opt.packpath:append(ovim.config.cache_path)
+vim.env.OVIM_ROOT_PATH = ovim.const.root_path
+vim.opt.packpath:append(ovim.const.cache_path)
 
 require("ovim.base")
 
@@ -55,9 +56,9 @@ end
 
 local default_python_path = nil
 if ovim.util.has_win() then
-    default_python_path = ovim.config.cache_path .. "/python3-venv/Scripts/python.exe"
+    default_python_path = ovim.const.cache_path .. "/python3-venv/Scripts/python.exe"
 else
-    default_python_path = ovim.config.cache_path .. "/python3-venv/bin/python"
+    default_python_path = ovim.const.cache_path .. "/python3-venv/bin/python"
 end
 
 vim.g.python3_host_prog = vim.fn.get(vim.g, "python3_host_prog", default_python_path)

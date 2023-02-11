@@ -12,7 +12,7 @@ return {
             config = function()
                 require("ovim.misc.safe_require")("ovim.modules.completion.config").nvim_cmp()
             end,
-            event = "VimEnter",
+            event = "VeryLazy",
             dependencies = {
                 "lukas-reineke/cmp-under-comparator",
                 "saadparwaiz1/cmp_luasnip",
@@ -32,9 +32,6 @@ return {
                     dependencies = {
                         {
                             "SirVer/ultisnips",
-                            init = function()
-				vim.g.UltiSnipsExpandTrigger = "<leader><space><space>"
-                            end
                         },
                     }
                 },

@@ -65,6 +65,13 @@ function rhs_options:map_f(func, opts)
     return self
 end
 
+function rhs_options:map_s(key, opts)
+    self.cmd = key
+    self.opts.display.repr = ""
+    self:update_opts(opts)
+    return self
+end
+
 function rhs_options:with_silent()
     self.opts.map.silent = true
     return self
@@ -116,6 +123,11 @@ end
 function pbind.map_f(func, opts)
     local ro = rhs_options:new()
     return ro:map_f(func, opts)
+end
+
+function pbind.map_s(key, opts)
+    local ro = rhs_options:new()
+    return ro:map_f(key, opts)
 end
 
 function pbind.display(display_string, opts)

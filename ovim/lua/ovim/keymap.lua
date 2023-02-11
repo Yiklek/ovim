@@ -21,9 +21,7 @@ nnoremap <leader>vs :source $MYVIMRC<cr>
 "粘贴模式
 set pastetoggle=<F4>
 nmap <F5> :redraw!<cr>
-" 下一行
-imap <leader><CR> <esc>o
-nmap <leader><CR> <esc>o
+
 "窗口快捷键
 "l-\ 左右分割
 nmap <leader>\ :vsplit<space>
@@ -51,54 +49,54 @@ nmap <leader>wa 5<c-w><
 nmap <leader>wd 5<c-w>>
 " 标签
 " 关闭当前标签
-nmap <leader>tq  :tabc<CR>
+nmap <leader>tq  <cmd>tabc<CR>
 " 关闭所有标签
-nmap <leader>tQ  :tabo<CR>
+nmap <leader>tQ  <cmd>tabo<CR>
 " 列出所有标签
-nmap <leader>tls :tabs<CR>
+nmap <leader>tls <cmd>tabs<CR>
 " 在新标签中打开
-nmap <leader>to  :tabe<space>
+nmap <leader>to  <cmd>tabe<space>
 " 新标签打开当前文件
-nmap <leader>tsp :tab split<CR>
+nmap <leader>tsp <cmd>tab split<CR>
 " 切换标签
 nmap <leader>th gT
 nmap <leader>tj gt
 nmap <leader>tk gT
 nmap <leader>tl gt
 
-nmap <leader>bd :bd<cr>
-nmap <leader>bp :bp<cr>
-nmap <leader>bn :bn<cr>
+nmap <leader>bd <cmd>bd<cr>
+nmap <leader>bp <cmd>bp<cr>
+nmap <leader>bn <cmd>bn<cr>
 
-nnoremap <leader>q :q<cr>
+nnoremap <leader>q <cmd>q<cr>
 
-nnoremap <tab>1 :b!1<cr>
-nnoremap <tab>2 :b!2<cr>
-nnoremap <tab>3 :b!3<cr>
-nnoremap <tab>4 :b!4<cr>
-nnoremap <tab>5 :b!5<cr>
-nnoremap <tab>6 :b!6<cr>
-nnoremap <tab>7 :b!7<cr>
-nnoremap <tab>8 :b!8<cr>
-nnoremap <tab>9 :b!9<cr>
-nnoremap <tab>0 :b!10<cr>
+nnoremap <tab>1 <cmd>b!1<cr>
+nnoremap <tab>2 <cmd>b!2<cr>
+nnoremap <tab>3 <cmd>b!3<cr>
+nnoremap <tab>4 <cmd>b!4<cr>
+nnoremap <tab>5 <cmd>b!5<cr>
+nnoremap <tab>6 <cmd>b!6<cr>
+nnoremap <tab>7 <cmd>b!7<cr>
+nnoremap <tab>8 <cmd>b!8<cr>
+nnoremap <tab>9 <cmd>b!9<cr>
+nnoremap <tab>0 <cmd>b!10<cr>
 
-noremap [b  :bp!<cr>
-noremap ]b  :bn!<cr>
+noremap [b  <cmd>bp!<cr>
+noremap ]b  <cmd>bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
 tnoremap <esc><esc> <C-\><C-N>
-if has("nvim")
-    tnoremap <C-W>h  <C-\><C-N><C-W>h
-    tnoremap <C-W>j  <C-\><C-N><C-W>j
-    tnoremap <C-W>k  <C-\><C-N><C-W>k
-    tnoremap <C-W>l  <C-\><C-N><C-W>l
-    tnoremap <C-W><C-H>  <C-\><C-N><C-W><C-H>
-    tnoremap <C-W><C-J>  <C-\><C-N><C-W><C-J>
-    tnoremap <C-W><C-K>  <C-\><C-N><C-W><C-K>
-    tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
-endif
+
+tnoremap <C-W>h  <C-\><C-N><C-W>h
+tnoremap <C-W>j  <C-\><C-N><C-W>j
+tnoremap <C-W>k  <C-\><C-N><C-W>k
+tnoremap <C-W>l  <C-\><C-N><C-W>l
+tnoremap <C-W><C-H>  <C-\><C-N><C-W><C-H>
+tnoremap <C-W><C-J>  <C-\><C-N><C-W><C-J>
+tnoremap <C-W><C-K>  <C-\><C-N><C-W><C-K>
+tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
+
 ]]
 
 local function basic()
@@ -140,42 +138,6 @@ local function basic()
         -- and will be remove in the future
         -- Floaterm
         ["n|<leader>e"] = display("Extensions"),
-        ["n|<leader>et"] = display("Floaterm"),
-        ["n|<leader>et<space>"] = display("Floaterm Toggle"),
-        ["n|<leader>et;"] = display("First Terminal"),
-        ["n|<leader>et'"] = display("Last Terminal"),
-        ["n|<leader>etq"] = display("Kill Terminal"),
-        ["n|<leader>etw"] = display("New Terminal Window"),
-        ["n|<leader>etw<space>"] = display("Right Window"),
-        ["n|<leader>etwr"] = display("Right Window"),
-        ["n|<leader>etwb"] = display("Bottom Window"),
-        ["n|<leader>et9"] = display("Previous Terminal"),
-        ["n|<leader>et0"] = display("Next Terminal"),
-        ["n|<leader>etn"] = display("New Terminal"),
-        ["n|<leader>et="] = display("Move to Bottom"),
-        ["n|<leader>et-"] = display("Move to Top"),
-        ["n|<leader>et["] = display("Move to Left"),
-        ["n|<leader>et]"] = display("Move to Right"),
-        ["n|<leader>et\\"] = display("Float"),
-
-        ["n|<esc>"] = display("Floaterm"),
-        ["n|<esc><space>"] = display("Floaterm Toggle"),
-        ["n|<esc>-"] = display("First Terminal"),
-        ["n|<esc>="] = display("Last Terminal"),
-        ["n|<esc>q"] = display("Kill Terminal"),
-        ["n|<esc>w"] = display("New Terminal Window"),
-        ["n|<esc>w<space>"] = display("Right Window"),
-        ["n|<esc>wr"] = display("Right Window"),
-        ["n|<esc>wb"] = display("Bottom Window"),
-        ["n|<esc>["] = display("Previous Terminal"),
-        ["n|<esc>]"] = display("Next Terminal"),
-        ["n|<esc>n"] = display("New Terminal"),
-        ["n|<esc>?"] = display("Help"),
-        ["n|<esc>j"] = display("Move to Bottom"),
-        ["n|<esc>k"] = display("Move to Top"),
-        ["n|<esc>h"] = display("Move to Left"),
-        ["n|<esc>l"] = display("Move to Right"),
-        ["n|<esc>f"] = display("Float"),
 
         -- AnyJump
         ["n|<leader>ej"] = display("AnyJump"),

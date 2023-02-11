@@ -10,7 +10,7 @@ local function telescope_fzf_native()
     -- telescope-fzf-native
     local fzf = nil
     if config_features["telescope-fzf-native"].enable and vim.fn.executable("cmake") ~= 0 then
-        local fzf_native_plugin_path = ovim.config.cache_path .. "/lazy/plugins/telescope-fzf-native.nvim"
+        local fzf_native_plugin_path = ovim.const.cache_path .. "/lazy/plugins/telescope-fzf-native.nvim"
         local fzf_native_plugin_build_path = fzf_native_plugin_path .. "/build"
         if vim.fn.isdirectory(fzf_native_plugin_build_path) == 0 then
             vim.cmd(vim.fn.join({"silent !cmake", "-S", fzf_native_plugin_path, "-B", fzf_native_plugin_build_path}, " "))
@@ -49,7 +49,7 @@ local function telescope_frecency()
         end
     end
     if use_frecency then
-        local telescope_db = ovim.config.cache_path .. "/plugins/telescope"
+        local telescope_db = ovim.const.cache_path .. "/plugins/telescope"
         vim.fn.mkdir(telescope_db, "p")
         -- require("packer.load")({"sqlite.lua", "telescope-frecency.nvim"}, {}, _G.packer_plugins)
         require("telescope").load_extension("frecency")
@@ -104,7 +104,9 @@ function C.telescope()
             defaults = {
                 mappings = {
                     i = {
-                        ["<C-o>"] = action_layout.toggle_preview
+                        ["<C-o>"] = action_layout.toggle_preview,
+                        ["<C-j>"] = "move_selection_next",
+                        ["<C-k>"] = "move_selection_previous",
                     }
                 },
                 prompt_prefix = "🔎 ",
@@ -156,7 +158,7 @@ function C.telescope()
 end
 
 function C.sqlite()
-    local sqlite_dir = ovim.config.cache_path .. "/plugins/sqlite"
+    local sqlite_dir = ovim.const.cache_path .. "/plugins/sqlite"
     if require("ovim.misc.util").has_win() then
         local sqlite_dll = sqlite_dir .. "/sqlite3.dll"
         vim.g.sqlite_clib_path = sqlite_dll

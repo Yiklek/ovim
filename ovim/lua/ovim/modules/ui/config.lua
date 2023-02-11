@@ -9,7 +9,7 @@ local keymap = require("ovim.modules.ui.keymap")
 function C.nvim_treesitter()
     vim.api.nvim_command('set foldmethod=expr')
     vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
-    local parser_install_dir = ovim.config.cache_path .. "/treesitter/paser"
+    local parser_install_dir = ovim.const.cache_path .. "/treesitter/paser"
     vim.opt.runtimepath:append(parser_install_dir)
     require "nvim-treesitter.configs".setup {
         ensure_installed = {
@@ -259,7 +259,12 @@ function C.nvim_tree()
             relativenumber = false,
             signcolumn = "yes"
         },
-        trash = { cmd = "trash", require_confirm = true }
+        trash = { cmd = "trash", require_confirm = true },
+        renderer = {
+            icons = {
+                git_placement = "after",
+            }
+        },
     }
     require("ovim.misc.keymap").load(keymap.nvim_tree())
 end
@@ -365,7 +370,16 @@ function C.toggleterm()
 end
 
 function C.floaterm()
-    vim.cmd "source $OVIM_ROOT_PATH/plugins/floaterm.vim"
+    vim.cmd[[let g:floaterm_complete_options = {'shortcut': 'floaterm', 'priority': 5,'filter_length':[0,100]}]]
+    if ovim.util.has_win() then
+        for i in ipairs({"pwsh.exe", "powershell.exe", "cmd.exe"}) do
+            if vim.fn.executable(i) then
+                vim.g.floaterm_shell = i
+                break
+            end
+        end
+    end
+    require("ovim.misc.keymap").load(keymap.floaterm())
 end
 
 function C.dressing()
