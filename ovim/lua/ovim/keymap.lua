@@ -4,13 +4,13 @@
 -- Last Modified: 03 17, 2022
 -- Copyright (c) 2022 ovim
 
-local km = require("ovim.misc.keymap")
+local km = require "ovim.misc.keymap"
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local display = km.display
 
-vim.cmd[[
+vim.cmd [[
 inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
@@ -100,76 +100,73 @@ tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
 ]]
 
 local function basic()
-    local maps = {
-        ["n|<leader>\\"] = display("vsplit"),
-        ["n|<leader>-"] = display("split"),
-        ["n|<leader>q"] = display("Exit"),
-        ["n|<leader>t"] = display("Tab"),
-        ["n|<leader>tq"] = display("Close"),
-        ["n|<leader>tk"] = display("Prev"),
-        ["n|<leader>th"] = display("Prev"),
-        ["n|<leader>tj"] = display("Next"),
-        ["n|<leader>tl"] = display("Next"),
-        ["n|<leader>tQ"] = display("CloseAll"),
-        ["n|<leader>to"] = display("Open"),
-        ["n|<leader>tp"] = display("OpenCurrentInNewTab"),
-        ["n|<leader>tL"] = display("List"),
+  local maps = {
+    ["n|<leader>\\"] = display "vsplit",
+    ["n|<leader>-"] = display "split",
+    ["n|<leader>q"] = display "Exit",
+    ["n|<leader>t"] = display "Tab",
+    ["n|<leader>tq"] = display "Close",
+    ["n|<leader>tk"] = display "Prev",
+    ["n|<leader>th"] = display "Prev",
+    ["n|<leader>tj"] = display "Next",
+    ["n|<leader>tl"] = display "Next",
+    ["n|<leader>tQ"] = display "CloseAll",
+    ["n|<leader>to"] = display "Open",
+    ["n|<leader>tp"] = display "OpenCurrentInNewTab",
+    ["n|<leader>tL"] = display "List",
 
-        ["n|<leader>w"] = display("Window"),
-        ["n|<leader>wH"] = display("Move to Left"),
-        ["n|<leader>wJ"] = display("Move to Below"),
-        ["n|<leader>wK"] = display("Move to Top"),
-        ["n|<leader>wL"] = display("Move to Right"),
-        ["n|<leader>wa"] = display("Decrease Width"),
-        ["n|<leader>w,"] = display("Decrease Width"),
-        ["n|<leader>wd"] = display("Increase Width"),
-        ["n|<leader>w."] = display("Increase Width"),
-        ["n|<leader>ws"] = display("Decrease Height"),
-        ["n|<leader>ww"] = display("Increase Height"),
-        ["n|<leader>w-"] = display("Decrease Height"),
-        ["n|<leader>w="] = display("Increase Height"),
-        ["n|<leader>wh"] = display("Focus to Left"),
-        ["n|<leader>wj"] = display("Focus to Below"),
-        ["n|<leader>wk"] = display("Focus to Top"),
-        ["n|<leader>wl"] = display("Focus to Right"),
-        ["n|<leader>w<space>"] = display("Choose Window"),
+    ["n|<leader>w"] = display "Window",
+    ["n|<leader>wH"] = display "Move to Left",
+    ["n|<leader>wJ"] = display "Move to Below",
+    ["n|<leader>wK"] = display "Move to Top",
+    ["n|<leader>wL"] = display "Move to Right",
+    ["n|<leader>wa"] = display "Decrease Width",
+    ["n|<leader>w,"] = display "Decrease Width",
+    ["n|<leader>wd"] = display "Increase Width",
+    ["n|<leader>w."] = display "Increase Width",
+    ["n|<leader>ws"] = display "Decrease Height",
+    ["n|<leader>ww"] = display "Increase Height",
+    ["n|<leader>w-"] = display "Decrease Height",
+    ["n|<leader>w="] = display "Increase Height",
+    ["n|<leader>wh"] = display "Focus to Left",
+    ["n|<leader>wj"] = display "Focus to Below",
+    ["n|<leader>wk"] = display "Focus to Top",
+    ["n|<leader>wl"] = display "Focus to Right",
 
-        -- the following keymaps are for plugins loaded by dein or vim-plug
-        -- and will be remove in the future
-        -- Floaterm
-        ["n|<leader>e"] = display("Extensions"),
+    -- the following keymaps are for plugins loaded by dein or vim-plug
+    -- and will be remove in the future
+    -- Floaterm
+    ["n|<leader>e"] = display "Extensions",
 
-        -- AnyJump
-        ["n|<leader>ej"] = display("AnyJump"),
-        ["n|<leader>ej<space>"] = display("Jump"),
-        ["n|<leader>ejb"] = display("JumpBack"),
-        ["n|<leader>ejl"] = display("JumpLastResults"),
+    -- AnyJump
+    ["n|<leader>ej"] = display "AnyJump",
+    ["n|<leader>ej<space>"] = display "Jump",
+    ["n|<leader>ejb"] = display "JumpBack",
+    ["n|<leader>ejl"] = display "JumpLastResults",
 
-        -- AsyncRun
-        ["n|<leader>r"] = display("AsyncRun"),
-        ["n|<leader>r<space>"] = display("Run"),
-        ["n|<leader>rp"] = display("Project Build"),
-        ["n|<leader>rb"] = display("File Build"),
-        ["n|<leader>rx"] = display("File Run"),
-        ["n|<leader>rr"] = display("Project Run"),
+    -- AsyncRun
+    ["n|<leader>r"] = display "AsyncRun",
+    ["n|<leader>r<space>"] = display "Run",
+    ["n|<leader>rp"] = display "Project Build",
+    ["n|<leader>rb"] = display "File Build",
+    ["n|<leader>rx"] = display "File Run",
+    ["n|<leader>rr"] = display "Project Run",
 
-        -- Search
-        ["n|<leader>s"] = display("Search"),
-        ["n|<leader>sp"] = display("CtrlP"),
-        ["n|<leader>sp<space>"] = display("CtrlP"),
+    -- Search
+    ["n|<leader>s"] = display "Search",
+    ["n|<leader>sp"] = display "CtrlP",
+    ["n|<leader>sp<space>"] = display "CtrlP",
 
-        ["n|<leader>sf"] = display("FZF"),
-        ["n|<leader>sf<space>"] = display("Files"),
+    ["n|<leader>sf"] = display "FZF",
+    ["n|<leader>sf<space>"] = display "Files",
 
-        ["n|<leader>sl"] = display("Leaderf"),
-        ["n|<leader>sl<space>"] = display("LeaderFile"),
+    ["n|<leader>sl"] = display "Leaderf",
+    ["n|<leader>sl<space>"] = display "LeaderFile",
 
-
-        ["n|<leader>x"] = display("Edit"),
-        ["n|<leader>xf"] = display("Format"),
-
-    }
-    return maps
+    ["n|<leader>x"] = display "Edit",
+    ["n|<leader>xf"] = display "Format",
+  }
+  return maps
 end
 
 km.load(basic())
@@ -177,5 +174,5 @@ km.load(require("ovim.modules.search.keymap").telescope())
 km.load(require("ovim.modules.lsp.keymap").vista())
 
 return {
-    basic = basic
+  basic = basic,
 }

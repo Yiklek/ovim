@@ -3,52 +3,52 @@
 -- Description: lsp
 -- Copyright (c) 2022 Yiklek
 local plugins = {
-        ["neovim/nvim-lspconfig"] = {
-            "neovim/nvim-lspconfig",
-            level = 1,
-            opt = true,
-            event = "VeryLazy",
-            config = function()
-                require("ovim.misc.safe_require")("ovim.modules.lsp.config").nvim_lsp()
-                -- require("ovim.modules.lsp.config").nvim_lsp()
-            end,
-            dependencies = {
-                {
-                    "mason.nvim",
-                    "ray-x/lsp_signature.nvim",
-                }
-            }
-        },
-        ["williamboman/mason.nvim"] = {
-            "williamboman/mason.nvim",
-            level = 1,
-            event = "VeryLazy",
-            dependencies = {
-                {
-                    "williamboman/mason-lspconfig.nvim",
-                }
-            }
-        },
-        ["folke/trouble.nvim"] = {
-            "folke/trouble.nvim",
-            event = "BufReadPost",
-            config = function()
-                require("ovim.misc.safe_require")("ovim.modules.lsp.config").trouble()
-            end
-        },
-        ["jose-elias-alvarez/null-ls.nvim"] = {
-            "jose-elias-alvarez/null-ls.nvim",
-            event = "BufReadPost",
-            config = function()
-                require("ovim.misc.safe_require")("ovim.modules.lsp.config").null_ls()
-            end
-        }
-    }
+  ["neovim/nvim-lspconfig"] = {
+    "neovim/nvim-lspconfig",
+    level = 1,
+    opt = true,
+    event = "VeryLazy",
+    config = function()
+      require "ovim.misc.safe_require"("ovim.modules.lsp.config").nvim_lsp()
+      -- require("ovim.modules.lsp.config").nvim_lsp()
+    end,
+    dependencies = {
+      {
+        "mason.nvim",
+        "ray-x/lsp_signature.nvim",
+      },
+    },
+  },
+  ["williamboman/mason.nvim"] = {
+    "williamboman/mason.nvim",
+    level = 1,
+    event = "VeryLazy",
+    dependencies = {
+      {
+        "williamboman/mason-lspconfig.nvim",
+      },
+    },
+  },
+  ["folke/trouble.nvim"] = {
+    "folke/trouble.nvim",
+    event = "BufReadPost",
+    config = function()
+      require "ovim.misc.safe_require"("ovim.modules.lsp.config").trouble()
+    end,
+  },
+  ["jose-elias-alvarez/null-ls.nvim"] = {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = "BufReadPost",
+    config = function()
+      require "ovim.misc.safe_require"("ovim.modules.lsp.config").null_ls()
+    end,
+  },
+}
 local features = require("ovim.misc.features").setup_module_features("lsp", plugins)
 return {
-    name = "lsp",
-    level = 1,
-    condition = "vim.g['ovim#modules#lsp'] and vim.g['ovim#modules#lsp'].method == 'nvim_lsp'",
-    plugins = plugins,
-    features = features,
+  name = "lsp",
+  level = 1,
+  condition = "vim.g['ovim#modules#lsp'] and vim.g['ovim#modules#lsp'].method == 'nvim_lsp'",
+  plugins = plugins,
+  features = features,
 }

@@ -198,11 +198,11 @@ on = ["<Plug>(choosewin)"]
 on_map = ["<Plug>(choosewin)"]
 hook_source = "source $OVIM_ROOT_PATH/plugins/vim-choosewin.source.vim"
 
-[plugins."lambdalisue/suda.vim"]
-level = 3
-repo = "lambdalisue/suda.vim"
-on = ["SudaRead","SudaWrite"]
-on_cmd = ["SudaRead","SudaWrite"]
+# [plugins."lambdalisue/suda.vim"]
+# level = 3
+# repo = "lambdalisue/suda.vim"
+# on = ["SudaRead","SudaWrite"]
+# on_cmd = ["SudaRead","SudaWrite"]
 
 [plugins."lervag/vimtex"]
 level = 3
@@ -251,43 +251,3 @@ theme-nvim-colors-solarized = {repo = "arakashic/nvim-colors-solarized"}
 theme-zephyr-nvim = {repo = "glepnir/zephyr-nvim", if = "has('nvim')"}
 theme-github-nvim = {repo = "projekt0n/github-nvim-theme", if = "has('nvim')"}
 theme-kanagawa = {repo = "rebelot/kanagawa.nvim", if = "has('nvim')"}
-
-
-#if has node,use coc
-# [modules.autocomplete]
-# level = 2
-# name = "autocomplete"
-# method = "auto"
-
-# [modules.lsp]
-# level = 2
-# name = "lsp"
-# method = "auto"
-
-# [modules.search]
-# level = 2
-# name = "search"
-# method = [ "leaderf", "ctrlp", "fzf","far"]
-# leader_prefix = "s"
-
-# [modules.ime]
-# level = 3
-# name = "ime"
-# method = 'auto'
-
-#### build-in addons
-# [addons.common]
-# level = 0
-# enable = 1
-
-# [addons.keymap]
-# level = 0
-# enable = 1
-
-# [addons.edit]
-# level = 0
-# enable = 1
-
-# [addons.window]
-# level = 0
-# enable = 1

@@ -43,4 +43,3 @@ local opts = {
 return {
   on_setup = require("ovim.modules.lsp.server").on_setup(opts),
 }
-

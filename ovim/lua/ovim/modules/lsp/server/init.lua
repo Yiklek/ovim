@@ -6,10 +6,9 @@
 
 local M = {}
 function M.on_setup(o)
-	return function(server, opts)
-        local fo = vim.tbl_extend("force", o, opts or {})
-        server.setup(fo)
-	end
+  return function(server, opts)
+    local fo = vim.tbl_extend("force", o, opts or {})
+    server.setup(fo)
+  end
 end
 return M
-

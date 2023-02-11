@@ -1,4 +1,4 @@
-vim.cmd[[
+vim.cmd [[
 let mapleader = ","      " 定义<leader>键
 let maplocalleader = '<TAB>'
 set nocompatible         " 设置不兼容原始vi模式

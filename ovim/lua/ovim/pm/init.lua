@@ -1,2 +1,1 @@
-
-return require("ovim.pm.lazy")
+return require "ovim.pm.lazy"

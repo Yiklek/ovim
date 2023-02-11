@@ -5,6 +5,6 @@
 -- Copyright (c) 2022 ovim
 
 return {
-    ["telescope-fzf-native"] = function(p, opts) end,
-    ["telescope-frecency"] = function(p, opts) end,
+  ["telescope-fzf-native"] = function(p, opts) end,
+  ["telescope-frecency"] = function(p, opts) end,
 }
