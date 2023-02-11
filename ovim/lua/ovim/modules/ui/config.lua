@@ -365,8 +365,8 @@ end
 function C.floaterm()
   vim.cmd [[let g:floaterm_complete_options = {'shortcut': 'floaterm', 'priority': 5,'filter_length':[0,100]}]]
   if ovim.util.has_win() then
-    for i in ipairs { "pwsh.exe", "powershell.exe", "cmd.exe" } do
-      if vim.fn.executable(i) then
+    for _, i in ipairs { "pwsh.exe", "powershell.exe", "cmd.exe" } do
+      if vim.fn.executable(i) ~= 0 then
         vim.g.floaterm_shell = i
         break
       end

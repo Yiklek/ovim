@@ -135,25 +135,6 @@ def depend(_, args):
         os.makedirs(ovim_cache_dir, exist_ok=True)
         args.venv.main([vim_py3_home])
         os.system('{} -m pip install -r {} -U'.format(vim_py, vim_requirements))
-        # this symlink is for vim python dependency.
-        # vim will search python/python3 module in all of runtimepath.
-        # python site-packages path is different between on unix/linux and on windows
-        # so create a symlink(python3) at Lib/lib, and set Lib/lib as vim runtimepath.
-        # noevim does't need this symlink, but it does't matter.
-        if os.path.exists(vim_rtp_link):
-            os.remove(vim_rtp_link)
-        os.symlink(vim_dep_source, vim_rtp_link,
-                   target_is_directory=isdir(vim_dep_source))
-
-        # these symlinks will be added into vim/nvim $PATH
-        # in order to run exe in vim/nvim
-        os.makedirs(ovim_py_vpath, exist_ok=True)
-        bins = os.listdir(ovim_py_path)
-        for b in bins:
-            source = os.path.join(ovim_py_path, b)
-            target = os.path.join(ovim_py_vpath, b)
-            if not b.startswith("python") and not os.path.exists(target):
-                os.symlink(source, target, target_is_directory=isdir(source))
 
     if args.node:
         with open(vim_packages, "r") as f:

@@ -2,20 +2,26 @@
 -- Author: Yiklek
 -- Description: entry
 -- Copyright (c) 2022 Yiklek
+_G.try = require "ovim.misc.try"
 _G.ovim = {}
 
 ovim.const = {}
 ovim.const.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "<script>:p"), ":h") .. "/ovim"
-ovim.const.cache_path = vim.fn.stdpath "cache" .. "/../ovim"
+vim.env.OVIM_ROOT_PATH = ovim.const.root_path
+
+ovim.util = require "ovim.misc.util"
+
+if ovim.util.has_win() then
+  ovim.const.cache_path = vim.env.userprofile .. "/.cache/ovim"
+else
+  ovim.const.cache_path = vim.fn.stdpath "cache" .. "/../ovim"
+end
+vim.opt.packpath:append(ovim.const.cache_path)
 
 ovim.compat = require "ovim.misc.compat"
-ovim.util = require "ovim.misc.util"
 ovim.sys = require "ovim.sys"
 ovim.lazy_pack = require "ovim.lazy"
 ovim.debug = false
-_G.try = require "ovim.misc.try"
-vim.env.OVIM_ROOT_PATH = ovim.const.root_path
-vim.opt.packpath:append(ovim.const.cache_path)
 
 require "ovim.base"
 

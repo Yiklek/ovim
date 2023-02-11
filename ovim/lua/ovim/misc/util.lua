@@ -9,7 +9,7 @@ local detect_modules = function()
   local plugins_pattern = "*/init.lua"
   local modules = vim.fn.globpath(modules_dir, plugins_pattern, 0, 1)
   for _, f in ipairs(modules) do
-    list[#list + 1] = string.match(f, "lua/(.+)/init.lua$")
+    list[#list + 1] = string.match(f, "lua[/\\](.+)[\\]init.lua$")
   end
   return list
 end
