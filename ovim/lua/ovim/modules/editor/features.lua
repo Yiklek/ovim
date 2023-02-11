@@ -104,4 +104,10 @@ return {
       },
     }
   end,
+  multi_cursor = function(p, opts)
+    p["mg979/vim-visual-multi"] = {
+      "mg979/vim-visual-multi",
+      event = "BufRead",
+    }
+  end,
 }

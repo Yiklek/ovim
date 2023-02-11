@@ -17,6 +17,7 @@ local opts = {
 }
 function K.telescope()
   return {
+    ["n|<leader>s"] = display "Search",
     ["n|<leader>st"] = display "Telescope",
     ["n|<leader>st<space>"] = map_cr("Telescope", opts),
     ["n|<leader>sty"] = map_cr("Telescope frecency", opts),

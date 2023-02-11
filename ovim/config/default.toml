@@ -14,25 +14,25 @@ ovim_plug_manager = "dein"
 ovim_lua = true
 
 [var]
-root_markers = [".git",".hg",".svn",".root",".project",
-                "compile_commands.json","CMakeLists.txt",
-                "Makefile","makefile"]
+# root_markers = [".git",".hg",".svn",".root",".project",
+#                 "compile_commands.json","CMakeLists.txt",
+#                 "Makefile","makefile"]
 
 
-[plugins."skywind3000/asyncrun.vim"]
-level = 3
-repo = "skywind3000/asyncrun.vim"
-hook_add = "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
-on = [ "AsyncRun",]
-on_cmd = [ "AsyncRun",]
-on_func = ["asyncrun#"]
+# [plugins."skywind3000/asyncrun.vim"]
+# level = 3
+# repo = "skywind3000/asyncrun.vim"
+# hook_add = "source $OVIM_ROOT_PATH/plugins/asyncrun.vim"
+# on = [ "AsyncRun",]
+# on_cmd = [ "AsyncRun",]
+# on_func = ["asyncrun#"]
 
-[plugins."skywind3000/asynctasks.vim"]
-level = 3
-repo = "skywind3000/asynctasks.vim"
-hook_add = "source $OVIM_ROOT_PATH/plugins/asynctasks.add.vim"
-on_cmd = ["AsyncTask","AsyncTaskEdit","AsyncTaskMacro","AsyncTaskProfile"]
-on = ["AsyncTask","AsyncTaskEdit","AsyncTaskMacro","AsyncTaskProfile"]
+# [plugins."skywind3000/asynctasks.vim"]
+# level = 3
+# repo = "skywind3000/asynctasks.vim"
+# hook_add = "source $OVIM_ROOT_PATH/plugins/asynctasks.add.vim"
+# on_cmd = ["AsyncTask","AsyncTaskEdit","AsyncTaskMacro","AsyncTaskProfile"]
+# on = ["AsyncTask","AsyncTaskEdit","AsyncTaskMacro","AsyncTaskProfile"]
 
 
 # [plugins."pseewald/vim-anyfold"]
@@ -65,23 +65,23 @@ repo = "skywind3000/gutentags_plus"
 on_event = [ "VimEnter",]
 hook_source = 'let g:gutentags_plus_nomap = 1'
 
-[plugins."mhinz/vim-signify"]
-level = 2
-repo = "mhinz/vim-signify"
-hook_add = "source $OVIM_ROOT_PATH/plugins/signify.vim"
-hook_post_source = "SignifyEnable"
-on = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
-on_cmd = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
-on_event = [ "BufReadPost", "BufWritePost",]
+# [plugins."mhinz/vim-signify"]
+# level = 2
+# repo = "mhinz/vim-signify"
+# hook_add = "source $OVIM_ROOT_PATH/plugins/signify.vim"
+# hook_post_source = "SignifyEnable"
+# on = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
+# on_cmd = [ "SignifyDiff", "SignifyEnable", "SignifyEnableAll", "SignifyToggle",]
+# on_event = [ "BufReadPost", "BufWritePost",]
 
-[plugins."tpope/vim-fugitive"]
-level = 2
-repo = "tpope/vim-fugitive"
-hook_source = "source $OVIM_ROOT_PATH/plugins/fugitive.source.vim"
-on = ["Git","G"]
-on_cmd = ["Git","G"]
-on_event = ["VimEnter"]
-if = "!ovim#utils#check_lua()"
+# [plugins."tpope/vim-fugitive"]
+# level = 2
+# repo = "tpope/vim-fugitive"
+# hook_source = "source $OVIM_ROOT_PATH/plugins/fugitive.source.vim"
+# on = ["Git","G"]
+# on_cmd = ["Git","G"]
+# on_event = ["VimEnter"]
+# if = "!ovim#utils#check_lua()"
 
 
 [plugins."junegunn/vim-easy-align"]
@@ -98,25 +98,25 @@ on = ["Tabularize","Tab"]
 on_cmd = ["Tabularize","Tab"]
 
 
-[plugins."junegunn/vim-peekaboo"]
-level = 3
-repo = "junegunn/vim-peekaboo"
-on_event = [ "VimEnter",]
-hook_post_source = 'call peekaboo#on()'
+# [plugins."junegunn/vim-peekaboo"]
+# level = 3
+# repo = "junegunn/vim-peekaboo"
+# on_event = [ "VimEnter",]
+# hook_post_source = 'call peekaboo#on()'
 
 
-[plugins."mg979/vim-visual-multi"]
-level = 3
-repo = "mg979/vim-visual-multi"
-on_event = [ "VimEnter",]
+# [plugins."mg979/vim-visual-multi"]
+# level = 3
+# repo = "mg979/vim-visual-multi"
+# on_event = [ "VimEnter",]
 
 
-[plugins."pechorin/any-jump.vim"]
-level = 3
-repo = "pechorin/any-jump.vim"
-on = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
-on_cmd = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
-hook_add = "source $OVIM_ROOT_PATH/plugins/any-jump.vim"
+# [plugins."pechorin/any-jump.vim"]
+# level = 3
+# repo = "pechorin/any-jump.vim"
+# on = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
+# on_cmd = [ "AnyJump", "AnyJumpVisual", "AnyJumpBack", "AnyJumpLastResults",]
+# hook_add = "source $OVIM_ROOT_PATH/plugins/any-jump.vim"
 
 # [plugins."Shougo/echodoc.vim"]
 # level = 3
@@ -127,36 +127,36 @@ hook_add = "source $OVIM_ROOT_PATH/plugins/any-jump.vim"
 # let g:echodoc#type = has('nvim') ? 'floating' : 'popup'
 # highlight link EchoDocFloat Pmenu"""
 
-[plugins."plasticboy/vim-markdown"]
-level = 3
-repo = "plasticboy/vim-markdown"
-on_ft = "markdown"
-for = ["markdown","vim-plug"]
-hook_source = "source $OVIM_ROOT_PATH/plugins/markdown.vim"
+# [plugins."plasticboy/vim-markdown"]
+# level = 3
+# repo = "plasticboy/vim-markdown"
+# on_ft = "markdown"
+# for = ["markdown","vim-plug"]
+# hook_source = "source $OVIM_ROOT_PATH/plugins/markdown.vim"
 
-[plugins."iamcco/markdown-preview.nvim"]
-level = 3
-repo = "iamcco/markdown-preview.nvim"
-on_ft = ["markdown","pandoc.markdown","rmd"]
-for = ["markdown","pandoc.markdown","rmd","vim-plug"]
-build = "sh -c 'cd app && yarn install'"
+# [plugins."iamcco/markdown-preview.nvim"]
+# level = 3
+# repo = "iamcco/markdown-preview.nvim"
+# on_ft = ["markdown","pandoc.markdown","rmd"]
+# for = ["markdown","pandoc.markdown","rmd","vim-plug"]
+# build = "sh -c 'cd app && yarn install'"
 
-[plugins."yianwillis/vimcdoc"]
-level = 1
-repo = "yianwillis/vimcdoc"
-on_cmd = ['h','help']
-if = "!has('nvim')"
+# [plugins."yianwillis/vimcdoc"]
+# level = 1
+# repo = "yianwillis/vimcdoc"
+# on_cmd = ['h','help']
+# if = "!has('nvim')"
 
-[plugins."sheerun/vim-polyglot"]
-level = 3
-repo = "sheerun/vim-polyglot"
-on_event = ["VimEnter"]
-if = 0
+# [plugins."sheerun/vim-polyglot"]
+# level = 3
+# repo = "sheerun/vim-polyglot"
+# on_event = ["VimEnter"]
+# if = 0
 
-[plugins."tpope/vim-unimpaired"]
-level = 3
-repo = "tpope/vim-unimpaired"
-on_event = ["VimEnter"]
+# [plugins."tpope/vim-unimpaired"]
+# level = 3
+# repo = "tpope/vim-unimpaired"
+# on_event = ["VimEnter"]
 
 # [plugins."puremourning/vimspector"]
 # level = 3
@@ -173,30 +173,30 @@ on_event = ["VimEnter"]
 #         "<Plug>VimspectorRunToCursor",]
 # hook_add = "source $OVIM_ROOT_PATH/plugins/vimspector.add.vim"
 
-[plugins."jmcantrell/vim-virtualenv"]
-level = 3
-repo = "jmcantrell/vim-virtualenv"
-on_ft = ["python"]
-for = ["python","vim-plug"]
-hook_source = """let g:virtualenv_directory = '~/.cache/venv'
-let g:virtualenv_auto_activate = 0
-"""
+# [plugins."jmcantrell/vim-virtualenv"]
+# level = 3
+# repo = "jmcantrell/vim-virtualenv"
+# on_ft = ["python"]
+# for = ["python","vim-plug"]
+# hook_source = """let g:virtualenv_directory = '~/.cache/venv'
+# let g:virtualenv_auto_activate = 0
+# """
 
-[plugins."lambdalisue/vim-pyenv"]
-level = 3
-repo = "lambdalisue/vim-pyenv"
-on_ft = ["python"]
-for = ["python","vim-plug"]
-hook_source = """let g:pyenv#auto_assign_ctags = 0
-let g:pyenv#auto_activate = 0"""
+# [plugins."lambdalisue/vim-pyenv"]
+# level = 3
+# repo = "lambdalisue/vim-pyenv"
+# on_ft = ["python"]
+# for = ["python","vim-plug"]
+# hook_source = """let g:pyenv#auto_assign_ctags = 0
+# let g:pyenv#auto_activate = 0"""
 
-[plugins."t9md/vim-choosewin"]
-level = 3
-repo = "t9md/vim-choosewin"
-on_event = ["VimEnter"]
-on = ["<Plug>(choosewin)"]
-on_map = ["<Plug>(choosewin)"]
-hook_source = "source $OVIM_ROOT_PATH/plugins/vim-choosewin.source.vim"
+# [plugins."t9md/vim-choosewin"]
+# level = 3
+# repo = "t9md/vim-choosewin"
+# on_event = ["VimEnter"]
+# on = ["<Plug>(choosewin)"]
+# on_map = ["<Plug>(choosewin)"]
+# hook_source = "source $OVIM_ROOT_PATH/plugins/vim-choosewin.source.vim"
 
 # [plugins."lambdalisue/suda.vim"]
 # level = 3

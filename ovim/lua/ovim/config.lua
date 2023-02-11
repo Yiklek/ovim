@@ -5,6 +5,17 @@
 return {
   level = 4,
   plugins = {},
+  root_markers = {
+    ".git",
+    ".hg",
+    ".svn",
+    ".root",
+    ".project",
+    "compile_commands.json",
+    "CMakeLists.txt",
+    "Makefile",
+    "makefile",
+  },
   modules = {
     ui = {
       features = {

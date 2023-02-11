@@ -133,38 +133,7 @@ local function basic()
     ["n|<leader>wk"] = display "Focus to Top",
     ["n|<leader>wl"] = display "Focus to Right",
 
-    -- the following keymaps are for plugins loaded by dein or vim-plug
-    -- and will be remove in the future
-    -- Floaterm
     ["n|<leader>e"] = display "Extensions",
-
-    -- AnyJump
-    ["n|<leader>ej"] = display "AnyJump",
-    ["n|<leader>ej<space>"] = display "Jump",
-    ["n|<leader>ejb"] = display "JumpBack",
-    ["n|<leader>ejl"] = display "JumpLastResults",
-
-    -- AsyncRun
-    ["n|<leader>r"] = display "AsyncRun",
-    ["n|<leader>r<space>"] = display "Run",
-    ["n|<leader>rp"] = display "Project Build",
-    ["n|<leader>rb"] = display "File Build",
-    ["n|<leader>rx"] = display "File Run",
-    ["n|<leader>rr"] = display "Project Run",
-
-    -- Search
-    ["n|<leader>s"] = display "Search",
-    ["n|<leader>sp"] = display "CtrlP",
-    ["n|<leader>sp<space>"] = display "CtrlP",
-
-    ["n|<leader>sf"] = display "FZF",
-    ["n|<leader>sf<space>"] = display "Files",
-
-    ["n|<leader>sl"] = display "Leaderf",
-    ["n|<leader>sl<space>"] = display "LeaderFile",
-
-    ["n|<leader>x"] = display "Edit",
-    ["n|<leader>xf"] = display "Format",
   }
   return maps
 end
