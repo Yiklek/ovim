@@ -53,7 +53,7 @@ local function custom_attach()
 end
 
 local servers = {
-  sumneko_lua = require "ovim.modules.lsp.server.lua",
+  lua_ls = require "ovim.modules.lsp.server.lua",
   clangd = require "ovim.modules.lsp.server.clangd",
   html = require "ovim.modules.lsp.server.html",
 }
