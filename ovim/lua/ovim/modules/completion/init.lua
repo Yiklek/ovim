@@ -32,6 +32,9 @@ return {
           dependencies = {
             {
               "SirVer/ultisnips",
+              init = function()
+                vim.g.UltiSnipsExpandTrigger = ""
+              end,
             },
           },
         },

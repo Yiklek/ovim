@@ -8,7 +8,7 @@ local km = require "ovim.misc.keymap"
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
-local map_s = km.map_s
+local map = km.map
 local display = km.display
 local K = {}
 local opts = {
@@ -73,6 +73,7 @@ function K.floaterm()
 
     ["n|<esc>"] = display "Floaterm",
     ["n|<esc><space>"] = map_cmd("FloatermToggle", opts):with_display "Floaterm Toggle",
+    ["n|<A-t>"] = map_cmd("FloatermToggle", opts):with_display "Floaterm Toggle",
     ["n|<esc>;"] = map_cmd("FloatermFirst", opts):with_display "First Terminal",
     ["n|<esc>'"] = map_cmd("FloatermLast", opts):with_display "Last Terminal",
     ["n|<esc>q"] = map_cmd("FloatermKill", opts):with_display "Kill Terminal",
@@ -88,13 +89,10 @@ function K.floaterm()
     ["n|<esc>["] = map_cmd("FloatermUpdate --wintype=vsplit --position=topleft --width=0.4", opts):with_display "Move to Left",
     ["n|<esc>]"] = map_cmd("FloatermUpdate --wintype=vsplit --position=botright --width=0.4", opts):with_display "Move to Right",
     ["n|<esc>\\"] = map_cmd("FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8", opts):with_display "Float",
-    ["n|<esc>j"] = map_s([[<c-w>j]], opts):with_display "Focus to Bottom",
-    ["n|<esc>k"] = map_cmd([[<c-w>k]], opts):with_display "Focus to Top",
-    ["n|<esc>h"] = map_cmd([[<c-w>h]], opts):with_display "Focus to Left",
-    ["n|<esc>l"] = map_cmd([[<c-w>l]], opts):with_display "Focus to Right",
 
     ["t|<esc>"] = display "Floaterm",
     ["t|<esc><space>"] = map_cmd("FloatermToggle", opts):with_display "Floaterm Toggle",
+    ["t|<A-t>"] = map_cmd("FloatermToggle", opts):with_display "Floaterm Toggle",
     ["t|<esc>;"] = map_cmd("FloatermFirst", opts):with_display "First Terminal",
     ["t|<esc>'"] = map_cmd("FloatermLast", opts):with_display "Last Terminal",
     ["t|<esc>q"] = map_cmd("FloatermKill", opts):with_display "Kill Terminal",
@@ -110,10 +108,6 @@ function K.floaterm()
     ["t|<esc>["] = map_cmd("FloatermUpdate --wintype=vsplit --position=topleft --width=0.4", opts):with_display "Move to Left",
     ["t|<esc>]"] = map_cmd("FloatermUpdate --wintype=vsplit --position=botright --width=0.4", opts):with_display "Move to Right",
     ["t|<esc>\\"] = map_cmd("FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8", opts):with_display "Float",
-    ["t|<esc>j"] = map_s([[<c-\><c-n><c-w>j]], opts):with_display "Focus to Bottom",
-    ["t|<esc>k"] = map_s([[<c-\><c-n><c-w>k]], opts):with_display "Focus to Top",
-    ["t|<esc>h"] = map_s([[<c-\><c-n><c-w>h]], opts):with_display "Focus to Left",
-    ["t|<esc>l"] = map_s([[<c-\><c-n><c-w>l]], opts):with_display "Focus to Right",
 
     ["v|<leader>ets"] = map_cmd("FloatermSend", opts),
   }

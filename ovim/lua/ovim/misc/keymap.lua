@@ -3,7 +3,7 @@ local rhs_options = {}
 
 function rhs_options:new()
   local instance = {
-    cmd = "",
+    rhs = "",
     opts = {
       display = {
         repr = nil,
@@ -31,64 +31,70 @@ function rhs_options:update_opts(opts)
 end
 
 function rhs_options:map_cmd(cmd_string, opts)
-  self.cmd = ("<cmd>%s<cr>"):format(cmd_string)
+  self.rhs = ("<cmd>%s<cr>"):format(cmd_string)
   self.opts.display.repr = cmd_string
   self:update_opts(opts)
   return self
 end
 
 function rhs_options:map_cr(cmd_string, opts)
-  self.cmd = (":%s<CR>"):format(cmd_string)
+  self.rhs = (":%s<CR>"):format(cmd_string)
   self.opts.display.repr = cmd_string
   self:update_opts(opts)
   return self
 end
 
 function rhs_options:map_args(cmd_string, opts)
-  self.cmd = (":%s<Space>"):format(cmd_string)
+  self.rhs = (":%s<Space>"):format(cmd_string)
   self.opts.display.repr = cmd_string
   self:update_opts(opts)
   return self
 end
 
 function rhs_options:map_cu(cmd_string, opts)
-  self.cmd = (":<C-u>%s<CR>"):format(cmd_string)
+  self.rhs = (":<C-u>%s<CR>"):format(cmd_string)
   self.opts.display.repr = cmd_string
   self:update_opts(opts)
   return self
 end
 
 function rhs_options:map_f(func, opts)
-  self.cmd = func
+  self.rhs = func
   self.opts.display.repr = ""
   self:update_opts(opts)
   return self
 end
 
-function rhs_options:map_s(key, opts)
-  self.cmd = key
+function rhs_options:map(key, opts)
+  self.rhs = key
   self.opts.display.repr = ""
   self:update_opts(opts)
   return self
 end
-
-function rhs_options:with_silent()
-  self.opts.map.silent = true
+local function with_helper(sub_opt, field, value)
+  if value ~= nil then
+    sub_opt[field] = silent
+  else
+    sub_opt[field] = true
+  end
+end
+function rhs_options:with_silent(silent)
+  with_helper(self.opts.map, "silent", silent)
   return self
 end
 
-function rhs_options:with_noremap()
-  self.opts.map.noremap = true
+function rhs_options:with_noremap(noremap)
+  with_helper(self.opts.map, "noremap", noremap)
   return self
 end
 
-function rhs_options:with_expr()
-  self.opts.map.expr = true
+function rhs_options:with_expr(expr)
+  with_helper(self.opts.map, "expr", expr)
   return self
 end
 
-function rhs_options:with_nowait()
-  self.opts.map.nowait = true
+function rhs_options:with_nowait(nowait)
+  with_helper(self.opts.map, "nowait", nowait)
   return self
 end
 
@@ -126,7 +132,7 @@ function pbind.map_f(func, opts)
   return ro:map_f(func, opts)
 end
 
-function pbind.map_s(key, opts)
+function pbind.map(key, opts)
   local ro = rhs_options:new()
   return ro:map_f(key, opts)
 end
@@ -148,23 +154,23 @@ function pbind.register_which_key()
 end
 
 function pbind.load(mapping, extra_opts)
-  for key, value in pairs(mapping) do
-    local mode, keymap = key:match "([^|]*)|?(.*)"
-    if type(value) == "table" then
-      local rhs = value.cmd
-      local opts = vim.tbl_deep_extend("force", value.opts, extra_opts or {})
+  for mode_lhs, ro in pairs(mapping) do
+    local mode, lhs = mode_lhs:match "([^|]*)|?(.*)"
+    if type(ro) == "table" then
+      local rhs = ro.rhs
+      local opts = vim.tbl_deep_extend("force", ro.opts, extra_opts or {})
       if opts.display.enable then
         local m = cache_keymaps[mode]
         if m == nil then
           m = {}
         end
         m = vim.tbl_deep_extend("force", m, {
-          [keymap] = { opts.display.repr },
+          [lhs] = { opts.display.repr },
         })
         cache_keymaps[mode] = m
       end
       if rhs ~= nil and rhs ~= "" then
-        vim.keymap.set(mode, keymap, rhs, opts.map)
+        vim.keymap.set(mode, lhs, rhs, opts.map)
       end
     end
   end

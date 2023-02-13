@@ -7,7 +7,7 @@ local km = require "ovim.misc.keymap"
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
-local map_s = km.map_s
+local map = km.map
 local display = km.display
 
 local opts = {

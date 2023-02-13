@@ -8,6 +8,7 @@ local km = require "ovim.misc.keymap"
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
+local map = km.map
 local display = km.display
 
 vim.cmd [[
@@ -132,6 +133,14 @@ local function basic()
     ["n|<leader>wj"] = display "Focus to Below",
     ["n|<leader>wk"] = display "Focus to Top",
     ["n|<leader>wl"] = display "Focus to Right",
+    ["n|<A-j>"] = map([[<c-w>j]], opts):with_display "Focus to Bottom",
+    ["n|<A-k>"] = map([[<c-w>k]], opts):with_display "Focus to Top",
+    ["n|<A-h>"] = map([[<c-w>h]], opts):with_display "Focus to Left",
+    ["n|<A-l>"] = map([[<c-w>l]], opts):with_display "Focus to Right",
+    ["t|<A-j>"] = map([[<c-w>j]], opts):with_display "Focus to Bottom",
+    ["t|<A-k>"] = map([[<c-w>k]], opts):with_display "Focus to Top",
+    ["t|<A-h>"] = map([[<c-w>h]], opts):with_display "Focus to Left",
+    ["t|<A-l>"] = map([[<c-w>l]], opts):with_display "Focus to Right",
 
     ["n|<leader>e"] = display "Extensions",
   }

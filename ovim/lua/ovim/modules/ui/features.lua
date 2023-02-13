@@ -206,6 +206,11 @@ return {
                 action = "Telescope oldfiles",
                 key = "o",
               },
+              {
+                desc = "Project",
+                action = "Telescope project",
+                key = "p",
+              },
             },
           },
         },
