@@ -2,6 +2,7 @@
 -- Author: Yiklek
 -- Description: search init
 -- Copyright (c) 2022 Yiklek
+local km = require "ovim.misc.keymap"
 local plugins = {
   ["nvim-telescope/telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
@@ -10,6 +11,9 @@ local plugins = {
     cmd = "Telescope",
     event = "VeryLazy",
     module = "telescope",
+    init = function()
+      km.load(require("ovim.modules.search.keymap").telescope())
+    end,
     config = function()
       require "ovim.misc.safe_require"("ovim.modules.search.config").telescope()
     end,

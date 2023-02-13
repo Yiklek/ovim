@@ -1,7 +1,7 @@
--- File: pack.lua
+-- File: lazy.lua
 -- Author: Yiklek
--- Description: pack
--- Copyright (c) 2022 Yiklek
+-- Description: lazy
+-- Copyright (c) 2023 Yiklek
 local sys = require "ovim.sys"
 
 local this = {}
@@ -19,6 +19,16 @@ local lazy_opts = {
     reset_packpath = false,
     rtp = {
       reset = false,
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
     },
   },
 }

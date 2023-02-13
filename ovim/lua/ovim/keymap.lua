@@ -139,8 +139,6 @@ local function basic()
 end
 
 km.load(basic())
-km.load(require("ovim.modules.search.keymap").telescope())
-km.load(require("ovim.modules.lsp.keymap").vista())
 
 return {
   basic = basic,

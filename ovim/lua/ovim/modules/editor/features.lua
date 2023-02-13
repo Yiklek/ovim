@@ -81,7 +81,7 @@ return {
     p["rhysd/committia.vim"] = {
       "rhysd/committia.vim",
       ft = { "gitcommit", "gitrebase" },
-      event = "BufReadPre",
+      event = "BufRead",
     }
   end,
   ime = function(p, opts)

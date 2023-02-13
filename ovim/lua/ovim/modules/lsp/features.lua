@@ -3,12 +3,15 @@
 -- Description: editor features
 -- Last Modified: 02 18, 2022
 -- Copyright (c) 2022 ovim
-
+local km = require "ovim.misc.keymap"
 return {
   vista = function(p, opts)
     p["liuchengxu/vista.vim"] = {
       "liuchengxu/vista.vim",
       cmd = "Vista",
+      init = function()
+        km.load(require("ovim.modules.lsp.keymap").vista())
+      end,
       config = function()
         require "ovim.misc.safe_require"("ovim.modules.lsp.config").vista()
       end,
