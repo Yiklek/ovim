@@ -28,6 +28,7 @@ function K.telescope()
     ["n|<leader>stf"] = map_cr("Telescope find_files", opts),
     ["n|<leader>sto"] = map_cr("Telescope oldfiles", opts),
     ["n|<leader>stu"] = map_cr("Telescope undo", opts),
+    ["n|<leader>stp"] = map_cr("Telescope project", opts),
   }
 end
 

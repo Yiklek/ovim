@@ -1,5 +1,1 @@
 pynvim
-toml
-python-lsp-server[all]
-autopep8
-sqlparse
