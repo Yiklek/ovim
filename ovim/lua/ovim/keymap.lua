@@ -100,6 +100,17 @@ tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
 
 ]]
 
+local opts = {
+  display = {
+    enable = true,
+  },
+  map = {
+    noremap = true,
+    silent = true,
+    nowait = true,
+  },
+}
+
 local function basic()
   local maps = {
     ["n|<leader>\\"] = display "vsplit",
@@ -137,10 +148,10 @@ local function basic()
     ["n|<A-k>"] = map([[<c-w>k]], opts):with_display "Focus to Top",
     ["n|<A-h>"] = map([[<c-w>h]], opts):with_display "Focus to Left",
     ["n|<A-l>"] = map([[<c-w>l]], opts):with_display "Focus to Right",
-    ["t|<A-j>"] = map([[<c-w>j]], opts):with_display "Focus to Bottom",
-    ["t|<A-k>"] = map([[<c-w>k]], opts):with_display "Focus to Top",
-    ["t|<A-h>"] = map([[<c-w>h]], opts):with_display "Focus to Left",
-    ["t|<A-l>"] = map([[<c-w>l]], opts):with_display "Focus to Right",
+    ["t|<A-j>"] = map([[<c-\><c-n><c-w>j]], opts):with_display "Focus to Bottom",
+    ["t|<A-k>"] = map([[<c-\><c-n><c-w>k]], opts):with_display "Focus to Top",
+    ["t|<A-h>"] = map([[<c-\><c-n><c-w>h]], opts):with_display "Focus to Left",
+    ["t|<A-l>"] = map([[<c-\><c-n><c-w>l]], opts):with_display "Focus to Right",
 
     ["n|<leader>e"] = display "Extensions",
   }
