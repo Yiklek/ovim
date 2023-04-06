@@ -77,7 +77,6 @@ end
 
 function C.lualine()
   -- ovim.pack.load({ "nvim-treesitter", "nvim-gps" })
-  local gps = require "nvim-gps"
   local ui_config = require("ovim.config").modules.ui
   local lualine_c = ""
   if
@@ -87,7 +86,8 @@ function C.lualine()
     lualine_c = "lsp_progress"
   end
   local function gps_content()
-    if gps.is_available() then
+    local gps = require "ovim.misc.safe_require" "nvim-gps"
+    if gps ~= nil and gps.is_available() then
       return gps.get_location()
     else
       return ""
@@ -138,8 +138,18 @@ function C.lualine()
       lualine_a = { "mode" },
       lualine_b = { { "branch" }, { "diff" } },
       lualine_c = {
-        { lualine_c },
-        { gps_content, cond = gps.is_available },
+        "filename",
+        {
+          gps_content,
+          cond = function()
+            local gps = require "ovim.misc.safe_require" "nvim-gps"
+            if gps ~= nil then
+              return gps.is_available()
+            end
+            return false
+          end,
+        },
+        lualine_c,
       },
       lualine_x = {
         {
@@ -149,10 +159,8 @@ function C.lualine()
         },
       },
       lualine_y = {
-        {
-          "filetype",
-          "encoding",
-        },
+        "filetype",
+        "encoding",
         {
           "fileformat",
           icons_enabled = true,

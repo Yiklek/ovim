@@ -24,21 +24,6 @@ return {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-cmdline",
         "kdheepak/cmp-latex-symbols",
-        {
-          "quangnguyen30192/cmp-nvim-ultisnips",
-          config = function()
-            require "ovim.misc.safe_require"("cmp_nvim_ultisnips").setup {}
-          end,
-          dependencies = {
-            {
-              "SirVer/ultisnips",
-              init = function()
-                vim.g.UltiSnipsExpandTrigger = ""
-              end,
-            },
-          },
-        },
-        "honza/vim-snippets",
       },
     },
     {
