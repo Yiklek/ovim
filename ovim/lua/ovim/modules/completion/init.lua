@@ -34,6 +34,7 @@ return {
       event = "InsertEnter",
       dependencies = {
         "rafamadriz/friendly-snippets",
+        "honza/vim-snippets",
       },
     },
   },

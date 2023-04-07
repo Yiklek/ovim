@@ -16,7 +16,7 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
-nnoremap <silent> <esc><esc> :silent! nohlsearch<cr>
+nnoremap <silent> =<esc> :silent! nohlsearch<cr>
 nnoremap <leader>ve<space> :edit $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
 "粘贴模式

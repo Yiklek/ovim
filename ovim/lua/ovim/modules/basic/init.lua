@@ -31,30 +31,14 @@ local plugins = {
     level = 0,
     cmd = { "SudaRead", "SudaWrite" },
   },
-  ["skywind3000/asynctasks.vim"] = {
-    "skywind3000/asynctasks.vim",
+  ["stevearc/overseer.nvim"] = {
+    "stevearc/overseer.nvim",
     event = "VeryLazy",
     config = function()
-      vim.g.asynctasks_extra_config = {
-        ovim.const.root_path .. "/config/asynctasks/tasks.ini",
-      }
-      vim.g.asynctasks_term_pos = "bottom"
-      km.load {
-        ["n|<leader>r"] = display "Run",
-        ["n|<leader>rp"] = map_cmd("AsyncTask project-build"):with_display "Project Build",
-        ["n|<leader>rb"] = map_cmd("AsyncTask file-build"):with_display "File Build",
-        ["n|<leader>rx"] = map_cmd("AsyncTask file-run"):with_display "File Run",
-        ["n|<leader>rr"] = map_cmd("AsyncTask project-run"):with_display "Project Run",
+      require("overseer").setup {
+        templates = { "builtin", "ovim" },
       }
     end,
-    dependencies = {
-      {
-        "skywind3000/asyncrun.vim",
-        config = function()
-          vim.g.asyncrun_open = 10
-        end,
-      },
-    },
   },
 }
 return {

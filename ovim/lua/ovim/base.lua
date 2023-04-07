@@ -22,3 +22,4 @@ vim.o.mouse = "a"
 vim.o.backspace = "indent,eol,start"
 vim.o.splitbelow = true
 vim.o.splitright = true
+vim.o.timeoutlen = 200
