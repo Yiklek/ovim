@@ -7,6 +7,14 @@ local plugins = {
     "rebelot/kanagawa.nvim",
     lazy = false,
   },
+  ["rmehri01/onenord.nvim"] = {
+    "rmehri01/onenord.nvim",
+    lazy = false,
+  },
+  ["sainnhe/everforest"] = {
+    "sainnhe/everforest",
+    lazy = false,
+    }
 }
 local features = require("ovim.misc.features").setup_module_features("ui", plugins)
 return {

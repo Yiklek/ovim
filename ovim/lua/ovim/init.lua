@@ -79,5 +79,5 @@ end
 require "ovim.keymap"
 
 function ovim.setup(options) end
-vim.cmd [[colorscheme kanagawa]]
+vim.cmd [[colorscheme onenord]]
 return ovim

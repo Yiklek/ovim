@@ -96,6 +96,12 @@ return {
         ime = {
           enable = false,
         },
+        multi_cursor = {
+          enable = true,
+        },
+        movement = {
+          enable = true,
+        },
       },
     },
     lsp = {

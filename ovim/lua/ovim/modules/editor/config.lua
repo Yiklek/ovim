@@ -167,4 +167,9 @@ function C.diffview()
   }
 end
 
+function C.leap()
+    require('leap').add_default_mappings()
+    km.load(keymap.leap())
+end
+
 return C

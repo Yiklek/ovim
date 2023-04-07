@@ -11,6 +11,7 @@ local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local map_f = km.map_f
+local map = km.map
 local display = km.display
 
 function K.nvim_comment()
@@ -61,6 +62,16 @@ end
 function K.remove_space()
   return {
     ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):with_display "RemoveTraialingSpace",
+  }
+end
+function K.leap()
+  return {
+    ["n|<leader>]"] = map("<Plug>(leap-forward-to)"):with_display "ForwardMove",
+    ["x|<leader>]"] = map("<Plug>(leap-forward-to)"):with_display "ForwardMove",
+    ["o|<leader>]"] = map("<Plug>(leap-forward-to)"):with_display "ForwardMove",
+    ["n|<leader>["] = map("<Plug>(leap-backward-to)"):with_display "BackwardMove",
+    ["x|<leader>["] = map("<Plug>(leap-backward-to)"):with_display "BackwardMove",
+    ["o|<leader>["] = map("<Plug>(leap-backward-to)"):with_display "BackwardMove",
   }
 end
 

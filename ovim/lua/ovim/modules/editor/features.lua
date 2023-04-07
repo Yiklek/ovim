@@ -70,7 +70,7 @@ return {
   accelerated_jk = function(p, opts)
     p["rainbowhxch/accelerated-jk.nvim"] = {
       "rainbowhxch/accelerated-jk.nvim",
-      event = "BufRead",
+      event = "VeryLazy",
       config = function()
         vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_gj)", {})
         vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_gk)", {})
@@ -81,7 +81,7 @@ return {
     p["rhysd/committia.vim"] = {
       "rhysd/committia.vim",
       ft = { "gitcommit", "gitrebase" },
-      event = "BufRead",
+      event = "BufReadPre",
     }
   end,
   ime = function(p, opts)
@@ -107,7 +107,30 @@ return {
   multi_cursor = function(p, opts)
     p["mg979/vim-visual-multi"] = {
       "mg979/vim-visual-multi",
+      event = "BufReadPost",
+    }
+  end,
+  movement = function(p, opts)
+    p["ggandor/leap.nvim"] = {
+      "ggandor/leap.nvim",
       event = "BufRead",
+      config = require("ovim.modules.editor.config").leap,
+    }
+    p["ggandor/flit.nvim"] = {
+      "ggandor/flit.nvim",
+      event = "BufRead",
+      config = function()
+        require("flit").setup {
+          keys = { f = "f", F = "F", t = "t", T = "T" },
+          -- A string like "nv", "nvo", "o", etc.
+          labeled_modes = "v",
+          multiline = true,
+          opts = {},
+        }
+      end,
+      dependencies = {
+        "ggandor/leap.nvim",
+      },
     }
   end,
 }
