@@ -9,6 +9,7 @@ local keymap = require "ovim.modules.ui.keymap"
 function C.nvim_treesitter()
   vim.api.nvim_command "set foldmethod=expr"
   vim.api.nvim_command "set foldexpr=nvim_treesitter#foldexpr()"
+  vim.o.foldlevelstart = 99
   local parser_install_dir = ovim.const.cache_path .. "/treesitter/paser"
   vim.opt.runtimepath:append(parser_install_dir)
   require("nvim-treesitter.configs").setup {
