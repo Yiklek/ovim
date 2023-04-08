@@ -14,7 +14,7 @@ ovim.util = require "ovim.misc.util"
 if ovim.util.has_win() then
   ovim.const.cache_path = vim.env.userprofile .. "/.cache/ovim"
 else
-  local cache_path = vim.env.XDG_CACHE_HOME or vim.env.HOME .. "/.cache"
+  local cache_path = vim.env.XDG_CACHE_HOME or (vim.env.HOME .. "/.cache")
   ovim.const.cache_path = cache_path .. "/ovim"
 end
 vim.opt.packpath:append(ovim.const.cache_path)

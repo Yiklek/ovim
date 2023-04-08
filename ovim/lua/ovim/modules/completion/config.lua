@@ -29,6 +29,7 @@ function C.nvim_cmp()
   -- if not packer_plugins["cmp-under-comparator"].loaded then
   --     vim.cmd [[packadd cmp-under-comparator]]
   -- end
+  ---@diagnostic disable-next-line: redundant-parameter
   cmp.setup {
     window = {
       completion = cmp.config.window.bordered(),
@@ -110,6 +111,8 @@ function C.nvim_cmp()
           cmp.select_next_item()
         elseif has_words_before() then
           cmp.complete()
+        elseif require("luasnip").expand_or_jumpable() then
+          vim.fn.feedkeys(t "<Plug>luasnip-expand-or-jump", "")
         else
           fallback()
         end
@@ -117,24 +120,12 @@ function C.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<C-h>"] = function(fallback)
-        if require("luasnip").jumpable(-1) then
+        elseif require("luasnip").jumpable(-1) then
           vim.fn.feedkeys(t "<Plug>luasnip-jump-prev", "")
         else
           fallback()
         end
-      end,
-      ["<C-l>"] = function(fallback)
-        if require("luasnip").expand_or_jumpable() then
-          vim.fn.feedkeys(t "<Plug>luasnip-expand-or-jump", "")
-        else
-          fallback()
-        end
-      end,
+      end, { "i", "s" }),
     },
     snippet = {
       expand = function(args)
@@ -202,6 +193,7 @@ function C.nvim_cmp()
   })
   vim.o.wildmenu = false
 end
+
 function C.lua_snip()
   require("luasnip").config.set_config {
     history = true,
@@ -210,4 +202,5 @@ function C.lua_snip()
   require("luasnip/loaders/from_vscode").lazy_load()
   require("luasnip/loaders/from_snipmate").lazy_load()
 end
+
 return C
