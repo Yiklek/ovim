@@ -35,12 +35,9 @@ return {
       end,
       dependencies = {
         {
-          "SmiteshP/nvim-gps",
-          dependencies = {
-            { "nvim-treesitter" },
-          },
+          "SmiteshP/nvim-navic",
           config = function()
-            require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_gps()
+            require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_navic()
           end,
         },
       },

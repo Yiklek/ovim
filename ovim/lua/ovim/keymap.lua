@@ -16,12 +16,11 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
-nnoremap <silent> =<esc> :silent! nohlsearch<cr>
-nnoremap <leader>ve<space> :edit $MYVIMRC<cr>
-nnoremap <leader>vs :source $MYVIMRC<cr>
+nnoremap <silent> =<esc> <cmd>silent! nohlsearch<cr>
+
 "粘贴模式
 set pastetoggle=<F4>
-nmap <F5> :redraw!<cr>
+nmap <F5> <cmd>redraw!<cr>
 
 "窗口快捷键
 "l-\ 左右分割
@@ -113,6 +112,7 @@ local opts = {
 
 local function basic()
   local maps = {
+    ["n|<leader>x"] = display "Edit",
     ["n|<leader>\\"] = display "vsplit",
     ["n|<leader>-"] = display "split",
     ["n|<leader>q"] = display "Exit",

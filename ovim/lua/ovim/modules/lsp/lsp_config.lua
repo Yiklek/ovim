@@ -40,16 +40,23 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
 }
 
-local function custom_attach()
-  require("lsp_signature").on_attach {
-    bind = true,
-    use_lspsaga = false,
-    floating_window = true,
-    fix_pos = true,
-    hint_enable = true,
-    hi_parameter = "Search",
-    handler_opts = { "double" },
-  }
+local function custom_attach(client, bufnr)
+  local signature = require "ovim.misc.safe_require" "lsp_signature"
+  if signature ~= nil then
+    require("lsp_signature").on_attach {
+      bind = true,
+      use_lspsaga = false,
+      floating_window = true,
+      fix_pos = true,
+      hint_enable = true,
+      hi_parameter = "Search",
+      handler_opts = { "double" },
+    }
+  end
+  local navic = require "ovim.misc.safe_require" "nvim-navic"
+  if navic ~= nil and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
 end
 
 local servers = {

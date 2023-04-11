@@ -10,9 +10,10 @@ function C.nvim_treesitter()
   vim.api.nvim_command "set foldmethod=expr"
   vim.api.nvim_command "set foldexpr=nvim_treesitter#foldexpr()"
   vim.o.foldlevelstart = 99
-  local parser_install_dir = ovim.const.cache_path .. "/treesitter/paser"
+  local parser_install_dir = ovim.const.cache_path .. "/treesitter"
   vim.opt.runtimepath:append(parser_install_dir)
   require("nvim-treesitter.configs").setup {
+    parser_install_dir = parser_install_dir,
     ensure_installed = {
       "c",
       "cpp",
@@ -34,7 +35,84 @@ function C.nvim_treesitter()
       -- Instead of true it can also be a list of languages
       additional_vim_regex_highlighting = true,
     },
-    parser_install_dir = parser_install_dir,
+    textobjects = {
+      select = {
+        enable = true,
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          -- You can optionally set descriptions to the mappings (used in the desc parameter of
+          -- nvim_buf_set_keymap) which plugins like which-key display
+          ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+          -- You can also use captures from other query groups like `locals.scm`
+          ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+        },
+        -- You can choose the select mode (default is charwise 'v')
+        --
+        -- Can also be a function which gets passed a table with the keys
+        -- * query_string: eg '@function.inner'
+        -- * method: eg 'v' or 'o'
+        -- and should return the mode ('v', 'V', or '<c-v>') or a table
+        -- mapping query_strings to modes.
+        selection_modes = {
+          ["@parameter.outer"] = "v", -- charwise
+          ["@function.outer"] = "V", -- linewise
+          ["@class.outer"] = "<c-v>", -- blockwise
+        },
+        -- If you set this to `true` (default is `false`) then any textobject is
+        -- extended to include preceding or succeeding whitespace. Succeeding
+        -- whitespace has priority in order to act similarly to eg the built-in
+        -- `ap`.
+        --
+        -- Can also be a function which gets passed a table with the keys
+        -- * query_string: eg '@function.inner'
+        -- * selection_mode: eg 'v'
+        -- and should return true of false
+        include_surrounding_whitespace = true,
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          ["]m"] = "@function.outer",
+          ["]["] = { query = "@class.outer", desc = "Next class start" },
+          --
+          -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+          ["]o"] = "@loop.*",
+          -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+          --
+          -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+          -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+          ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+          ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+        },
+        goto_next_end = {
+          ["]M"] = "@function.outer",
+          ["]]"] = "@class.outer",
+        },
+        goto_previous_start = {
+          ["[m"] = "@function.outer",
+          ["[["] = "@class.outer",
+        },
+        goto_previous_end = {
+          ["[M"] = "@function.outer",
+          ["[]"] = "@class.outer",
+        },
+        -- Below will go to either the start or the end, whichever is closer.
+        -- Use if you want more granular movements
+        -- Make it even more gradual by adding multiple queries and regex.
+        goto_next = {
+          ["]d"] = "@conditional.outer",
+        },
+        goto_previous = {
+          ["[d"] = "@conditional.outer",
+        },
+      },
+    },
   }
 end
 
@@ -54,26 +132,8 @@ function C.indent_guides()
   }
 end
 
-function C.nvim_gps()
-  require("nvim-gps").setup {
-    icons = {
-      ["class-name"] = " ", -- Classes and class-like objects
-      ["function-name"] = " ", -- Functions
-      ["method-name"] = " ", -- Methods (functions inside class-like objects)
-    },
-    languages = {
-      -- You can disable any language individually here
-      ["c"] = true,
-      ["cpp"] = true,
-      ["go"] = true,
-      ["java"] = true,
-      ["javascript"] = true,
-      ["lua"] = true,
-      ["python"] = true,
-      ["rust"] = true,
-    },
-    separator = " > ",
-  }
+function C.nvim_navic()
+  require("nvim-navic").setup()
 end
 
 function C.lualine()
@@ -86,10 +146,10 @@ function C.lualine()
     ovim.pack.load "lualine-lsp-progress"
     lualine_c = "lsp_progress"
   end
-  local function gps_content()
-    local gps = require "ovim.misc.safe_require" "nvim-gps"
-    if gps ~= nil and gps.is_available() then
-      return gps.get_location()
+  local function navic_content()
+    local navic = require "ovim.misc.safe_require" "nvim-navic"
+    if navic ~= nil and navic.is_available() then
+      return navic.get_location()
     else
       return ""
     end
@@ -141,11 +201,11 @@ function C.lualine()
       lualine_c = {
         "filename",
         {
-          gps_content,
+          navic_content,
           cond = function()
-            local gps = require "ovim.misc.safe_require" "nvim-gps"
-            if gps ~= nil then
-              return gps.is_available()
+            local navic = require "ovim.misc.safe_require" "nvim-navic"
+            if navic ~= nil then
+              return navic.is_available()
             end
             return false
           end,
@@ -242,8 +302,6 @@ function C.nvim_tree()
   require "ovim.misc.safe_require"("nvim-tree").setup {
     disable_netrw = true,
     hijack_netrw = true,
-    open_on_setup = false,
-    ignore_ft_on_setup = {},
     open_on_tab = false,
     hijack_cursor = true,
     update_cwd = false,
@@ -332,7 +390,7 @@ function C.which_key()
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
-    ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
+    ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
     hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ ", "<Plug>", "<plug>" }, -- hide mapping boilerplate
     key_labels = {
       -- override the label used to display some keys. It doesn't effect WK in any other way.
@@ -389,25 +447,19 @@ function C.dressing()
     input = {
       -- Set to false to disable the vim.ui.input implementation
       enabled = true,
-
       -- Default prompt string
       default_prompt = "Input:",
-
       -- Can be 'left', 'right', or 'center'
       prompt_align = "left",
-
       -- When true, <Esc> will close the modal
       insert_only = true,
-
       -- When true, input will start in insert mode.
       start_in_insert = true,
-
       -- These are passed to nvim_open_win
       anchor = "SW",
       border = "rounded",
       -- 'editor' and 'win' will default to being centered
       relative = "editor",
-
       -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
       prefer_width = 40,
       width = nil,
@@ -415,7 +467,6 @@ function C.dressing()
       -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
       max_width = { 140, 0.9 },
       min_width = { 20, 0.2 },
-
       buf_options = {},
       win_options = {
         -- Window transparency (0-100)
@@ -423,7 +474,6 @@ function C.dressing()
         -- Disable line wrapping
         wrap = false,
       },
-
       -- Set to `false` to disable
       mappings = {
         n = {
@@ -437,31 +487,25 @@ function C.dressing()
           ["<Down>"] = "HistoryNext",
         },
       },
-
       override = function(conf)
         -- This is the config that will be passed to nvim_open_win.
         -- Change values here to customize the layout
         return conf
       end,
-
       -- see :help dressing_get_config
       get_config = nil,
     },
     select = {
       -- Set to false to disable the vim.ui.select implementation
       enabled = true,
-
       -- Priority list of preferred vim.select implementations
       backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
-
       -- Trim trailing `:` from prompt
       trim_prompt = true,
-
       -- Options for telescope selector
       -- These are passed into the telescope picker directly. Can be used like:
       -- telescope = require('telescope.themes').get_ivy({...})
       telescope = nil,
-
       -- Options for fzf selector
       fzf = {
         window = {
@@ -469,7 +513,6 @@ function C.dressing()
           height = 0.4,
         },
       },
-
       -- Options for fzf_lua selector
       fzf_lua = {
         winopts = {
@@ -477,7 +520,6 @@ function C.dressing()
           height = 0.4,
         },
       },
-
       -- Options for nui Menu
       nui = {
         position = "50%",
@@ -498,7 +540,6 @@ function C.dressing()
         min_width = 40,
         min_height = 10,
       },
-
       -- Options for built-in selector
       builtin = {
         -- These are passed to nvim_open_win
@@ -506,13 +547,11 @@ function C.dressing()
         border = "rounded",
         -- 'editor' and 'win' will default to being centered
         relative = "editor",
-
         buf_options = {},
         win_options = {
           -- Window transparency (0-100)
           winblend = 10,
         },
-
         -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
         -- the min_ and max_ options can be a list of mixed types.
         -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
@@ -522,24 +561,20 @@ function C.dressing()
         height = nil,
         max_height = 0.9,
         min_height = { 10, 0.2 },
-
         -- Set to `false` to disable
         mappings = {
           ["<Esc>"] = "Close",
           ["<C-c>"] = "Close",
           ["<CR>"] = "Confirm",
         },
-
         override = function(conf)
           -- This is the config that will be passed to nvim_open_win.
           -- Change values here to customize the layout
           return conf
         end,
       },
-
       -- Used to override format_item. See :help dressing-format
       format_item_override = {},
-
       -- see :help dressing_get_config
       get_config = nil,
     },
