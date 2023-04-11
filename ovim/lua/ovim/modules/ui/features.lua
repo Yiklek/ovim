@@ -40,6 +40,15 @@ return {
             require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_navic()
           end,
         },
+        {
+          "bartoszmaka/nvim-gps",
+          dependencies = {
+            { "nvim-treesitter" },
+          },
+          config = function()
+            require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_gps()
+          end,
+        },
       },
     }
   end,

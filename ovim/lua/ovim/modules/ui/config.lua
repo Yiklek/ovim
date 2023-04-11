@@ -136,6 +136,28 @@ function C.nvim_navic()
   require("nvim-navic").setup()
 end
 
+function C.nvim_gps()
+  require("nvim-gps").setup {
+    icons = {
+      ["class-name"] = " ", -- Classes and class-like objects
+      ["function-name"] = " ", -- Functions
+      ["method-name"] = " ", -- Methods (functions inside class-like objects)
+    },
+    languages = {
+      -- You can disable any language individually here
+      ["c"] = true,
+      ["cpp"] = true,
+      ["go"] = true,
+      ["java"] = true,
+      ["javascript"] = true,
+      ["lua"] = true,
+      ["python"] = true,
+      ["rust"] = true,
+    },
+    separator = " > ",
+  }
+end
+
 function C.lualine()
   -- ovim.pack.load({ "nvim-treesitter", "nvim-gps" })
   local ui_config = require("ovim.config").modules.ui
@@ -146,13 +168,27 @@ function C.lualine()
     ovim.pack.load "lualine-lsp-progress"
     lualine_c = "lsp_progress"
   end
-  local function navic_content()
+  local function context_content()
     local navic = require "ovim.misc.safe_require" "nvim-navic"
+    local gps = require "ovim.misc.safe_require" "nvim-gps"
     if navic ~= nil and navic.is_available() then
       return navic.get_location()
-    else
-      return ""
     end
+    if gps ~= nil and gps.is_available() then
+      return gps.get_location()
+    end
+    return ""
+  end
+  local function context_condition()
+    local navic = require "ovim.misc.safe_require" "nvim-navic"
+    local gps = require "ovim.misc.safe_require" "nvim-gps"
+    if navic ~= nil and navic.is_available() then
+      return true
+    end
+    if gps ~= nil and gps.is_available() then
+      return true
+    end
+    return false
   end
 
   local simple_sections = {
@@ -201,14 +237,8 @@ function C.lualine()
       lualine_c = {
         "filename",
         {
-          navic_content,
-          cond = function()
-            local navic = require "ovim.misc.safe_require" "nvim-navic"
-            if navic ~= nil then
-              return navic.is_available()
-            end
-            return false
-          end,
+          context_content,
+          cond = context_condition,
         },
         lualine_c,
       },
