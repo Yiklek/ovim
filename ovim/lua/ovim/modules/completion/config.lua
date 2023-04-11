@@ -26,9 +26,6 @@ function C.nvim_cmp()
   end
 
   local cmp = require "cmp"
-  -- if not packer_plugins["cmp-under-comparator"].loaded then
-  --     vim.cmd [[packadd cmp-under-comparator]]
-  -- end
   ---@diagnostic disable-next-line: redundant-parameter
   cmp.setup {
     window = {
@@ -37,14 +34,15 @@ function C.nvim_cmp()
     },
     sorting = {
       comparators = {
+        cmp.config.compare.locality,
+        cmp.config.compare.score,
+        cmp.config.compare.recently_used,
+        cmp.config.compare.kind,
+        cmp.config.compare.order,
+        cmp.config.compare.sort_text,
         cmp.config.compare.offset,
         cmp.config.compare.exact,
-        cmp.config.compare.score,
         require("cmp-under-comparator").under,
-        cmp.config.compare.kind,
-        cmp.config.compare.sort_text,
-        cmp.config.compare.length,
-        cmp.config.compare.order,
       },
     },
     formatting = {
@@ -109,10 +107,12 @@ function C.nvim_cmp()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
+        elseif require("luasnip").locally_jumpable(1) then
+          vim.fn.feedkeys(t "<Plug>luasnip-jump-next", "")
+          -- elseif require("luasnip").expand_or_locally_jumpable() then
+          -- vim.fn.feedkeys(t "<Plug>luasnip-expand-or-jump", "")
         elseif has_words_before() then
           cmp.complete()
-        elseif require("luasnip").expand_or_jumpable() then
-          vim.fn.feedkeys(t "<Plug>luasnip-expand-or-jump", "")
         else
           fallback()
         end
@@ -120,7 +120,7 @@ function C.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif require("luasnip").jumpable(-1) then
+        elseif require("luasnip").locally_jumpable(-1) then
           vim.fn.feedkeys(t "<Plug>luasnip-jump-prev", "")
         else
           fallback()
@@ -143,7 +143,6 @@ function C.nvim_cmp()
       { name = "orgmode" },
       { name = "buffer" },
       { name = "latex_symbols" },
-      { name = "ultisnips" },
     },
   }
 
@@ -197,7 +196,8 @@ end
 function C.lua_snip()
   require("luasnip").config.set_config {
     history = true,
-    updateevents = "TextChanged,TextChangedI",
+    region_check_events = { "InsertEnter", "InsertLeave", "CursorMoved", "CursorHold" },
+    delete_check_events = { "InsertEnter", "InsertLeave", "CursorMoved", "CursorHold" },
   }
   require("luasnip/loaders/from_vscode").lazy_load()
   require("luasnip/loaders/from_snipmate").lazy_load()
