@@ -23,3 +23,4 @@ vim.o.backspace = "indent,eol,start"
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.timeoutlen = 200
+vim.o.clipboard = "unnamedplus"
