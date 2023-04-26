@@ -79,5 +79,6 @@ end
 require "ovim.keymap"
 
 function ovim.setup(options) end
+
 vim.cmd [[colorscheme onenord]]
 return ovim

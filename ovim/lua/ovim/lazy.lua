@@ -7,6 +7,7 @@ local sys = require "ovim.sys"
 local this = {}
 this.__index = this
 
+local lazy_path = ovim.const.cache_path .. "/pack/ovim/opt/lazy.nvim"
 local lazy_opts = {
   root = ovim.const.cache_path .. "/lazy/plugins",
   defaults = {
@@ -55,6 +56,20 @@ function this.init()
   end
 
   ovim.lazy.setup(vim.tbl_values(config.plugins), lazy_opts)
+  vim.api.nvim_create_user_command("LazyUpdate", function()
+    local Job = require "plenary.job"
+    Job:new({
+      command = "git",
+      args = { "--work-tree", lazy_path, "pull" },
+      on_exit = function(j, return_val)
+        local level = vim.log.levels.INFO
+        if return_val ~= 0 then
+          level = vim.log.levels.WARN
+        end
+        vim.notify(j:result()[1] or "LazyUpdate failed.", level, {})
+      end,
+    }):start()
+  end, {})
 end
 
 return this
