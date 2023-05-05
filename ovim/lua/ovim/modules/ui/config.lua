@@ -21,7 +21,7 @@ function C.nvim_treesitter()
       "rust",
       "vim",
       "javascript",
-      --"lua",
+      "lua",
       "toml",
       "json",
       "go",
@@ -136,30 +136,7 @@ function C.nvim_navic()
   require("nvim-navic").setup()
 end
 
-function C.nvim_gps()
-  require("nvim-gps").setup {
-    icons = {
-      ["class-name"] = " ", -- Classes and class-like objects
-      ["function-name"] = " ", -- Functions
-      ["method-name"] = " ", -- Methods (functions inside class-like objects)
-    },
-    languages = {
-      -- You can disable any language individually here
-      ["c"] = true,
-      ["cpp"] = true,
-      ["go"] = true,
-      ["java"] = true,
-      ["javascript"] = true,
-      ["lua"] = true,
-      ["python"] = true,
-      ["rust"] = true,
-    },
-    separator = " > ",
-  }
-end
-
 function C.lualine()
-  -- ovim.pack.load({ "nvim-treesitter", "nvim-gps" })
   local ui_config = require("ovim.config").modules.ui
   local lualine_c = ""
   if
@@ -170,22 +147,14 @@ function C.lualine()
   end
   local function context_content()
     local navic = require "ovim.misc.safe_require" "nvim-navic"
-    local gps = require "ovim.misc.safe_require" "nvim-gps"
     if navic ~= nil and navic.is_available() then
       return navic.get_location()
-    end
-    if gps ~= nil and gps.is_available() then
-      return gps.get_location()
     end
     return ""
   end
   local function context_condition()
     local navic = require "ovim.misc.safe_require" "nvim-navic"
-    local gps = require "ovim.misc.safe_require" "nvim-gps"
     if navic ~= nil and navic.is_available() then
-      return true
-    end
-    if gps ~= nil and gps.is_available() then
       return true
     end
     return false
