@@ -42,4 +42,8 @@ function C.null_ls()
   }
 end
 
+function C.inlayhints()
+    require("lsp-inlayhints").setup()
+end
+
 return C

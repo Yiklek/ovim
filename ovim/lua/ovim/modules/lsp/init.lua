@@ -16,6 +16,7 @@ local plugins = {
       {
         "mason.nvim",
         "ray-x/lsp_signature.nvim",
+        "lvimuser/lsp-inlayhints.nvim",
       },
     },
   },
@@ -43,6 +44,13 @@ local plugins = {
       require "ovim.misc.safe_require"("ovim.modules.lsp.config").null_ls()
     end,
   },
+  ["lvimuser/lsp-inlayhints.nvim"] = {
+    "lvimuser/lsp-inlayhints.nvim",
+    event = "BufReadPost",
+    config = function()
+      require "ovim.misc.safe_require"("ovim.modules.lsp.config").inlayhints()
+    end,
+    }
 }
 local features = require("ovim.misc.features").setup_module_features("lsp", plugins)
 return {
