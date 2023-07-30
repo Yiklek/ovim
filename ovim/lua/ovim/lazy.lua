@@ -34,7 +34,7 @@ local lazy_opts = {
 }
 
 function this.init()
-  if not vim.uv.fs_stat(lazy_path) then
+  if not vim.loop.fs_stat(lazy_path) then
     -- bootstrap lazy.nvim
     vim.fn.system { "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazy_path }
   end
