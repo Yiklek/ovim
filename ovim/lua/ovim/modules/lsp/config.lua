@@ -30,7 +30,7 @@ function C.null_ls()
   local null_ls = require "null-ls"
   local formatting = null_ls.builtins.formatting
   -- local completion = null_ls.builtins.completion
-  null_ls.setup {
+  local opts = {
     log_level = "error",
     sources = {
       formatting.stylua,
@@ -40,10 +40,8 @@ function C.null_ls()
       formatting.fixjson,
     },
   }
-end
-
-function C.inlayhints()
-    require("lsp-inlayhints").setup()
+  -- table.insert(opts.sources, formatting.prettierd)
+  null_ls.setup(opts)
 end
 
 return C

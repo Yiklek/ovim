@@ -43,6 +43,17 @@ local plugins = {
       "debugloop/telescope-undo.nvim",
     },
   },
+  ["nvim-pack/nvim-spectre"] = {
+    "nvim-pack/nvim-spectre",
+    cmd = "Spectre",
+    event = "VeryLazy",
+    opts = { open_cmd = "noswapfile vnew" },
+    keys = {
+      -- stylua: ignore start
+      { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)", },
+      -- stylua: ignore end
+    },
+  },
 }
 local features = require("ovim.misc.features").setup_module_features("search", plugins)
 return {

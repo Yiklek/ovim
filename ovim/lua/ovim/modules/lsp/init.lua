@@ -10,7 +10,6 @@ local plugins = {
     event = "VeryLazy",
     config = function()
       require "ovim.misc.safe_require"("ovim.modules.lsp.config").nvim_lsp()
-      -- require("ovim.modules.lsp.config").nvim_lsp()
     end,
     dependencies = {
       {
@@ -44,19 +43,11 @@ local plugins = {
       require "ovim.misc.safe_require"("ovim.modules.lsp.config").null_ls()
     end,
   },
-  ["lvimuser/lsp-inlayhints.nvim"] = {
-    "lvimuser/lsp-inlayhints.nvim",
-    event = "BufReadPost",
-    config = function()
-      require "ovim.misc.safe_require"("ovim.modules.lsp.config").inlayhints()
-    end,
-    }
 }
 local features = require("ovim.misc.features").setup_module_features("lsp", plugins)
 return {
   name = "lsp",
   level = 1,
-  condition = "vim.g['ovim#modules#lsp'] and vim.g['ovim#modules#lsp'].method == 'nvim_lsp'",
   plugins = plugins,
   features = features,
 }

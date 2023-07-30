@@ -155,7 +155,7 @@ def install(parser, args):
     if not isfile(ovim_config_init):
         os.symlink(join(basedir, 'init.lua'), ovim_config_init)
 
-    lazy_path = join(ovim_cache_dir, 'pack', 'ovim', 'opt', 'lazy.nvim')
+    lazy_path = join(ovim_cache_dir, "lazy", "plugins", "lazy.nvim")
     if not isdir(lazy_path):
         cmd = 'git clone https://github.com/folke/lazy.nvim {}'.format(lazy_path)
         os.system(cmd)
@@ -191,15 +191,18 @@ def uninstall(parser, args):
 def download(parser, args):
     in_tar_dir_name = {"linux64": "linux64", "macos": "macos"}
     global local_dir
+    version = None
     from urllib.request import urlopen
-    import json
-
-    r = urlopen("https://api.github.com/repos/neovim/neovim/releases/latest")
-    s = r.read().decode()
-    r = json.loads(s)
-    lastest = r["tag_name"]
-    print("latest version is:", lastest)
-    download_url = "https://github.com/neovim/neovim/releases/download/{}/nvim-{}.tar.gz".format(lastest, args.arch)
+    if args.nightly:
+        version = "nightly"
+    else:
+        import json
+        r = urlopen("https://api.github.com/repos/neovim/neovim/releases/latest")
+        s = r.read().decode()
+        r = json.loads(s)
+        version = r["tag_name"]
+    print("latest version is:", version)
+    download_url = "https://github.com/neovim/neovim/releases/download/{}/nvim-{}.tar.gz".format(version, args.arch)
     import tarfile
     import tempfile
     print("download from:", download_url)
@@ -235,14 +238,16 @@ def create_arg_parser():
     parser_install = subparsers.add_parser(
         'install', aliases=['i'], help='install vim config')
     parser_install.set_defaults(func=install)
-    parser_install.add_argument('target', metavar='TARGET', choices=['nvim'], default='nvim', help='option choices: nvim. default: nvim', nargs='?')
+    parser_install.add_argument('target', metavar='TARGET', choices=[
+                                'nvim'], default='nvim', help='option choices: nvim. default: nvim', nargs='?')
     parser_install.add_argument('-d', '--depend', dest='install_depend', type=str,
                                 action='append', nargs='?', help='install dependency.example: -d="-i-p" -d="-n"')
     # uninstall
     parser_uninstall = subparsers.add_parser(
         'uninstall', aliases=['u'], help='uninstall nvim config')
     parser_uninstall.set_defaults(func=uninstall)
-    parser_uninstall.add_argument('target', metavar='TARGET', choices=['nvim'], default='nvim', help='option choices: nvim. default: nvim', nargs='?')
+    parser_uninstall.add_argument('target', metavar='TARGET', choices=[
+                                  'nvim'], default='nvim', help='option choices: nvim. default: nvim', nargs='?')
     parser_uninstall.add_argument('-r-c', '--remove-cache', dest='remove_cache',
                                   help='remove cache. default: False', default=False, action='store_true')
     # depend
@@ -270,6 +275,7 @@ def create_arg_parser():
     parser_download.set_defaults(func=download)
     parser_download.add_argument('-a', '--arch', choices=["linux64", "macos"],
                                  type=str, default="linux64")
+    parser_download.add_argument('--nightly', default=False, action="store_true")
     parser_download.set_defaults(func=download)
     return parser
 

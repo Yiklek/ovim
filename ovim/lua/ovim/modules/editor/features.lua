@@ -111,25 +111,19 @@ return {
     }
   end,
   movement = function(p, opts)
-    p["ggandor/leap.nvim"] = {
-      "ggandor/leap.nvim",
-      event = "BufRead",
-      config = require("ovim.modules.editor.config").leap,
-    }
-    p["ggandor/flit.nvim"] = {
-      "ggandor/flit.nvim",
-      event = "BufRead",
-      config = function()
-        require("flit").setup {
-          keys = { f = "f", F = "F", t = "t", T = "T" },
-          -- A string like "nv", "nvo", "o", etc.
-          labeled_modes = "v",
-          multiline = true,
-          opts = {},
-        }
-      end,
-      dependencies = {
-        "ggandor/leap.nvim",
+    p["folke/flash.nvim"] = {
+      "folke/flash.nvim",
+      event = "VeryLazy",
+      vscode = true,
+      opts = {},
+      keys = {
+        -- stylua: ignore start
+        { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash", },
+        { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+        { "r", mode = "o",               function() require("flash").remote() end,desc = "Remote Flash", },
+        { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end,desc = "Treesitter Search", },
+        { "<c-s>", mode = { "c" },function() require("flash").toggle() end, desc = "Toggle Flash Search", }
+        -- stylua: ignore end
       },
     }
   end,

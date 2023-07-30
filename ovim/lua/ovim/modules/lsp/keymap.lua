@@ -22,7 +22,7 @@ local opts = {
   },
 }
 function K.lsp()
-  return {
+  local m = {
     ["n|<leader>l"] = display "LSP",
     ["n|<leader>g"] = display "LSPAction",
     ["n|<leader>li"] = map_cr("LspInfo", opts),
@@ -53,6 +53,10 @@ function K.lsp()
     ["v|<leader>gf"] = map_f(vim.lsp.buf.format):with_display "Format",
     ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):with_display "show cursor diagnostic",
   }
+  if vim.fn.has "nvim-0.10" then
+    m["n|<leader>gh"] = map_cr("lua vim.lsp.inlay_hint(0, nil)", opts):with_display "toggle inlay hint"
+  end
+  return m
 end
 
 function K.trouble()

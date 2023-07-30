@@ -17,18 +17,20 @@ local opts = {
 }
 function K.telescope()
   return {
-    ["n|<leader>s"] = display "Search",
-    ["n|<leader>st"] = display "Telescope",
-    ["n|<leader>st<space>"] = map_cr("Telescope", opts),
-    ["n|<leader>sty"] = map_cr("Telescope frecency", opts),
-    ["n|<leader>stc"] = map_cr("Telescope commands", opts),
-    ["n|<leader>stb"] = map_cr("Telescope buffers", opts),
-    ["n|<leader>sts"] = map_cr("Telescope live_grep", opts),
-    ["n|<leader>stS"] = map_cr("Telescope grep_string", opts),
-    ["n|<leader>stf"] = map_cr("Telescope find_files", opts),
-    ["n|<leader>sto"] = map_cr("Telescope oldfiles", opts),
-    ["n|<leader>stu"] = map_cr("Telescope undo", opts),
-    ["n|<leader>stp"] = map_cr("Telescope project", opts),
+    ["n|<leader>s"] = display "Search (Telescope)",
+    ["n|<leader>sy"] = map_cr("Telescope frecency", opts),
+    ["n|<leader>sc"] = map_cr("Telescope commands", opts),
+    ["n|<leader>sb"] = map_cr("Telescope buffers", opts),
+    ["n|<leader>,"] = map_cr("Telescope buffers", opts),
+    ["n|<leader>ss"] = map_cr("Telescope live_grep", opts),
+    ["n|<leader>/"] = map_cr("Telescope live_grep", opts),
+    ["n|<leader>sS"] = map_cr("Telescope grep_string", opts),
+    ["n|<leader>sf"] = map_cr("Telescope find_files", opts),
+    ["n|<leader><space>"] = map_cr("Telescope find_files", opts),
+    ["n|<leader>so"] = map_cr("Telescope oldfiles", opts),
+    ["n|<leader>su"] = map_cr("Telescope undo", opts),
+    ["n|<leader>sp"] = map_cr("Telescope project", opts),
+    ["n|<leader>:"] = map_cr("Telescope command_history", opts),
   }
 end
 

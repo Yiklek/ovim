@@ -64,16 +64,6 @@ function K.remove_space()
     ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):with_display "RemoveTraialingSpace",
   }
 end
-function K.leap()
-  return {
-    ["n|<leader>]"] = map("<Plug>(leap-forward-to)"):with_display "ForwardMove",
-    ["x|<leader>]"] = map("<Plug>(leap-forward-to)"):with_display "ForwardMove",
-    ["o|<leader>]"] = map("<Plug>(leap-forward-to)"):with_display "ForwardMove",
-    ["n|<leader>["] = map("<Plug>(leap-backward-to)"):with_display "BackwardMove",
-    ["x|<leader>["] = map("<Plug>(leap-backward-to)"):with_display "BackwardMove",
-    ["o|<leader>["] = map("<Plug>(leap-backward-to)"):with_display "BackwardMove",
-  }
-end
 
 function K.init()
   km.load(K.remove_space())

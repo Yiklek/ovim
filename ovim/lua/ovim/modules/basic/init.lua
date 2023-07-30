@@ -21,6 +21,9 @@ local opts = {
 }
 
 local plugins = {
+  ["folke/lazy.nvim"] = {
+    "folke/lazy.nvim",
+  },
   ["tweekmonster/startuptime.vim"] = {
     "tweekmonster/startuptime.vim",
     level = 0,

@@ -10,9 +10,6 @@ return {
     p["stevearc/dressing.nvim"] = {
       "stevearc/dressing.nvim",
       event = "VeryLazy",
-      config = function()
-        require "ovim.misc.safe_require"("ovim.modules.ui.config").dressing()
-      end,
     }
     p["folke/noice.nvim"] = {
       "folke/noice.nvim",
@@ -88,12 +85,43 @@ return {
     }
   end,
   indent = function(p, opts)
-    if opts.use == nil or opts.use == "blankline" then
+    if opts.use == nil or opts.use == "mini" then
       p["lukas-reineke/indent-blankline.nvim"] = {
         "lukas-reineke/indent-blankline.nvim",
         event = "BufRead",
         config = function()
           require "ovim.misc.safe_require"("ovim.modules.ui.config").indent_blankline()
+        end,
+      }
+      p["echasnovski/mini.indentscope"] = {
+        "echasnovski/mini.indentscope",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {
+          -- symbol = "▏",
+          symbol = "│",
+          options = { try_as_border = true },
+          draw = {
+            delay = 50,
+          },
+        },
+        init = function()
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = {
+              "help",
+              "alpha",
+              "dashboard",
+              "neo-tree",
+              "Trouble",
+              "lazy",
+              "mason",
+              "notify",
+              "toggleterm",
+              "lazyterm",
+            },
+            callback = function()
+              vim.b.miniindentscope_disable = true
+            end,
+          })
         end,
       }
     end
@@ -157,6 +185,7 @@ return {
     if opts.use == "fidget" then
       p["j-hui/fidget.nvim"] = {
         "j-hui/fidget.nvim",
+        tag = "legacy",
         config = function()
           require "ovim.misc.safe_require"("fidget").setup()
         end,
