@@ -1,9 +1,1 @@
 neovim
-bash-language-server
-yarn
-js-beautify
-standard
-eslint
-typescript-formatter
-lua-fmt
-fixjson

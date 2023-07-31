@@ -27,3 +27,12 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.timeoutlen = 200
 vim.o.clipboard = "unnamedplus"
+vim.o.signcolumn = "yes"
+vim.o.autowrite = true -- Enable auto write
+vim.o.completeopt = "menu,menuone,noselect"
+vim.o.confirm = true -- Confirm to save changes before exiting modified buffer
+vim.o.showmode = false -- Dont show mode since we have a statusline
+vim.o.undofile = true
+vim.o.undolevels = 10000
+vim.opt.shortmess:append { W = true, I = true, c = true }
+vim.o.cursorline = true -- Enable highlighting of the current line
