@@ -3,7 +3,7 @@
 -- Description: editor features
 -- Last Modified: 02 18, 2022
 -- Copyright (c) 2022 ovim
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 return {
   vista = function(p, opts)
     p["liuchengxu/vista.vim"] = {
@@ -13,7 +13,7 @@ return {
         km.load(require("ovim.modules.lsp.keymap").vista())
       end,
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.lsp.config").vista()
+        require "ovim.core.safe_require"("ovim.modules.lsp.config").vista()
       end,
     }
   end,
@@ -22,7 +22,7 @@ return {
       "tami5/lspsaga.nvim",
       event = "BufRead",
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.lsp.config").lspsaga()
+        require "ovim.core.safe_require"("ovim.modules.lsp.config").lspsaga()
       end,
     }
     if p["neovim/nvim-lspconfig"].dependencies ~= nil then

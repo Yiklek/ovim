@@ -1,5 +1,5 @@
 local M = {}
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 function M.remove_space()
   try {
     function()

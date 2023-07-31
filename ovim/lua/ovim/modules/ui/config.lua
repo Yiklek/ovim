@@ -146,14 +146,14 @@ function C.lualine()
     lualine_c = "lsp_progress"
   end
   local function context_content()
-    local navic = require "ovim.misc.safe_require" "nvim-navic"
+    local navic = require "ovim.core.safe_require" "nvim-navic"
     if navic ~= nil and navic.is_available() then
       return navic.get_location()
     end
     return ""
   end
   local function context_condition()
-    local navic = require "ovim.misc.safe_require" "nvim-navic"
+    local navic = require "ovim.core.safe_require" "nvim-navic"
     if navic ~= nil and navic.is_available() then
       return true
     end
@@ -286,7 +286,7 @@ function C.bufferline()
       diagnostics = "nvim_lsp",
     },
   }
-  require("ovim.misc.keymap").load(keymap.bufferline())
+  require("ovim.core.keymap").load(keymap.bufferline())
 end
 
 function C.nvim_tree()
@@ -364,7 +364,7 @@ function C.nvim_tree()
     vim.keymap.set("n", "t", api.node.open.tab, opts "Open: New Tab")
     vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
   end
-  require "ovim.misc.safe_require"("nvim-tree").setup {
+  require "ovim.core.safe_require"("nvim-tree").setup {
     disable_netrw = true,
     hijack_netrw = true,
     open_on_tab = false,
@@ -393,7 +393,7 @@ function C.nvim_tree()
       },
     },
   }
-  require("ovim.misc.keymap").load(keymap.nvim_tree())
+  require("ovim.core.keymap").load(keymap.nvim_tree())
 end
 
 function C.indent_blankline()
@@ -466,7 +466,7 @@ function C.which_key()
       ["<tab>"] = "TAB",
     },
   }
-  require("ovim.misc.keymap").register_which_key()
+  require("ovim.core.keymap").register_which_key()
 end
 
 function C.toggleterm()
@@ -505,7 +505,7 @@ function C.floaterm()
       end
     end
   end
-  require("ovim.misc.keymap").load(keymap.floaterm())
+  require("ovim.core.keymap").load(keymap.floaterm())
 end
 
 function C.noice()

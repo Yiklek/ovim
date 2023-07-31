@@ -9,7 +9,7 @@ local plugins = {
     opt = true,
     event = "VeryLazy",
     config = function()
-      require "ovim.misc.safe_require"("ovim.modules.lsp.config").nvim_lsp()
+      require "ovim.core.safe_require"("ovim.modules.lsp.config").nvim_lsp()
     end,
     dependencies = {
       {
@@ -33,18 +33,18 @@ local plugins = {
     "folke/trouble.nvim",
     event = "BufReadPost",
     config = function()
-      require "ovim.misc.safe_require"("ovim.modules.lsp.config").trouble()
+      require "ovim.core.safe_require"("ovim.modules.lsp.config").trouble()
     end,
   },
   ["jose-elias-alvarez/null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
     event = "BufReadPost",
     config = function()
-      require "ovim.misc.safe_require"("ovim.modules.lsp.config").null_ls()
+      require "ovim.core.safe_require"("ovim.modules.lsp.config").null_ls()
     end,
   },
 }
-local features = require("ovim.misc.features").setup_module_features("lsp", plugins)
+local features = require("ovim.core.features").setup_module_features("lsp", plugins)
 return {
   name = "lsp",
   level = 1,

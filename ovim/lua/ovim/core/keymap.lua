@@ -174,7 +174,7 @@ function pbind.load(mapping, extra_opts)
       end
     end
   end
-  local wk = require "ovim.misc.safe_require" "which-key"
+  local wk = require "ovim.core.safe_require" "which-key"
   if wk ~= nil then
     pbind.register_which_key()
   end

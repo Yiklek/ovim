@@ -41,7 +41,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 local function custom_attach(client, bufnr)
-  local signature = require "ovim.misc.safe_require" "lsp_signature"
+  local signature = require "ovim.core.safe_require" "lsp_signature"
   if signature ~= nil then
     require("lsp_signature").on_attach {
       bind = true,
@@ -53,7 +53,7 @@ local function custom_attach(client, bufnr)
       handler_opts = { "double" },
     }
   end
-  local navic = require "ovim.misc.safe_require" "nvim-navic"
+  local navic = require "ovim.core.safe_require" "nvim-navic"
   if navic ~= nil and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
@@ -87,4 +87,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   virtual_text = false,
 })
 local keymap = require "ovim.modules.lsp.keymap"
-require("ovim.misc.keymap").load(keymap.lsp())
+require("ovim.core.keymap").load(keymap.lsp())

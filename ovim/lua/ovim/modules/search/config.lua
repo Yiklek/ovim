@@ -3,7 +3,7 @@
 -- Description: search config
 -- Copyright (c) 2022 Yiklek
 local C = {}
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 local keymap = require "ovim.modules.search.keymap"
 local config_features = require("ovim.config").modules.search.features
 local function telescope_fzf_native()
@@ -60,7 +60,7 @@ local function telescope_frecency()
     then
       use_frecency = true
     elseif
-      require("ovim.misc.util").has_win()
+      require("ovim.core.util").has_win()
       and (vim.g.sqlite_clib_path ~= nil and vim.fn.filereadable(vim.g.sqlite_clib_path) ~= 0)
     then
       use_frecency = true
@@ -175,7 +175,7 @@ end
 
 function C.sqlite()
   local sqlite_dir = ovim.const.cache_path .. "/plugins/sqlite"
-  if require("ovim.misc.util").has_win() then
+  if require("ovim.core.util").has_win() then
     local sqlite_dll = sqlite_dir .. "/sqlite3.dll"
     vim.g.sqlite_clib_path = sqlite_dll
     if vim.fn.filereadable(sqlite_dll) == 0 then

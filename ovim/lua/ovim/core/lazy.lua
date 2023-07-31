@@ -2,7 +2,6 @@
 -- Author: Yiklek
 -- Description: lazy
 -- Copyright (c) 2023 Yiklek
-local sys = require "ovim.sys"
 
 local this = {}
 this.__index = this
@@ -43,7 +42,7 @@ function this.init()
     ovim.lazy = require "lazy"
   end
   local config = require "ovim.config"
-  local util = require "ovim.misc.util"
+  local util = require "ovim.core.util"
   local modules = util.detect_modules()
 
   for _, module in pairs(modules) do

@@ -3,14 +3,14 @@
 -- Description: editor config
 -- Copyright (c) 2022 Yiklek
 local C = {}
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 local keymap = require "ovim.modules.editor.keymap"
 function C.nvim_autopairs()
-  require "ovim.misc.safe_require"("nvim-autopairs").setup {}
+  require "ovim.core.safe_require"("nvim-autopairs").setup {}
 end
 function C.nvim_comment()
   km.load(keymap.nvim_comment())
-  require "ovim.misc.safe_require"("nvim_comment").setup {
+  require "ovim.core.safe_require"("nvim_comment").setup {
     comment_empty = false,
     line_mapping = "<leader>c<space>",
     operator_mapping = "<leader>c",
@@ -19,7 +19,7 @@ end
 
 function C.comment_dot_nvim()
   km.load(keymap.comment_dot_nvim())
-  require "ovim.misc.safe_require"("Comment").setup {
+  require "ovim.core.safe_require"("Comment").setup {
     toggler = {
       ---Line-comment toggle keymap
       line = "<leader>c<space>",
@@ -47,7 +47,7 @@ function C.comment_dot_nvim()
 end
 
 function C.gitsigns()
-  require "ovim.misc.safe_require"("gitsigns").setup {
+  require "ovim.core.safe_require"("gitsigns").setup {
     on_attach = function(bufnr)
       local opts = {
         map = {

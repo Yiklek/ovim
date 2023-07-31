@@ -16,7 +16,7 @@ local plugins = {
     lazy = false,
   },
 }
-local features = require("ovim.misc.features").setup_module_features("ui", plugins)
+local features = require("ovim.core.features").setup_module_features("ui", plugins)
 return {
   name = "ui",
   level = 1,

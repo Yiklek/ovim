@@ -4,7 +4,7 @@
 -- Last Modified: 03 17, 2022
 -- Copyright (c) 2022 ovim
 
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd

@@ -2,11 +2,11 @@
 -- Author: Yiklek
 -- Description: lsp config
 -- Copyright (c) 2022 Yiklek
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 local keymap = require "ovim.modules.lsp.keymap"
 local C = {}
 function C.nvim_lsp()
-  require "ovim.misc.safe_require" "ovim.modules.lsp.lsp_config"
+  require "ovim.core.safe_require" "ovim.modules.lsp.lsp_config"
 end
 
 function C.trouble()
@@ -37,6 +37,7 @@ function C.null_ls()
       formatting.autopep8,
       -- formatting.clang_format,
       formatting.gofmt,
+      formatting.jq,
       formatting.fixjson,
     },
   }

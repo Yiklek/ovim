@@ -3,7 +3,7 @@
 -- Description: ui features
 -- Last Modified: 02 18, 2022
 -- Copyright (c) 2022 ovim
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 
 return {
   basic = function(p, opts)
@@ -15,7 +15,7 @@ return {
       "folke/noice.nvim",
       event = "VeryLazy",
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.ui.config").noice()
+        require "ovim.core.safe_require"("ovim.modules.ui.config").noice()
       end,
       dependencies = {
         "MunifTanjim/nui.nvim",
@@ -28,13 +28,13 @@ return {
       "hoob3rt/lualine.nvim",
       event = "VeryLazy",
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.ui.config").lualine()
+        require "ovim.core.safe_require"("ovim.modules.ui.config").lualine()
       end,
       dependencies = {
         {
           "SmiteshP/nvim-navic",
           config = function()
-            require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_navic()
+            require "ovim.core.safe_require"("ovim.modules.ui.config").nvim_navic()
           end,
         },
       },
@@ -45,7 +45,7 @@ return {
       "akinsho/bufferline.nvim",
       event = "VeryLazy",
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.ui.config").bufferline()
+        require "ovim.core.safe_require"("ovim.modules.ui.config").bufferline()
       end,
     }
   end,
@@ -54,7 +54,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       event = "VeryLazy",
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_treesitter()
+        require "ovim.core.safe_require"("ovim.modules.ui.config").nvim_treesitter()
       end,
       dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -69,7 +69,7 @@ return {
         "kyazdani42/nvim-tree.lua",
         event = "VeryLazy",
         config = function()
-          require "ovim.misc.safe_require"("ovim.modules.ui.config").nvim_tree()
+          require "ovim.core.safe_require"("ovim.modules.ui.config").nvim_tree()
         end,
       }
     end
@@ -90,7 +90,7 @@ return {
         "lukas-reineke/indent-blankline.nvim",
         event = "BufRead",
         config = function()
-          require "ovim.misc.safe_require"("ovim.modules.ui.config").indent_blankline()
+          require "ovim.core.safe_require"("ovim.modules.ui.config").indent_blankline()
         end,
       }
       p["echasnovski/mini.indentscope"] = {
@@ -130,7 +130,7 @@ return {
         "glepnir/indent-guides.nvim",
         event = "BufRead",
         config = function()
-          require "ovim.misc.safe_require"("ovim.modules.ui.config").indent_guides()
+          require "ovim.core.safe_require"("ovim.modules.ui.config").indent_guides()
         end,
       }
     end
@@ -140,7 +140,7 @@ return {
       "folke/which-key.nvim",
       lazy = true,
       config = function()
-        require "ovim.misc.safe_require"("ovim.modules.ui.config").which_key()
+        require "ovim.core.safe_require"("ovim.modules.ui.config").which_key()
       end,
       event = "VeryLazy",
     }
@@ -150,7 +150,7 @@ return {
       p["akinsho/toggleterm.nvim"] = {
         "akinsho/toggleterm.nvim",
         config = function()
-          require "ovim.misc.safe_require"("ovim.modules.ui.config").toggleterm()
+          require "ovim.core.safe_require"("ovim.modules.ui.config").toggleterm()
         end,
         cmd = {
           "ToggleTerm",
@@ -176,7 +176,7 @@ return {
           "FloatermUpdate",
         },
         init = function()
-          require "ovim.misc.safe_require"("ovim.modules.ui.config").floaterm()
+          require "ovim.core.safe_require"("ovim.modules.ui.config").floaterm()
         end,
       }
     end
@@ -187,7 +187,7 @@ return {
         "j-hui/fidget.nvim",
         tag = "legacy",
         config = function()
-          require "ovim.misc.safe_require"("fidget").setup()
+          require "ovim.core.safe_require"("fidget").setup()
         end,
         event = { "VeryLazy" },
       }

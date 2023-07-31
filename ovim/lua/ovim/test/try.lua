@@ -3,7 +3,7 @@
 -- Description: test try
 -- Copyright (c) 2022 Yiklek
 print "test try start"
-try = require "ovim.misc.try"
+try = require "ovim.core.try"
 
 local r1, r2 = nil, nil
 r1, r2 = pcall(try, {

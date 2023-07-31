@@ -4,7 +4,7 @@
 -- Copyright (c) 2022 Yiklek
 
 local C = {}
-local km = require "ovim.misc.keymap"
+local km = require "ovim.core.keymap"
 local keymap = require "ovim.modules.debug.keymap"
 
 function C.dap_install()

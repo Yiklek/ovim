@@ -7,7 +7,7 @@ local detect_modules = function()
   local list = {}
   local modules_dir = ovim.const.root_path .. "/lua/ovim/modules"
   local plugins_pattern = "*/init.lua"
-  local modules = vim.fn.globpath(modules_dir, plugins_pattern, 0, 1)
+  local modules = vim.fn.globpath(modules_dir, plugins_pattern, false, 1)
   for _, f in ipairs(modules) do
     list[#list + 1] = string.match(f, "lua[/\\](.+)[/\\]init.lua$")
   end

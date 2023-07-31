@@ -3,7 +3,7 @@
 -- Description: ui init
 -- Copyright (c) 2022 Yiklek
 local plugins = {}
-local features = require("ovim.misc.features").setup_module_features("debug", plugins)
+local features = require("ovim.core.features").setup_module_features("debug", plugins)
 return {
   name = "debug",
   level = 1,
