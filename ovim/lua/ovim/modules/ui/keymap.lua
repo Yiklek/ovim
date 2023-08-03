@@ -9,6 +9,7 @@ local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local map = km.map
+local map_f = km.map_f
 local display = km.display
 local K = {}
 local opts = {
@@ -42,6 +43,7 @@ function K.bufferline()
     ["n|<leader>b8"] = map_cr("BufferLineGoToBuffer 8", opts),
   }
 end
+
 function K.nvim_tree()
   return {
     ["n|="] = display "FileExplorer",
@@ -106,6 +108,28 @@ function K.floaterm()
     ["t|<A-\\>"] = map_cmd("FloatermUpdate --wintype=float --position=center --width=0.8 --height=0.8", opts):with_display "Float",
 
     ["v|<leader>ets"] = map_cmd("FloatermSend", opts),
+  }
+end
+
+function K.toggleterm()
+  local Terminal = require("toggleterm.terminal").Terminal
+  local new_term = map_f(function()
+    local t = Terminal:new()
+    t:open()
+  end):with_display "New Terminal"
+  local toggle_term = map_cmd("ToggleTerm", opts):with_display "Floaterm Toggle"
+  return {
+    ["n|<leader>et"] = display "Floaterm",
+    ["n|<leader>et<space>"] = toggle_term,
+    ["n|<leader>etn"] = new_term,
+
+    ["n|<A-t>"] = toggle_term,
+    ["n|<A-CR>"] = toggle_term,
+    ["n|<A-n>"] = new_term,
+
+    ["t|<A-t>"] = toggle_term,
+    ["t|<A-CR>"] = toggle_term,
+    ["t|<A-n>"] = toggle_term,
   }
 end
 

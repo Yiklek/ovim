@@ -71,9 +71,10 @@ function rhs_options:map(key, opts)
   self:update_opts(opts)
   return self
 end
+
 local function with_helper(sub_opt, field, value)
   if value ~= nil then
-    sub_opt[field] = silent
+    sub_opt[field] = value
   else
     sub_opt[field] = true
   end
@@ -153,9 +154,13 @@ function pbind.register_which_key()
   cache_keymaps = {}
 end
 
+function pbind.mode_lhs(s)
+  return s:match "([^|]*)|?(.*)"
+end
+
 function pbind.load(mapping, extra_opts)
   for mode_lhs, ro in pairs(mapping) do
-    local mode, lhs = mode_lhs:match "([^|]*)|?(.*)"
+    local mode, lhs = pbind.mode_lhs(mode_lhs)
     if type(ro) == "table" then
       local rhs = ro.rhs
       local opts = vim.tbl_deep_extend("force", ro.opts, extra_opts or {})
@@ -180,4 +185,42 @@ function pbind.load(mapping, extra_opts)
   end
 end
 
+function pbind.unset_keymap(keymaps, mode, buffer)
+  if keymaps == nil then
+    return
+  end
+  if mode == nil then
+    mode = "n"
+  end
+  local keys = vim.tbl_map(function(s)
+    local _, lhs = pbind.mode_lhs(s)
+    return lhs
+  end, vim.tbl_keys(keymaps))
+  local maps
+  if buffer == nil then
+    maps = vim.api.nvim_get_keymap(mode)
+  else
+    maps = vim.api.nvim_buf_get_keymap(buffer, mode)
+  end
+  local m = {}
+  for _, value in ipairs(maps) do
+    m[value.lhs] = true
+  end
+  for _, value in ipairs(keys) do
+    local v = string.gsub(value, "<leader>", vim.g.mapleader)
+    if m[v] then
+      vim.keymap.del(mode, v, { buffer = buffer })
+    end
+  end
+end
+
+---@class KeymapOption
+---@field display table
+---@field map table
+
+---@class KeymapSpec
+---@field rhs string
+---@field opts KeymapOption
+
+---@alias KeymapTable { [string]: KeymapSpec}
 return pbind

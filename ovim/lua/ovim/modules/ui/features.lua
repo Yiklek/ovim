@@ -149,15 +149,61 @@ return {
     if opts.use ~= nil and opts.use == "toggleterm" then
       p["akinsho/toggleterm.nvim"] = {
         "akinsho/toggleterm.nvim",
-        config = function()
-          require "ovim.core.safe_require"("ovim.modules.ui.config").toggleterm()
+        init = function()
+          km.load(require("ovim.modules.ui.keymap").toggleterm())
         end,
         cmd = {
+          "TermExec",
+          "TermSelect",
           "ToggleTerm",
           "ToggleTermToggleAll",
           "ToggleTermSendCurrentLine",
           "ToggleTermSendVisualLines",
           "ToggleTermSendVisualSelection",
+        },
+        opts = {
+          highlights = {
+            Normal = { link = "Normal" },
+            NormalNC = { link = "NormalNC" },
+            NormalFloat = { link = "NormalFloat" },
+            FloatBorder = { link = "FloatBorder" },
+            StatusLine = { link = "StatusLine" },
+            StatusLineNC = { link = "StatusLineNC" },
+            WinBar = { link = "WinBar" },
+            WinBarNC = { link = "WinBarNC" },
+          },
+          on_create = function()
+            vim.opt.foldcolumn = "0"
+            vim.opt.signcolumn = "no"
+          end,
+          size = 20,
+          -- open_mapping = [[<leader>et<space>]],
+          open_mapping = nil,
+          hide_numbers = false,
+          shade_filetypes = {},
+          shade_terminals = true,
+          shading_factor = 3,
+          start_in_insert = true,
+          insert_mappings = true,
+          persist_size = false,
+          persist_mode = true,
+          direction = "float",
+          close_on_exit = true,
+          shell = vim.o.shell,
+          float_opts = {
+            border = "curved",
+            winblend = 3,
+            highlights = {
+              border = "Normal",
+              background = "Normal",
+            },
+          },
+          winbar = {
+            enabled = true,
+            name_formatter = function(term) --  term: Terminal
+              return term.name
+            end,
+          },
         },
       }
     elseif opts.use ~= nil and opts.use == "floaterm" then

@@ -18,6 +18,7 @@ return {
   },
   modules = {
     ui = {
+      opts = {},
       features = {
         basic = {
           enable = true,
@@ -47,7 +48,8 @@ return {
           enable = true,
         },
         terminal = {
-          use = "floaterm",
+          -- use = "floaterm",
+          use = "toggleterm",
           enable = true,
         },
         lsp_progress = {

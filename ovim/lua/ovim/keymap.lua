@@ -9,8 +9,10 @@ local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local map = km.map
+local map_f = km.map_f
 local display = km.display
-
+local window = require "ovim.core.window"
+local config = require "ovim.config"
 vim.cmd [[
 inoremap <c-h> <left>
 inoremap <c-j> <down>
@@ -111,6 +113,8 @@ local opts = {
 }
 
 local function basic()
+  local window_opts = config.modules.ui.opts.window or {}
+  window.setup(window_opts)
   local maps = {
     ["n|<leader>x"] = display "Edit",
     ["n|<leader>\\"] = display "vsplit",
@@ -152,6 +156,31 @@ local function basic()
     ["t|<A-k>"] = map([[<c-\><c-n><c-w>k]], opts):with_display "Focus to Top",
     ["t|<A-h>"] = map([[<c-\><c-n><c-w>h]], opts):with_display "Focus to Left",
     ["t|<A-l>"] = map([[<c-\><c-n><c-w>l]], opts):with_display "Focus to Right",
+        -- stylua: ignore start
+        ["n|<leader>f"] = display "Float Window",
+        ["n|<leader>f<space>"] = map_f(function() window.float(0) end, opts):with_display "Float",
+        ["n|<leader>f" .. (window_opts.center or "<space>")] = map_f(function() M.float(0) end):with_display "Center",
+        ["n|<leader>f" .. (window_opts.full or "g")] = map_f(function() M.float_full(0) end):with_display "Full",
+        ["n|<leader>f" .. (window_opts.nw or "y")] = map_f(function() M.float_nw(0) end):with_display "NW",
+        ["n|<leader>f" .. (window_opts.ne or "u")] = map_f(function() M.float_ne(0) end):with_display "NE",
+        ["n|<leader>f" .. (window_opts.sw or "n")] = map_f(function() M.float_sw(0) end):with_display "SW",
+        ["n|<leader>f" .. (window_opts.se or "m")] = map_f(function() M.float_se(0) end):with_display "SE",
+        ["n|<leader>f" .. (window_opts.top or "k")] = map_f(function() M.float_top(0) end):with_display "Top",
+        ["n|<leader>f" .. (window_opts.left or "h")] = map_f(function() M.float_left(0) end):with_display "Left",
+        ["n|<leader>f" .. (window_opts.bottom or "j")] = map_f(function() M.float_bottom(0) end):with_display "Bottom",
+        ["n|<leader>f" .. (window_opts.right or "l")] = map_f(function() M.float_right(0) end):with_display "Right",
+        ["n|<leader>f" .. (window_opts.scale_up or "o")] = map_f(function() M.float_scale(0, 1.1, 1.1) end):with_display "Scale +",
+        ["n|<leader>f" .. (window_opts.scale_down or "i")] = map_f(function() M.float_scale(0, 0.9, 0.9) end):with_display "Scale -",
+        ["n|<leader>f" .. (window_opts.move_left or "[")] = map_f(function() M.float_move(0, 0, -5) end):with_display "MoveLeft",
+        ["n|<leader>f" .. (window_opts.move_right or "]")] = map_f(function() M.float_move(0, 0, 5) end):with_display "MoveRight",
+        ["n|<leader>f" .. (window_opts.move_up or ";")] = map_f(function() M.float_move(0, -5, 0) end):with_display "MoveUp",
+        ["n|<leader>f" .. (window_opts.move_down or "'")] = map_f(function() M.float_move(0, 5, 0) end):with_display "MoveDown",
+        ["n|<leader>f" .. (window_opts.reduce_width or "9")] = map_f(function() M.float_plus(0, 0, -5) end):with_display "Width -",
+        ["n|<leader>f" .. (window_opts.increase_width or "0")] = map_f(function() M.float_plus(0, 0, 5) end):with_display "Width +",
+        ["n|<leader>f" .. (window_opts.increase_height or ".")] = map_f(function() M.float_plus(0, 5, 0) end):with_display "Height +",
+        ["n|<leader>f" .. (window_opts.reduce_height or ",")] = map_f(function() M.float_plus(0, -5, 0) end):with_display "Height -",
+        ["n|<leader>f" .. (window_opts.select or "s")] = map_f(window.select):with_display "Select",
+    -- stylua: ignore end
 
     ["n|<leader>e"] = display "Extensions",
   }
