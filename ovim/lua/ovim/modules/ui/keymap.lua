@@ -46,18 +46,18 @@ end
 
 function K.nvim_tree()
   return {
-    ["n|="] = display "FileExplorer",
-    ["n|=="] = map_cr("NvimTreeToggle", opts),
-    ["n|=f"] = map_cr("NvimTreeFindFile", opts),
-    ["n|=r"] = map_cr("NvimTreeRefresh", opts),
+    ["n|<tab>"] = display "FileExplorer",
+    ["n|<tab><tab>"] = map_cr("NvimTreeToggle", opts),
+    ["n|<tab>f"] = map_cr("NvimTreeFindFile", opts),
+    ["n|<tab>=r"] = map_cr("NvimTreeRefresh", opts),
   }
 end
 
 function K.neo_tree()
   return {
-    ["n|="] = display "FileExplorer",
-    ["n|=="] = map_cr("Neotree toggle", opts),
-    ["n|=f"] = map_cr("Neotree reveal", opts),
+    ["n|<tab>"] = display "FileExplorer",
+    ["n|<tab><tab>"] = map_cr("Neotree toggle", opts),
+    ["n|<tab>f"] = map_cr("Neotree reveal", opts),
   }
 end
 

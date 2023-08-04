@@ -465,6 +465,9 @@ function C.which_key()
       ["<cr>"] = "RET",
       ["<tab>"] = "TAB",
     },
+    disable = {
+      buftypes = { "neo-tree", "NvimTree" },
+    },
   }
   require("ovim.core.keymap").register_which_key()
 end
