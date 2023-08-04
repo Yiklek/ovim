@@ -232,7 +232,7 @@ M._wins = {}
 ---@param tid number? toggleterm terminal id
 function M.append_window(buffer, window, tid)
   local cond = vim.tbl_contains(M._wins, function(w)
-    return w.win == window or w.terminal == tid
+    return w.win == window or (w.terminal ~= nil and w.terminal == tid)
   end, { predicate = true })
   if cond then
     return
@@ -256,9 +256,10 @@ end
 
 ---remove a managed window
 ---@param window NvimWinId
-function M.remove_window(window)
+---@param tid number? toggleterm terminal id
+function M.remove_window(window, tid)
   local find = vim.tbl_filter(function(w)
-    return w.win == window or w.terminal == require("toggleterm.terminal").get_focused_id()
+    return w.win == window or (w.terminal ~= nil and w.terminal == tid)
   end, M._wins)
   for _, w in pairs(find) do
     M._wins[w.id] = nil
@@ -290,7 +291,9 @@ function M.buf_float_keymaps(opts)
     ["n|" .. (opts.remove_window or "<leader>fx")] = map_f(function()
       if M.is_float(0) then
         local winid = vim.fn.win_getid()
-        M.remove_window(winid)
+        local term = require "toggleterm.terminal"
+        local tid = term.get_focused_id()
+        M.remove_window(winid, tid)
       end
     end):with_display "Remove Window",
   }
