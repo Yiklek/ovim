@@ -36,3 +36,17 @@ vim.o.undofile = true
 vim.o.undolevels = 10000
 vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.o.cursorline = true -- Enable highlighting of the current line
+
+if ovim.util.has_win() then
+  local powershell_options = {
+    shell = vim.fn.executable "pwsh.exe" == 1 and "pwsh.exe" or "powershell.exe",
+    shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+    shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+    shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+    shellquote = "",
+    shellxquote = "",
+  }
+  for option, value in pairs(powershell_options) do
+    vim.opt[option] = value
+  end
+end
