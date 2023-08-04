@@ -73,6 +73,29 @@ return {
         end,
       }
     end
+    if require("ovim.config").modules.ui.features.fileTree.use == "neo-tree" then
+      p["nvim-neo-tree/neo-tree.nvim"] = {
+        "nvim-neo-tree/neo-tree.nvim",
+        event = "VeryLazy",
+        branch = "v3.x",
+        cmd = "NeoTree",
+        init = function()
+          km.load(require("ovim.modules.ui.keymap").neo_tree())
+        end,
+        config = function()
+          vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+          vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+          vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+          vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+          require("neo-tree").setup()
+        end,
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "nvim-web-devicons", -- not strictly required, but recommended
+          "MunifTanjim/nui.nvim",
+        },
+      }
+    end
   end,
   devicons = function(p, opts)
     p["kyazdani42/nvim-web-devicons"] = {
@@ -294,9 +317,9 @@ return {
     p["s1n7ax/nvim-window-picker"] = {
       "s1n7ax/nvim-window-picker",
       event = "VeryLazy",
-      version = "v1.*",
+      version = "2.*",
       config = function()
-        require("window-picker").setup()
+        -- require("window-picker").setup()
         km.load {
           ["n|<leader>w<space>"] = km.map_f(function()
             local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()

@@ -53,6 +53,14 @@ function K.nvim_tree()
   }
 end
 
+function K.neo_tree()
+  return {
+    ["n|="] = display "FileExplorer",
+    ["n|=="] = map_cr("Neotree toggle", opts),
+    ["n|=f"] = map_cr("Neotree reveal", opts),
+  }
+end
+
 function K.floaterm()
   return {
     ["n|<leader>et"] = display "Floaterm",

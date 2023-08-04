@@ -36,7 +36,8 @@ return {
         },
         fileTree = {
           enable = true,
-          use = "NvimTree",
+          -- use = "NvimTree",
+          use = "neo-tree",
         },
         devicons = {
           enable = true,
