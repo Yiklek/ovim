@@ -18,7 +18,7 @@ local plugins = {
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = { "BufReadPost", "BufNewFile" },
     config = true,
-    -- stylua: ignore start
+        -- stylua: ignore start
         keys = {
             { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
             { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
@@ -27,6 +27,24 @@ local plugins = {
             { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
             { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",    desc = "Todo/Fix/Fixme" },
         },
+    -- stylua: ignore end
+  },
+  ["danymat/neogen"] = {
+    "danymat/neogen",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+    config = true,
+    opts = { snippet_engine = "luasnip" },
+        -- Uncomment next line if you want to follow only stable versions
+        -- version = "*"
+        -- stylua: ignore start
+        keys = {
+            { "<leader>xdd", function() require('neogen').generate { type = "func" } end,  desc = "function doc" },
+            { "<leader>xdf", function() require('neogen').generate { type = "file" } end,  desc = "file doc" },
+            { "<leader>xdc", function() require('neogen').generate { type = "class" } end, desc = "class doc" },
+            { "<leader>xdt", function() require('neogen').generate { type = "type" } end,  desc = "type doc" },
+        }
+,
     -- stylua: ignore end
   },
 }

@@ -59,14 +59,14 @@ local function neovide_config()
   vim.g.neovide_cursor_vfx_particle_density = 5.0
 end
 
-local default_python_path = nil
-if ovim.util.has_win() then
-  default_python_path = ovim.const.cache_path .. "/python3-venv/Scripts/python.exe"
-else
-  default_python_path = ovim.const.cache_path .. "/python3-venv/bin/python"
-end
+-- local default_python_path = nil
+-- if ovim.util.has_win() then
+--   default_python_path = ovim.const.cache_path .. "/python3-venv/Scripts/python.exe"
+-- else
+--   default_python_path = ovim.const.cache_path .. "/python3-venv/bin/python"
+-- end
 
-vim.g.python3_host_prog = vim.fn.get(vim.g, "python3_host_prog", default_python_path)
+-- vim.g.python3_host_prog = vim.fn.get(vim.g, "python3_host_prog", default_python_path)
 
 disable_distribution_plugins()
 

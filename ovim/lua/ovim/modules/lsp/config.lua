@@ -21,7 +21,8 @@ function C.lspsaga()
   saga.init_lsp_saga {
     error_sign = " ",
     warn_sign = " ",
-    hint_sign = " ",
+    -- hint_sign = " ",
+    hint_sign = nil,
     infor_sign = " ",
   }
 end
