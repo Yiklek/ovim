@@ -2,10 +2,11 @@ M = {}
 
 --- @class NvimWinConfig
 --- @field relative string
+--- @field title string
 --- @alias NvimWinId integer
 --- @alias NvimBufId integer
 ---Check window is float
----@param config (number?)|(NvimWinConfig?)
+---@param config (NvimWinId)|(NvimWinConfig)
 ---@return boolean
 function M.is_float(config)
   local c = config
@@ -13,6 +14,13 @@ function M.is_float(config)
     c = vim.api.nvim_win_get_config(config) ---@cast c NvimWinConfig
   end
   return c.relative ~= nil and c.relative ~= ""
+end
+
+---Check buffer is floatable
+---@param buffer NvimBufId
+---@return boolean
+function M.is_floatable_buffer(buffer)
+  return vim.tbl_contains({ "", "terminal" }, vim.api.nvim_buf_get_option(buffer, "buftype"))
 end
 
 ---Scale float window. min: (10, 20) max: (lines, columns)
@@ -228,9 +236,9 @@ end
 M._wins = {}
 ---Add window to be manager
 ---@param buffer NvimBufId buffer id
----@param window NvimWinId? window id
+---@param window NvimWinId window id
 function M.append_window(buffer, window)
-  if not M.is_float(window) then
+  if not M.is_float(window) or not M.is_floatable_buffer(buffer) then
     return
   end
   local cond = vim.tbl_contains(M._wins, function(w)
@@ -292,14 +300,13 @@ function M.buf_float_keymaps(opts)
     ["n|" .. (opts.remove_window or "<leader>fx")] = map_f(function()
       if M.is_float(0) then
         local winid = vim.fn.win_getid()
-        local term = require "toggleterm.terminal"
-        local tid = term.get_focused_id()
-        M.remove_window(winid, tid)
+        M.remove_window(winid)
       end
     end):with_display "Remove Window",
   }
 end
 
+---@return WinInfo[]
 function M._get_all()
   local result = {}
   for _, v in pairs(M._wins) do
@@ -342,7 +349,7 @@ function M._float_leave_callback(ev)
 end
 
 function M._float_enter_callback(ev)
-  if ev.event == "TermOpen" or M.is_float(0) then
+  if ev.event == "TermOpen" or (M.is_float(0) and M.is_floatable_buffer(ev.buf)) then
     km.load(M._buf_float_keymaps, { map = { buffer = ev.buf } })
   else
     km.unset_keymap(M._buf_float_keymaps, "n", ev.buf)
@@ -369,8 +376,7 @@ function M._open_toggleterm(window)
 end
 
 ---Open a managed window
----@param win (WinInfo?)|(integer?)
----@return nil
+---@param win (WinInfo)|(integer)
 function M.open(win)
   local window = win
   if type(win) == "number" then
@@ -389,29 +395,41 @@ function M.open(win)
   vim.api.nvim_set_current_win(window.win)
 end
 
+---get win display name
+---@param win WinInfo|integer
+local function get_win_display_name(win)
+  if type(win) == "number" then
+    win = M._wins[win]
+  end
+  local term = require "toggleterm.terminal"
+  local t = term.get(win.terminal, true)
+  return t and t:_display_name() or win.config.title or vim.fn.bufname(win.buffer)
+end
+
+---@param win WinInfo|integer
+local function format_win(win)
+  if type(win) == "number" then
+    win = M._wins[win]
+  end
+  return string.format("%s. %s", win.id, get_win_display_name(win))
+end
+
 ---Select a managed window
 function M.select()
   local result = M._get_all()
   vim.ui.select(result, {
     prompt = "Select Float Window:",
-    format_item = function(item)
-      return string.format("%d. %s", item.id, vim.fn.bufname(item.buffer))
-    end,
-  }, function(choice)
-    M.open(choice)
-  end)
+    format_item = format_win,
+  }, M.open)
 end
 
+---Remove a managed window
 function M.remove()
   local result = M._get_all()
   vim.ui.select(result, {
     prompt = "Select Float Window to Remove:",
-    format_item = function(item)
-      return string.format("%d. %s", item.id, vim.fn.bufname(item.buffer))
-    end,
-  }, function(choice)
-    M.remove_window(choice)
-  end)
+    format_item = format_win,
+  }, M.remove_window)
 end
 
 ---setup

@@ -18,7 +18,7 @@ inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
-nnoremap <silent> <C-\> <cmd>silent! nohlsearch<cr>
+nnoremap <silent> <esc> <cmd>silent! nohlsearch<cr>
 
 "粘贴模式
 set pastetoggle=<F4>
@@ -77,7 +77,7 @@ noremap ]b  <cmd>bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
-tnoremap <esc><esc> <C-\><C-N>
+tnoremap <A-/> <C-\><C-N>
 
 tnoremap <C-W>h  <C-\><C-N><C-W>h
 tnoremap <C-W>j  <C-\><C-N><C-W>j

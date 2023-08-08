@@ -36,7 +36,6 @@ return {
         },
         fileTree = {
           enable = true,
-          -- use = "NvimTree",
           use = "neo-tree",
         },
         devicons = {
@@ -49,7 +48,6 @@ return {
           enable = true,
         },
         terminal = {
-          -- use = "floaterm",
           use = "toggleterm",
           enable = true,
         },
@@ -109,9 +107,6 @@ return {
     },
     lsp = {
       features = {
-        vista = {
-          enable = true,
-        },
         lspsaga = {
           enable = true,
         },

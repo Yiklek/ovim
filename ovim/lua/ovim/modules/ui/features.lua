@@ -98,8 +98,8 @@ return {
     end
   end,
   devicons = function(p, opts)
-    p["kyazdani42/nvim-web-devicons"] = {
-      "kyazdani42/nvim-web-devicons",
+    p["nvim-tree/nvim-web-devicons"] = {
+      "nvim-tree/nvim-web-devicons",
       event = "VeryLazy",
     }
     p["ryanoasis/vim-devicons"] = {

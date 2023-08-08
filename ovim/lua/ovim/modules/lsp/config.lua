@@ -14,19 +14,6 @@ function C.trouble()
   km.load(keymap.trouble())
 end
 
-function C.vista() end
-
-function C.lspsaga()
-  local saga = require "lspsaga"
-  saga.init_lsp_saga {
-    error_sign = " ",
-    warn_sign = " ",
-    -- hint_sign = " ",
-    hint_sign = nil,
-    infor_sign = " ",
-  }
-end
-
 function C.null_ls()
   local null_ls = require "null-ls"
   local formatting = null_ls.builtins.formatting
