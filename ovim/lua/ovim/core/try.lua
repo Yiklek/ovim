@@ -18,16 +18,16 @@ local function try(body)
       err_dict[err_store] = debug.traceback(err, 2)
     end
   end
-  local call_success, call_result = xpcall(body[1], error_process "call")
+  local call_success, call_result = xpcall(body[1], error_process("call"))
   if not call_success and catch ~= nil then
     catch_success, catch_result = xpcall(function(e)
       return catch(e)
-    end, error_process "catch")
+    end, error_process("catch"))
   end
   if finally ~= nil then
     final_success, final_result = xpcall(function(e)
       return finally(e)
-    end, error_process "final")
+    end, error_process("final"))
   end
 
   if call_success and catch_success ~= false and final_success ~= false then

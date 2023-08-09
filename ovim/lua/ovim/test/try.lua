@@ -2,8 +2,8 @@
 -- Author: Yiklek
 -- Description: test try
 -- Copyright (c) 2022 Yiklek
-print "test try start"
-try = require "ovim.core.try"
+print("test try start")
+try = require("ovim.core.try")
 
 local r1, r2 = nil, nil
 r1, r2 = pcall(try, {
@@ -202,4 +202,4 @@ r1, r2 = pcall(try, {
 })
 assert(r1)
 assert(r2 == 3)
-print "test try end"
+print("test try end")

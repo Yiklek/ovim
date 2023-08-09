@@ -9,26 +9,26 @@ local function dap(p, opts)
     p["mfussenegger/nvim-dap"] = {
       "mfussenegger/nvim-dap",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.debug.config").dap()
+        require("ovim.core.safe_require")("ovim.modules.debug.config").dap()
       end,
       event = "VeryLazy",
       dependencies = {
         {
           "ravenxrz/DAPInstall.nvim",
           config = function()
-            require "ovim.core.safe_require"("ovim.modules.debug.config").dap_install()
+            require("ovim.core.safe_require")("ovim.modules.debug.config").dap_install()
           end,
         },
         {
           "theHamsta/nvim-dap-virtual-text",
           config = function()
-            require "ovim.core.safe_require"("ovim.modules.debug.config").dap_virtual_text()
+            require("ovim.core.safe_require")("ovim.modules.debug.config").dap_virtual_text()
           end,
         },
         {
           "rcarriga/nvim-dap-ui",
           config = function()
-            require "ovim.core.safe_require"("ovim.modules.debug.config").dap_ui()
+            require("ovim.core.safe_require")("ovim.modules.debug.config").dap_ui()
           end,
         },
         {

@@ -3,9 +3,9 @@
 -- Description: lspconfig
 -- Copyright (c) 2022 Yiklek
 
-local lspconfig = require "lspconfig"
-local mason = require "mason"
-local mason_config = require "mason-lspconfig"
+local lspconfig = require("lspconfig")
+local mason = require("mason")
+local mason_config = require("mason-lspconfig")
 
 mason.setup {
   install_root_dir = ovim.const.cache_path .. "/mason",
@@ -41,7 +41,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 local function custom_attach(client, bufnr)
-  local signature = require "ovim.core.safe_require" "lsp_signature"
+  local signature = require("ovim.core.safe_require")("lsp_signature")
   if signature ~= nil then
     require("lsp_signature").on_attach {
       bind = true,
@@ -53,7 +53,7 @@ local function custom_attach(client, bufnr)
       handler_opts = { "double" },
     }
   end
-  local navic = require "ovim.core.safe_require" "nvim-navic"
+  local navic = require("ovim.core.safe_require")("nvim-navic")
   if navic ~= nil and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
@@ -61,9 +61,9 @@ local function custom_attach(client, bufnr)
 end
 
 local servers = {
-  lua_ls = require "ovim.modules.lsp.server.lua",
-  clangd = require "ovim.modules.lsp.server.clangd",
-  html = require "ovim.modules.lsp.server.html",
+  lua_ls = require("ovim.modules.lsp.server.lua"),
+  clangd = require("ovim.modules.lsp.server.clangd"),
+  html = require("ovim.modules.lsp.server.html"),
 }
 require("mason-lspconfig").setup_handlers {
   -- The first entry (without a key) will be the default handler
@@ -86,5 +86,5 @@ require("mason-lspconfig").setup_handlers {
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = false,
 })
-local keymap = require "ovim.modules.lsp.keymap"
+local keymap = require("ovim.modules.lsp.keymap")
 require("ovim.core.keymap").load(keymap.lsp())

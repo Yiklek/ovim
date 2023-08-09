@@ -1,4 +1,4 @@
-local dap = require "dap"
+local dap = require("dap")
 
 local dbg_path = require("dap-install.config.settings").options["installation_path"] .. "ccppr_vsc/"
 dap.adapters.cppdbg = {
@@ -24,7 +24,7 @@ dap.configurations.cpp = {
       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     args = function()
-      local input = vim.fn.input "Input args: "
+      local input = vim.fn.input("Input args: ")
       return require("ovim.modules.debug.dap.util").str2argtable(input)
     end,
     cwd = "${workspaceFolder}",
@@ -45,7 +45,7 @@ dap.configurations.cpp = {
       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     args = function()
-      local input = vim.fn.input "Input args: "
+      local input = vim.fn.input("Input args: ")
       return require("ovim.modules.debug.dap.util").str2argtable(input)
     end,
     cwd = "${workspaceFolder}",

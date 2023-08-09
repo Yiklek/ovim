@@ -1,5 +1,5 @@
 local M = {}
-local dap = require "dap"
+local dap = require("dap")
 
 -- refresh config
 M.reload_continue = function()
@@ -60,7 +60,7 @@ end
 
 -- persist breakpoint
 local bp_base_dir = ovim.const.cache_path .. "/dap-breakpoint/"
-local breakpoints = require "dap.breakpoints"
+local breakpoints = require("dap.breakpoints")
 
 function M.store_breakpoints()
   if vim.fn.isdirectory(bp_base_dir) == 0 then
@@ -99,7 +99,7 @@ function M.load_breakpoints()
   end
 
   -- read breakpoints from json file
-  local content = fp:read "*a"
+  local content = fp:read("*a")
   local bps = vim.fn.json_decode(content)
   for bufname, buf_bps in pairs(bps) do
     if vim.api.nvim_buf_get_name(0) == bufname then

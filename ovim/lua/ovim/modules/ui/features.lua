@@ -3,7 +3,7 @@
 -- Description: ui features
 -- Last Modified: 02 18, 2022
 -- Copyright (c) 2022 ovim
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 
 return {
   basic = function(p, opts)
@@ -15,7 +15,7 @@ return {
       "folke/noice.nvim",
       event = "VeryLazy",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.ui.config").noice()
+        require("ovim.core.safe_require")("ovim.modules.ui.config").noice()
       end,
       dependencies = {
         "MunifTanjim/nui.nvim",
@@ -28,13 +28,13 @@ return {
       "hoob3rt/lualine.nvim",
       event = "VeryLazy",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.ui.config").lualine()
+        require("ovim.core.safe_require")("ovim.modules.ui.config").lualine()
       end,
       dependencies = {
         {
           "SmiteshP/nvim-navic",
           config = function()
-            require "ovim.core.safe_require"("ovim.modules.ui.config").nvim_navic()
+            require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_navic()
           end,
         },
       },
@@ -45,7 +45,7 @@ return {
       "akinsho/bufferline.nvim",
       event = "VeryLazy",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.ui.config").bufferline()
+        require("ovim.core.safe_require")("ovim.modules.ui.config").bufferline()
       end,
     }
   end,
@@ -54,7 +54,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       event = "VeryLazy",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.ui.config").nvim_treesitter()
+        require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_treesitter()
       end,
       dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -69,7 +69,7 @@ return {
         "kyazdani42/nvim-tree.lua",
         event = "VeryLazy",
         config = function()
-          require "ovim.core.safe_require"("ovim.modules.ui.config").nvim_tree()
+          require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_tree()
         end,
       }
     end
@@ -109,18 +109,35 @@ return {
   end,
   indent = function(p, opts)
     if opts.use == nil or opts.use == "mini" then
-      p["lukas-reineke/indent-blankline.nvim"] = {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "BufRead",
+      local disable_filetype = {
+        "help",
+        "alpha",
+        "dashboard",
+        "neo-tree",
+        "Trouble",
+        "lazy",
+        "mason",
+        "notify",
+        "toggleterm",
+        "lazyterm",
+        "TelescopePromt",
+      }
+      p["nvimdev/indentmini.nvim"] = {
+        "nvimdev/indentmini.nvim",
+        event = "BufEnter",
         config = function()
-          require "ovim.core.safe_require"("ovim.modules.ui.config").indent_blankline()
+          require("indentmini").setup {
+            char = "│",
+            exclude = disable_filetype,
+          }
+          -- use comment color
+          vim.cmd.highlight("default link IndentLine Comment")
         end,
       }
       p["echasnovski/mini.indentscope"] = {
         "echasnovski/mini.indentscope",
         event = { "BufReadPre", "BufNewFile" },
         opts = {
-          -- symbol = "▏",
           symbol = "│",
           options = { try_as_border = true },
           draw = {
@@ -129,18 +146,7 @@ return {
         },
         init = function()
           vim.api.nvim_create_autocmd("FileType", {
-            pattern = {
-              "help",
-              "alpha",
-              "dashboard",
-              "neo-tree",
-              "Trouble",
-              "lazy",
-              "mason",
-              "notify",
-              "toggleterm",
-              "lazyterm",
-            },
+            pattern = disable_filetype,
             callback = function()
               vim.b.miniindentscope_disable = true
             end,
@@ -153,7 +159,7 @@ return {
         "glepnir/indent-guides.nvim",
         event = "BufRead",
         config = function()
-          require "ovim.core.safe_require"("ovim.modules.ui.config").indent_guides()
+          require("ovim.core.safe_require")("ovim.modules.ui.config").indent_guides()
         end,
       }
     end
@@ -163,7 +169,7 @@ return {
       "folke/which-key.nvim",
       lazy = true,
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.ui.config").which_key()
+        require("ovim.core.safe_require")("ovim.modules.ui.config").which_key()
       end,
       event = "VeryLazy",
     }
@@ -245,7 +251,7 @@ return {
           "FloatermUpdate",
         },
         init = function()
-          require "ovim.core.safe_require"("ovim.modules.ui.config").floaterm()
+          require("ovim.core.safe_require")("ovim.modules.ui.config").floaterm()
         end,
       }
     end
@@ -256,7 +262,7 @@ return {
         "j-hui/fidget.nvim",
         tag = "legacy",
         config = function()
-          require "ovim.core.safe_require"("fidget").setup()
+          require("ovim.core.safe_require")("fidget").setup()
         end,
         event = { "VeryLazy" },
       }
@@ -319,14 +325,27 @@ return {
       event = "VeryLazy",
       version = "2.*",
       config = function()
-        -- require("window-picker").setup()
         km.load {
           ["n|<leader>w<space>"] = km.map_f(function()
+            ---@diagnostic disable-next-line: missing-parameter
             local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
             vim.api.nvim_set_current_win(picked_window_id)
-          end):with_display "Choose Window",
+          end):with_display("Choose Window"),
         }
       end,
+    }
+  end,
+  window_focus = function(p, opts)
+    p["anuvyklack/windows.nvim"] = {
+      "anuvyklack/windows.nvim",
+      event = "VeryLazy",
+      config = function()
+        require("windows").setup()
+      end,
+      dependencies = {
+        "anuvyklack/middleclass",
+        "anuvyklack/animation.nvim",
+      },
     }
   end,
 }

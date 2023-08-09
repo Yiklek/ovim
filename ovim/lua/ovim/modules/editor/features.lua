@@ -10,7 +10,7 @@ return {
       "windwp/nvim-autopairs",
       event = "BufReadPost",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.editor.config").nvim_autopairs()
+        require("ovim.core.safe_require")("ovim.modules.editor.config").nvim_autopairs()
       end,
     }
   end,
@@ -20,7 +20,7 @@ return {
         "terrortylor/nvim-comment",
         event = "BufReadPost",
         config = function()
-          require "ovim.core.safe_require"("ovim.modules.editor.config").nvim_comment()
+          require("ovim.core.safe_require")("ovim.modules.editor.config").nvim_comment()
         end,
       }
     end
@@ -29,7 +29,7 @@ return {
         "numToStr/Comment.nvim",
         event = "BufReadPost",
         config = function()
-          require "ovim.core.safe_require"("ovim.modules.editor.config").comment_dot_nvim()
+          require("ovim.core.safe_require")("ovim.modules.editor.config").comment_dot_nvim()
         end,
       }
     end
@@ -39,13 +39,13 @@ return {
       "lewis6991/gitsigns.nvim",
       event = "BufReadPost",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.editor.config").gitsigns()
+        require("ovim.core.safe_require")("ovim.modules.editor.config").gitsigns()
       end,
     }
     p["sindrets/diffview.nvim"] = {
       "sindrets/diffview.nvim",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.editor.config").diffview()
+        require("ovim.core.safe_require")("ovim.modules.editor.config").diffview()
       end,
       cmd = {
         "DiffviewOpen",
@@ -94,7 +94,9 @@ return {
         vim.g.ZFVimIM_cachePath = ovim.const.cache_path .. "/ZFVimIM"
       end,
       config = function()
-        vim.cmd [[nnoremap <expr><silent> ;' ZFVimIME_keymap_next_n()\ninoremap <expr><silent> ;' ZFVimIME_keymap_next_i()\nvnoremap <expr><silent> ;' ZFVimIME_keymap_next_v()]]
+        vim.cmd(
+          [[nnoremap <expr><silent> ;' ZFVimIME_keymap_next_n()\ninoremap <expr><silent> ;' ZFVimIME_keymap_next_i()\nvnoremap <expr><silent> ;' ZFVimIME_keymap_next_v()]]
+        )
       end,
       dependencies = {
         "ZSaberLv0/ZFVimJob",
@@ -123,7 +125,17 @@ return {
         { "r", mode = "o",               function() require("flash").remote() end,desc = "Remote Flash", },
         { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end,desc = "Treesitter Search", },
         { "<c-s>", mode = { "c" },function() require("flash").toggle() end, desc = "Toggle Flash Search", }
+,
         -- stylua: ignore end
+      },
+    }
+  end,
+  quickfix = function(p, opts)
+    p["kevinhwang91/nvim-bqf"] = {
+      "kevinhwang91/nvim-bqf",
+      ft = "qf",
+      dependencies = {
+        "nvim-treesitter/nvim-treesitter",
       },
     }
   end,

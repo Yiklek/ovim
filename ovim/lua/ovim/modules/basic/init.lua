@@ -3,7 +3,7 @@
 -- Description: global config
 -- Copyright (c) 2022 Yiklek
 
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
@@ -47,7 +47,7 @@ local plugins = {
     "folke/persistence.nvim",
     event = "BufReadPre",
     init = function()
-      km.load { ["n|<leader>r"] = display "Session" }
+      km.load { ["n|<leader>r"] = display("Session") }
     end,
     opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
     keys = {

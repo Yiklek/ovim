@@ -11,7 +11,7 @@ local function safe_require(module)
       if ovim.debug then
         print("require " .. module .. " failed.")
         print(e)
-        print(debug.traceback "safe_require")
+        print(debug.traceback("safe_require"))
       end
     end,
   }

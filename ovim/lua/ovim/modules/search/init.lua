@@ -2,7 +2,7 @@
 -- Author: Yiklek
 -- Description: search init
 -- Copyright (c) 2022 Yiklek
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 local plugins = {
   ["nvim-telescope/telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
@@ -15,7 +15,7 @@ local plugins = {
       km.load(require("ovim.modules.search.keymap").telescope())
     end,
     config = function()
-      require "ovim.core.safe_require"("ovim.modules.search.config").telescope()
+      require("ovim.core.safe_require")("ovim.modules.search.config").telescope()
     end,
     dependencies = {
       "nvim-lua/popup.nvim",
@@ -33,7 +33,7 @@ local plugins = {
           {
             "tami5/sqlite.lua",
             config = function()
-              require "ovim.core.safe_require"("ovim.modules.search.config").sqlite()
+              require("ovim.core.safe_require")("ovim.modules.search.config").sqlite()
             end,
           },
         },

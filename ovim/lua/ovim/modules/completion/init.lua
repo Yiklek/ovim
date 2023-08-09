@@ -10,7 +10,7 @@ return {
     ["hrsh7th/nvim-cmp"] = {
       "hrsh7th/nvim-cmp",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.completion.config").nvim_cmp()
+        require("ovim.core.safe_require")("ovim.modules.completion.config").nvim_cmp()
       end,
       event = "VeryLazy",
       dependencies = {
@@ -30,7 +30,7 @@ return {
     {
       "L3MON4D3/LuaSnip",
       config = function()
-        require "ovim.core.safe_require"("ovim.modules.completion.config").lua_snip()
+        require("ovim.core.safe_require")("ovim.modules.completion.config").lua_snip()
       end,
       event = "InsertEnter",
       dependencies = {

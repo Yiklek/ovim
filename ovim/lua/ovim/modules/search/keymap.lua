@@ -1,6 +1,6 @@
 local K = {}
 
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
@@ -17,7 +17,7 @@ local opts = {
 }
 function K.telescope()
   return {
-    ["n|<leader>s"] = display "Search (Telescope)",
+    ["n|<leader>s"] = display("Search (Telescope)"),
     ["n|<leader>sy"] = map_cr("Telescope frecency", opts),
     ["n|<leader>sc"] = map_cr("Telescope commands", opts),
     ["n|<leader>sb"] = map_cr("Telescope buffers", opts),

@@ -4,7 +4,7 @@
 -- Last Modified: 12 03, 2022
 -- Copyright (c) 2022 Yiklek
 
-local lspconfig = require "lspconfig"
+local lspconfig = require("lspconfig")
 
 local function switch_source_header_splitcmd(bufnr, splitcmd)
   bufnr = lspconfig.util.validate_bufnr(bufnr)
@@ -14,7 +14,7 @@ local function switch_source_header_splitcmd(bufnr, splitcmd)
       error(tostring(err))
     end
     if not result then
-      print "Corresponding file can’t be determined"
+      print("Corresponding file can’t be determined")
       return
     end
     vim.api.nvim_command(splitcmd .. " " .. vim.uri_to_fname(result))

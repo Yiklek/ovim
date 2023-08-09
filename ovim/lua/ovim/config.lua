@@ -64,6 +64,9 @@ return {
         window_picker = {
           enable = true,
         },
+        window_focus = {
+          enable = true,
+        },
       },
     },
     editor = {
@@ -101,6 +104,9 @@ return {
           enable = true,
         },
         movement = {
+          enable = true,
+        },
+        quickfix = {
           enable = true,
         },
       },

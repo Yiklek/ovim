@@ -3,7 +3,7 @@
 -- Description: editor features
 -- Last Modified: 02 18, 2022
 -- Copyright (c) 2022 ovim
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 return {
   lspsaga = function(p, opts)
     local lspsaga_plugin = {

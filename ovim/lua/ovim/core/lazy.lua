@@ -39,10 +39,10 @@ function this.init()
   end
   if not ovim.lazy then
     vim.opt.rtp:prepend(lazy_path)
-    ovim.lazy = require "lazy"
+    ovim.lazy = require("lazy")
   end
-  local config = require "ovim.config"
-  local util = require "ovim.core.util"
+  local config = require("ovim.config")
+  local util = require("ovim.core.util")
   local modules = util.detect_modules()
 
   for _, module in pairs(modules) do

@@ -4,16 +4,16 @@
 -- Last Modified: 03 17, 2022
 -- Copyright (c) 2022 ovim
 
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local map = km.map
 local map_f = km.map_f
 local display = km.display
-local window = require "ovim.core.window"
-local config = require "ovim.config"
-vim.cmd [[
+local window = require("ovim.core.window")
+local config = require("ovim.config")
+vim.cmd([[
 inoremap <c-h> <left>
 inoremap <c-j> <down>
 inoremap <c-k> <up>
@@ -88,7 +88,7 @@ tnoremap <C-W><C-J>  <C-\><C-N><C-W><C-J>
 tnoremap <C-W><C-K>  <C-\><C-N><C-W><C-K>
 tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
 
-]]
+]])
 
 local opts = {
   display = {
@@ -108,7 +108,7 @@ local function quit()
     end
   end
   if #vim.api.nvim_list_tabpages() > 1 or count > 1 then
-    vim.cmd "quit"
+    vim.cmd("quit")
   end
 end
 
@@ -118,49 +118,49 @@ local function basic()
   local quit_window = map_f(function()
     window.append_window(vim.api.nvim_get_current_buf(), vim.api.nvim_get_current_win())
     quit()
-  end, opts):with_display "Quit Window"
+  end, opts):with_display("Quit Window")
 
   local maps = {
-    ["n|<leader>x"] = display "Edit",
-    ["n|<leader>\\"] = display "vsplit",
-    ["n|<leader>-"] = display "split",
-    ["n|<leader>q"] = display "Exit",
-    ["n|<leader>t"] = display "Tab",
-    ["n|<leader>tq"] = display "Close",
-    ["n|<leader>tk"] = display "Prev",
-    ["n|<leader>th"] = display "Prev",
-    ["n|<leader>tj"] = display "Next",
-    ["n|<leader>tl"] = display "Next",
-    ["n|<leader>tQ"] = display "CloseAll",
-    ["n|<leader>to"] = display "Open",
-    ["n|<leader>tp"] = display "OpenCurrentInNewTab",
-    ["n|<leader>tL"] = display "List",
+    ["n|<leader>x"] = display("Edit"),
+    ["n|<leader>\\"] = display("vsplit"),
+    ["n|<leader>-"] = display("split"),
+    ["n|<leader>q"] = display("Exit"),
+    ["n|<leader>t"] = display("Tab"),
+    ["n|<leader>tq"] = display("Close"),
+    ["n|<leader>tk"] = display("Prev"),
+    ["n|<leader>th"] = display("Prev"),
+    ["n|<leader>tj"] = display("Next"),
+    ["n|<leader>tl"] = display("Next"),
+    ["n|<leader>tQ"] = display("CloseAll"),
+    ["n|<leader>to"] = display("Open"),
+    ["n|<leader>tp"] = display("OpenCurrentInNewTab"),
+    ["n|<leader>tL"] = display("List"),
 
-    ["n|<leader>w"] = display "Window",
-    ["n|<leader>wH"] = display "Move to Left",
-    ["n|<leader>wJ"] = display "Move to Below",
-    ["n|<leader>wK"] = display "Move to Top",
-    ["n|<leader>wL"] = display "Move to Right",
-    ["n|<leader>wa"] = display "Decrease Width",
-    ["n|<leader>w,"] = display "Decrease Width",
-    ["n|<leader>wd"] = display "Increase Width",
-    ["n|<leader>w."] = display "Increase Width",
-    ["n|<leader>ws"] = display "Decrease Height",
-    ["n|<leader>ww"] = display "Increase Height",
-    ["n|<leader>w-"] = display "Decrease Height",
-    ["n|<leader>w="] = display "Increase Height",
-    ["n|<leader>wh"] = display "Focus to Left",
-    ["n|<leader>wj"] = display "Focus to Below",
-    ["n|<leader>wk"] = display "Focus to Top",
-    ["n|<leader>wl"] = display "Focus to Right",
-    ["n|<A-j>"] = map([[<c-w>j]], opts):with_display "Focus to Bottom",
-    ["n|<A-k>"] = map([[<c-w>k]], opts):with_display "Focus to Top",
-    ["n|<A-h>"] = map([[<c-w>h]], opts):with_display "Focus to Left",
-    ["n|<A-l>"] = map([[<c-w>l]], opts):with_display "Focus to Right",
-    ["t|<A-j>"] = map([[<c-\><c-n><c-w>j]], opts):with_display "Focus to Bottom",
-    ["t|<A-k>"] = map([[<c-\><c-n><c-w>k]], opts):with_display "Focus to Top",
-    ["t|<A-h>"] = map([[<c-\><c-n><c-w>h]], opts):with_display "Focus to Left",
-    ["t|<A-l>"] = map([[<c-\><c-n><c-w>l]], opts):with_display "Focus to Right",
+    ["n|<leader>w"] = display("Window"),
+    ["n|<leader>wH"] = display("Move to Left"),
+    ["n|<leader>wJ"] = display("Move to Below"),
+    ["n|<leader>wK"] = display("Move to Top"),
+    ["n|<leader>wL"] = display("Move to Right"),
+    ["n|<leader>wa"] = display("Decrease Width"),
+    ["n|<leader>w,"] = display("Decrease Width"),
+    ["n|<leader>wd"] = display("Increase Width"),
+    ["n|<leader>w."] = display("Increase Width"),
+    ["n|<leader>ws"] = display("Decrease Height"),
+    ["n|<leader>ww"] = display("Increase Height"),
+    ["n|<leader>w-"] = display("Decrease Height"),
+    ["n|<leader>w="] = display("Increase Height"),
+    ["n|<leader>wh"] = display("Focus to Left"),
+    ["n|<leader>wj"] = display("Focus to Below"),
+    ["n|<leader>wk"] = display("Focus to Top"),
+    ["n|<leader>wl"] = display("Focus to Right"),
+    ["n|<A-j>"] = map([[<c-w>j]], opts):with_display("Focus to Bottom"),
+    ["n|<A-k>"] = map([[<c-w>k]], opts):with_display("Focus to Top"),
+    ["n|<A-h>"] = map([[<c-w>h]], opts):with_display("Focus to Left"),
+    ["n|<A-l>"] = map([[<c-w>l]], opts):with_display("Focus to Right"),
+    ["t|<A-j>"] = map([[<c-\><c-n><c-w>j]], opts):with_display("Focus to Bottom"),
+    ["t|<A-k>"] = map([[<c-\><c-n><c-w>k]], opts):with_display("Focus to Top"),
+    ["t|<A-h>"] = map([[<c-\><c-n><c-w>h]], opts):with_display("Focus to Left"),
+    ["t|<A-l>"] = map([[<c-\><c-n><c-w>l]], opts):with_display("Focus to Right"),
     ["t|<A-q>"] = quit_window,
     ["n|<A-q>"] = quit_window,
         -- stylua: ignore start
@@ -190,7 +190,7 @@ local function basic()
         ["n|<leader>f" .. (window_opts.remove or "x")] = map_f(window.remove):with_display "Remove",
     -- stylua: ignore end
 
-    ["n|<leader>e"] = display "Extensions",
+    ["n|<leader>e"] = display("Extensions"),
   }
   return maps
 end

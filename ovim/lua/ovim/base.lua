@@ -1,15 +1,15 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "<tab>"
-if vim.fn.has "nvim-0.10" ~= 1 then
+if vim.fn.has("nvim-0.10") ~= 1 then
   vim.o.nocompatible = true
   vim.o.nobackup = true
 end
-vim.cmd [[
+vim.cmd([[
   filetype on
   filetype plugin on
   syntax enable
   syntax on
-]]
+]])
 
 vim.o.number = true
 vim.o.cursorline = true
@@ -39,7 +39,7 @@ vim.o.cursorline = true -- Enable highlighting of the current line
 
 if ovim.util.has_win() then
   local powershell_options = {
-    shell = vim.fn.executable "pwsh.exe" == 1 and "pwsh.exe" or "powershell.exe",
+    shell = vim.fn.executable("pwsh.exe") == 1 and "pwsh.exe" or "powershell.exe",
     shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
     shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
     shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",

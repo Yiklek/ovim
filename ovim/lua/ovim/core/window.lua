@@ -176,22 +176,22 @@ function M._float_helper(a)
   end
 end
 
-M.float = M._float_helper "float"
-M.float_full = M._float_helper "full"
+M.float = M._float_helper("float")
+M.float_full = M._float_helper("full")
 
-M.float_nw = M._float_helper "nw"
-M.float_ne = M._float_helper "ne"
-M.float_sw = M._float_helper "sw"
-M.float_se = M._float_helper "se"
-M.float_left = M._float_helper "left"
-M.float_right = M._float_helper "right"
-M.float_top = M._float_helper "top"
-M.float_bottom = M._float_helper "bottom"
+M.float_nw = M._float_helper("nw")
+M.float_ne = M._float_helper("ne")
+M.float_sw = M._float_helper("sw")
+M.float_se = M._float_helper("se")
+M.float_left = M._float_helper("left")
+M.float_right = M._float_helper("right")
+M.float_top = M._float_helper("top")
+M.float_bottom = M._float_helper("bottom")
 
 M.FLOAT_WINDOW_AUGROUP = "OvimFloatWindow"
 vim.api.nvim_create_augroup(M.FLOAT_WINDOW_AUGROUP, { clear = true })
 
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 local map_f = km.map_f
 
 ---Build buf control Keymaps
@@ -286,23 +286,23 @@ function M.buf_float_keymaps(opts)
       if M.is_float(0) then
         km.load(M._buf_ctrl_keymaps, { map = { buffer = 0 } })
       end
-    end):with_display "Start Ctrl",
+    end):with_display("Start Ctrl"),
     ["n|" .. (opts.stop_ctrl_mode or "<leader>fq")] = map_f(function()
       km.unset_keymap(M._buf_ctrl_keymaps, "n", 0)
-    end):with_display "Stop Ctrl",
+    end):with_display("Stop Ctrl"),
     ["n|" .. (opts.append_window or "<leader>fa")] = map_f(function()
       if M.is_float(0) then
         local buffer = vim.api.nvim_get_current_buf()
         local win = vim.api.nvim_get_current_win()
         M.append_window(buffer, win)
       end
-    end):with_display "Append Window",
+    end):with_display("Append Window"),
     ["n|" .. (opts.remove_window or "<leader>fx")] = map_f(function()
       if M.is_float(0) then
         local winid = vim.fn.win_getid()
         M.remove_window(winid)
       end
-    end):with_display "Remove Window",
+    end):with_display("Remove Window"),
   }
 end
 
@@ -368,7 +368,7 @@ function M._floatterm_close_callback(ev)
 end
 
 function M._open_toggleterm(window)
-  local term = require "toggleterm.terminal"
+  local term = require("toggleterm.terminal")
   local t = term.get(window.terminal, true)
   local wid = vim.api.nvim_open_win(window.buffer, true, window.config)
   t.window = wid
@@ -401,7 +401,7 @@ local function get_win_display_name(win)
   if type(win) == "number" then
     win = M._wins[win]
   end
-  local term = require "toggleterm.terminal"
+  local term = require("toggleterm.terminal")
   local t = term.get(win.terminal, true)
   return t and t:_display_name() or win.config.title or vim.fn.bufname(win.buffer)
 end

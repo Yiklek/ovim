@@ -2,14 +2,14 @@
 -- Author: Yiklek
 -- Description: entry
 -- Copyright (c) 2022 Yiklek
-_G.try = require "ovim.core.try"
+_G.try = require("ovim.core.try")
 _G.ovim = {}
 
 ovim.const = {}
-ovim.const.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "<script>:p"), ":h") .. "/ovim"
+ovim.const.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand("<script>:p")), ":h") .. "/ovim"
 vim.env.OVIM_ROOT_PATH = ovim.const.root_path
 
-ovim.util = require "ovim.core.util"
+ovim.util = require("ovim.core.util")
 
 if ovim.util.has_win() then
   ovim.const.cache_path = vim.env.userprofile .. "/.cache/ovim"
@@ -19,10 +19,10 @@ else
 end
 vim.opt.packpath:append(ovim.const.cache_path)
 
-ovim.lazy_pack = require "ovim.core.lazy"
+ovim.lazy_pack = require("ovim.core.lazy")
 ovim.debug = false
 
-require "ovim.base"
+require("ovim.base")
 
 ovim.lazy_pack.init()
 
@@ -70,13 +70,13 @@ end
 
 disable_distribution_plugins()
 
-if vim.fn.exists "g:neovide" ~= 0 then
+if vim.fn.exists("g:neovide") ~= 0 then
   neovide_config()
 end
 
-require "ovim.keymap"
+require("ovim.keymap")
 
 function ovim.setup(options) end
 
-vim.cmd [[colorscheme onenord]]
+vim.cmd([[colorscheme onenord]])
 return ovim

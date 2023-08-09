@@ -6,7 +6,7 @@
 
 local K = {}
 
-local km = require "ovim.core.keymap"
+local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
@@ -16,15 +16,15 @@ local display = km.display
 
 function K.nvim_comment()
   return {
-    ["n|<leader>c"] = display "Comment",
+    ["n|<leader>c"] = display("Comment"),
   }
 end
 
 function K.comment_dot_nvim()
   return {
-    ["n|<leader>c"] = display "Comment",
-    ["n|<leader>c<space>"] = display "Comment line",
-    ["n|<leader>cb"] = display "Comment block",
+    ["n|<leader>c"] = display("Comment"),
+    ["n|<leader>c<space>"] = display("Comment line"),
+    ["n|<leader>cb"] = display("Comment block"),
   }
 end
 
@@ -39,7 +39,7 @@ function K.gitsigns()
     },
   }
   return {
-    ["n|<leader>eh"] = display "VCS",
+    ["n|<leader>eh"] = display("VCS"),
     ["n|<leader>ehj"] = map_cr("Gitsigns next_hunk", opts),
     ["n|<leader>ehk"] = map_cr("Gitsigns prev_hunk", opts),
     ["n|]h"] = map_cr("Gitsigns next_hunk", opts),
@@ -50,18 +50,20 @@ function K.gitsigns()
     ["n|<leader>ehS"] = map_cr("Gitsigns stage_buffer", opts),
     ["n|<leader>ehR"] = map_cr("Gitsigns reset_buffer", opts),
     ["n|<leader>ehp"] = map_cr("Gitsigns preview_hunk", opts),
-    ["n|<leader>ehB"] = map_cr([[lua require"gitsigns".blame_line{full=true}]], opts):with_display "Gitsigns BlameLineFull",
-    ["n|<leader>ehb"] = map_cr("Gitsigns toggle_current_line_blame", opts):with_display "Gitsigns BlameLine",
-    ["n|<leader>ehd"] = map_cr("Gitsigns diffthis", opts):with_display "Gitsigns Diffthis",
-    ["n|<leader>ehD"] = map_cr([[lua require"gitsigns".diffthis("~")]], opts):with_display "Gitsigns Diffthis~",
-    ["o|ih"] = map_cu "Gitsigns select_hunk",
-    ["x|ih"] = map_cu "Gitsigns select_hunk",
+    ["n|<leader>ehB"] = map_cr([[lua require"gitsigns".blame_line{full=true}]], opts):with_display(
+      "Gitsigns BlameLineFull"
+    ),
+    ["n|<leader>ehb"] = map_cr("Gitsigns toggle_current_line_blame", opts):with_display("Gitsigns BlameLine"),
+    ["n|<leader>ehd"] = map_cr("Gitsigns diffthis", opts):with_display("Gitsigns Diffthis"),
+    ["n|<leader>ehD"] = map_cr([[lua require"gitsigns".diffthis("~")]], opts):with_display("Gitsigns Diffthis~"),
+    ["o|ih"] = map_cu("Gitsigns select_hunk"),
+    ["x|ih"] = map_cu("Gitsigns select_hunk"),
   }
 end
 
 function K.remove_space()
   return {
-    ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):with_display "RemoveTraialingSpace",
+    ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):with_display("RemoveTraialingSpace"),
   }
 end
 

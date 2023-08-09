@@ -4,11 +4,11 @@
 -- Copyright (c) 2022 Yiklek
 
 local C = {}
-local km = require "ovim.core.keymap"
-local keymap = require "ovim.modules.debug.keymap"
+local km = require("ovim.core.keymap")
+local keymap = require("ovim.modules.debug.keymap")
 
 function C.dap_install()
-  local dap_install = require "dap-install"
+  local dap_install = require("dap-install")
   dap_install.setup {
     installation_path = ovim.const.cache_path .. "/dapinstall/",
   }
@@ -40,32 +40,32 @@ function C.dap_install()
 end
 
 function C.dap()
-  local dap = require "dap"
+  local dap = require("dap")
   -- TODO: wait dap-ui for fixing temrinal layout
   -- the "30" of "30vsplit: doesn't work
   dap.defaults.fallback.terminal_win_cmd = "30vsplit new" -- this will be overrided by dapui
-  dap.set_log_level "DEBUG"
+  dap.set_log_level("DEBUG")
 
   -- load from json file
   require("dap.ext.vscode").load_launchjs(nil, { cppdbg = { "cpp" } })
   -- config per launage
-  require "ovim.modules.debug.dap.cpp"
+  require("ovim.modules.debug.dap.cpp")
 
   km.load(keymap.dap())
 end
 
 function C.dap_ui()
-  local dap, dapui = require "dap", require "dapui"
+  local dap, dapui = require("dap"), require("dapui")
 
   local debug_open = function()
     dapui.open()
-    vim.api.nvim_command "DapVirtualTextEnable"
-    vim.api.nvim_command "NvimTreeClose"
+    vim.api.nvim_command("DapVirtualTextEnable")
+    vim.api.nvim_command("NvimTreeClose")
   end
   local debug_close = function()
     dap.repl.close()
     dapui.close()
-    vim.api.nvim_command "DapVirtualTextDisable"
+    vim.api.nvim_command("DapVirtualTextDisable")
     -- vim.api.nvim_command("bdelete! term:")   -- close debug temrinal
   end
 

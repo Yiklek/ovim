@@ -17,6 +17,6 @@ end
 obj.detect_modules = detect_modules
 
 function obj.has_win()
-  return vim.fn.has "win64" == 1 or vim.fn.has "win32" == 1 or vim.fn.has "win16" == 1 or vim.fn.has "win95" == 1
+  return vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 or vim.fn.has("win95") == 1
 end
 return obj

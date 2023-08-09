@@ -147,7 +147,7 @@ local cache_keymaps = {}
 
 function pbind.register_which_key()
   -- must ensure which-key.nvim loaded
-  local wk = require "which-key"
+  local wk = require("which-key")
   for m, key in pairs(cache_keymaps) do
     wk.register(key, { mode = m })
   end
@@ -155,7 +155,7 @@ function pbind.register_which_key()
 end
 
 function pbind.mode_lhs(s)
-  return s:match "([^|]*)|?(.*)"
+  return s:match("([^|]*)|?(.*)")
 end
 
 function pbind.load(mapping, extra_opts)
@@ -179,7 +179,7 @@ function pbind.load(mapping, extra_opts)
       end
     end
   end
-  local wk = require "ovim.core.safe_require" "which-key"
+  local wk = require("ovim.core.safe_require")("which-key")
   if wk ~= nil then
     pbind.register_which_key()
   end

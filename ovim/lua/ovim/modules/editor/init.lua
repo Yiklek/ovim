@@ -49,7 +49,7 @@ local plugins = {
   },
 }
 
-local addon = require "ovim.modules.editor.addon"
+local addon = require("ovim.modules.editor.addon")
 addon.init()
 require("ovim.modules.editor.keymap").init()
 
