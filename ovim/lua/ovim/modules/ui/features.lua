@@ -76,12 +76,9 @@ return {
     if require("ovim.config").modules.ui.features.fileTree.use == "neo-tree" then
       p["nvim-neo-tree/neo-tree.nvim"] = {
         "nvim-neo-tree/neo-tree.nvim",
-        event = "VeryLazy",
         branch = "v3.x",
         cmd = "NeoTree",
-        init = function()
-          km.load(require("ovim.modules.ui.keymap").neo_tree())
-        end,
+        keys = km.to_lazy(require("ovim.modules.ui.keymap").neo_tree()),
         config = function()
           vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
           vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
@@ -178,9 +175,7 @@ return {
     if opts.use ~= nil and opts.use == "toggleterm" then
       p["akinsho/toggleterm.nvim"] = {
         "akinsho/toggleterm.nvim",
-        init = function()
-          km.load(require("ovim.modules.ui.keymap").toggleterm())
-        end,
+        keys = km.to_lazy(require("ovim.modules.ui.keymap").toggleterm()),
         cmd = {
           "TermExec",
           "TermSelect",

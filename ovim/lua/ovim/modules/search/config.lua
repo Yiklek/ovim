@@ -169,8 +169,6 @@ function C.telescope()
       undo = undo,
     },
   }
-
-  km.load(keymap.telescope())
 end
 
 function C.sqlite()

@@ -54,10 +54,10 @@ function K.nvim_tree()
 end
 
 function K.neo_tree()
+  km.load({["n|<tab>"] = display("FileExplorer")})
   return {
-    ["n|<tab>"] = display("FileExplorer"),
-    ["n|<tab><tab>"] = map_cr("Neotree toggle", opts),
-    ["n|<tab>f"] = map_cr("Neotree reveal", opts),
+    ["n|<tab><tab>"] = map_cmd("Neotree toggle", opts),
+    ["n|<tab>f"] = map_cmd("Neotree reveal", opts),
   }
 end
 
@@ -166,8 +166,8 @@ function K.floaterm()
 end
 
 function K.toggleterm()
-  local Terminal = require("toggleterm.terminal").Terminal
   local new_term = map_f(function()
+    local Terminal = require("toggleterm.terminal").Terminal
     local t = Terminal:new()
     t:open()
   end):display("New Terminal")
