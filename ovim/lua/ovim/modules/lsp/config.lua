@@ -14,23 +14,23 @@ function C.trouble()
   km.load(keymap.trouble())
 end
 
-function C.null_ls()
-  local null_ls = require("null-ls")
-  local formatting = null_ls.builtins.formatting
-  -- local completion = null_ls.builtins.completion
-  local opts = {
-    log_level = "error",
-    sources = {
-      formatting.stylua,
-      formatting.autopep8,
-      -- formatting.clang_format,
-      formatting.gofmt,
-      formatting.jq,
-      formatting.fixjson,
-    },
-  }
-  -- table.insert(opts.sources, formatting.prettierd)
-  null_ls.setup(opts)
-end
+-- function C.null_ls()
+--   local null_ls = require("null-ls")
+--   local formatting = null_ls.builtins.formatting
+--   -- local completion = null_ls.builtins.completion
+--   local opts = {
+--     log_level = "error",
+--     sources = {
+--       formatting.stylua,
+--       formatting.autopep8,
+--       -- formatting.clang_format,
+--       formatting.gofmt,
+--       formatting.jq,
+--       formatting.fixjson,
+--     },
+--   }
+--   -- table.insert(opts.sources, formatting.prettierd)
+--   null_ls.setup(opts)
+-- end
 
 return C

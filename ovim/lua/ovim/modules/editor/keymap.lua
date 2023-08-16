@@ -50,12 +50,10 @@ function K.gitsigns()
     ["n|<leader>ehS"] = map_cr("Gitsigns stage_buffer", opts),
     ["n|<leader>ehR"] = map_cr("Gitsigns reset_buffer", opts),
     ["n|<leader>ehp"] = map_cr("Gitsigns preview_hunk", opts),
-    ["n|<leader>ehB"] = map_cr([[lua require"gitsigns".blame_line{full=true}]], opts):with_display(
-      "Gitsigns BlameLineFull"
-    ),
-    ["n|<leader>ehb"] = map_cr("Gitsigns toggle_current_line_blame", opts):with_display("Gitsigns BlameLine"),
-    ["n|<leader>ehd"] = map_cr("Gitsigns diffthis", opts):with_display("Gitsigns Diffthis"),
-    ["n|<leader>ehD"] = map_cr([[lua require"gitsigns".diffthis("~")]], opts):with_display("Gitsigns Diffthis~"),
+    ["n|<leader>ehB"] = map_cr([[lua require"gitsigns".blame_line{full=true}]], opts):display("Gitsigns BlameLineFull"),
+    ["n|<leader>ehb"] = map_cr("Gitsigns toggle_current_line_blame", opts):display("Gitsigns BlameLine"),
+    ["n|<leader>ehd"] = map_cr("Gitsigns diffthis", opts):display("Gitsigns Diffthis"),
+    ["n|<leader>ehD"] = map_cr([[lua require"gitsigns".diffthis("~")]], opts):display("Gitsigns Diffthis~"),
     ["o|ih"] = map_cu("Gitsigns select_hunk"),
     ["x|ih"] = map_cu("Gitsigns select_hunk"),
   }
@@ -63,7 +61,7 @@ end
 
 function K.remove_space()
   return {
-    ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):with_display("RemoveTraialingSpace"),
+    ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):display("RemoveTraialingSpace"),
   }
 end
 

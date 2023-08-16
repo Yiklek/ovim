@@ -109,6 +109,9 @@ return {
         quickfix = {
           enable = true,
         },
+        format = {
+          enable = true,
+        },
       },
     },
     lsp = {

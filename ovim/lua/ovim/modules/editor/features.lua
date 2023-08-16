@@ -3,7 +3,7 @@
 -- Description: editor features
 -- Last Modified: 02 18, 2022
 -- Copyright (c) 2022 ovim
-
+local km = require("ovim.core.keymap")
 return {
   autopairs = function(p, opts)
     p["windwp/nvim-autopairs"] = {
@@ -136,6 +136,28 @@ return {
       ft = "qf",
       dependencies = {
         "nvim-treesitter/nvim-treesitter",
+      },
+    }
+  end,
+  format = function(p, opts)
+    p["nvimdev/guard.nvim"] = {
+      "nvimdev/guard.nvim",
+      event = "VeryLazy",
+      config = function()
+        local ft = require("guard.filetype")
+        ft("c"):fmt("clang-format"):lint("clang-tidy")
+        ft("cpp"):fmt("clang-format"):lint("clang-tidy")
+        ft("lua"):fmt("stylua")
+        ft("python"):fmt("black")
+        require("guard").setup {
+          -- the only options for the setup function
+          fmt_on_save = false,
+          -- Use lsp if no formatter was defined for this filetype
+          lsp_as_default_formatter = true,
+        }
+      end,
+      keys = km.to_lazy {
+        ["n|<leader>xf"] = km.map_cmd("GuardFmt"):display("Format"),
       },
     }
   end,

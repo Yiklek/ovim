@@ -36,25 +36,25 @@ function K.lsp()
     ["n|<leader>gs"] = map_cr("Lspsaga signature_help", opts),
     ["n|<leader>gr"] = map_cr("Lspsaga rename", opts),
     ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc", opts),
-    ["n|<C-Up>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_silent(),
-    ["n|<C-k>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):with_silent(),
-    ["n|<C-Down>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_silent(),
-    ["n|<C-j>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):with_silent(),
+    ["n|<C-Up>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):silent(),
+    ["n|<C-k>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(-1)"):silent(),
+    ["n|<C-Down>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):silent(),
+    ["n|<C-j>"] = map_cr("lua require('lspsaga.action').smart_scroll_with_saga(1)"):silent(),
     ["n|<leader>ga"] = map_cr("Lspsaga code_action", opts),
     ["v|<leader>ga"] = map_cu("Lspsaga range_code_action", opts),
     ["n|<leader>gd"] = map_cr("Lspsaga preview_definition", opts),
-    ["n|<leader>gD"] = map_cr("lua vim.lsp.buf.definition()", opts):with_display("Definition"),
-    ["n|<leader>gt"] = map_cr("lua vim.lsp.buf.type_definition()", opts):with_display("TypeDefinition"),
-    ["n|<leader>gi"] = map_cr("lua vim.lsp.buf.implementation()", opts):with_display("Implementation"),
-    ["n|<leader>gn"] = map_cr("Lspsaga rename", opts):with_display("Rename"),
-    ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()", opts):with_display("Declaration"),
-    ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()", opts):with_display("References"),
-    ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.format { async = true }", opts):with_display("Format"),
-    ["v|<leader>gf"] = map_f(vim.lsp.buf.format):with_display("Format"),
-    ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):with_display("show cursor diagnostic"),
+    ["n|<leader>gD"] = map_cr("lua vim.lsp.buf.definition()", opts):display("Definition"),
+    ["n|<leader>gt"] = map_cr("lua vim.lsp.buf.type_definition()", opts):display("TypeDefinition"),
+    ["n|<leader>gi"] = map_cr("lua vim.lsp.buf.implementation()", opts):display("Implementation"),
+    ["n|<leader>gn"] = map_cr("Lspsaga rename", opts):display("Rename"),
+    ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()", opts):display("Declaration"),
+    ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()", opts):display("References"),
+    ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.format { async = true }", opts):display("Format"),
+    ["v|<leader>gf"] = map_f(vim.lsp.buf.format):display("Format"),
+    ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):display("show cursor diagnostic"),
   }
   if vim.fn.has("nvim-0.10") then
-    m["n|<leader>gh"] = map_cr("lua vim.lsp.inlay_hint(0, nil)", opts):with_display("toggle inlay hint")
+    m["n|<leader>gh"] = map_cr("lua vim.lsp.inlay_hint(0, nil)", opts):display("toggle inlay hint")
   end
   return m
 end
@@ -62,9 +62,9 @@ end
 function K.trouble()
   return {
     ["n|<leader>gq"] = display("Trouble"),
-    ["n|<leader>gq<space>"] = map_cr("TroubleToggle document_diagnostics"):with_display("Trouble File"),
-    ["n|<leader>gqw"] = map_cr("TroubleToggle workspace_diagnostics"):with_display("Trouble Workspace"),
-    ["n|<leader>gqf"] = map_cr("TroubleToggle quickfix"):with_display("Trouble Quickfix"),
+    ["n|<leader>gq<space>"] = map_cr("TroubleToggle document_diagnostics"):display("Trouble File"),
+    ["n|<leader>gqw"] = map_cr("TroubleToggle workspace_diagnostics"):display("Trouble Workspace"),
+    ["n|<leader>gqf"] = map_cr("TroubleToggle quickfix"):display("Trouble Quickfix"),
   }
 end
 
