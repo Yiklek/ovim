@@ -16,6 +16,7 @@ local plugins = {
         "mason.nvim",
         "ray-x/lsp_signature.nvim",
         "lvimuser/lsp-inlayhints.nvim",
+        "folke/neodev.nvim",
       },
     },
   },
@@ -36,13 +37,6 @@ local plugins = {
       require("ovim.core.safe_require")("ovim.modules.lsp.config").trouble()
     end,
   },
-  -- ["jose-elias-alvarez/null-ls.nvim"] = {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   event = "BufReadPost",
-  --   config = function()
-  --     require("ovim.core.safe_require")("ovim.modules.lsp.config").null_ls()
-  --   end,
-  -- },
 }
 local features = require("ovim.core.features").setup_module_features("lsp", plugins)
 return {
