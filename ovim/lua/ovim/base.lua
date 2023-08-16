@@ -26,7 +26,6 @@ vim.o.backspace = "indent,eol,start"
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.timeoutlen = 200
-vim.o.clipboard = "unnamedplus"
 vim.o.signcolumn = "yes"
 vim.o.autowriteall = true -- Enable auto write
 vim.o.completeopt = "menu,menuone,noselect"
