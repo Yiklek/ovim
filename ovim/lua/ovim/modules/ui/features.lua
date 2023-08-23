@@ -84,7 +84,8 @@ return {
           vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
           vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
           vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
-          require("neo-tree").setup { filesystem = { use_libuv_file_watcher = true } }
+          require("neo-tree").setup()
+          -- require("neo-tree").setup { filesystem = { use_libuv_file_watcher = true } }
         end,
         dependencies = {
           "nvim-lua/plenary.nvim",

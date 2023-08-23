@@ -7,9 +7,9 @@
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-require("neodev").setup({
+require("neodev").setup {
   -- add any options here, or leave empty to use the default settings
-})
+}
 
 local opts = {
   settings = {

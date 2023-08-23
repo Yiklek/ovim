@@ -76,7 +76,7 @@ local plugins = {
     event = "VeryLazy",
     config = function()
       require("deferred-clipboard").setup {
-        lazy = true,
+        fallback = "unnamedplus",
       }
     end,
   },

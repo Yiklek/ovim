@@ -145,10 +145,12 @@ return {
       event = "VeryLazy",
       config = function()
         local ft = require("guard.filetype")
-        ft("c"):fmt("clang-format"):lint("clang-tidy")
-        ft("cpp"):fmt("clang-format"):lint("clang-tidy")
+        ft("c"):fmt("clang-format")
+        ft("cpp"):fmt("clang-format")
         ft("lua"):fmt("stylua")
         ft("python"):fmt("black")
+        ft("cmake"):fmt("cmake-format")
+        ft("json"):fmt("prettier")
         require("guard").setup {
           -- the only options for the setup function
           fmt_on_save = false,

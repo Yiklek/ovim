@@ -33,6 +33,7 @@ return {
         require("ovim.core.safe_require")("ovim.modules.completion.config").lua_snip()
       end,
       event = "InsertEnter",
+      build = "make install_jsregexp",
       dependencies = {
         "rafamadriz/friendly-snippets",
         "honza/vim-snippets",

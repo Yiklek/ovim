@@ -54,7 +54,7 @@ function K.nvim_tree()
 end
 
 function K.neo_tree()
-  km.load({["n|<tab>"] = display("FileExplorer")})
+  km.load { ["n|<tab>"] = display("FileExplorer") }
   return {
     ["n|<tab><tab>"] = map_cmd("Neotree toggle", opts),
     ["n|<tab>f"] = map_cmd("Neotree reveal", opts),
