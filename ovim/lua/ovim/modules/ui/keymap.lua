@@ -172,18 +172,14 @@ function K.toggleterm()
     t:open()
   end):display("New Terminal")
   local toggle_term = map_cmd("ToggleTerm", opts):display("Floaterm Toggle")
+  local select_term = map_cmd("TermSelect", opts):display("Floaterm Select")
   return {
     ["n|<leader>et"] = display("Floaterm"),
     ["n|<leader>et<space>"] = toggle_term,
     ["n|<leader>etn"] = new_term,
+    ["n|<leader>ets"] = select_term,
 
-    ["n|<A-t>"] = toggle_term,
-    ["n|<A-CR>"] = toggle_term,
     ["n|<A-n>"] = new_term,
-
-    ["t|<A-t>"] = toggle_term,
-    ["t|<A-CR>"] = toggle_term,
-    ["t|<A-n>"] = toggle_term,
   }
 end
 

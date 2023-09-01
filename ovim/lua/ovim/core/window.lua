@@ -33,8 +33,8 @@ function M.float_scale(winid, height, width)
     return
   end
 
-  win_config.width = math.max(vim.fn.ceil(win_config.width * width), 20)
-  win_config.height = math.max(vim.fn.ceil(win_config.height * height), 10)
+  win_config.width = math.max(vim.fn.ceil(win_config.width * width) or 0, 20)
+  win_config.height = math.max(vim.fn.ceil(win_config.height * height) or 0, 10)
 
   win_config.width = math.min(win_config.width, vim.o.columns)
   win_config.height = math.min(win_config.height, vim.o.lines)
@@ -199,28 +199,28 @@ local map_f = km.map_f
 ---@return KeymapTable
 function M.buf_ctrl_keymaps(opts)
   return {
-        -- stylua: ignore start
-        ["n|" .. (opts.center or "f")] = map_f(function() M.float(0) end):display("Center"),
-        ["n|" .. (opts.full or "g")] = map_f(function() M.float_full(0) end):display("Full"),
-        ["n|" .. (opts.nw or "y")] = map_f(function() M.float_nw(0) end):display("NW"),
-        ["n|" .. (opts.ne or "u")] = map_f(function() M.float_ne(0) end):display("NE"),
-        ["n|" .. (opts.sw or "n")] = map_f(function() M.float_sw(0) end):display("SW"),
-        ["n|" .. (opts.se or "m")] = map_f(function() M.float_se(0) end):display("SE"),
-        ["n|" .. (opts.top or "k")] = map_f(function() M.float_top(0) end):display("Top"),
-        ["n|" .. (opts.left or "h")] = map_f(function() M.float_left(0) end):display("Left"),
-        ["n|" .. (opts.bottom or "j")] = map_f(function() M.float_bottom(0) end):display("Bottom"),
-        ["n|" .. (opts.right or "l")] = map_f(function() M.float_right(0) end):display("Right"),
-        ["n|" .. (opts.scale_up or "o")] = map_f(function() M.float_scale(0, 1.1, 1.1) end):display("Scale +"),
-        ["n|" .. (opts.scale_down or "i")] = map_f(function() M.float_scale(0, 0.9, 0.9) end):display("Scale -"),
-        ["n|" .. (opts.move_left or "[")] = map_f(function() M.float_move(0, 0, -5) end):display("MoveLeft"),
-        ["n|" .. (opts.move_right or "]")] = map_f(function() M.float_move(0, 0, 5) end):display("MoveRight"),
-        ["n|" .. (opts.move_up or ";")] = map_f(function() M.float_move(0, -5, 0) end):display("MoveUp"),
-        ["n|" .. (opts.move_down or "'")] = map_f(function() M.float_move(0, 5, 0) end):display("MoveDown"),
-        ["n|" .. (opts.reduce_width or "9")] = map_f(function() M.float_plus(0, 0, -5) end):display("Width -"),
-        ["n|" .. (opts.increase_width or "0")] = map_f(function() M.float_plus(0, 0, 5) end):display("Width +"),
-        ["n|" .. (opts.increase_height or ".")] = map_f(function() M.float_plus(0, 5, 0) end):display("Height +"),
-        ["n|" .. (opts.reduce_height or ",")] = map_f(function() M.float_plus(0, -5, 0) end):display("Height -"),
-        ["n|" .. (opts.quit or "q")] = map_f(function() km.unset_keymap(M._buf_ctrl_keymaps, "n", 0) end):display("Quit"),
+    -- stylua: ignore start
+    ["n|" .. (opts.center or "f")] = map_f(function() M.float(0) end):display("Center"),
+    ["n|" .. (opts.full or "g")] = map_f(function() M.float_full(0) end):display("Full"),
+    ["n|" .. (opts.nw or "y")] = map_f(function() M.float_nw(0) end):display("NW"),
+    ["n|" .. (opts.ne or "u")] = map_f(function() M.float_ne(0) end):display("NE"),
+    ["n|" .. (opts.sw or "n")] = map_f(function() M.float_sw(0) end):display("SW"),
+    ["n|" .. (opts.se or "m")] = map_f(function() M.float_se(0) end):display("SE"),
+    ["n|" .. (opts.top or "k")] = map_f(function() M.float_top(0) end):display("Top"),
+    ["n|" .. (opts.left or "h")] = map_f(function() M.float_left(0) end):display("Left"),
+    ["n|" .. (opts.bottom or "j")] = map_f(function() M.float_bottom(0) end):display("Bottom"),
+    ["n|" .. (opts.right or "l")] = map_f(function() M.float_right(0) end):display("Right"),
+    ["n|" .. (opts.scale_up or "o")] = map_f(function() M.float_scale(0, 1.1, 1.1) end):display("Scale +"),
+    ["n|" .. (opts.scale_down or "i")] = map_f(function() M.float_scale(0, 0.9, 0.9) end):display("Scale -"),
+    ["n|" .. (opts.move_left or "[")] = map_f(function() M.float_move(0, 0, -5) end):display("MoveLeft"),
+    ["n|" .. (opts.move_right or "]")] = map_f(function() M.float_move(0, 0, 5) end):display("MoveRight"),
+    ["n|" .. (opts.move_up or ";")] = map_f(function() M.float_move(0, -5, 0) end):display("MoveUp"),
+    ["n|" .. (opts.move_down or "'")] = map_f(function() M.float_move(0, 5, 0) end):display("MoveDown"),
+    ["n|" .. (opts.reduce_width or "9")] = map_f(function() M.float_plus(0, 0, -5) end):display("Width -"),
+    ["n|" .. (opts.increase_width or "0")] = map_f(function() M.float_plus(0, 0, 5) end):display("Width +"),
+    ["n|" .. (opts.increase_height or ".")] = map_f(function() M.float_plus(0, 5, 0) end):display("Height +"),
+    ["n|" .. (opts.reduce_height or ",")] = map_f(function() M.float_plus(0, -5, 0) end):display("Height -"),
+    ["n|" .. (opts.quit or "q")] = map_f(function() km.unset_keymap(M._buf_ctrl_keymaps, "n", 0) end):display("Quit"),
     -- stylua: ignore end
   }
 end
@@ -230,7 +230,6 @@ end
 ---@field win NvimWinId
 ---@field buffer NvimBufId
 ---@field config NvimWinConfig
----@field terminal integer? toggleterm terminal id
 
 ---@type WinInfo[]
 M._wins = {}
@@ -299,7 +298,7 @@ function M.buf_float_keymaps(opts)
     end):display("Append Window"),
     ["n|" .. (opts.remove_window or "<leader>fx")] = map_f(function()
       if M.is_float(0) then
-        local winid = vim.fn.win_getid()
+        local winid = vim.api.nvim_get_current_win()
         M.remove_window(winid)
       end
     end):display("Remove Window"),
@@ -340,10 +339,9 @@ function M._float_leave_callback(ev)
       return w.win == winid
     end, M._wins)
     local config = vim.api.nvim_win_get_config(0)
-    local tid = require("toggleterm.terminal").get_focused_id()
     for _, w in pairs(find) do
       w.config = config
-      w.terminal = tid
+      M.latest_focused = w
     end
   end
 end
@@ -357,22 +355,12 @@ function M._float_enter_callback(ev)
 end
 
 function M._floatterm_close_callback(ev)
-  if M.is_float(0) then
-    local find = vim.tbl_filter(function(w)
-      return w.buffer == ev.buf
-    end, M._wins)
-    for _, w in pairs(find) do
-      M._wins[w.id] = nil
-    end
+  local find = vim.tbl_filter(function(w)
+    return w.buffer == ev.buf
+  end, M._wins)
+  for _, w in pairs(find) do
+    M._wins[w.id] = nil
   end
-end
-
-function M._open_toggleterm(window)
-  local term = require("toggleterm.terminal")
-  local t = term.get(window.terminal, true)
-  local wid = vim.api.nvim_open_win(window.buffer, true, window.config)
-  t.window = wid
-  window.win = wid
 end
 
 ---Open a managed window
@@ -385,14 +373,14 @@ function M.open(win)
   if window == nil then
     return
   end
-  if window.terminal ~= nil then
-    return M._open_toggleterm(window)
-  end
   if window.win == nil or not vim.api.nvim_win_is_valid(window.win) then
     window.win = vim.api.nvim_open_win(window.buffer, true, window.config)
-    return
+  else
+    vim.api.nvim_set_current_win(window.win)
   end
-  vim.api.nvim_set_current_win(window.win)
+  if vim.api.nvim_buf_get_option(window.buffer, "buftype") == "terminal" then
+    vim.cmd([[startinsert!]])
+  end
 end
 
 ---get win display name
@@ -401,9 +389,10 @@ local function get_win_display_name(win)
   if type(win) == "number" then
     win = M._wins[win]
   end
-  local term = require("toggleterm.terminal")
-  local t = term.get(win.terminal, true)
-  return t and t:_display_name() or win.config.title or vim.fn.bufname(win.buffer)
+  if vim.api.nvim_buf_get_option(win.buffer, "buftype") == "terminal" then
+    return vim.split(vim.fn.bufname(win.buffer) or "", ":")[3]
+  end
+  return win.config.title or vim.fn.fnamemodify(vim.fn.bufname(win.buffer), ":~:.")
 end
 
 ---@param win WinInfo|integer
@@ -430,6 +419,16 @@ function M.remove()
     prompt = "Select Float Window to Remove:",
     format_item = format_win,
   }, M.remove_window)
+end
+
+---toggle a managed window
+function M.toggle()
+  if M.is_float(0) then
+    M.append_window(vim.api.nvim_get_current_buf(), vim.api.nvim_get_current_win())
+    vim.api.nvim_win_close(0, true)
+  elseif M.latest_focused ~= nil then
+    M.open(M.latest_focused)
+  end
 end
 
 ---setup
