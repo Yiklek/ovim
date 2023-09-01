@@ -64,16 +64,9 @@ function rhs_options:map_cu(cmd_string, opts)
   return self
 end
 
-function rhs_options:map_f(func, opts)
-  self.rhs = func
-  self.opts.display.repr = ""
-  self:update_opts(opts)
-  return self
-end
 
 function rhs_options:map(key, opts)
   self.rhs = key
-  self.opts.display.repr = ""
   self:update_opts(opts)
   return self
 end
@@ -134,14 +127,9 @@ function pbind.map_args(cmd_string, opts)
   return ro:map_args(cmd_string)
 end
 
-function pbind.map_f(func, opts)
+function pbind.map(rhs, opts)
   local ro = rhs_options:new(opts)
-  return ro:map_f(func)
-end
-
-function pbind.map(key, opts)
-  local ro = rhs_options:new(opts)
-  return ro:map_f(key)
+  return ro:map(rhs)
 end
 
 function pbind.display(display_string, opts)

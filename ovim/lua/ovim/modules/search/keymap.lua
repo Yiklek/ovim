@@ -4,6 +4,7 @@ local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
+local map = km.map
 local display = km.display
 local opts = {
   display = {
@@ -16,21 +17,26 @@ local opts = {
   },
 }
 function K.telescope()
+  local map_keys = function(target)
+    return function()
+      require("telescope.builtin")[target]()
+    end
+  end
   return {
     ["n|<leader>s"] = display("Search (Telescope)"),
-    ["n|<leader>sy"] = map_cr("Telescope frecency", opts),
-    ["n|<leader>sc"] = map_cr("Telescope commands", opts),
-    ["n|<leader>sb"] = map_cr("Telescope buffers", opts),
-    ["n|<leader>,"] = map_cr("Telescope buffers", opts),
-    ["n|<leader>ss"] = map_cr("Telescope live_grep", opts),
-    ["n|<leader>/"] = map_cr("Telescope live_grep", opts),
-    ["n|<leader>sS"] = map_cr("Telescope grep_string", opts),
-    ["n|<leader>sf"] = map_cr("Telescope find_files", opts),
-    ["n|<leader><space>"] = map_cr("Telescope find_files", opts),
-    ["n|<leader>so"] = map_cr("Telescope oldfiles", opts),
-    ["n|<leader>su"] = map_cr("Telescope undo", opts),
-    ["n|<leader>sp"] = map_cr("Telescope project", opts),
-    ["n|<leader>:"] = map_cr("Telescope command_history", opts),
+    ["n|<leader>sy"] = map(map_keys("frecency"), opts):display("frecency"),
+    ["n|<leader>sc"] = map(map_keys("commands"), opts):display("commands"),
+    ["n|<leader>sb"] = map(map_keys("buffers"), opts):display("buffers"),
+    ["n|<leader>,"] = map(map_keys("buffers"), opts):display("buffers"),
+    ["n|<leader>ss"] = map(map_keys("live_grep"), opts):display("live_grep"),
+    ["n|<leader>/"] = map(map_keys("live_grep"), opts):display("live_grep"),
+    ["n|<leader>sS"] = map(map_keys("grep_string"), opts):display("grep_string"),
+    ["n|<leader>sf"] = map(map_keys("find_files"), opts):display("find_files"),
+    ["n|<leader><space>"] = map(map_keys("find_files"), opts):display("find_files"),
+    ["n|<leader>so"] = map(map_keys("oldfiles"), opts):display("oldfiles"),
+    ["n|<leader>su"] = map(map_keys("undo"), opts):display("undo"),
+    ["n|<leader>sp"] = map(map_keys("project"), opts):display("project"),
+    ["n|<leader>:"] = map(map_keys("command_history"), opts):display("command_history"),
   }
 end
 

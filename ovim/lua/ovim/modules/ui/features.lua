@@ -322,7 +322,7 @@ return {
       version = "2.*",
       config = function()
         km.load {
-          ["n|<leader>w<space>"] = km.map_f(function()
+          ["n|<leader>w<space>"] = km.map(function()
             ---@diagnostic disable-next-line: missing-parameter
             local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
             vim.api.nvim_set_current_win(picked_window_id)

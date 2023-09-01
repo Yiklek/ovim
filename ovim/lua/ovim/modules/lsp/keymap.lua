@@ -8,7 +8,7 @@ local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
-local map_f = km.map_f
+local map = km.map
 local display = km.display
 local K = {}
 local opts = {
@@ -50,7 +50,7 @@ function K.lsp()
     ["n|<leader>gc"] = map_cr("lua vim.lsp.buf.declaration()", opts):display("Declaration"),
     ["n|<leader>gu"] = map_cr("lua vim.lsp.buf.references()", opts):display("References"),
     ["n|<leader>gf"] = map_cr("lua vim.lsp.buf.format { async = true }", opts):display("Format"),
-    ["v|<leader>gf"] = map_f(vim.lsp.buf.format):display("Format"),
+    ["v|<leader>gf"] = map(vim.lsp.buf.format):display("Format"),
     ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):display("show cursor diagnostic"),
   }
   if vim.fn.has("nvim-0.10") then

@@ -192,7 +192,7 @@ M.FLOAT_WINDOW_AUGROUP = "OvimFloatWindow"
 vim.api.nvim_create_augroup(M.FLOAT_WINDOW_AUGROUP, { clear = true })
 
 local km = require("ovim.core.keymap")
-local map_f = km.map_f
+local map = km.map
 
 ---Build buf control Keymaps
 ---@param opts table
@@ -200,27 +200,27 @@ local map_f = km.map_f
 function M.buf_ctrl_keymaps(opts)
   return {
     -- stylua: ignore start
-    ["n|" .. (opts.center or "f")] = map_f(function() M.float(0) end):display("Center"),
-    ["n|" .. (opts.full or "g")] = map_f(function() M.float_full(0) end):display("Full"),
-    ["n|" .. (opts.nw or "y")] = map_f(function() M.float_nw(0) end):display("NW"),
-    ["n|" .. (opts.ne or "u")] = map_f(function() M.float_ne(0) end):display("NE"),
-    ["n|" .. (opts.sw or "n")] = map_f(function() M.float_sw(0) end):display("SW"),
-    ["n|" .. (opts.se or "m")] = map_f(function() M.float_se(0) end):display("SE"),
-    ["n|" .. (opts.top or "k")] = map_f(function() M.float_top(0) end):display("Top"),
-    ["n|" .. (opts.left or "h")] = map_f(function() M.float_left(0) end):display("Left"),
-    ["n|" .. (opts.bottom or "j")] = map_f(function() M.float_bottom(0) end):display("Bottom"),
-    ["n|" .. (opts.right or "l")] = map_f(function() M.float_right(0) end):display("Right"),
-    ["n|" .. (opts.scale_up or "o")] = map_f(function() M.float_scale(0, 1.1, 1.1) end):display("Scale +"),
-    ["n|" .. (opts.scale_down or "i")] = map_f(function() M.float_scale(0, 0.9, 0.9) end):display("Scale -"),
-    ["n|" .. (opts.move_left or "[")] = map_f(function() M.float_move(0, 0, -5) end):display("MoveLeft"),
-    ["n|" .. (opts.move_right or "]")] = map_f(function() M.float_move(0, 0, 5) end):display("MoveRight"),
-    ["n|" .. (opts.move_up or ";")] = map_f(function() M.float_move(0, -5, 0) end):display("MoveUp"),
-    ["n|" .. (opts.move_down or "'")] = map_f(function() M.float_move(0, 5, 0) end):display("MoveDown"),
-    ["n|" .. (opts.reduce_width or "9")] = map_f(function() M.float_plus(0, 0, -5) end):display("Width -"),
-    ["n|" .. (opts.increase_width or "0")] = map_f(function() M.float_plus(0, 0, 5) end):display("Width +"),
-    ["n|" .. (opts.increase_height or ".")] = map_f(function() M.float_plus(0, 5, 0) end):display("Height +"),
-    ["n|" .. (opts.reduce_height or ",")] = map_f(function() M.float_plus(0, -5, 0) end):display("Height -"),
-    ["n|" .. (opts.quit or "q")] = map_f(function() km.unset_keymap(M._buf_ctrl_keymaps, "n", 0) end):display("Quit"),
+    ["n|" .. (opts.center or "f")] = map(function() M.float(0) end):display("Center"),
+    ["n|" .. (opts.full or "g")] = map(function() M.float_full(0) end):display("Full"),
+    ["n|" .. (opts.nw or "y")] = map(function() M.float_nw(0) end):display("NW"),
+    ["n|" .. (opts.ne or "u")] = map(function() M.float_ne(0) end):display("NE"),
+    ["n|" .. (opts.sw or "n")] = map(function() M.float_sw(0) end):display("SW"),
+    ["n|" .. (opts.se or "m")] = map(function() M.float_se(0) end):display("SE"),
+    ["n|" .. (opts.top or "k")] = map(function() M.float_top(0) end):display("Top"),
+    ["n|" .. (opts.left or "h")] = map(function() M.float_left(0) end):display("Left"),
+    ["n|" .. (opts.bottom or "j")] = map(function() M.float_bottom(0) end):display("Bottom"),
+    ["n|" .. (opts.right or "l")] = map(function() M.float_right(0) end):display("Right"),
+    ["n|" .. (opts.scale_up or "o")] = map(function() M.float_scale(0, 1.1, 1.1) end):display("Scale +"),
+    ["n|" .. (opts.scale_down or "i")] = map(function() M.float_scale(0, 0.9, 0.9) end):display("Scale -"),
+    ["n|" .. (opts.move_left or "[")] = map(function() M.float_move(0, 0, -5) end):display("MoveLeft"),
+    ["n|" .. (opts.move_right or "]")] = map(function() M.float_move(0, 0, 5) end):display("MoveRight"),
+    ["n|" .. (opts.move_up or ";")] = map(function() M.float_move(0, -5, 0) end):display("MoveUp"),
+    ["n|" .. (opts.move_down or "'")] = map(function() M.float_move(0, 5, 0) end):display("MoveDown"),
+    ["n|" .. (opts.reduce_width or "9")] = map(function() M.float_plus(0, 0, -5) end):display("Width -"),
+    ["n|" .. (opts.increase_width or "0")] = map(function() M.float_plus(0, 0, 5) end):display("Width +"),
+    ["n|" .. (opts.increase_height or ".")] = map(function() M.float_plus(0, 5, 0) end):display("Height +"),
+    ["n|" .. (opts.reduce_height or ",")] = map(function() M.float_plus(0, -5, 0) end):display("Height -"),
+    ["n|" .. (opts.quit or "q")] = map(function() km.unset_keymap(M._buf_ctrl_keymaps, "n", 0) end):display("Quit"),
     -- stylua: ignore end
   }
 end
@@ -281,22 +281,22 @@ end
 ---@return KeymapTable
 function M.buf_float_keymaps(opts)
   return {
-    ["n|" .. (opts.start_ctrl_mode or "<leader>ff")] = map_f(function()
+    ["n|" .. (opts.start_ctrl_mode or "<leader>ff")] = map(function()
       if M.is_float(0) then
         km.load(M._buf_ctrl_keymaps, { map = { buffer = 0 } })
       end
     end):display("Start Ctrl"),
-    ["n|" .. (opts.stop_ctrl_mode or "<leader>fq")] = map_f(function()
+    ["n|" .. (opts.stop_ctrl_mode or "<leader>fq")] = map(function()
       km.unset_keymap(M._buf_ctrl_keymaps, "n", 0)
     end):display("Stop Ctrl"),
-    ["n|" .. (opts.append_window or "<leader>fa")] = map_f(function()
+    ["n|" .. (opts.append_window or "<leader>fa")] = map(function()
       if M.is_float(0) then
         local buffer = vim.api.nvim_get_current_buf()
         local win = vim.api.nvim_get_current_win()
         M.append_window(buffer, win)
       end
     end):display("Append Window"),
-    ["n|" .. (opts.remove_window or "<leader>fx")] = map_f(function()
+    ["n|" .. (opts.remove_window or "<leader>fx")] = map(function()
       if M.is_float(0) then
         local winid = vim.api.nvim_get_current_win()
         M.remove_window(winid)

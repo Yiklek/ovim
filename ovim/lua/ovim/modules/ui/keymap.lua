@@ -9,7 +9,6 @@ local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local map = km.map
-local map_f = km.map_f
 local display = km.display
 local K = {}
 local opts = {
@@ -166,7 +165,7 @@ function K.floaterm()
 end
 
 function K.toggleterm()
-  local new_term = map_f(function()
+  local new_term = map(function()
     local Terminal = require("toggleterm.terminal").Terminal
     local t = Terminal:new()
     t:open()

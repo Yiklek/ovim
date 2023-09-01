@@ -44,7 +44,16 @@ local plugins = {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
     event = "VeryLazy",
-    opts = { open_cmd = "noswapfile vnew" },
+    opts = {
+      open_cmd = "noswapfile vnew",
+      mapping = {
+        ["send_to_qf"] = {
+          map = "<leader>a",
+          cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
+          desc = "send all items to quickfix",
+        },
+      },
+    },
     keys = {
       -- stylua: ignore start
       { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)", },

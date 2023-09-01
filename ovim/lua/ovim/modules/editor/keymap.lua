@@ -10,7 +10,6 @@ local km = require("ovim.core.keymap")
 local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
-local map_f = km.map_f
 local map = km.map
 local display = km.display
 
@@ -61,7 +60,7 @@ end
 
 function K.remove_space()
   return {
-    ["n|<leader>xa"] = map_f(require("ovim.modules.editor.util").remove_space):display("RemoveTraialingSpace"),
+    ["n|<leader>xa"] = map(require("ovim.modules.editor.util").remove_space):display("RemoveTraialingSpace"),
   }
 end
 

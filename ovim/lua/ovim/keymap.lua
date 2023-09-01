@@ -9,7 +9,6 @@ local map_cr = km.map_cr
 local map_cu = km.map_cu
 local map_cmd = km.map_cmd
 local map = km.map
-local map_f = km.map_f
 local display = km.display
 local window = require("ovim.core.window")
 local config = require("ovim.config")
@@ -117,7 +116,7 @@ end
 local function basic()
   local window_opts = config.modules.ui.opts.window or {}
   window.setup(window_opts)
-  local quit_window = map_f(function()
+  local quit_window = map(function()
     window.append_window(vim.api.nvim_get_current_buf(), vim.api.nvim_get_current_win())
     quit()
   end, opts):display("Quit Window")
@@ -167,33 +166,33 @@ local function basic()
     ["n|<A-q>"] = quit_window,
     -- stylua: ignore start
     ["n|<leader>f"] = display "Float Window",
-    ["n|<leader>f<space>"] = map_f(function() window.float(0) end, opts):display("Float"),
-    ["n|<leader>f" .. (window_opts.center or "<space>")] = map_f(function() window.float(0) end):display("Center"),
-    ["n|<leader>f" .. (window_opts.full or "g")] = map_f(function() window.float_full(0) end):display("Full"),
-    ["n|<leader>f" .. (window_opts.nw or "y")] = map_f(function() window.float_nw(0) end):display("NW"),
-    ["n|<leader>f" .. (window_opts.ne or "u")] = map_f(function() window.float_ne(0) end):display("NE"),
-    ["n|<leader>f" .. (window_opts.sw or "n")] = map_f(function() window.float_sw(0) end):display("SW"),
-    ["n|<leader>f" .. (window_opts.se or "m")] = map_f(function() window.float_se(0) end):display("SE"),
-    ["n|<leader>f" .. (window_opts.top or "k")] = map_f(function() window.float_top(0) end):display("Top"),
-    ["n|<leader>f" .. (window_opts.left or "h")] = map_f(function() window.float_left(0) end):display("Left"),
-    ["n|<leader>f" .. (window_opts.bottom or "j")] = map_f(function() window.float_bottom(0) end):display("Bottom"),
-    ["n|<leader>f" .. (window_opts.right or "l")] = map_f(function() window.float_right(0) end):display("Right"),
-    ["n|<leader>f" .. (window_opts.scale_up or "o")] = map_f(function() window.float_scale(0, 1.1, 1.1) end):display("Scale +"),
-    ["n|<leader>f" .. (window_opts.scale_down or "i")] = map_f(function() window.float_scale(0, 0.9, 0.9) end):display("Scale -"),
-    ["n|<leader>f" .. (window_opts.move_left or "[")] = map_f(function() window.float_move(0, 0, -5) end):display("window.veLeft"),
-    ["n|<leader>f" .. (window_opts.move_right or "]")] = map_f(function() window.float_move(0, 0, 5) end):display("window.veRight"),
-    ["n|<leader>f" .. (window_opts.move_up or ";")] = map_f(function() window.float_move(0, -5, 0) end):display("window.veUp"),
-    ["n|<leader>f" .. (window_opts.move_down or "'")] = map_f(function() window.float_move(0, 5, 0) end):display("window.veDown"),
-    ["n|<leader>f" .. (window_opts.reduce_width or "9")] = map_f(function() window.float_plus(0, 0, -5) end):display("Width -"),
-    ["n|<leader>f" .. (window_opts.increase_width or "0")] = map_f(function() window.float_plus(0, 0, 5) end):display("Width +"),
-    ["n|<leader>f" .. (window_opts.increase_height or ".")] = map_f(function() window.float_plus(0, 5, 0) end):display("Height +"),
-    ["n|<leader>f" .. (window_opts.reduce_height or ",")] = map_f(function() window.float_plus(0, -5, 0) end):display("Height -"),
-    ["n|<leader>f" .. (window_opts.select or "s")] = map_f(window.select):display("Select"),
-    ["n|<leader>f" .. (window_opts.remove or "x")] = map_f(window.remove):display("Remove"),
-    ["n|" ..(window_opts.toggle_latest or "<A-t>")] = map_f(window.toggle):display("Toggle"),
-    ["t|" ..(window_opts.toggle_latest or "<A-t>")] = map_f(window.toggle):display("Toggle"),
-    ["n|" ..(window_opts.toggle_latest or "<A-CR>")] = map_f(window.toggle):display("Toggle"),
-    ["t|" ..(window_opts.toggle_latest or "<A-CR>")] = map_f(window.toggle):display("Toggle"),
+    ["n|<leader>f<space>"] = map(function() window.float(0) end, opts):display("Float"),
+    ["n|<leader>f" .. (window_opts.center or "<space>")] = map(function() window.float(0) end):display("Center"),
+    ["n|<leader>f" .. (window_opts.full or "g")] = map(function() window.float_full(0) end):display("Full"),
+    ["n|<leader>f" .. (window_opts.nw or "y")] = map(function() window.float_nw(0) end):display("NW"),
+    ["n|<leader>f" .. (window_opts.ne or "u")] = map(function() window.float_ne(0) end):display("NE"),
+    ["n|<leader>f" .. (window_opts.sw or "n")] = map(function() window.float_sw(0) end):display("SW"),
+    ["n|<leader>f" .. (window_opts.se or "m")] = map(function() window.float_se(0) end):display("SE"),
+    ["n|<leader>f" .. (window_opts.top or "k")] = map(function() window.float_top(0) end):display("Top"),
+    ["n|<leader>f" .. (window_opts.left or "h")] = map(function() window.float_left(0) end):display("Left"),
+    ["n|<leader>f" .. (window_opts.bottom or "j")] = map(function() window.float_bottom(0) end):display("Bottom"),
+    ["n|<leader>f" .. (window_opts.right or "l")] = map(function() window.float_right(0) end):display("Right"),
+    ["n|<leader>f" .. (window_opts.scale_up or "o")] = map(function() window.float_scale(0, 1.1, 1.1) end):display("Scale +"),
+    ["n|<leader>f" .. (window_opts.scale_down or "i")] = map(function() window.float_scale(0, 0.9, 0.9) end):display("Scale -"),
+    ["n|<leader>f" .. (window_opts.move_left or "[")] = map(function() window.float_move(0, 0, -5) end):display("window.veLeft"),
+    ["n|<leader>f" .. (window_opts.move_right or "]")] = map(function() window.float_move(0, 0, 5) end):display("window.veRight"),
+    ["n|<leader>f" .. (window_opts.move_up or ";")] = map(function() window.float_move(0, -5, 0) end):display("window.veUp"),
+    ["n|<leader>f" .. (window_opts.move_down or "'")] = map(function() window.float_move(0, 5, 0) end):display("window.veDown"),
+    ["n|<leader>f" .. (window_opts.reduce_width or "9")] = map(function() window.float_plus(0, 0, -5) end):display("Width -"),
+    ["n|<leader>f" .. (window_opts.increase_width or "0")] = map(function() window.float_plus(0, 0, 5) end):display("Width +"),
+    ["n|<leader>f" .. (window_opts.increase_height or ".")] = map(function() window.float_plus(0, 5, 0) end):display("Height +"),
+    ["n|<leader>f" .. (window_opts.reduce_height or ",")] = map(function() window.float_plus(0, -5, 0) end):display("Height -"),
+    ["n|<leader>f" .. (window_opts.select or "s")] = map(window.select):display("Select"),
+    ["n|<leader>f" .. (window_opts.remove or "x")] = map(window.remove):display("Remove"),
+    ["n|" ..(window_opts.toggle_latest or "<A-t>")] = map(window.toggle):display("Toggle"),
+    ["t|" ..(window_opts.toggle_latest or "<A-t>")] = map(window.toggle):display("Toggle"),
+    ["n|" ..(window_opts.toggle_latest or "<A-CR>")] = map(window.toggle):display("Toggle"),
+    ["t|" ..(window_opts.toggle_latest or "<A-CR>")] = map(window.toggle):display("Toggle"),
     -- stylua: ignore end
 
     ["n|<leader>e"] = display("Extensions"),
