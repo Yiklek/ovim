@@ -8,7 +8,7 @@ M = {}
 ---Check window is float
 ---@param config (NvimWinId)|(NvimWinConfig)
 ---@return boolean
-function M.is_float(config)
+function M.is_floating(config)
   local c = config
   if type(config) == "number" then
     c = vim.api.nvim_win_get_config(config) ---@cast c NvimWinConfig
@@ -29,7 +29,7 @@ end
 ---@param width number Scaling factor
 function M.float_scale(winid, height, width)
   local win_config = vim.api.nvim_win_get_config(winid)
-  if not M.is_float(win_config) then
+  if not M.is_floating(win_config) then
     return
   end
 
@@ -48,7 +48,7 @@ end
 ---@param width number width bais
 function M.float_plus(winid, height, width)
   local win_config = vim.api.nvim_win_get_config(winid)
-  if not M.is_float(win_config) then
+  if not M.is_floating(win_config) then
     return
   end
   win_config.width = math.max(win_config.width + width, 20)
@@ -67,7 +67,7 @@ end
 function M.float_move(winid, row, col)
   local win_config = vim.api.nvim_win_get_config(winid)
   local pos = vim.api.nvim_win_get_position(winid)
-  if not M.is_float(win_config) then
+  if not M.is_floating(win_config) then
     return
   end
   win_config.row = vim.fn.floor(pos[1] + row)
@@ -89,27 +89,32 @@ function M._default_float_config()
     border = "rounded",
   }
 end
+function M._default_float_options()
+  return {
+    winblend = 10,
+  }
+end
 
 function M._nw_config(config)
   config.height = vim.fn.floor(0.5 * vim.o.lines)
   config.width = vim.fn.floor(0.5 * vim.o.columns)
-  config.row = 0
-  config.col = 0
+  config.row = 1
+  config.col = 1
   return config
 end
 
 function M._sw_config(config)
   config.height = vim.fn.floor(0.5 * vim.o.lines)
   config.width = vim.fn.floor(0.5 * vim.o.columns)
-  config.row = config.height
-  config.col = 0
+  config.row = config.height - 2
+  config.col = 1
   return config
 end
 
 function M._ne_config(config)
   config.height = vim.fn.floor(0.5 * vim.o.lines)
   config.width = vim.fn.floor(0.5 * vim.o.columns)
-  config.row = 0
+  config.row = 1
   config.col = config.width
   return config
 end
@@ -117,7 +122,7 @@ end
 function M._se_config(config)
   config.height = vim.fn.floor(0.5 * vim.o.lines)
   config.width = vim.fn.floor(0.5 * vim.o.columns)
-  config.row = config.height
+  config.row = config.height - 2
   config.col = config.width
   return config
 end
@@ -131,8 +136,8 @@ function M._full_config(config)
 end
 
 M._configs = {
-  float = function(_)
-    return M._default_float_config()
+  float = function(config)
+    return config
   end,
   ne = M._ne_config,
   se = M._se_config,
@@ -163,9 +168,9 @@ M._configs = {
 function M._float_helper(a)
   return function(winnr)
     local config = vim.api.nvim_win_get_config(winnr)
-    local floated = M.is_float(config)
+    local floated = M.is_floating(config)
     if not floated then
-      config = M._default_float_config()
+      config = vim.deepcopy(M._float_config)
     end
     config = M._configs[a](config)
     if not floated then
@@ -173,6 +178,7 @@ function M._float_helper(a)
     else
       vim.api.nvim_win_set_config(winnr, config)
     end
+    M._apply_window_options(0, M._float_options)
   end
 end
 
@@ -230,6 +236,7 @@ end
 ---@field win NvimWinId
 ---@field buffer NvimBufId
 ---@field config NvimWinConfig
+---@field opts table
 
 ---@type WinInfo[]
 M._wins = {}
@@ -237,11 +244,14 @@ M._wins = {}
 ---@param buffer NvimBufId buffer id
 ---@param window NvimWinId window id
 function M.append_window(buffer, window)
-  if not M.is_float(window) or not M.is_floatable_buffer(buffer) then
+  if not M.is_floating(window) or not M.is_floatable_buffer(buffer) then
+    return
+  end
+  if not vim.api.nvim_buf_is_valid(buffer) or not vim.api.nvim_win_is_valid(window) then
     return
   end
   local cond = vim.tbl_contains(M._wins, function(w)
-    return w.win == window -- or (w.terminal ~= nil and w.terminal == tid)
+    return w.win == window
   end, { predicate = true })
   if cond then
     return
@@ -251,13 +261,14 @@ function M.append_window(buffer, window)
   if vim.api.nvim_win_is_valid(window) then
     config = vim.api.nvim_win_get_config(window)
   else
-    config = M._default_float_config()
+    config = vim.deepcopy(M._float_config)
   end
   local info = {
     id = id,
     win = window,
     buffer = buffer,
     config = config,
+    opts = M._get_window_options(window, M._float_options),
   }
   M._wins[id] = info
 end
@@ -269,7 +280,7 @@ function M.remove_window(window)
     window = window.win
   end
   local find = vim.tbl_filter(function(w)
-    return w.win == window --or (w.terminal ~= nil and w.terminal == tid)
+    return w.win == window
   end, M._wins)
   for _, w in pairs(find) do
     M._wins[w.id] = nil
@@ -282,7 +293,7 @@ end
 function M.buf_float_keymaps(opts)
   return {
     ["n|" .. (opts.start_ctrl_mode or "<leader>ff")] = map(function()
-      if M.is_float(0) then
+      if M.is_floating(0) then
         km.load(M._buf_ctrl_keymaps, { map = { buffer = 0 } })
       end
     end):display("Start Ctrl"),
@@ -290,14 +301,14 @@ function M.buf_float_keymaps(opts)
       km.unset_keymap(M._buf_ctrl_keymaps, "n", 0)
     end):display("Stop Ctrl"),
     ["n|" .. (opts.append_window or "<leader>fa")] = map(function()
-      if M.is_float(0) then
+      if M.is_floating(0) then
         local buffer = vim.api.nvim_get_current_buf()
         local win = vim.api.nvim_get_current_win()
         M.append_window(buffer, win)
       end
     end):display("Append Window"),
     ["n|" .. (opts.remove_window or "<leader>fx")] = map(function()
-      if M.is_float(0) then
+      if M.is_floating(0) then
         local winid = vim.api.nvim_get_current_win()
         M.remove_window(winid)
       end
@@ -305,16 +316,18 @@ function M.buf_float_keymaps(opts)
   }
 end
 
+function M._regular_wins()
+  for key, value in pairs(M._wins) do
+    if not vim.api.nvim_buf_is_valid(value.buffer) then
+      M._wins[key] = nil
+    end
+  end
+end
+
 ---@return WinInfo[]
 function M._get_all()
-  local result = {}
-  for _, v in pairs(M._wins) do
-    result[#result + 1] = v
-  end
-  table.sort(result, function(a, b)
-    return a.id < b.id
-  end)
-  return result
+  M._regular_wins()
+  return vim.tbl_values(M._wins)
 end
 
 --- Get the next available id based on the next number in the sequence that
@@ -332,22 +345,27 @@ function M._next_id()
 end
 
 function M._float_leave_callback(ev)
-  if M.is_float(0) then
+  if M.is_floating(0) then
     km.unset_keymap(M._buf_float_keymaps, "n", ev.buf)
-    local winid = vim.fn.win_getid()
+    local winid = vim.api.nvim_get_current_win()
     local find = vim.tbl_filter(function(w)
       return w.win == winid
     end, M._wins)
-    local config = vim.api.nvim_win_get_config(0)
-    for _, w in pairs(find) do
-      w.config = config
-      M.latest_focused = w
+    if #find > 0 then
+      local config = vim.api.nvim_win_get_config(0)
+      for _, w in pairs(find) do
+        w.config = config
+        w.opts = M._get_window_options(winid, M._float_options)
+        M.latest_focused = w
+      end
+    else
+      M.append_window(ev.buf, winid)
     end
   end
 end
 
 function M._float_enter_callback(ev)
-  if ev.event == "TermOpen" or (M.is_float(0) and M.is_floatable_buffer(ev.buf)) then
+  if M.is_floating(vim.api.nvim_get_current_win()) and M.is_floatable_buffer(ev.buf) then
     km.load(M._buf_float_keymaps, { map = { buffer = ev.buf } })
   else
     km.unset_keymap(M._buf_float_keymaps, "n", ev.buf)
@@ -358,9 +376,36 @@ function M._floatterm_close_callback(ev)
   local find = vim.tbl_filter(function(w)
     return w.buffer == ev.buf
   end, M._wins)
+  print(ev.buf, vim.inspect(M._wins), vim.inspect(find))
   for _, w in pairs(find) do
     M._wins[w.id] = nil
   end
+end
+
+---Apply window options
+---@param winid NvimWinId
+---@param opts table
+function M._apply_window_options(winid, opts)
+  if type(winid) ~= "number" or type(opts) ~= "table" then
+    return
+  end
+  for key, value in pairs(opts) do
+    vim.api.nvim_set_option_value(key, value, { win = winid })
+  end
+end
+
+---Apply window options
+---@param winid NvimWinId
+---@param opts table
+function M._get_window_options(winid, opts)
+  if type(winid) ~= "number" or type(opts) ~= "table" then
+    return
+  end
+  local ret = {}
+  for key, _ in pairs(opts) do
+    ret[key] = vim.api.nvim_get_option_value(key, { win = winid })
+  end
+  return ret
 end
 
 ---Open a managed window
@@ -378,6 +423,7 @@ function M.open(win)
   else
     vim.api.nvim_set_current_win(window.win)
   end
+  M._apply_window_options(window.win, window.opts)
   if vim.api.nvim_buf_get_option(window.buffer, "buftype") == "terminal" then
     vim.cmd([[startinsert!]])
   end
@@ -423,8 +469,7 @@ end
 
 ---toggle a managed window
 function M.toggle()
-  if M.is_float(0) then
-    M.append_window(vim.api.nvim_get_current_buf(), vim.api.nvim_get_current_win())
+  if M.is_floating(0) then
     vim.api.nvim_win_close(0, true)
   elseif M.latest_focused ~= nil then
     M.open(M.latest_focused)
@@ -435,8 +480,10 @@ end
 ---@param opts table
 function M.setup(opts)
   local o = opts or {}
-  M._buf_float_keymaps = M.buf_float_keymaps(o)
-  M._buf_ctrl_keymaps = M.buf_ctrl_keymaps(o)
+  M._buf_float_keymaps = M.buf_float_keymaps(o.float_keymap or {})
+  M._buf_ctrl_keymaps = M.buf_ctrl_keymaps(o.ctrl_keymap or {})
+  M._float_options = o.opts or M._default_float_options()
+  M._float_config = o.config or M._default_float_config()
   vim.api.nvim_create_autocmd({ "WinLeave" }, {
     group = M.FLOAT_WINDOW_AUGROUP,
     nested = true,
@@ -450,7 +497,7 @@ function M.setup(opts)
     pattern = "*",
     callback = M._floatterm_close_callback,
   })
-  vim.api.nvim_create_autocmd({ "WinEnter", "TermOpen", "BufEnter" }, {
+  vim.api.nvim_create_autocmd({ "TermEnter", "BufEnter" }, {
     pattern = "*",
     group = M.FLOAT_WINDOW_AUGROUP,
     nested = true,

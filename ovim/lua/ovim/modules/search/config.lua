@@ -119,6 +119,7 @@ function C.telescope()
   local undo = telescope_undo()
   require("telescope").setup {
     defaults = {
+      sorting_strategy = "ascending",
       mappings = {
         i = {
           ["<C-o>"] = action_layout.toggle_preview,
@@ -129,7 +130,7 @@ function C.telescope()
       prompt_prefix = "🔎 ",
       selection_caret = " ",
       layout_config = {
-        horizontal = { prompt_position = "bottom", results_width = 0.6 },
+        horizontal = { prompt_position = "top", results_width = 0.8 },
         vertical = { mirror = false },
       },
       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -138,8 +139,7 @@ function C.telescope()
       file_sorter = require("telescope.sorters").get_fuzzy_file,
       file_ignore_patterns = {},
       generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-      path_display = { "absolute" },
-      winblend = 0,
+      winblend = 10,
       border = {},
       borderchars = {
         "─",
