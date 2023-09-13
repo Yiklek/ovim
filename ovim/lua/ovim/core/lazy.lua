@@ -50,7 +50,7 @@ function this.init()
     local level = m.level or 0
     local condition = true
     if m.condition ~= nil and type(m.condition) == "string" then
-      condition = condition and vim.fn.luaeval(m.condition)
+      condition = condition and vim.fn.luaeval(m.condition) or false
     end
     if level < config.level and condition then
       config.plugins = vim.tbl_deep_extend("force", config.plugins, m.plugins)

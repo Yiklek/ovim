@@ -151,12 +151,12 @@ return {
         ft("python"):fmt("black")
         ft("cmake"):fmt("cmake-format")
         ft("json"):fmt("prettier")
-        require("guard").setup {
-          -- the only options for the setup function
-          fmt_on_save = false,
-          -- Use lsp if no formatter was defined for this filetype
-          lsp_as_default_formatter = true,
-        }
+        -- require("guard").setup {
+        --   -- the only options for the setup function
+        --   fmt_on_save = false,
+        --   -- Use lsp if no formatter was defined for this filetype
+        --   lsp_as_default_formatter = true,
+        -- }
       end,
       keys = km.to_lazy {
         ["n|<leader>xf"] = km.map_cmd("GuardFmt"):display("Format"),

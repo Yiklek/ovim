@@ -67,6 +67,9 @@ return {
         window_focus = {
           enable = true,
         },
+        competition = {
+          enable = true,
+        },
       },
     },
     editor = {

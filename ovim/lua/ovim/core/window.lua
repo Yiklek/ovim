@@ -137,7 +137,7 @@ end
 
 M._configs = {
   float = function(config)
-    return config
+    return vim.tbl_extend("force", config, M._float_config)
   end,
   ne = M._ne_config,
   se = M._se_config,
@@ -166,13 +166,16 @@ M._configs = {
 ---@param a string action
 ---@return fun(winid: NvimWinId)
 function M._float_helper(a)
+  local apply_config = M._configs[a]
   return function(winnr)
-    local config = vim.api.nvim_win_get_config(winnr)
-    local floated = M.is_floating(config)
+    local floated = M.is_floating(winnr)
+    local config
     if not floated then
       config = vim.deepcopy(M._float_config)
+    else
+      config = vim.api.nvim_win_get_config(winnr)
     end
-    config = M._configs[a](config)
+    config = apply_config(config)
     if not floated then
       vim.api.nvim_open_win(0, true, config)
     else
