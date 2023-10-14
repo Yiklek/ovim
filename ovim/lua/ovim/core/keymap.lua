@@ -64,7 +64,6 @@ function rhs_options:map_cu(cmd_string, opts)
   return self
 end
 
-
 function rhs_options:map(key, opts)
   self.rhs = key
   self:update_opts(opts)

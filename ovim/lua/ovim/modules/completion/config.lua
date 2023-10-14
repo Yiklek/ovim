@@ -24,26 +24,15 @@ function C.nvim_cmp()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
-
+  local default = require("cmp.config").global
+  -- put underlines to end
+  table.insert(default.sorting.comparators, 3, require("cmp-under-comparator").under)
   local cmp = require("cmp")
   ---@diagnostic disable-next-line: redundant-parameter
   cmp.setup {
     window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
-    },
-    sorting = {
-      comparators = {
-        cmp.config.compare.locality,
-        cmp.config.compare.score,
-        cmp.config.compare.recently_used,
-        cmp.config.compare.kind,
-        cmp.config.compare.order,
-        cmp.config.compare.sort_text,
-        cmp.config.compare.offset,
-        cmp.config.compare.exact,
-        require("cmp-under-comparator").under,
-      },
     },
     formatting = {
       format = function(entry, vim_item)

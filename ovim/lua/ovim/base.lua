@@ -35,6 +35,7 @@ vim.o.undofile = true
 vim.o.undolevels = 10000
 vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.o.cursorline = true -- Enable highlighting of the current line
+vim.o.exrc = true
 
 if ovim.util.has_win() then
   local powershell_options = {
