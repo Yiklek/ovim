@@ -3,6 +3,7 @@ M = {}
 --- @class NvimWinConfig
 --- @field relative string
 --- @field title string
+--- @field hide boolean
 --- @alias NvimWinId integer
 --- @alias NvimBufId integer
 ---Check window is float
@@ -20,7 +21,8 @@ end
 ---@param buffer NvimBufId
 ---@return boolean
 function M.is_floatable_buffer(buffer)
-  return vim.tbl_contains({ "", "terminal" }, vim.api.nvim_buf_get_option(buffer, "buftype"))
+  local buftype = vim.api.nvim_get_option_value("buftype", { buf = buffer })
+  return vim.tbl_contains({ "", "terminal" }, buftype)
 end
 
 ---Scale float window. min: (10, 20) max: (lines, columns)
@@ -239,7 +241,7 @@ end
 ---@field win NvimWinId
 ---@field buffer NvimBufId
 ---@field config NvimWinConfig
----@field opts table
+---@field win_opts table
 
 ---@type WinInfo[]
 M._wins = {}
@@ -379,8 +381,8 @@ function M._floatterm_close_callback(ev)
   local find = vim.tbl_filter(function(w)
     return w.buffer == ev.buf
   end, M._wins)
-  print(ev.buf, vim.inspect(M._wins), vim.inspect(find))
   for _, w in pairs(find) do
+    vim.api.nvim_win_close(w.win, true)
     M._wins[w.id] = nil
   end
 end
@@ -426,8 +428,9 @@ function M.open(win)
   else
     vim.api.nvim_set_current_win(window.win)
   end
-  M._apply_window_options(window.win, window.opts)
-  if vim.api.nvim_buf_get_option(window.buffer, "buftype") == "terminal" then
+  vim.api.nvim_win_set_config(window.win, { hide = false })
+  M._apply_window_options(window.win, window.win_opts)
+  if vim.api.nvim_get_option_value("buftype", { buf = window.buffer }) == "terminal" then
     vim.cmd([[startinsert!]])
   end
 end
@@ -438,7 +441,7 @@ local function get_win_display_name(win)
   if type(win) == "number" then
     win = M._wins[win]
   end
-  if vim.api.nvim_buf_get_option(win.buffer, "buftype") == "terminal" then
+  if vim.api.nvim_get_option_value("buftype", { buf = win.buffer }) == "terminal" then
     return vim.split(vim.fn.bufname(win.buffer) or "", ":")[3]
   end
   return win.config.title or vim.fn.fnamemodify(vim.fn.bufname(win.buffer), ":~:.")

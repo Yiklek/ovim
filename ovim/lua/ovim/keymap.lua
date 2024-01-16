@@ -103,7 +103,7 @@ local function quit()
   local count = 0
   local current_wins = vim.api.nvim_tabpage_list_wins(0)
   for _, value in pairs(current_wins) do
-    local buftype = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(value), "buftype")
+    local buftype = vim.api.nvim_get_option_value("buftype", { buf = vim.api.nvim_win_get_buf(value) })
     if buftype ~= "nofile" then
       count = count + 1
     end
