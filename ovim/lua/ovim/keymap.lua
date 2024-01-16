@@ -5,9 +5,9 @@
 -- Copyright (c) 2022 ovim
 
 local km = require("ovim.core.keymap")
-local map_cr = km.map_cr
-local map_cu = km.map_cu
-local map_cmd = km.map_cmd
+-- local map_cr = km.map_cr
+-- local map_cu = km.map_cu
+-- local map_cmd = km.map_cmd
 local map = km.map
 local display = km.display
 local window = require("ovim.core.window")
@@ -76,7 +76,7 @@ noremap ]b  <cmd>bn!<cr>
 noremap ]t  gt
 noremap [t  gT
 
-tnoremap <A-/> <C-\><C-N>
+tnoremap <A-\> <C-\><C-N>
 
 tnoremap <C-W>h  <C-\><C-N><C-W>h
 tnoremap <C-W>j  <C-\><C-N><C-W>j
@@ -88,6 +88,16 @@ tnoremap <C-W><C-K>  <C-\><C-N><C-W><C-K>
 tnoremap <C-W><C-L>  <C-\><C-N><C-W><C-L>
 
 ]])
+
+local TERMINAL_AUGROUP = "OvimTerminal"
+vim.api.nvim_create_augroup(TERMINAL_AUGROUP, { clear = true })
+vim.api.nvim_create_autocmd({ "TermEnter" }, {
+  pattern = "*",
+  group = "OvimTerminal",
+  callback = function()
+    vim.notify_once("<A-\\> escape insert mode in terminal")
+  end,
+})
 
 local opts = {
   display = {
@@ -179,10 +189,10 @@ local function basic()
     ["n|<leader>f" .. (window_opts.right or "l")] = map(function() window.float_right(0) end):display("Right"),
     ["n|<leader>f" .. (window_opts.scale_up or "o")] = map(function() window.float_scale(0, 1.1, 1.1) end):display("Scale +"),
     ["n|<leader>f" .. (window_opts.scale_down or "i")] = map(function() window.float_scale(0, 0.9, 0.9) end):display("Scale -"),
-    ["n|<leader>f" .. (window_opts.move_left or "[")] = map(function() window.float_move(0, 0, -5) end):display("window.veLeft"),
-    ["n|<leader>f" .. (window_opts.move_right or "]")] = map(function() window.float_move(0, 0, 5) end):display("window.veRight"),
-    ["n|<leader>f" .. (window_opts.move_up or ";")] = map(function() window.float_move(0, -5, 0) end):display("window.veUp"),
-    ["n|<leader>f" .. (window_opts.move_down or "'")] = map(function() window.float_move(0, 5, 0) end):display("window.veDown"),
+    ["n|<leader>f" .. (window_opts.move_left or "[")] = map(function() window.float_move(0, 0, -5) end):display("MoveLeft"),
+    ["n|<leader>f" .. (window_opts.move_right or "]")] = map(function() window.float_move(0, 0, 5) end):display("MoveRight"),
+    ["n|<leader>f" .. (window_opts.move_up or ";")] = map(function() window.float_move(0, -5, 0) end):display("MoveUp"),
+    ["n|<leader>f" .. (window_opts.move_down or "'")] = map(function() window.float_move(0, 5, 0) end):display("MoveDown"),
     ["n|<leader>f" .. (window_opts.reduce_width or "9")] = map(function() window.float_plus(0, 0, -5) end):display("Width -"),
     ["n|<leader>f" .. (window_opts.increase_width or "0")] = map(function() window.float_plus(0, 0, 5) end):display("Width +"),
     ["n|<leader>f" .. (window_opts.increase_height or ".")] = map(function() window.float_plus(0, 5, 0) end):display("Height +"),
