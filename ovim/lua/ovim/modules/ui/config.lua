@@ -26,6 +26,8 @@ function C.nvim_treesitter()
       "json",
       "go",
       "gomod",
+      "markdown",
+      "markdown_inline",
     },
     indent = {
       enable = true,

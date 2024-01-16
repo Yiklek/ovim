@@ -52,7 +52,7 @@ return {
   treesitter = function(p, opts)
     p["nvim-treesitter/nvim-treesitter"] = {
       "nvim-treesitter/nvim-treesitter",
-      event = "VeryLazy",
+      event = "BufReadPre",
       config = function()
         require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_treesitter()
       end,
