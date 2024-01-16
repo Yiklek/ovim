@@ -12,6 +12,7 @@ from os.path import join, isfile, isdir, abspath
 import shutil
 import platform
 import importlib
+from pathlib import Path
 
 basedir = abspath(os.path.dirname(__file__))
 homedir = abspath(os.path.expanduser("~"))
@@ -228,6 +229,7 @@ def download(parser, args):
         os.remove(nvim_target_path)
     os.makedirs(os.path.dirname(nvim_target_path), exist_ok=True)
     os.symlink(nvim_source_path, nvim_target_path)
+    shutil.rmtree(Path(out) / "lib" / "nvim" / "parser")
     print("download successfully")
 
 
