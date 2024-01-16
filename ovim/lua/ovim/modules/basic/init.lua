@@ -42,6 +42,9 @@ local plugins = {
         templates = { "builtin", "ovim" },
       }
     end,
+    dependencies = {
+      "Yiklek/ovim-overseer",
+    },
   },
   ["folke/persistence.nvim"] = {
     "folke/persistence.nvim",
