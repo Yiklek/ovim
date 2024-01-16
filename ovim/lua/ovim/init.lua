@@ -7,7 +7,6 @@ _G.ovim = {}
 
 ovim.const = {}
 ovim.const.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand("<script>:p")), ":h") .. "/ovim"
-vim.env.OVIM_ROOT_PATH = ovim.const.root_path
 
 ovim.util = require("ovim.core.util")
 
