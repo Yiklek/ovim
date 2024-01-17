@@ -2,6 +2,17 @@
 -- Author: Yiklek
 -- Description: global config
 -- Copyright (c) 2022 Yiklek
+--
+
+---@alias ConfigOption table<string, any>
+
+---@class OvimModuleConfig
+---@field opts ConfigOption?
+---@field features table
+
+---@class OvimLspOption
+---@field inlay_hint boolean?
+
 return {
   level = 4,
   plugins = {},
@@ -16,6 +27,7 @@ return {
     "Makefile",
     "makefile",
   },
+  ---@type table<string, OvimModuleConfig>
   modules = {
     ui = {
       opts = {},
@@ -49,6 +61,7 @@ return {
         },
         terminal = {
           use = "toggleterm",
+          -- use = "FTerm",
           enable = true,
         },
         lsp_progress = {
