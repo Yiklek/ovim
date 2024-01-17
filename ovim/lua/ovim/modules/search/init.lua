@@ -23,18 +23,9 @@ local plugins = {
       },
       {
         "nvim-telescope/telescope-project.nvim",
+        dependencies = { "nvim-telescope/telescope-file-browser.nvim" },
       },
-      {
         "nvim-telescope/telescope-frecency.nvim",
-        dependencies = {
-          {
-            "tami5/sqlite.lua",
-            config = function()
-              require("ovim.core.safe_require")("ovim.modules.search.config").sqlite()
-            end,
-          },
-        },
-      },
       "jvgrootveld/telescope-zoxide",
       "gbrlsnchs/telescope-lsp-handlers.nvim",
       "debugloop/telescope-undo.nvim",
