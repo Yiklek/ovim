@@ -57,7 +57,9 @@ local function custom_attach(client, bufnr)
   if navic ~= nil and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
-  require("lsp-inlayhints").on_attach(client, bufnr)
+  if config.modules.lsp.opts.inlay_hint and client.supports_method("textDocument/inlayHint") then
+    vim.lsp.inlay_hint.enable(bufnr, true)
+  end
 end
 
 local servers = {

@@ -53,8 +53,17 @@ function K.lsp()
     ["v|<leader>gf"] = map(vim.lsp.buf.format):display("Format"),
     ["n|<leader>gp"] = map_cr("Lspsaga show_cursor_diagnostics", opts):display("show cursor diagnostic"),
   }
-  if vim.fn.has("nvim-0.10") then
-    m["n|<leader>gh"] = map_cr("lua vim.lsp.inlay_hint(0, nil)", opts):display("toggle inlay hint")
+  local ih = vim.lsp.inlay_hint
+  if ih ~= nil then
+    m["n|<leader>gh"] = map(function()
+      if type(ih) == "function" then
+        vim.lsp.inlay_hint(0, nil)
+      elseif type(ih) == "table" then
+        vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+      else
+        vim.notify_once("Inlay hint is not supported. Please ensure neovim >= 0.10.")
+      end
+    end, opts):display("toggle inlay hint")
   end
   return m
 end

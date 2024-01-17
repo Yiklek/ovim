@@ -131,6 +131,10 @@ return {
       },
     },
     lsp = {
+      ---@type OvimLspOption
+      opts = {
+        inlay_hint = true,
+      },
       features = {
         lspsaga = {
           enable = true,

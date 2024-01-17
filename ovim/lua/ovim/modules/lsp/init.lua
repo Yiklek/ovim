@@ -15,7 +15,6 @@ local plugins = {
       {
         "mason.nvim",
         "ray-x/lsp_signature.nvim",
-        "lvimuser/lsp-inlayhints.nvim",
         "folke/neodev.nvim",
       },
     },
