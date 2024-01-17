@@ -5,7 +5,6 @@
 return {
   name = "completion",
   level = 1,
-  condition = "vim.g['ovim#modules#autocomplete'] and vim.g['ovim#modules#autocomplete'].method == 'nvim_cmp'",
   plugins = {
     ["hrsh7th/nvim-cmp"] = {
       "hrsh7th/nvim-cmp",

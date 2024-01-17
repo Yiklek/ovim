@@ -9,7 +9,6 @@ return {
     local lspsaga_plugin = {
       "nvimdev/lspsaga.nvim",
       event = "BufRead",
-      config = true,
       dependencies = {
         "nvim-treesitter/nvim-treesitter", -- optional
         "nvim-tree/nvim-web-devicons", -- optional

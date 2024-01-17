@@ -43,7 +43,6 @@ local plugins = {
   ["nvim-pack/nvim-spectre"] = {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
-    event = "VeryLazy",
     opts = {
       open_cmd = "noswapfile vnew",
       mapping = {
