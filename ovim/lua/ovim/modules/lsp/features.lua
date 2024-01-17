@@ -13,6 +13,12 @@ return {
         "nvim-treesitter/nvim-treesitter", -- optional
         "nvim-tree/nvim-web-devicons", -- optional
       },
+      opts = {
+        scroll_preview = {
+          scroll_down = "<C-j>",
+          scroll_up = "<C-k>",
+        },
+      },
     }
     if p["neovim/nvim-lspconfig"].dependencies ~= nil then
       p["neovim/nvim-lspconfig"].dependencies[#p["neovim/nvim-lspconfig"].dependencies + 1] = lspsaga_plugin
