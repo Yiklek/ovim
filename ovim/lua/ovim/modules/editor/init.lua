@@ -32,7 +32,6 @@ local plugins = {
   ["danymat/neogen"] = {
     "danymat/neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
     config = true,
     opts = { snippet_engine = "luasnip" },
         -- Uncomment next line if you want to follow only stable versions

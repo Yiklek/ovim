@@ -142,7 +142,6 @@ return {
   format = function(p, opts)
     p["nvimdev/guard.nvim"] = {
       "nvimdev/guard.nvim",
-      event = "VeryLazy",
       config = function()
         local ft = require("guard.filetype")
         ft("c"):fmt("clang-format")
