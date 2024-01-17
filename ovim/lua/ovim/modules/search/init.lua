@@ -11,7 +11,7 @@ local plugins = {
     cmd = "Telescope",
     module = "telescope",
     config = function()
-      require("ovim.core.safe_require")("ovim.modules.search.config").telescope()
+      require("ovim.modules.search.config").telescope()
     end,
     keys = km.to_lazy(require("ovim.modules.search.keymap").telescope()),
     dependencies = {

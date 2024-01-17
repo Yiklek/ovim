@@ -10,7 +10,7 @@ return {
       "windwp/nvim-autopairs",
       event = "BufReadPost",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.editor.config").nvim_autopairs()
+        require("ovim.modules.editor.config").nvim_autopairs()
       end,
     }
   end,
@@ -20,7 +20,7 @@ return {
         "terrortylor/nvim-comment",
         event = "BufReadPost",
         config = function()
-          require("ovim.core.safe_require")("ovim.modules.editor.config").nvim_comment()
+          require("ovim.modules.editor.config").nvim_comment()
         end,
       }
     end
@@ -29,7 +29,7 @@ return {
         "numToStr/Comment.nvim",
         event = "BufReadPost",
         config = function()
-          require("ovim.core.safe_require")("ovim.modules.editor.config").comment_dot_nvim()
+          require("ovim.modules.editor.config").comment_dot_nvim()
         end,
       }
     end
@@ -39,13 +39,13 @@ return {
       "lewis6991/gitsigns.nvim",
       event = "BufReadPost",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.editor.config").gitsigns()
+        require("ovim.modules.editor.config").gitsigns()
       end,
     }
     p["sindrets/diffview.nvim"] = {
       "sindrets/diffview.nvim",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.editor.config").diffview()
+        require("ovim.modules.editor.config").diffview()
       end,
       cmd = {
         "DiffviewOpen",

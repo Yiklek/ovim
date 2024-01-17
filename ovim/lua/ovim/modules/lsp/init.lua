@@ -9,7 +9,7 @@ local plugins = {
     opt = true,
     event = "VeryLazy",
     config = function()
-      require("ovim.core.safe_require")("ovim.modules.lsp.config").nvim_lsp()
+      require("ovim.modules.lsp.config").nvim_lsp()
     end,
     dependencies = {
       {
@@ -34,7 +34,7 @@ local plugins = {
     "folke/trouble.nvim",
     event = "BufReadPost",
     config = function()
-      require("ovim.core.safe_require")("ovim.modules.lsp.config").trouble()
+      require("ovim.modules.lsp.config").trouble()
     end,
   },
 }

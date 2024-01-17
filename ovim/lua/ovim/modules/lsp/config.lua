@@ -6,7 +6,7 @@ local km = require("ovim.core.keymap")
 local keymap = require("ovim.modules.lsp.keymap")
 local C = {}
 function C.nvim_lsp()
-  require("ovim.core.safe_require")("ovim.modules.lsp.lsp_config")
+  require("ovim.modules.lsp.lsp_config")
 end
 
 function C.trouble()

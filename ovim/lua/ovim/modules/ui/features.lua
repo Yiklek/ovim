@@ -15,7 +15,7 @@ return {
       "folke/noice.nvim",
       event = "VeryLazy",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.ui.config").noice()
+        require("ovim.modules.ui.config").noice()
       end,
       dependencies = {
         "MunifTanjim/nui.nvim",
@@ -28,13 +28,13 @@ return {
       "hoob3rt/lualine.nvim",
       event = "VeryLazy",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.ui.config").lualine()
+        require("ovim.modules.ui.config").lualine()
       end,
       dependencies = {
         {
           "SmiteshP/nvim-navic",
           config = function()
-            require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_navic()
+            require("ovim.modules.ui.config").nvim_navic()
           end,
         },
       },
@@ -45,7 +45,7 @@ return {
       "akinsho/bufferline.nvim",
       event = "VeryLazy",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.ui.config").bufferline()
+        require("ovim.modules.ui.config").bufferline()
       end,
     }
   end,
@@ -54,7 +54,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       event = "BufReadPre",
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_treesitter()
+        require("ovim.modules.ui.config").nvim_treesitter()
       end,
       dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -69,7 +69,7 @@ return {
         "kyazdani42/nvim-tree.lua",
         event = "VeryLazy",
         config = function()
-          require("ovim.core.safe_require")("ovim.modules.ui.config").nvim_tree()
+          require("ovim.modules.ui.config").nvim_tree()
         end,
       }
     end
@@ -144,7 +144,7 @@ return {
       "folke/which-key.nvim",
       lazy = true,
       config = function()
-        require("ovim.core.safe_require")("ovim.modules.ui.config").which_key()
+        require("ovim.modules.ui.config").which_key()
       end,
       event = "VeryLazy",
     }
@@ -224,7 +224,7 @@ return {
           "FloatermUpdate",
         },
         init = function()
-          require("ovim.core.safe_require")("ovim.modules.ui.config").floaterm()
+          require("ovim.modules.ui.config").floaterm()
         end,
       }
     end
