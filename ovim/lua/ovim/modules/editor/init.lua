@@ -33,16 +33,15 @@ local plugins = {
     "danymat/neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
     opts = { snippet_engine = "luasnip" },
-        -- Uncomment next line if you want to follow only stable versions
-        -- version = "*"
-        -- stylua: ignore start
-        keys = {
-            { "<leader>xdd", function() require('neogen').generate { type = "func" } end,  desc = "function doc" },
-            { "<leader>xdf", function() require('neogen').generate { type = "file" } end,  desc = "file doc" },
-            { "<leader>xdc", function() require('neogen').generate { type = "class" } end, desc = "class doc" },
-            { "<leader>xdt", function() require('neogen').generate { type = "type" } end,  desc = "type doc" },
-        }
-,
+      -- Uncomment next line if you want to follow only stable versions
+      -- version = "*"
+      -- stylua: ignore start
+      keys = {
+        { "<leader>xdd", function() require('neogen').generate { type = "func" } end,  desc = "function doc" },
+        { "<leader>xdf", function() require('neogen').generate { type = "file" } end,  desc = "file doc" },
+        { "<leader>xdc", function() require('neogen').generate { type = "class" } end, desc = "class doc" },
+        { "<leader>xdt", function() require('neogen').generate { type = "type" } end,  desc = "type doc" },
+      },
     -- stylua: ignore end
   },
 }
