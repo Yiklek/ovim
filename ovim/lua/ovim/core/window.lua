@@ -428,7 +428,6 @@ function M.open(win)
   else
     vim.api.nvim_set_current_win(window.win)
   end
-  vim.api.nvim_win_set_config(window.win, { hide = false })
   M._apply_window_options(window.win, window.win_opts)
   if vim.api.nvim_get_option_value("buftype", { buf = window.buffer }) == "terminal" then
     vim.cmd([[startinsert!]])
