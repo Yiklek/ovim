@@ -284,7 +284,9 @@ function M.remove_window(window)
   if type(window) == "table" then
     window = window.win
   end
-  vim.api.nvim_win_close(window, true)
+  if vim.api.nvim_win_is_valid(window) then
+    vim.api.nvim_win_close(window, false)
+  end
   local find = vim.tbl_filter(function(w)
     return w.win == window
   end, M._wins)
