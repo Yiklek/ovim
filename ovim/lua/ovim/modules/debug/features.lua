@@ -30,6 +30,9 @@ local function dap(p, opts)
           config = function()
             config.dap_ui()
           end,
+          dependencies = {
+            "nvim-neotest/nvim-nio",
+          },
         },
         {
           "nvim-telescope/telescope-dap.nvim",
