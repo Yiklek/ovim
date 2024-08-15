@@ -137,12 +137,30 @@ function pbind.display(display_string, opts)
 end
 
 local cache_keymaps = {}
+local function set_cache_keymaps(key, callback)
+  local m = cache_keymaps[key]
+  if m == nil then
+    m = {}
+  end
+  callback(m)
+  cache_keymaps[key] = m
+end
 
+local function append_cache_keymaps(key, value)
+  set_cache_keymaps(key, function(m)
+    m[#m + 1] = value
+  end)
+end
+
+local which_key_mode = "which-key"
 function pbind.register_which_key()
   -- must ensure which-key.nvim loaded
   local wk = require("which-key")
   for m, key in pairs(cache_keymaps) do
-    wk.register(key, { mode = m })
+    if m ~= which_key_mode then
+      key.mode = m
+    end
+    wk.add(key)
   end
   cache_keymaps = {}
 end
@@ -151,26 +169,32 @@ function pbind.mode_lhs(s)
   return s:match("([^|]*)|?(.*)")
 end
 
+-- mapping support 2 Spec
+-- 1. map
+-- {
+--   ["n|<leader>xa"] = map(require("ovim.modules.editor.util").remove_space):display("RemoveTraialingSpace")
+-- }
+-- 2. which-key v3. require which-key.nvim
+-- {
+--   {"<leader>xa", require("ovim.modules.editor.util").remove_space, desc = "RemoveTraialingSpace", mode = "n"}
+-- }
 function pbind.load(mapping, extra_opts)
-  for mode_lhs, ro in pairs(mapping) do
-    local mode, lhs = pbind.mode_lhs(mode_lhs)
-    if type(ro) == "table" then
-      local rhs = ro.rhs
-      local opts = vim.tbl_deep_extend("force", ro.opts, extra_opts or {})
-      if opts.display.enable then
-        local m = cache_keymaps[mode]
-        if m == nil then
-          m = {}
+  if type(mapping) == "table" and not vim.islist(mapping) and mapping.mode == nil then
+    for mode_lhs, ro in pairs(mapping) do
+      local mode, lhs = pbind.mode_lhs(mode_lhs)
+      if type(ro) == "table" then
+        local rhs = ro.rhs
+        local opts = vim.tbl_deep_extend("force", ro.opts, extra_opts or {})
+        if opts.display.enable then
+          append_cache_keymaps(mode, { [1] = lhs, [2] = rhs, desc = opts.display.repr })
         end
-        m = vim.tbl_deep_extend("force", m, {
-          [lhs] = { opts.display.repr },
-        })
-        cache_keymaps[mode] = m
-      end
-      if rhs ~= nil and rhs ~= "" then
-        vim.keymap.set(mode, lhs, rhs, opts.map)
+        if rhs ~= nil and rhs ~= "" then
+          vim.keymap.set(mode, lhs, rhs, opts.map)
+        end
       end
     end
+  else
+    append_cache_keymaps(which_key_mode, mapping)
   end
   local wk = require("ovim.core.safe_require")("which-key")
   if wk ~= nil then

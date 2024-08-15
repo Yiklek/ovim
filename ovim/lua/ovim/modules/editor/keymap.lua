@@ -60,7 +60,7 @@ end
 
 function K.remove_space()
   return {
-    ["n|<leader>xa"] = map(require("ovim.modules.editor.util").remove_space):display("RemoveTraialingSpace"),
+    { "<leader>xa", require("ovim.modules.editor.util").remove_space, desc = "RemoveTraialingSpace", mode = "n" },
   }
 end
 
