@@ -264,9 +264,11 @@ function C.lualine()
 end
 
 function C.bufferline()
-  require("bufferline").setup {
+  local bufferline = require("bufferline")
+  bufferline.setup {
     options = {
       numbers = "both",
+      style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
       offsets = {
         {
           filetype = "coc-explorer",

@@ -41,7 +41,7 @@ local function custom_attach(client, bufnr)
     navic.attach(client, bufnr)
   end
   if config.modules.lsp.opts.inlay_hint and client.supports_method("textDocument/inlayHint") then
-    vim.lsp.inlay_hint.enable(bufnr, true)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
 end
 

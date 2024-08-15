@@ -36,7 +36,7 @@ vim.o.undolevels = 10000
 vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.o.cursorline = true -- Enable highlighting of the current line
 vim.o.exrc = true
-
+vim.o.clipboard = "unnamedplus"
 if ovim.util.has_win() then
   local powershell_options = {
     shell = vim.fn.executable("pwsh.exe") == 1 and "pwsh.exe" or "powershell.exe",
