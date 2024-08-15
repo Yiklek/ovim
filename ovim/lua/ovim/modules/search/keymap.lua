@@ -24,8 +24,6 @@ local function map_act(target)
 end
 
 function K.telescope()
-  km.load { "<leader>s", desc = "Search (Telescope)", mode = "n" }
-
   return {
     ["n|<leader>s"] = display("Search (Telescope)"),
     ["n|<leader>s<space>"] = map_cmd("Telescope", opts):display("Telescope"),

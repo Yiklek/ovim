@@ -313,11 +313,9 @@ function pbind.to_lazy(mapping, extra_opts)
     if type(ro) == "table" then
       local rhs = ro.rhs
       local opts = vim.tbl_deep_extend("force", ro.opts, extra_opts or {})
-      if rhs ~= nil and rhs ~= "" then
-        local lazy_key = { lhs, rhs, desc = opts.display.enable and opts.display.repr or nil, mode = mode }
-        vim.tbl_deep_extend("force", lazy_key, opts.map)
-        table.insert(ret, lazy_key)
-      end
+      local lazy_key = { lhs, rhs, desc = opts.display.enable and opts.display.repr or nil, mode = mode }
+      vim.tbl_deep_extend("force", lazy_key, opts.map)
+      table.insert(ret, lazy_key)
     end
   end
   return ret
