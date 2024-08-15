@@ -16,28 +16,56 @@ local opts = {
     nowait = true,
   },
 }
-function K.telescope()
-  local map_keys = function(target)
-    return function()
-      require("telescope.builtin")[target]()
-    end
+
+local function map_act(target)
+  return function()
+    require("telescope.builtin")[target]()
   end
+end
+
+function K.telescope()
+  km.load { "<leader>s", desc = "Search (Telescope)", mode = "n" }
+
   return {
     ["n|<leader>s"] = display("Search (Telescope)"),
+    ["n|<leader>s<space>"] = map_cmd("Telescope", opts):display("Telescope"),
     ["n|<leader>sy"] = map_cmd("Telescope frecency", opts):display("frecency"),
     ["n|<leader>sp"] = map_cmd("Telescope project", opts):display("project"),
-    ["n|<leader>sc"] = map(map_keys("commands"), opts):display("commands"),
-    ["n|<leader>sb"] = map(map_keys("buffers"), opts):display("buffers"),
-    ["n|<leader>,"] = map(map_keys("buffers"), opts):display("buffers"),
-    ["n|<leader>ss"] = map(map_keys("live_grep"), opts):display("live_grep"),
-    ["n|<leader>/"] = map(map_keys("live_grep"), opts):display("live_grep"),
-    ["n|<leader>sS"] = map(map_keys("grep_string"), opts):display("grep_string"),
-    ["n|<leader>sf"] = map(map_keys("find_files"), opts):display("find_files"),
-    ["n|<leader>."] = map(map_keys("find_files"), opts):display("find_files"),
-    ["n|<leader>so"] = map(map_keys("oldfiles"), opts):display("oldfiles"),
-    ["n|<leader>su"] = map(map_keys("undo"), opts):display("undo"),
-    ["n|<leader>;"] = map(map_keys("command_history"), opts):display("command_history"),
-    ["n|<leader>'"] = map(map_keys("registers"), opts):display("registers"),
+    ["n|<leader>sc"] = map(map_act("commands"), opts):display("commands"),
+    ["n|<leader>sb"] = map(map_act("buffers"), opts):display("buffers"),
+    ["n|<leader>,"] = map(map_act("buffers"), opts):display("buffers"),
+    ["n|<leader>ss"] = map(map_act("live_grep"), opts):display("live_grep"),
+    ["n|<leader>/"] = map(map_act("live_grep"), opts):display("live_grep"),
+    ["n|<leader>sS"] = map(map_act("grep_string"), opts):display("grep_string"),
+    ["n|<leader>sf"] = map(map_act("find_files"), opts):display("find_files"),
+    ["n|<leader>."] = map(map_act("find_files"), opts):display("find_files"),
+    ["n|<leader>so"] = map(map_act("oldfiles"), opts):display("oldfiles"),
+    ["n|<leader>su"] = map(map_act("undo"), opts):display("undo"),
+    ["n|<leader>;"] = map(map_act("command_history"), opts):display("command_history"),
+    ["n|<leader>'"] = map(map_act("registers"), opts):display("registers"),
+  }
+end
+
+function K.telescope_which_key()
+  return {
+    mode = "n",
+    { "<leader>s", desc = "Search (Telescope)" },
+    { "<leader>s<space>", km.cmd("Telescope"), desc = "Telescope" },
+    { "<leader>sy", km.cmd("Telescope frecency"), desc = "frecency" },
+    { "<leader>sp", km.cmd("Telescope project"), desc = "project" },
+
+    { "<leader>sc", map_act("commands"), desc = "commands" },
+    { "<leader>sb", map_act("buffers"), desc = "buffers" },
+    { "<leader>,", map_act("buffers"), desc = "buffers" },
+    { "<leader>ss", map_act("live_grep"), desc = "live_grep" },
+    { "<leader>/", map_act("live_grep"), desc = "live_grep" },
+    { "<leader>sS", map_act("grep_string"), desc = "grep_string" },
+    { "<leader>sf", map_act("find_files"), desc = "find_files" },
+    { "<leader>.", map_act("find_files"), desc = "find_files" },
+    { "<leader>so", map_act("oldfiles"), desc = "oldfiles" },
+    { "<leader>su", map_act("undo"), desc = "undo" },
+    { "<leader>;", map_act("command_history"), desc = "command_history" },
+    { "<leader>'", map_act("registers"), desc = "registers" },
   }
 end
 

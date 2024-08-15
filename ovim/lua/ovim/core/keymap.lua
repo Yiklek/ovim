@@ -169,6 +169,76 @@ function pbind.mode_lhs(s)
   return s:match("([^|]*)|?(.*)")
 end
 
+local function check_is_map_spec(mapping)
+  local cond = type(mapping) == "table" and not vim.islist(mapping)
+  if cond then
+    for _, value in ipairs { "mode", "desc", "proxy", "hidden", "group", "expand" } do
+      if mapping[value] ~= nil then
+        cond = false
+        break
+      end
+    end
+  end
+  return cond
+end
+
+local function is_which_key_item(mapping)
+  if type(mapping) == "table" and type(mapping[1]) == "string" then
+    return true
+  end
+  return false
+end
+
+local function remove_which_key_fieles(item, mode)
+  for _, value in ipairs { "proxy", "hidden", "group", "expand" } do
+    item[value] = nil
+  end
+  item.mode = vim.tbl_keys(mode)
+  if #item.mode == 0 then
+    item.mode = nil
+  end
+end
+
+local function enter_mode_level(mapping, mode)
+  if mapping.mode ~= nil then
+    if type(mapping.mode) == "string" then
+      mode[mapping.mode] = 1
+    else
+      for _, m in ipairs(mapping.mode) do
+        mode[m] = 1
+      end
+    end
+  end
+end
+local function check_mode(mode)
+  mode = mode or {}
+  if type(mode) == "string" then
+    mode = { [mode] = 1 }
+  end
+  return mode
+end
+
+---convert which-key spec to lazy
+---@param mapping WhichKeySpec
+---@param mode ModeList?
+---@return LazySpec
+function pbind.whick_key_to_lazy(mapping, mode)
+  mode = check_mode(mode)
+  enter_mode_level(mapping, mode)
+  if is_which_key_item(mapping) then
+    remove_which_key_fieles(mapping, mode)
+    return { mapping }
+  end
+  local ret = {}
+  for _, value in ipairs(mapping) do
+    local r = pbind.whick_key_to_lazy(value, vim.deepcopy(mode))
+    for _, v in ipairs(r) do
+      ret[#ret + 1] = v
+    end
+  end
+  return ret
+end
+
 -- mapping support 2 Spec
 -- 1. map
 -- {
@@ -179,14 +249,14 @@ end
 --   {"<leader>xa", require("ovim.modules.editor.util").remove_space, desc = "RemoveTraialingSpace", mode = "n"}
 -- }
 function pbind.load(mapping, extra_opts)
-  if type(mapping) == "table" and not vim.islist(mapping) and mapping.mode == nil then
+  if check_is_map_spec(mapping) then
     for mode_lhs, ro in pairs(mapping) do
       local mode, lhs = pbind.mode_lhs(mode_lhs)
       if type(ro) == "table" then
         local rhs = ro.rhs
         local opts = vim.tbl_deep_extend("force", ro.opts, extra_opts or {})
         if opts.display.enable then
-          append_cache_keymaps(mode, { [1] = lhs, [2] = rhs, desc = opts.display.repr })
+          append_cache_keymaps(mode, { [1] = lhs, desc = opts.display.repr })
         end
         if rhs ~= nil and rhs ~= "" then
           vim.keymap.set(mode, lhs, rhs, opts.map)
@@ -221,6 +291,7 @@ function pbind.unset_keymap(keymaps, mode, buffer)
   end
   local m = {}
   for _, value in ipairs(maps) do
+    ---@diagnostic disable-next-line: undefined-field
     m[value.lhs] = true
   end
   for _, value in ipairs(keys) do
@@ -251,6 +322,9 @@ function pbind.to_lazy(mapping, extra_opts)
   end
   return ret
 end
+function pbind.cmd(cmd)
+  return ("<cmd>%s<cr>"):format(cmd)
+end
 
 ---@class KeymapOption
 ---@field display table
@@ -271,5 +345,28 @@ end
 ---@field nowait boolean?
 ---@field script boolean?
 ---@field unique boolean?
----
+
+---@class WhichKeyItem
+---@field [1] string
+---@field [2] string|function?
+---@field group string?
+---@field desc string?
+---@field mode string?
+---@field hidden boolean?
+---@field proxy string?
+---@field expand function?
+
+---@alias WhichKeySpec WhichKeyItem[]
+
+---@alias Mode string
+---@alias ModeList Mode[]
+
+---@class LazyItem
+---@field [1] string
+---@field [2] string|function?
+---@field mode ModeList|Mode
+---@field ft string?
+
+---@alias LazySpec LazyItem[]
+
 return pbind

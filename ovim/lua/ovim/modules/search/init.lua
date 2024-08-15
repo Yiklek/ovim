@@ -25,7 +25,7 @@ local plugins = {
         "nvim-telescope/telescope-project.nvim",
         dependencies = { "nvim-telescope/telescope-file-browser.nvim" },
       },
-        "nvim-telescope/telescope-frecency.nvim",
+      "nvim-telescope/telescope-frecency.nvim",
       "jvgrootveld/telescope-zoxide",
       "gbrlsnchs/telescope-lsp-handlers.nvim",
       "debugloop/telescope-undo.nvim",
