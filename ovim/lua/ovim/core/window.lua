@@ -22,7 +22,7 @@ end
 ---@return boolean
 function M.is_floatable_buffer(buffer)
   local buftype = vim.api.nvim_get_option_value("buftype", { buf = buffer })
-  return vim.tbl_contains({ "", "terminal" }, buftype)
+  return vim.tbl_contains({ "", "terminal", "nofile", "nowrite" }, buftype)
 end
 
 ---Scale float window. min: (10, 20) max: (lines, columns)
@@ -284,6 +284,7 @@ function M.remove_window(window)
   if type(window) == "table" then
     window = window.win
   end
+  vim.api.nvim_win_close(window, true)
   local find = vim.tbl_filter(function(w)
     return w.win == window
   end, M._wins)
