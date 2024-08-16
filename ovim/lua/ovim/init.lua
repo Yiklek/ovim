@@ -6,8 +6,7 @@ _G.try = require("ovim.core.try")
 _G.ovim = {}
 
 ovim.const = {}
-ovim.const.root_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand("<script>:p")), ":h") .. "/ovim"
-
+ovim.const.root_path = vim.fn.fnamemodify(debug.getinfo(1, "S").short_src, ":h:h:h")
 ovim.util = require("ovim.core.util")
 
 if ovim.util.has_win() then

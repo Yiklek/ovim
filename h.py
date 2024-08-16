@@ -154,7 +154,7 @@ def install(parser, args):
     os.makedirs(ovim_config_path, exist_ok=True)
     logger.info('create path {} successfully.'.format(ovim_config_path))
     if not isfile(ovim_config_init):
-        os.symlink(join(basedir, 'init.lua'), ovim_config_init)
+        os.symlink(join(basedir, "ovim", "init.lua"), ovim_config_init)
 
     lazy_path = join(ovim_cache_dir, "lazy", "plugins", "lazy.nvim")
     if not isdir(lazy_path):
