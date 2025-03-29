@@ -12,7 +12,7 @@ local lazy_opts = {
   defaults = {
     lazy = true,
   },
-  lockfile = ovim.const.cache_path .. "/lazy/lazy-lock.json",
+  lockfile = ovim.const.cache_path .. "/lazy/lock.json",
   readme = { root = ovim.const.cache_path .. "/lazy/readme" },
   state = ovim.const.cache_path .. "/lazy/state.json",
   performance = {
@@ -35,6 +35,7 @@ local lazy_opts = {
 function this.init()
   if not vim.loop.fs_stat(lazy_path) then
     -- bootstrap lazy.nvim
+    vim.notify("bootstrap lazy.nvim...")
     vim.fn.system { "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazy_path }
   end
   if not ovim.lazy then

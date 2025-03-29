@@ -182,4 +182,19 @@ function K.toggleterm()
   }
 end
 
+function K.fterm_nvim()
+  local new_term = map(function()
+    local t = require("FTerm.terminal"):new()
+    t:open()
+  end):display("New Terminal")
+  local select_term = map_cmd("TermSelect", opts):display("Floaterm Select")
+  return {
+    ["n|<leader>et"] = display("Floaterm"),
+    ["n|<leader>etn"] = new_term,
+    ["n|<leader>ets"] = select_term,
+
+    ["n|<A-n>"] = new_term,
+  }
+end
+
 return K

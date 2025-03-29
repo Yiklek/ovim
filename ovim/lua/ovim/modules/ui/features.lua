@@ -150,7 +150,20 @@ return {
     }
   end,
   terminal = function(p, opts)
-    if opts.use ~= nil and opts.use == "toggleterm" then
+    if opts.use ~= nil and opts.use == "FTerm" then
+      p["numToStr/FTerm.nvim"] = {
+        "numToStr/FTerm.nvim",
+        keys = km.to_lazy(require("ovim.modules.ui.keymap").fterm_nvim()),
+        config = function()
+          require("FTerm").setup {
+            dimensions = {
+              height = 0.9,
+              width = 0.9,
+            },
+          }
+        end,
+      }
+    elseif opts.use ~= nil and opts.use == "toggleterm" then
       p["akinsho/toggleterm.nvim"] = {
         "akinsho/toggleterm.nvim",
         keys = km.to_lazy(require("ovim.modules.ui.keymap").toggleterm()),
