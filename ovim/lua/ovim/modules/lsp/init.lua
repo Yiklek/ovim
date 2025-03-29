@@ -15,6 +15,7 @@ local plugins = {
       {
         "mason.nvim",
         "ray-x/lsp_signature.nvim",
+        "folke/neoconf.nvim",
         {
           "folke/lazydev.nvim",
           ft = "lua", -- only load on lua files
