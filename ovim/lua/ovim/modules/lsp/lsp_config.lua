@@ -22,7 +22,6 @@ mason.setup {
 
 mason_lsp.setup()
 
-
 local function custom_attach(client, bufnr)
   local signature = require("ovim.core.safe_require")("lsp_signature")
   if signature ~= nil then
@@ -40,7 +39,7 @@ local function custom_attach(client, bufnr)
   if navic ~= nil and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
-  if config.modules.lsp.opts.inlay_hint and client.supports_method("textDocument/inlayHint") then
+  if config.modules.lsp.opts.inlay_hint and client:supports_method("textDocument/inlayHint") then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
 end

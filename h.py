@@ -190,7 +190,7 @@ def uninstall(parser, args):
 
 
 def download(parser, args):
-    in_tar_dir_name = {"linux64": "linux64", "macos": "macos"}
+    in_tar_dir_name = {"macos": "macos", "linux-x86_64": "linux-x86_64"}
     global local_dir
     version = None
     from urllib.request import urlopen
@@ -275,8 +275,8 @@ def create_arg_parser():
     parser_download = subparsers.add_parser(
         'download', help='download and install lastest neovim')
     parser_download.set_defaults(func=download)
-    parser_download.add_argument('-a', '--arch', choices=["linux64", "macos"],
-                                 type=str, default="linux64")
+    parser_download.add_argument('-a', '--arch', choices=["linux-x86_64", "macos"],
+                                 type=str, default="linux-x86_64")
     parser_download.add_argument('--nightly', default=False, action="store_true")
     parser_download.set_defaults(func=download)
     return parser

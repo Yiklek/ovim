@@ -13,7 +13,7 @@
 ---@class OvimLspOption
 ---@field inlay_hint boolean?
 
-return {
+local M = {
   level = 4,
   plugins = {},
   root_markers = {
@@ -160,3 +160,14 @@ return {
     },
   },
 }
+
+function M:update(options)
+  if options == nil then
+    return
+  end
+  self.level = options.level or 4
+  self.modules = vim.tbl_deep_extend("force", self.modules, options.modules or {})
+  self.root_markers = vim.tbl_deep_extend("force", self.root_markers, options.root_markers or {})
+end
+
+return M

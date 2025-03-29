@@ -19,8 +19,6 @@ inoremap <c-k> <up>
 inoremap <c-l> <right>
 nnoremap <silent> <esc> <cmd>silent! nohlsearch<cr>
 
-"粘贴模式
-set pastetoggle=<F4>
 nmap <F5> <cmd>redraw!<cr>
 
 "窗口快捷键

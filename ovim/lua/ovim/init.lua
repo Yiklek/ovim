@@ -20,10 +20,6 @@ vim.opt.packpath:append(ovim.const.cache_path)
 ovim.lazy_pack = require("ovim.core.lazy")
 ovim.debug = false
 
-require("ovim.base")
-
-ovim.lazy_pack.init()
-
 local function disable_distribution_plugins()
   vim.g.loaded_gzip = 1
   vim.g.loaded_tar = 1
@@ -71,9 +67,12 @@ if vim.fn.exists("g:neovide") ~= 0 then
   neovide_config()
 end
 
-require("ovim.keymap")
+function ovim.setup(options)
+  require("ovim.config"):update(options)
+  require("ovim.base")
+  require("ovim.keymap") -- must after set <leader>
+  ovim.lazy_pack.init()
+  vim.cmd([[colorscheme onenord]])
+end
 
-function ovim.setup(options) end
-
-vim.cmd([[colorscheme onenord]])
 return ovim
