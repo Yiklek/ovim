@@ -17,14 +17,14 @@ local function switch_cursor()
       local buftype = vim.api.nvim_get_option_value("buftype", { buf = ev.buf })
       local filetype = vim.api.nvim_get_option_value("filetype", { buf = ev.buf })
       local modified = vim.api.nvim_get_option_value("modified", { buf = ev.buf })
-      if
-        modifiable
-        and buftype
-        and not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype)
-        and modified
-      then
-        vim.cmd([[silent! write]])
-      end
+      -- if
+      --   modifiable
+      --   and buftype
+      --   and not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype)
+      --   and modified
+      -- then
+      --   vim.cmd([[silent! write]])
+      -- end
     end,
   })
 end
