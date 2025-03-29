@@ -465,11 +465,11 @@ function C.which_key()
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
-   filter = function(mapping)
+    filter = function(mapping)
       -- example to exclude mappings without a description
       return mapping.desc and mapping.desc ~= ""
       --return true
-    end,--
+    end,
     disable = {
       buftypes = { "neo-tree", "NvimTree" },
     },

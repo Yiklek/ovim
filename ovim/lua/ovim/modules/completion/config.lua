@@ -132,7 +132,7 @@ function C.nvim_cmp()
       { name = "orgmode" },
       { name = "buffer" },
       { name = "latex_symbols" },
-      { name = "lazydev", group_index = 0 }
+      { name = "lazydev", group_index = 0 },
     },
   }
 
