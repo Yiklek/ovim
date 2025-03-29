@@ -7,9 +7,6 @@
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-require("neodev").setup {
-  -- add any options here, or leave empty to use the default settings
-}
 
 local opts = {
   settings = {
@@ -35,6 +32,15 @@ local opts = {
       -- },
       completion = {
         callSnippet = "Replace",
+      },
+      format = {
+        enable = true,
+        -- Put format options here
+        -- NOTE: the value should be String!
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = "2",
+        },
       },
     },
   },
