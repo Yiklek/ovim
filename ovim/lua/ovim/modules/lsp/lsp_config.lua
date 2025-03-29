@@ -74,10 +74,6 @@ if vim.diagnostic ~= nil and vim.diagnostic.config ~= nil then
   vim.diagnostic.config {
     virtual_text = false,
   }
-else
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-  })
 end
 local keymap = require("ovim.modules.lsp.keymap")
 require("ovim.core.keymap").load(keymap.lsp())
