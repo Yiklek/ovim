@@ -14,7 +14,6 @@ local plugins = {
     dependencies = {
       {
         "mason.nvim",
-        "ray-x/lsp_signature.nvim",
         "folke/neoconf.nvim",
         {
           "folke/lazydev.nvim",
