@@ -87,6 +87,8 @@ function C.telescope()
           ["<C-o>"] = action_layout.toggle_preview,
           ["<C-j>"] = "move_selection_next",
           ["<C-k>"] = "move_selection_previous",
+          ["<C-->"] = "select_horizontal",
+          ["<C-\\>"] = "select_vertical",
         },
       },
       prompt_prefix = "🔎 ",

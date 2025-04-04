@@ -83,11 +83,6 @@ local plugins = {
       }
     end,
   },
-  ["folke/neoconf.nvim"] = {
-    "folke/neoconf.nvim",
-    event = "VeryLazy",
-    config = true,
-  },
 }
 return {
   plugins = plugins,

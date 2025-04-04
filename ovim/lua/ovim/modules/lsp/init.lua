@@ -33,6 +33,17 @@ local plugins = {
     "williamboman/mason.nvim",
     level = 1,
     event = "VeryLazy",
+    opts = {
+      install_root_dir = ovim.const.cache_path .. "/mason",
+      ui = {
+        border = "rounded",
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+      },
+    },
     dependencies = {
       {
         "williamboman/mason-lspconfig.nvim",

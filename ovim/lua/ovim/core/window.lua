@@ -367,7 +367,10 @@ function M._float_leave_callback(ev)
         M.latest_focused = w
       end
     else
-      M.append_window(ev.buf, winid)
+      local buftype = vim.api.nvim_get_option_value("buftype", { buf = ev.buf })
+      if buftype == "terminal" then
+        M.append_window(ev.buf, winid)
+      end
     end
   end
 end
@@ -505,7 +508,7 @@ function M.setup(opts)
     pattern = "*",
     callback = M._floatterm_close_callback,
   })
-  vim.api.nvim_create_autocmd({ "TermEnter", "BufEnter" }, {
+  vim.api.nvim_create_autocmd({ "TermEnter", "BufEnter", "WinEnter" }, {
     pattern = "*",
     group = M.FLOAT_WINDOW_AUGROUP,
     nested = true,

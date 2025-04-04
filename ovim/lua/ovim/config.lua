@@ -15,6 +15,7 @@
 
 local M = {
   level = 4,
+  lazyvim = true,
   plugins = {},
   root_markers = {
     ".git",
@@ -113,9 +114,6 @@ local M = {
         commit = {
           enable = true,
         },
-        ime = {
-          enable = false,
-        },
         multi_cursor = {
           enable = true,
         },
@@ -165,7 +163,12 @@ function M:update(options)
   if options == nil then
     return
   end
-  self.level = options.level or 4
+  if options.lazyvim ~= nil then
+    self.lazyvim = options.lazyvim
+  end
+  if options.level ~= nil then
+    self.level = options.level
+  end
   self.modules = vim.tbl_deep_extend("force", self.modules, options.modules or {})
   self.root_markers = vim.tbl_deep_extend("force", self.root_markers, options.root_markers or {})
 end

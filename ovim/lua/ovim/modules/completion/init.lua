@@ -13,7 +13,7 @@ return {
         require("ovim.modules.completion.config").nvim_cmp()
       end,
       event = "VeryLazy",
-      enabled = false,
+      enabled = vim.g.lazyvim_cmp == "nvim-cmp",
       dependencies = {
         "lukas-reineke/cmp-under-comparator",
         "L3MON4D3/LuaSnip",
@@ -30,14 +30,17 @@ return {
     },
     ["saghen/blink.cmp"] = {
       "saghen/blink.cmp",
+      version = "*",
+      enabled = vim.g.lazyvim_cmp == "auto" or vim.g.lazyvim_cmp == "blink.cmp",
       dependencies = {
         "rafamadriz/friendly-snippets",
         "mikavilpas/blink-ripgrep.nvim",
       },
       event = "VeryLazy",
-      opts = require("ovim.modules.completion.config").blink_cmp(),
-      -- 由于“opts_extend”，您的配置中的其他位置无需重新定义它
-      opts_extend = { "sources.default" },
+      -- opts = require("ovim.modules.completion.config").blink_cmp(),
+      opts = function()
+        return require("ovim.modules.completion.config").blink_cmp()
+      end,
     },
     {
       "L3MON4D3/LuaSnip",

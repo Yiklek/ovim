@@ -71,10 +71,10 @@ return {
     p["rainbowhxch/accelerated-jk.nvim"] = {
       "rainbowhxch/accelerated-jk.nvim",
       event = "VeryLazy",
-      config = function()
-        vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_gj)", {})
-        vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_gk)", {})
-      end,
+      keys = {
+        { "j", mode = { "n" }, "<Plug>(accelerated_jk_gj)", desc = "accelerated-up" },
+        { "k", mode = { "n" }, "<Plug>(accelerated_jk_gk)", desc = "accelerated-down" },
+      },
     }
   end,
   commit = function(p, opts)
@@ -82,28 +82,6 @@ return {
       "rhysd/committia.vim",
       ft = { "gitcommit", "gitrebase" },
       event = "BufReadPre",
-    }
-  end,
-  ime = function(p, opts)
-    p["ZSaberLv0/ZFVimIM"] = {
-      "ZSaberLv0/ZFVimIM",
-      event = "InsertEnter",
-      init = function()
-        vim.g.ZFVimIM_cloudAsync_enable = 1
-        vim.g.ZFVimIM_cloudSync_enable = 0
-        vim.g.ZFVimIM_cachePath = ovim.const.cache_path .. "/ZFVimIM"
-      end,
-      config = function()
-        vim.cmd(
-          [[nnoremap <expr><silent> ;' ZFVimIME_keymap_next_n()\ninoremap <expr><silent> ;' ZFVimIME_keymap_next_i()\nvnoremap <expr><silent> ;' ZFVimIME_keymap_next_v()]]
-        )
-      end,
-      dependencies = {
-        "ZSaberLv0/ZFVimJob",
-        "ZSaberLv0/ZFVimIM_pinyin_base",
-        "ZSaberLv0/ZFVimIM_openapi",
-        "Yiklek/ZFVimIM_openfly",
-      },
     }
   end,
   multi_cursor = function(p, opts)

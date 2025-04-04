@@ -194,18 +194,32 @@ function C.lua_snip()
 end
 
 function C.blink_cmp()
+  vim.cmd([[highlight BlinkCmpLabelDeprecated guifg=#D8DEE9 guibg=NONE gui=strikethrough]])
+  vim.cmd([[highlight BlinkCmpKindSnippet guifg=#BF616A guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindUnit guifg=#D08770 guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindProperty guifg=#A3BE8C guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindKeyword guifg=#EBCB8B guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindVariable guifg=#8FBCBB guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindInterface guifg=#88C0D0 guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindText guifg=#81A1C1 guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindFunction guifg=#B48EAD guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindMethod guifg=#B48EAD guibg=NONE]])
+  vim.cmd([[highlight BlinkCmpKindField guifg=#8FBCBB guibg=NONE]])
+
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   return {
     cmdline = {
       keymap = {
         preset = "inherit",
-        ["<CR>"] = { "accept_and_enter", "fallback" }, -- 更改成'select_and_accept'会选择第一项插入
+        ["<Tab>"] = { "show", "select_next", "fallback" },
+        ["<Space>"] = { "accept", "fallback" },
+        ["<CR>"] = { "fallback" },
       },
       completion = {
         -- 自动显示补全窗口
         menu = {
-          auto_show = true,
+          auto_show = false,
         },
         -- 不在当前行上显示所选项目的预览
         ghost_text = { enabled = false },
@@ -234,7 +248,7 @@ function C.blink_cmp()
       list = { selection = { preselect = false, auto_insert = true } },
       menu = {
         border = "rounded",
-        max_height = vim.o.lines / 2,
+        max_height = math.floor(vim.o.lines / 2),
         draw = {
           columns = {
             { "label", "label_description", gap = 1 },
@@ -251,7 +265,6 @@ function C.blink_cmp()
         -- "markdown"
       }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
     end,
-    fuzzy = { implementation = "lua" },
     signature = { enabled = true },
     appearance = {
       -- 将后备高亮组设置为 nvim-cmp 的高亮组
@@ -266,23 +279,23 @@ function C.blink_cmp()
     -- 已定义启用的提供程序的默认列表，以便您可以扩展它
     sources = {
       default = {
+        "lsp",
         "buffer",
         "ripgrep",
-        "lsp",
         "path",
         "snippets",
         "lazydev",
       },
       providers = {
         -- score_offset设置优先级数字越大优先级越高
-        buffer = { score_offset = 5 },
+        buffer = { score_offset = 1 },
         ripgrep = {
           module = "blink-ripgrep",
           name = "Ripgrep",
-          score_offset = 4,
+          score_offset = 2,
         },
         path = { score_offset = 3 },
-        lsp = { score_offset = 2 },
+        lsp = { score_offset = 5 },
         snippets = { score_offset = 1 },
         lazydev = {
           name = "LazyDev",
@@ -290,6 +303,31 @@ function C.blink_cmp()
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100,
         },
+      },
+    },
+    fuzzy = {
+      implementation = "prefer_rust",
+      sorts = {
+        "exact",
+        function(a, b)
+          local source_priority = {
+            path = 5,
+            lsp = 4,
+            lazydev = 3,
+            snippets = 2,
+            buffer = 1,
+            ripgrep = 1,
+          }
+          local a_p = source_priority[a.source_id]
+          local b_p = source_priority[b.source_id]
+          if a_p == nil or b_p == nil then
+            return
+          end
+          return a_p > b_p
+        end,
+        "kind",
+        "score",
+        "sort_text",
       },
     },
   }

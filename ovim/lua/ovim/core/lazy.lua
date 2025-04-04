@@ -45,20 +45,31 @@ function this.init()
   local config = require("ovim.config")
   local util = require("ovim.core.util")
   local modules = util.detect_modules()
+  require("ovim.lazyvim").setup()
 
   for _, module in pairs(modules) do
     local m = require(module)
     local level = m.level or 0
     local condition = true
     if m.condition ~= nil and type(m.condition) == "string" then
-      condition = condition and vim.fn.luaeval(m.condition) or false
+      condition = condition and vim.fn.luaeval(m.condition) and config_cond or false
     end
-    if level < config.level and condition then
+    local m_path = vim.split(module, "/")
+    local m_name = m_path[#m_path]
+    local config_cond = true
+    if config.modules[m_name] ~= nil then
+      config_cond = config.modules[m_name].enable ~= false
+    end
+    if level < config.level and condition and config_cond then
       config.plugins = vim.tbl_deep_extend("force", config.plugins, m.plugins)
     end
   end
-
-  ovim.lazy.setup(vim.tbl_values(config.plugins), lazy_opts)
+  local specs = {}
+  if config.lazyvim then
+    vim.list_extend(specs, require("ovim.lazyvim.plugins"))
+  end
+  vim.list_extend(specs, vim.tbl_values(config.plugins))
+  ovim.lazy.setup(specs, lazy_opts)
 end
 
 return this

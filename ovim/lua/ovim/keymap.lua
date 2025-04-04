@@ -91,7 +91,7 @@ local TERMINAL_AUGROUP = "OvimTerminal"
 vim.api.nvim_create_augroup(TERMINAL_AUGROUP, { clear = true })
 vim.api.nvim_create_autocmd({ "TermEnter" }, {
   pattern = "*",
-  group = "OvimTerminal",
+  group = TERMINAL_AUGROUP,
   callback = function()
     vim.notify_once("<A-\\> escape insert mode in terminal")
   end,
@@ -126,6 +126,26 @@ local function quit()
   end
 end
 
+local function split_func(split_dir)
+  return function()
+    local cmd_fmt = "%s %s"
+    local prompt = split_dir .. " file: "
+    if Snacks ~= nil then
+      Snacks.picker.buffers {
+        confirm = function(picker, item)
+          vim.cmd(string.format(cmd_fmt, split_dir, item.file))
+        end,
+      }
+    else
+      vim.ui.input({ prompt = prompt }, function(input)
+        if input ~= nil then
+          vim.cmd(string.format(cmd_fmt, split_dir, input))
+        end
+      end)
+    end
+  end
+end
+
 local function basic()
   local window_opts = config.modules.ui.opts.window or {}
   window.setup(window_opts)
@@ -136,8 +156,8 @@ local function basic()
 
   local maps = {
     ["n|<leader>x"] = display("Edit"),
-    ["n|<leader>\\"] = display("vsplit"),
-    ["n|<leader>-"] = display("split"),
+    ["n|<leader>\\"] = map(split_func("vsplit")):display("vsplit"),
+    ["n|<leader>-"] = map(split_func("split")):display("split"),
     ["n|<leader>q"] = display("Exit"),
     ["n|<leader>t"] = display("Tab"),
     ["n|<leader>tq"] = display("Close"),
