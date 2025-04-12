@@ -108,8 +108,11 @@ local opts = {
   },
 }
 local function quit()
+  local close_current = function()
+    return vim.api.nvim_win_close(0, false)
+  end
   if require("ovim.core.window").is_floating(0) or #vim.api.nvim_list_tabpages() > 1 then
-    vim.api.nvim_win_close(0, false)
+    return close_current()
   end
 
   local count = 0
@@ -122,7 +125,7 @@ local function quit()
   end
 
   if count > 1 then
-    vim.api.nvim_win_close(0, false)
+    return close_current()
   end
 end
 
