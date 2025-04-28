@@ -41,5 +41,13 @@ return {
         },
       },
     },
+    keys = {
+      { "<leader>.", false },
+      { "<leader>S", false },
+      -- stylua: ignore start
+      { "<leader>xs",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<leader>xS",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      -- stylua: ignore end
+    },
   },
 }

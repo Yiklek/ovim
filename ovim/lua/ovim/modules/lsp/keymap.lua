@@ -38,7 +38,7 @@ function K.lsp()
     ["n|<leader>g<space>"] = map_cr("Lspsaga hover_doc", opts),
     ["n|<leader>ga"] = map_cr("Lspsaga code_action", opts),
     ["v|<leader>ga"] = map_cu("Lspsaga range_code_action", opts),
-    ["n|<leader>gd"] = map_cr("Lspsaga preview_definition", opts),
+    ["n|<leader>gd"] = map_cr("Lspsaga peek_definition", opts),
     ["n|<leader>gD"] = map_cr("lua vim.lsp.buf.definition()", opts):display("Definition"),
     ["n|<leader>gt"] = map_cr("lua vim.lsp.buf.type_definition()", opts):display("TypeDefinition"),
     ["n|<leader>gi"] = map_cr("lua vim.lsp.buf.implementation()", opts):display("Implementation"),
