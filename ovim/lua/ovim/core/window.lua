@@ -205,33 +205,50 @@ vim.api.nvim_create_augroup(M.FLOAT_WINDOW_AUGROUP, { clear = true })
 local km = require("ovim.core.keymap")
 local map = km.map
 
+local function help_win_map(func)
+  return km.map(function()
+    func()
+    if M.help_win ~= nil then
+      M.help_win:update()
+    end
+  end)
+end
+
+local function float_quit()
+  if M.help_win ~= nil then
+    M.help_win:close()
+    M.help_win = nil
+  end
+  km.unset_keymap(M._buf_ctrl_keymaps, "n", 0)
+end
+
 ---Build buf control Keymaps
 ---@param opts table
 ---@return KeymapTable
 function M.buf_ctrl_keymaps(opts)
   return {
     -- stylua: ignore start
-    ["n|" .. (opts.center or "f")] = map(function() M.float(0) end):display("Center"),
-    ["n|" .. (opts.full or "g")] = map(function() M.float_full(0) end):display("Full"),
-    ["n|" .. (opts.nw or "y")] = map(function() M.float_nw(0) end):display("NW"),
-    ["n|" .. (opts.ne or "u")] = map(function() M.float_ne(0) end):display("NE"),
-    ["n|" .. (opts.sw or "n")] = map(function() M.float_sw(0) end):display("SW"),
-    ["n|" .. (opts.se or "m")] = map(function() M.float_se(0) end):display("SE"),
-    ["n|" .. (opts.top or "k")] = map(function() M.float_top(0) end):display("Top"),
-    ["n|" .. (opts.left or "h")] = map(function() M.float_left(0) end):display("Left"),
-    ["n|" .. (opts.bottom or "j")] = map(function() M.float_bottom(0) end):display("Bottom"),
-    ["n|" .. (opts.right or "l")] = map(function() M.float_right(0) end):display("Right"),
-    ["n|" .. (opts.scale_up or "o")] = map(function() M.float_scale(0, 1.1, 1.1) end):display("Scale +"),
-    ["n|" .. (opts.scale_down or "i")] = map(function() M.float_scale(0, 0.9, 0.9) end):display("Scale -"),
-    ["n|" .. (opts.move_left or "[")] = map(function() M.float_move(0, 0, -5) end):display("MoveLeft"),
-    ["n|" .. (opts.move_right or "]")] = map(function() M.float_move(0, 0, 5) end):display("MoveRight"),
-    ["n|" .. (opts.move_up or ";")] = map(function() M.float_move(0, -5, 0) end):display("MoveUp"),
-    ["n|" .. (opts.move_down or "'")] = map(function() M.float_move(0, 5, 0) end):display("MoveDown"),
-    ["n|" .. (opts.reduce_width or "9")] = map(function() M.float_plus(0, 0, -5) end):display("Width -"),
-    ["n|" .. (opts.increase_width or "0")] = map(function() M.float_plus(0, 0, 5) end):display("Width +"),
-    ["n|" .. (opts.increase_height or ".")] = map(function() M.float_plus(0, 5, 0) end):display("Height +"),
-    ["n|" .. (opts.reduce_height or ",")] = map(function() M.float_plus(0, -5, 0) end):display("Height -"),
-    ["n|" .. (opts.quit or "q")] = map(function() km.unset_keymap(M._buf_ctrl_keymaps, "n", 0) end):display("Quit"),
+    ["n|" .. (opts.center or "f")] = help_win_map(function() M.float(0) end):display("Set Center"),
+    ["n|" .. (opts.full or "g")] = help_win_map(function() M.float_full(0) end):display("Set Full"),
+    ["n|" .. (opts.nw or "y")] = help_win_map(function() M.float_nw(0) end):display("Set NW"),
+    ["n|" .. (opts.ne or "u")] = help_win_map(function() M.float_ne(0) end):display("Set NE"),
+    ["n|" .. (opts.sw or "n")] = help_win_map(function() M.float_sw(0) end):display("Set SW"),
+    ["n|" .. (opts.se or "m")] = help_win_map(function() M.float_se(0) end):display("Set SE"),
+    ["n|" .. (opts.top or "k")] = help_win_map(function() M.float_top(0) end):display("Set Top"),
+    ["n|" .. (opts.left or "h")] = help_win_map(function() M.float_left(0) end):display("Set Left"),
+    ["n|" .. (opts.bottom or "j")] = help_win_map(function() M.float_bottom(0) end):display("Set Bottom"),
+    ["n|" .. (opts.right or "l")] = help_win_map(function() M.float_right(0) end):display("Set Right"),
+    ["n|" .. (opts.scale_up or "o")] = help_win_map(function() M.float_scale(0, 1.1, 1.1) end):display("Scale +"),
+    ["n|" .. (opts.scale_down or "i")] = help_win_map(function() M.float_scale(0, 0.9, 0.9) end):display("Scale -"),
+    ["n|" .. (opts.move_left or ",")] = help_win_map(function() M.float_move(0, 0, -5) end):display("MoveLeft"),
+    ["n|" .. (opts.move_right or ".")] = help_win_map(function() M.float_move(0, 0, 5) end):display("MoveRight"),
+    ["n|" .. (opts.move_up or ";")] = help_win_map(function() M.float_move(0, -5, 0) end):display("MoveUp"),
+    ["n|" .. (opts.move_down or "'")] = help_win_map(function() M.float_move(0, 5, 0) end):display("MoveDown"),
+    ["n|" .. (opts.reduce_width or "9")] = help_win_map(function() M.float_plus(0, 0, -5) end):display("Width -"),
+    ["n|" .. (opts.increase_width or "0")] = help_win_map(function() M.float_plus(0, 0, 5) end):display("Width +"),
+    ["n|" .. (opts.increase_height or "=")] = help_win_map(function() M.float_plus(0, 5, 0) end):display("Height +"),
+    ["n|" .. (opts.reduce_height or "-")] = help_win_map(function() M.float_plus(0, -5, 0) end):display("Height -"),
+    ["n|" .. (opts.quit or "<bs>")] = map(float_quit):display("Quit"),
     -- stylua: ignore end
   }
 end
@@ -295,6 +312,27 @@ function M.remove_window(window)
   end
 end
 
+---@param lhs string
+---@param keymap Keymap
+local function keymap_help(lhs, keymap, width)
+  local _, key = km.mode_lhs(lhs)
+  local repr_len = #keymap.opts.display.repr
+  local key_len = #key
+  local pad = string.format("%" .. (width - repr_len - key_len) .. "s", "")
+  return string.format("%s%s(%s)", keymap.opts.display.repr, pad, key)
+end
+
+local function help_list(keymaps, width)
+  local res = {}
+  local max_col = 0
+  for key, value in pairs(keymaps) do
+    res[#res + 1] = keymap_help(key, value, width)
+    max_col = math.max(max_col, #res[#res])
+  end
+  table.sort(res)
+  return res
+end
+
 ---Build float buffer Keymaps
 ---@param opts table
 ---@return KeymapTable
@@ -302,6 +340,24 @@ function M.buf_float_keymaps(opts)
   return {
     ["n|" .. (opts.start_ctrl_mode or "<leader>ff")] = map(function()
       if M.is_floating(0) then
+        local width = 20
+        local help_lines = help_list(M._buf_ctrl_keymaps, width)
+        M.help_win = Snacks.win.new {
+          text = help_lines,
+          show = true,
+          focusable = false,
+          enter = false,
+          relative = "win",
+          wo = {
+            winblend = 50,
+          },
+          position = "float",
+          backdrop = false,
+          height = #help_lines,
+          width = width + 2, -- border 2
+          zindex = 150,
+          border = "rounded",
+        }
         km.load(M._buf_ctrl_keymaps, { map = { buffer = 0 } })
       end
     end):display("Start Ctrl"),
