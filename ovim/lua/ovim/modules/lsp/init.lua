@@ -29,10 +29,11 @@ local plugins = {
       },
     },
   },
-  ["williamboman/mason.nvim"] = {
-    "williamboman/mason.nvim",
+  ["mason-org/mason.nvim"] = {
+    "mason-org/mason.nvim",
     level = 1,
     event = "VeryLazy",
+    version = "^2.0.0", -- override LazyVim
     opts = {
       install_root_dir = ovim.const.cache_path .. "/mason",
       ui = {
@@ -43,10 +44,15 @@ local plugins = {
           package_uninstalled = "✗",
         },
       },
+      registries = {
+        "github:mason-org/mason-registry",
+        "lua:ovim.mason",
+      },
     },
     dependencies = {
       {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
+        "Yiklek/ovim-mason-registry",
       },
     },
   },
