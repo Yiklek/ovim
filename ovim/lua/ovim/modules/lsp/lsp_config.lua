@@ -7,7 +7,7 @@ local lspconfig = require("lspconfig")
 local mason = require("mason")
 local mason_lsp = require("mason-lspconfig")
 local config = require("ovim.config")
-
+require("neoconf").setup()
 mason.setup {
   install_root_dir = ovim.const.cache_path .. "/mason",
   ui = {
@@ -20,7 +20,11 @@ mason.setup {
   },
 }
 
-mason_lsp.setup()
+local servers = {
+  lua_ls = require("ovim.modules.lsp.server.lua"),
+  clangd = require("ovim.modules.lsp.server.clangd"),
+  html = require("ovim.modules.lsp.server.html"),
+}
 
 local function custom_attach(client, bufnr)
   local signature = require("ovim.core.safe_require")("lsp_signature")
@@ -44,30 +48,23 @@ local function custom_attach(client, bufnr)
   end
 end
 
-local servers = {
-  lua_ls = require("ovim.modules.lsp.server.lua"),
-  clangd = require("ovim.modules.lsp.server.clangd"),
-  html = require("ovim.modules.lsp.server.html"),
-}
+local function setup(server_name)
+  local server_config = servers[server_name]
+  local server_opts
+  if server_config ~= nil and type(server_config) == "table" then
+    server_opts = server_config.on_setup {
+      on_attach = custom_attach,
+    }
+  else
+    server_opts = {
+      on_attach = custom_attach,
+    }
+  end
+  lspconfig[server_name].setup(server_opts)
+end
 
-mason_lsp.setup_handlers {
-  -- The first entry (without a key) will be the default handler
-  -- and will be called for each installed server that doesn't have
-  -- a dedicated handler.
-  function(server_name) -- default handler (optional)
-    local server_config = servers[server_name]
-    local server_opts
-    if server_config ~= nil and type(server_config) == "table" then
-      server_opts = server_config.on_setup {
-        on_attach = custom_attach,
-      }
-    else
-      server_opts = {
-        on_attach = custom_attach,
-      }
-    end
-    lspconfig[server_name].setup(server_opts)
-  end,
+mason_lsp.setup {
+  handlers = { setup },
 }
 
 if vim.diagnostic ~= nil and vim.diagnostic.config ~= nil then
