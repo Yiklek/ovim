@@ -51,7 +51,7 @@ local plugins = {
     },
     dependencies = {
       {
-        "mason-org/mason-lspconfig.nvim",
+        { "mason-org/mason-lspconfig.nvim", version = "^2.0.0" },
         "Yiklek/ovim-mason-registry",
       },
     },

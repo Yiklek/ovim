@@ -63,9 +63,7 @@ local function setup(server_name)
   lspconfig[server_name].setup(server_opts)
 end
 
-mason_lsp.setup {
-  handlers = { setup },
-}
+mason_lsp.setup {}
 
 if vim.diagnostic ~= nil and vim.diagnostic.config ~= nil then
   vim.diagnostic.config {
