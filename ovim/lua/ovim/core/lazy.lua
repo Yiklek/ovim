@@ -51,12 +51,12 @@ function this.init()
     local m = require(module)
     local level = m.level or 0
     local condition = true
+    local config_cond = true
     if m.condition ~= nil and type(m.condition) == "string" then
       condition = condition and vim.fn.luaeval(m.condition) and config_cond or false
     end
     local m_path = vim.split(module, "/")
     local m_name = m_path[#m_path]
-    local config_cond = true
     if config.modules[m_name] ~= nil then
       config_cond = config.modules[m_name].enable ~= false
     end

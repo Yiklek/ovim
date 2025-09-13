@@ -1,11 +1,8 @@
 M = {}
 
---- @class NvimWinConfig
---- @field relative string
---- @field title string
---- @field hide boolean
---- @alias NvimWinId integer
+--- @alias NvimWinConfig vim.api.keyset.win_config
 --- @alias NvimBufId integer
+--- @alias NvimWinId integer
 ---Check window is float
 ---@param config (NvimWinId)|(NvimWinConfig)
 ---@return boolean
@@ -91,6 +88,7 @@ function M._default_float_config()
     border = "rounded",
   }
 end
+
 function M._default_float_options()
   return {
     winblend = 10,
@@ -222,8 +220,31 @@ local function float_quit()
   km.unset_keymap(M._buf_ctrl_keymaps, "n", 0)
 end
 
+---@class OvimCtrlKeys
+---@field center string|nil
+---@field full string|nil
+---@field nw string|nil
+---@field ne string|nil
+---@field sw string|nil
+---@field se string|nil
+---@field top string|nil
+---@field left string|nil
+---@field bottom string|nil
+---@field right string|nil
+---@field scale_up string|nil
+---@field scale_down string|nil
+---@field move_left string|nil
+---@field move_right string|nil
+---@field move_up string|nil
+---@field move_down string|nil
+---@field reduce_width string|nil
+---@field increase_width string|nil
+---@field increase_height string|nil
+---@field reduce_height string|nil
+---@field quit string|nil
+
 ---Build buf control Keymaps
----@param opts table
+---@param opts OvimCtrlKeys
 ---@return KeymapTable
 function M.buf_ctrl_keymaps(opts)
   return {
@@ -313,7 +334,7 @@ function M.remove_window(window)
 end
 
 ---@param lhs string
----@param keymap Keymap
+---@param keymap KeymapSpec
 local function keymap_help(lhs, keymap, width)
   local _, key = km.mode_lhs(lhs)
   local repr_len = #keymap.opts.display.repr
@@ -333,8 +354,14 @@ local function help_list(keymaps, width)
   return res
 end
 
+--- @class OvimFloatWindowKeys
+--- @field start_ctrl_mode string?
+--- @field stop_ctrl_mode string?
+--- @field append_window string?
+--- @field remove_window string?
+
 ---Build float buffer Keymaps
----@param opts table
+---@param opts OvimFloatWindowKeys
 ---@return KeymapTable
 function M.buf_float_keymaps(opts)
   return {
@@ -342,6 +369,7 @@ function M.buf_float_keymaps(opts)
       if M.is_floating(0) then
         local width = 20
         local help_lines = help_list(M._buf_ctrl_keymaps, width)
+        ---@diagnostic disable-next-line: undefined-global
         M.help_win = Snacks.win.new {
           text = help_lines,
           show = true,
@@ -412,6 +440,7 @@ function M._float_leave_callback(ev)
   if M.is_floating(0) then
     km.unset_keymap(M._buf_float_keymaps, "n", ev.buf)
     local winid = vim.api.nvim_get_current_win()
+    ---@type WinInfo[]
     local find = vim.tbl_filter(function(w)
       return w.win == winid
     end, M._wins)
@@ -419,7 +448,7 @@ function M._float_leave_callback(ev)
       local config = vim.api.nvim_win_get_config(0)
       for _, w in pairs(find) do
         w.config = config
-        w.opts = M._get_window_options(winid, M._float_options)
+        w.win_opts = M._get_window_options(winid, M._float_options) or {}
         M.latest_focused = w
       end
     else
@@ -444,7 +473,9 @@ function M._floatterm_close_callback(ev)
     return w.buffer == ev.buf
   end, M._wins)
   for _, w in pairs(find) do
-    vim.api.nvim_win_close(w.win, true)
+    if vim.api.nvim_win_is_valid(w.win) then
+      vim.api.nvim_win_close(w.win, true)
+    end
     M._wins[w.id] = nil
   end
 end
@@ -492,7 +523,8 @@ function M.open(win)
   end
   M._apply_window_options(window.win, window.win_opts)
   if vim.api.nvim_get_option_value("buftype", { buf = window.buffer }) == "terminal" then
-    vim.cmd([[startinsert!]])
+    M._apply_window_options(window.win, { winbar = M._format_win(window) })
+    vim.cmd.startinsert()
   end
 end
 
@@ -509,7 +541,7 @@ local function get_win_display_name(win)
 end
 
 ---@param win WinInfo|integer
-local function format_win(win)
+function M._format_win(win)
   if type(win) == "number" then
     win = M._wins[win]
   end
@@ -521,7 +553,7 @@ function M.select()
   local result = M._get_all()
   vim.ui.select(result, {
     prompt = "Select Float Window:",
-    format_item = format_win,
+    format_item = M._format_win,
   }, M.open)
 end
 
@@ -530,7 +562,7 @@ function M.remove()
   local result = M._get_all()
   vim.ui.select(result, {
     prompt = "Select Float Window to Remove:",
-    format_item = format_win,
+    format_item = M._format_win,
   }, M.remove_window)
 end
 
@@ -543,8 +575,14 @@ function M.toggle()
   end
 end
 
+--- @class OvimWindowOption
+--- @field opts table? -- vim.wo
+--- @field config NvimWinConfig?
+--- @field float_keymap OvimFloatWindowKeys?
+--- @field ctrl_keymap OvimCtrlKeys?
+
 ---setup
----@param opts table
+---@param opts OvimWindowOption
 function M.setup(opts)
   local o = opts or {}
   M._buf_float_keymaps = M.buf_float_keymaps(o.float_keymap or {})
