@@ -128,6 +128,9 @@ return {
         ft("python"):fmt("black")
         -- ft("cmake"):fmt("cmake-format")
         ft("typescript,javascript,typescriptreact,json"):fmt("prettier")
+        vim.g.guard_config = {
+          fmt_on_save = false,
+        }
       end,
       keys = km.to_lazy {
         ["n|<leader>xf"] = km.map_cmd("Guard fmt"):display("Format"),

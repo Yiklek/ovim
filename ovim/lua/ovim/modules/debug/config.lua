@@ -10,7 +10,7 @@ local keymap = require("ovim.modules.debug.keymap")
 function C.dap_install()
   local dap_install = require("dap-install")
   dap_install.setup {
-    installation_path = ovim.const.cache_path .. "/dapinstall/",
+    installation_path = ovim.util.path_concat { ovim.const.cache_path, "dapinstall" },
   }
 
   local dap_breakpoint = {

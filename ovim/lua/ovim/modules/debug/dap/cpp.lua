@@ -1,17 +1,18 @@
 local dap = require("dap")
 
-local dbg_path = require("dap-install.config.settings").options["installation_path"] .. "ccppr_vsc/"
+local dbg_path =
+  ovim.util.path_concat { require("dap-install.config.settings").options["installation_path"], "ccppr_vsc" }
 dap.adapters.cppdbg = {
   id = "cppdbg",
   type = "executable",
-  command = dbg_path .. "extension/debugAdapters/bin/OpenDebugAD7",
+  command = ovim.util.path_concat { dbg_path, "extension/debugAdapters/bin/OpenDebugAD7" },
 }
 
 -- require lldb-vscode in cache bin
 dap.adapters.lldb = {
   id = "lldb",
   type = "executable",
-  command = ovim.const.cache_path .. "/bin/lldb-vscode",
+  command = ovim.util.path_concat { ovim.const.cache_path, "bin/lldb-vscode" },
 }
 
 dap.configurations.cpp = {

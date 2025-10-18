@@ -10,8 +10,9 @@ local function telescope_fzf_native()
   -- telescope-fzf-native
   local fzf = nil
   if config_features["telescope-fzf-native"].enable and vim.fn.executable("cmake") ~= 0 then
-    local fzf_native_plugin_path = ovim.const.cache_path .. "/lazy/plugins/telescope-fzf-native.nvim"
-    local fzf_native_plugin_build_path = fzf_native_plugin_path .. "/build"
+    local fzf_native_plugin_path =
+      ovim.util.path_concat { ovim.const.cache_path, "lazy/plugins/telescope-fzf-native.nvim" }
+    local fzf_native_plugin_build_path = ovim.util.path_concat { fzf_native_plugin_path, "build" }
     if vim.fn.isdirectory(fzf_native_plugin_build_path) == 0 then
       vim.cmd(vim.fn.join({ "silent !cmake", "-S", fzf_native_plugin_path, "-B", fzf_native_plugin_build_path }, " "))
       vim.cmd(vim.fn.join({ "silent !cmake", "--build", fzf_native_plugin_build_path, "--config Release" }, " "))
@@ -37,7 +38,7 @@ end
 local function telescope_frecency()
   local frecency = nil
   if config_features["telescope-frecency"].enable then
-    local telescope_db = ovim.const.cache_path .. "/plugins/telescope"
+    local telescope_db = ovim.util.path_concat { ovim.const.cache_path, "plugins/telescope" }
     vim.fn.mkdir(telescope_db, "p")
     frecency = {
       db_root = telescope_db,

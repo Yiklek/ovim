@@ -6,15 +6,15 @@
 local this = {}
 this.__index = this
 
-local lazy_path = ovim.const.cache_path .. "/lazy/plugins/lazy.nvim"
+local lazy_path = ovim.util.path_concat { ovim.const.cache_path, "lazy/plugins/lazy.nvim" }
 local lazy_opts = {
-  root = ovim.const.cache_path .. "/lazy/plugins",
+  root = ovim.util.path_concat { ovim.const.cache_path, "lazy/plugins" },
   defaults = {
     lazy = true,
   },
-  lockfile = ovim.const.cache_path .. "/lazy/lock.json",
-  readme = { root = ovim.const.cache_path .. "/lazy/readme" },
-  state = ovim.const.cache_path .. "/lazy/state.json",
+  lockfile = ovim.util.path_concat { ovim.const.cache_path, "lazy/lock.json" },
+  readme = { root = ovim.util.path_concat { ovim.const.cache_path, "lazy/readme" } },
+  state = ovim.util.path_concat { ovim.const.cache_path, "lazy/state.json" },
   performance = {
     rtp = {
       reset = false,

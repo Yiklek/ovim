@@ -10,10 +10,10 @@ ovim.const.root_path = vim.fn.fnamemodify(debug.getinfo(1, "S").short_src, ":h:h
 ovim.util = require("ovim.core.util")
 
 if ovim.util.has_win() then
-  ovim.const.cache_path = vim.env.userprofile .. "/.cache/ovim"
+  ovim.const.cache_path = ovim.util.path_concat { vim.env.userprofile, ".cache/ovim" }
 else
-  local cache_path = vim.env.XDG_CACHE_HOME or (vim.env.HOME .. "/.cache")
-  ovim.const.cache_path = cache_path .. "/ovim"
+  local cache_path = vim.env.XDG_CACHE_HOME or ovim.util.path_concat { vim.env.HOME, ".cache" }
+  ovim.const.cache_path = ovim.util.path_concat { cache_path, "ovim" }
 end
 vim.opt.packpath:append(ovim.const.cache_path)
 

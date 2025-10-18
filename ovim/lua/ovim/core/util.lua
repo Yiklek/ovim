@@ -5,7 +5,7 @@
 local obj = {}
 local detect_modules = function()
   local list = {}
-  local modules_dir = ovim.const.root_path .. "/lua/ovim/modules"
+  local modules_dir = ovim.util.path_concat { ovim.const.root_path, "lua/ovim/modules" }
   local plugins_pattern = "*/init.lua"
   local modules = vim.fn.globpath(modules_dir, plugins_pattern, false, 1)
   for _, f in ipairs(modules) do
@@ -18,5 +18,11 @@ obj.detect_modules = detect_modules
 
 function obj.has_win()
   return vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 or vim.fn.has("win95") == 1
+end
+
+---@param path_sections string[]
+---@return string
+function obj.path_concat(path_sections)
+  return vim.fs.normalize(table.concat(path_sections, "/"))
 end
 return obj

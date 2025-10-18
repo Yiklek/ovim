@@ -59,7 +59,7 @@ M.str2argtable = function(str)
 end
 
 -- persist breakpoint
-local bp_base_dir = ovim.const.cache_path .. "/dap-breakpoint/"
+local bp_base_dir = ovim.util.path_concat { ovim.const.cache_path, "dap-breakpoint" }
 local breakpoints = require("dap.breakpoints")
 
 function M.store_breakpoints()
@@ -79,7 +79,7 @@ function M.store_breakpoints()
   -- build bps json file
   local buf_name = vim.api.nvim_buf_get_name(0)
   buf_name = buf_name:gsub("/", "-")
-  local fp = io.open(bp_base_dir .. buf_name:sub(2, #buf_name) .. ".json", "w")
+  local fp = io.open(ovim.util.path_concat { bp_base_dir, buf_name:sub(2, #buf_name) .. ".json" }, "w")
 
   -- write bps into json file
   local json_str = vim.fn.json_encode(bps)
@@ -93,7 +93,7 @@ function M.load_breakpoints()
   -- build bps json file
   local buf_name = vim.api.nvim_buf_get_name(0)
   buf_name = buf_name:gsub("/", "-")
-  local fp = io.open(bp_base_dir .. buf_name:sub(2, #buf_name) .. ".json", "r")
+  local fp = io.open(ovim.util.path_concat { bp_base_dir, buf_name:sub(2, #buf_name) .. ".json" }, "r")
   if fp == nil then
     return
   end

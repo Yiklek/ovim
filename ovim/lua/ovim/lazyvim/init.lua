@@ -1,10 +1,11 @@
 local M = {}
 local function lazyvim()
   -- lazyvim_json must be set as early as possible
-  vim.fn.mkdir(ovim.const.cache_path .. "/lazyvim", "p")
-  vim.g.lazyvim_json = ovim.const.cache_path .. "/lazyvim/config.json"
+  vim.fn.mkdir(ovim.util.path_concat { ovim.const.cache_path, "lazyvim" }, "p")
+  vim.g.lazyvim_json = ovim.util.path_concat { ovim.const.cache_path, "lazyvim/config.json" }
   vim.g.lazyvim_picker = "telescope"
-  vim.g.lazyvim_cmp = "blink.cmp"
+  -- vim.g.lazyvim_cmp = "blink.cmp"
+  vim.g.lazyvim_cmp = "nvim-cmp"
   vim.g.autoformat = false
   vim.g.deprecation_warnings = true
   vim.g.snacks_animate = false

@@ -5,6 +5,11 @@ return {
     priority = 10000,
     lazy = false,
     cond = true,
+    opts = {
+      defaults = {
+        keymaps = false,
+      },
+    },
   },
   {
     import = "lazyvim.plugins.extras.dap.core",
