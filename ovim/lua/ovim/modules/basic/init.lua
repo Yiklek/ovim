@@ -19,7 +19,19 @@ local opts = {
     silent = true,
   },
 }
-
+local function clipboard()
+  if os.getenv("SSH_TTY") == nil then
+    return {
+      "EtiamNullam/deferred-clipboard.nvim",
+      event = "VeryLazy",
+      config = function()
+        require("deferred-clipboard").setup {
+          fallback = "unnamedplus",
+        }
+      end,
+    }
+  end
+end
 local plugins = {
   ["folke/lazy.nvim"] = {
     "folke/lazy.nvim",
@@ -74,15 +86,7 @@ local plugins = {
       -- stylua: ignore end
     },
   },
-  ["EtiamNullam/deferred-clipboard.nvim"] = {
-    "EtiamNullam/deferred-clipboard.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("deferred-clipboard").setup {
-        fallback = "unnamedplus",
-      }
-    end,
-  },
+  ["EtiamNullam/deferred-clipboard.nvim"] = clipboard(),
 }
 return {
   plugins = plugins,

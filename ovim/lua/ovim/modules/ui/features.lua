@@ -50,16 +50,43 @@ return {
     }
   end,
   treesitter = function(p, opts)
+    vim.o.foldlevelstart = 99
     p["nvim-treesitter/nvim-treesitter"] = {
       "nvim-treesitter/nvim-treesitter",
       event = "BufReadPre",
-      config = function()
-        require("ovim.modules.ui.config").nvim_treesitter()
-      end,
-      dependencies = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        "p00f/nvim-ts-rainbow",
-        "nvim-treesitter/nvim-treesitter-refactor",
+      branch = "main",
+      version = false,
+      opts = {
+        install_dir = ovim.const.cache_path .. "/treesitter",
+        indent = { enable = true },
+        highlight = { enable = true },
+        folds = { enable = true },
+        ensure_installed = {
+          "bash",
+          "c",
+          "diff",
+          "html",
+          "javascript",
+          "jsdoc",
+          "json",
+          "jsonc",
+          "lua",
+          "luadoc",
+          "luap",
+          "markdown",
+          "markdown_inline",
+          "printf",
+          "python",
+          "query",
+          "regex",
+          "toml",
+          "tsx",
+          "typescript",
+          "vim",
+          "vimdoc",
+          "xml",
+          "yaml",
+        },
       },
     }
   end,
@@ -84,7 +111,7 @@ return {
           vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
           vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
           vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
-          require("neo-tree").setup()
+          require("neo-tree").setup {}
           -- require("neo-tree").setup { filesystem = { use_libuv_file_watcher = true } }
         end,
         dependencies = {
@@ -119,8 +146,8 @@ return {
       "lazyterm",
       "TelescopePromt",
     }
-    p["echasnovski/mini.indentscope"] = {
-      "echasnovski/mini.indentscope",
+    p["nvim-mini/mini.indentscope"] = {
+      "nvim-mini/mini.indentscope",
       event = { "BufReadPre", "BufNewFile" },
       opts = {
         symbol = "│",
@@ -261,8 +288,8 @@ return {
   end,
   dashboard = function(p, opts)
     if opts.use == "dashboard-nvim" then
-      p["glepnir/dashboard-nvim"] = {
-        "glepnir/dashboard-nvim",
+      p["nvimdev/dashboard-nvim"] = {
+        "nvimdev/dashboard-nvim",
         event = "VimEnter",
         opts = {
           theme = "hyper",
