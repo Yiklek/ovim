@@ -96,10 +96,7 @@ function C.nvim_cmp()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif require("luasnip").locally_jumpable(1) then
-          vim.fn.feedkeys(t("<Plug>luasnip-jump-next"), "")
-          -- elseif require("luasnip").expand_or_locally_jumpable() then
-          -- vim.fn.feedkeys(t "<Plug>luasnip-expand-or-jump", "")
+        elseif require("ovim.core.action").snip_forward() then
         elseif has_words_before() then
           cmp.complete()
         else
@@ -109,8 +106,7 @@ function C.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif require("luasnip").locally_jumpable(-1) then
-          vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+        elseif require("ovim.core.action").snip_backward() then
         else
           fallback()
         end
