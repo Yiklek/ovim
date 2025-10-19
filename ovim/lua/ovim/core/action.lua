@@ -13,6 +13,14 @@ function M.ai_accept()
   end
 end
 
+function M.ai_panel_toggle()
+  local copilot = require("ovim.core.safe_require")("copilot.panel")
+  if copilot ~= nil then
+    copilot.toggle()
+    return true
+  end
+end
+
 function M.snip_forward()
   local luasnip = require("ovim.core.safe_require")("luasnip")
   if vim.snippet.active { direction = 1 } then

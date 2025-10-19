@@ -233,6 +233,8 @@ local function basic()
 
     ["n|<leader>e"] = display("Extensions"),
     ["i|<A-y>"] = map(require("ovim.core.action").ai_accept, opts):display("AI Accept"),
+    ["i|<A-u>"] = map(require("ovim.core.action").ai_panel_toggle, opts):display("AI Panel"),
+    ["n|<A-u>"] = map(require("ovim.core.action").ai_panel_toggle, opts):display("AI Panel"),
   }
   return maps
 end
