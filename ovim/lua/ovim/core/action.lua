@@ -49,4 +49,31 @@ function M.snip_backward()
   return false
 end
 
+function M.find_files()
+  local telescope = require("ovim.core.safe_require")("telescope.builtin")
+  if telescope ~= nil then
+    require("ovim.core.util").cmp_input({ prompt = "find_command: " }, function(input)
+      if input ~= nil then
+        telescope.find_files { find_command = vim.split(input, " ") }
+      end
+    end)
+    return true
+  end
+  return false
+end
+
+function M.live_grep()
+  local telescope = require("ovim.core.safe_require")("telescope.builtin")
+  if telescope ~= nil then
+    require("ovim.core.util").cmp_input({ prompt = "cwd: " }, function(input)
+      if input ~= nil then
+        vim.notify(input)
+        telescope.live_grep { cwd = input }
+      end
+    end)
+    return true
+  end
+  return false
+end
+
 return M
