@@ -232,7 +232,7 @@ local function basic()
     -- stylua: ignore end
 
     ["n|<leader>e"] = display("Extensions"),
-    ["i|<tab><space>"] = map(require("ovim.core.action").ai_accept, opts):display("AI Accept"),
+    ["i|<A-y>"] = map(require("ovim.core.action").ai_accept, opts):display("AI Accept"),
   }
   return maps
 end

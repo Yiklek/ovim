@@ -8,7 +8,7 @@ local M = {}
 function M.ai_accept()
   local copilot = require("ovim.core.safe_require")("copilot.suggestion")
   if copilot ~= nil and copilot.is_visible() then
-    copilot.accept()
+    copilot.accept_line()
     return true
   end
 end
