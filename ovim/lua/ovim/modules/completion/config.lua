@@ -87,7 +87,7 @@ function C.nvim_cmp()
     },
     -- You can set mappings if you want
     mapping = cmp.mapping.preset.insert {
-      ["<CR>"] = cmp.mapping.confirm { select = true },
+      ["<CR>"] = cmp.mapping.close(),
       ["<C-p>"] = cmp.mapping.select_prev_item(),
       ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<C-k>"] = cmp.mapping.scroll_docs(-4),
