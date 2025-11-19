@@ -13,10 +13,6 @@ local display = km.display
 local window = require("ovim.core.window")
 local config = require("ovim.config")
 vim.cmd([[
-inoremap <c-h> <left>
-inoremap <c-j> <down>
-inoremap <c-k> <up>
-inoremap <c-l> <right>
 nnoremap <silent> <esc> <cmd>silent! nohlsearch<cr>
 
 nmap <F5> <cmd>redraw!<cr>
