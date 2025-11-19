@@ -67,7 +67,7 @@ function ovim.setup(options)
   require("ovim.base")
   require("ovim.keymap") -- must require after set <leader> in ovim.base
   ovim.lazy_pack.init()
-  vim.cmd([[colorscheme onenord]])
+  vim.cmd.colorscheme(config.colorscheme)
 end
 
 return ovim
