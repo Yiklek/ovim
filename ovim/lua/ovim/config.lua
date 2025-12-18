@@ -16,7 +16,7 @@
 local M = {
   level = 4,
   lazyvim = true,
-  colorscheme = "sonokai",
+  colorscheme = "cyberdream",
   plugins = {},
   root_markers = {
     ".git",

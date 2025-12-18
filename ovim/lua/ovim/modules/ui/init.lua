@@ -38,6 +38,14 @@ local plugins = {
     "navarasu/onedark.nvim",
     lazy = false,
   },
+  ["scottmckendry/cyberdream.nvim"] = {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      saturation = 0.7,
+    },
+  },
 }
 local features = require("ovim.core.features").setup_module_features("ui", plugins)
 return {

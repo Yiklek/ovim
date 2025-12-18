@@ -55,6 +55,9 @@ function this.init()
     if m.condition ~= nil and type(m.condition) == "string" then
       condition = condition and vim.fn.luaeval(m.condition) and config_cond or false
     end
+    if m.condition ~= nil and type(m.condition) == "boolean" then
+      condition = condition and m.condition --vim.fn.luaeval(m.condition) and config_cond or false
+    end
     local m_path = vim.split(module, "/")
     local m_name = m_path[#m_path]
     if config.modules[m_name] ~= nil then
