@@ -31,8 +31,8 @@ function C.nvim_cmp()
   ---@diagnostic disable-next-line: redundant-parameter
   cmp.setup {
     window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
+      completion = cmp.config.window.bordered { border = "rounded" },
+      documentation = cmp.config.window.bordered { border = "rounded" },
     },
     formatting = {
       format = function(entry, vim_item)

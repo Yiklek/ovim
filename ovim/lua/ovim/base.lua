@@ -37,6 +37,7 @@ vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.o.cursorline = true -- Enable highlighting of the current line
 vim.o.exrc = true
 vim.o.jumpoptions = "stack"
+vim.o.winborder = "rounded"
 
 if ovim.util.has_win() then
   local powershell_options = {
