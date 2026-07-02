@@ -32,7 +32,18 @@ end
 
 function M.options() end
 
-function M.autocmds() end
+function M.autocmds()
+  -- Override LazyVim's broken highlight-on-yank autocmd.
+  -- vim.hl.hl_op() was renamed to vim.hl.on_yank() in nvim 0.13 dev.
+  -- See: .../LazyVim/lua/lazyvim/config/autocmds.lua:22
+  local group = vim.api.nvim_create_augroup("lazyvim_highlight_yank", { clear = true })
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    group = group,
+    callback = function()
+      vim.hl.on_yank()
+    end,
+  })
+end
 
 function M.setup()
   lazyvim()

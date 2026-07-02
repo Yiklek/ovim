@@ -6,20 +6,23 @@
 # Copyright (c) 2021 Yiklek
 
 import argparse
+import logging
 import os
 import sys
 from os.path import join, isfile, isdir, abspath
 import shutil
-import platform
-import importlib
 from pathlib import Path
 
 basedir = abspath(os.path.dirname(__file__))
 homedir = abspath(os.path.expanduser("~"))
 sys.dont_write_bytecode = True
-sys.path.append(join(basedir, "ovim", "python3"))
 
-logger = importlib.import_module("ovim.log").logger
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(message)s",
+    handlers=[logging.StreamHandler()],
+)
+logger = logging.getLogger(__name__)
 
 xdg_config_dir = os.getenv("XDG_CONFIG_HOME")
 xdg_cache_dir = os.getenv("XDG_CACHE_HOME")
@@ -47,43 +50,11 @@ ovim_config_init = join(ovim_config_path, nvim_init_file)
 ovim_requirements = join(basedir, "ovim", "requirements.txt")
 ovim_packages = join(basedir, "ovim", "packages.txt")
 ovim_cargo = join(basedir, "ovim", "cargo.txt")
-platform_module = "ovim.platform"
-platform_module_mac = "ovim.platform.MacRunner"
-platform_module_win = "ovim.platform.WinRunner"
-
-
-def import_module(module):
-    import importlib
-
-    try:
-        modules = module.split(".")
-        if len(modules) == 1:
-            return getattr(globals(), modules[-1], None) or importlib.import_module(modules[-1])
-        elif len(modules) > 1:
-            module_path = ".".join(modules[:-1])
-            m = importlib.import_module(module_path)
-            return getattr(m, modules[-1])
-        else:
-            raise RuntimeError
-    except (ImportError, RuntimeError, AttributeError) as e:
-        exit = 1
-        logger.error("{} not found.reason: {}\nexit {}".format(module, e, exit))
-        sys.exit(exit)
-
-
-def _runner_name(name):
-    runner_name = name.strip().lower()
-    runner_name = runner_name[0].upper() + runner_name[1:] + "Runner"
-    return runner_name
-
-
-def _runner_module_name(runner):
-    return os.path.join("{}.{}".format(platform_module, _runner_name(runner)))
-
-
 def depend_check_env(args):
     if not args.ignore_python:
-        args.venv = import_module("venv")
+        import venv
+
+        args.venv = venv
 
     if args.node:
         logger.info("finding npm")
@@ -96,24 +67,6 @@ def depend_check_env(args):
         if os.system("cargo --version"):
             logger.error("cargo not found. exit 0")
             sys.exit(0)
-    if args.auto_platform:
-        s = platform.system()
-        if s == "Darwin":
-            args.platform = platform_module_mac
-        elif s == "Windows":
-            args.platform = platform_module_win
-        elif s == "Linux":
-            out = os.popen("cat /etc/*release")
-            out = out.readlines()
-            for o in out:
-                o = o.split("=")
-                if o[0] == "ID":
-                    args.platform = _runner_module_name(o[1])
-                    break
-
-    if args.platform:
-        args.platform = import_module(args.platform)()
-        args.platform.check_env()
 
 
 def depend(_, args):
@@ -121,7 +74,6 @@ def depend(_, args):
         args.ignore_python = False
         args.node = True
         args.cargo = True
-        args.auto_platform = True
     depend_check_env(args)
 
     if not args.ignore_python:
@@ -142,9 +94,6 @@ def depend(_, args):
         crates = " ".join(crates.split("\n"))
         logger.info("install cargo crates: {}".format(crates))
         os.system("cargo install {}".format(crates))
-
-    if args.platform:
-        args.platform.run()
 
 
 def install(parser, args):
@@ -288,21 +237,8 @@ def create_arg_parser():
     parser_dep.add_argument("-n", "--node", help="node dependency", default=False, action="store_true")
     parser_dep.add_argument("-c", "--cargo", help="cargo dependency", default=False, action="store_true")
     parser_dep.add_argument(
-        "--after-shell",
-        help="run shell script after all finished",
-        default=None,
-        type=str,
-    )
-    parser_dep.add_argument("--platform", help="platform dependency", default=None, type=str)
-    parser_dep.add_argument(
-        "--auto-platform",
-        help="auto detect platform shell dependency",
-        default=False,
-        action="store_true",
-    )
-    parser_dep.add_argument(
         "--all",
-        help="ignore-python=False,node=True,cargo=True,auto-platform=True",
+        help="ignore-python=False,node=True,cargo=True",
         default=False,
         action="store_true",
     )
