@@ -2,15 +2,15 @@
 # File: h.py
 # Author: Yiklek
 # Description: helper for installing neovim config
-# Last Modified: Feb 16, 2023
 # Copyright (c) 2021 Yiklek
 
 import argparse
 import logging
 import os
+import platform
+import shutil
 import sys
 from os.path import join, isfile, isdir, abspath
-import shutil
 from pathlib import Path
 
 basedir = abspath(os.path.dirname(__file__))
@@ -29,232 +29,158 @@ xdg_cache_dir = os.getenv("XDG_CACHE_HOME")
 local_dir = join(homedir, ".local")
 cache_dir = xdg_cache_dir or join(homedir, ".cache")
 ovim_cache_dir = join(cache_dir, "ovim")
-ovim_py3_home = join(ovim_cache_dir, "python3-venv")
-
 
 if os.name == "nt":
-    path = "Scripts"
     config_dir = xdg_config_dir or join(homedir, "AppData", "Local")
-    ovim_py_path = os.path.join(ovim_py3_home, path)
-    ovim_py = join(ovim_py_path, "python.exe")
 else:
-    path = "bin"
     config_dir = xdg_config_dir or join(homedir, ".config")
-    ovim_py_path = os.path.join(ovim_py3_home, path)
-    ovim_py = join(ovim_py_path, "python")
 
-nvim_init_file = "init.lua"
 nvim_root_name = "nvim"
 ovim_config_path = join(config_dir, nvim_root_name)
-ovim_config_init = join(ovim_config_path, nvim_init_file)
-ovim_requirements = join(basedir, "ovim", "requirements.txt")
-ovim_packages = join(basedir, "ovim", "packages.txt")
-ovim_cargo = join(basedir, "ovim", "cargo.txt")
-def depend_check_env(args):
-    if not args.ignore_python:
-        import venv
-
-        args.venv = venv
-
-    if args.node:
-        logger.info("finding npm")
-        if os.system("npm --version"):
-            logger.error("npm not found. exit 0")
-            sys.exit(0)
-
-    if args.cargo:
-        logger.info("finding cargo")
-        if os.system("cargo --version"):
-            logger.error("cargo not found. exit 0")
-            sys.exit(0)
+ovim_config_init = join(ovim_config_path, "init.lua")
 
 
-def depend(_, args):
-    if args.all:
-        args.ignore_python = False
-        args.node = True
-        args.cargo = True
-    depend_check_env(args)
-
-    if not args.ignore_python:
-        os.makedirs(ovim_cache_dir, exist_ok=True)
-        args.venv.main([ovim_py3_home])
-        os.system("{} -m pip install -r {} -U".format(ovim_py, ovim_requirements))
-
-    if args.node:
-        with open(ovim_packages, "r") as f:
-            packages = f.read()
-        packages = " ".join(packages.split("\n"))
-        logger.info("install node packages: {}".format(packages))
-        os.system("npm install -g {}".format(packages))
-
-    if args.cargo:
-        with open(ovim_cargo, "r") as f:
-            crates = f.read()
-        crates = " ".join(crates.split("\n"))
-        logger.info("install cargo crates: {}".format(crates))
-        os.system("cargo install {}".format(crates))
-
-
-def install(parser, args):
-    global config_dir, ovim_config_path
-
+def install(_, args):
+    """Create symlink ~/.config/nvim/init.lua -> ovim/init.lua"""
     os.makedirs(ovim_config_path, exist_ok=True)
-    logger.info("create path {} successfully.".format(ovim_config_path))
+    logger.info("create path %s successfully.", ovim_config_path)
     if not isfile(ovim_config_init):
         os.symlink(join(basedir, "ovim", "init.lua"), ovim_config_init)
-
-    lazy_path = join(ovim_cache_dir, "lazy", "plugins", "lazy.nvim")
-    if not isdir(lazy_path):
-        cmd = "git clone https://github.com/folke/lazy.nvim {}".format(lazy_path)
-        os.system(cmd)
+        logger.info("symlink created: %s -> ovim/init.lua", ovim_config_init)
     else:
-        print("lazy.nvim exist.")
-
-    if args.install_depend:
-        new_args = ["depend"]
-        new_args.extend(filter(lambda i: i is not None, args.install_depend))
-        a = parser.parse_args(new_args)
-        a.func(parser, a)
+        logger.info("config already exists at %s", ovim_config_init)
 
 
-def uninstall(parser, args):
-    global config_dir
-    global ovim_cache_dir, ovim_config_path
-
+def uninstall(_, args):
+    """Remove config dir and optionally cache"""
     try:
         shutil.rmtree(ovim_config_path)
-        logger.info("delete config dir %s successfully." % ovim_config_path)
+        logger.info("delete config dir %s successfully.", ovim_config_path)
     except Exception:
-        logger.warn("delete config dir %s failed. please remove %s manually." % (ovim_config_path, ovim_config_path))
+        logger.warning("delete config dir %s failed. please remove %s manually.", ovim_config_path, ovim_config_path)
     if args.remove_cache:
         try:
             shutil.rmtree(ovim_cache_dir)
-            logger.info("delete config dir %s successfully." % ovim_cache_dir)
+            logger.info("delete cache dir %s successfully.", ovim_cache_dir)
         except Exception:
-            logger.warn("delete config dir %s failed. please remove %s manually." % (ovim_cache_dir, ovim_cache_dir))
+            logger.warning("delete cache dir %s failed. please remove %s manually.", ovim_cache_dir, ovim_cache_dir)
 
 
-def download(parser, args):
-    global local_dir
-    version = None
+def detect_arch():
+    """Auto-detect platform and architecture for Neovim download."""
+    system = platform.system()
+    machine = platform.machine()
+
+    if system == "Darwin":
+        if machine == "arm64":
+            return "macos-arm64"
+        else:
+            return "macos-x86_64"
+    elif system == "Linux":
+        if machine in ("aarch64", "arm64"):
+            return "linux-arm64"
+        else:
+            return "linux-x86_64"
+    else:
+        logger.error("unsupported platform: %s %s", system, machine)
+        logger.error("please specify --arch manually")
+        sys.exit(1)
+
+
+VALID_ARCHS = ("macos-x86_64", "macos-arm64", "linux-x86_64", "linux-arm64")
+
+
+def download(_, args):
+    """Download and install latest Neovim release."""
     from urllib.request import urlopen
+
+    arch = args.arch or detect_arch()
+    if arch not in VALID_ARCHS:
+        logger.error("invalid arch: %s. valid: %s", arch, ", ".join(VALID_ARCHS))
+        sys.exit(1)
 
     if args.nightly:
         version = "nightly"
     else:
         import json
 
+        logger.info("fetching latest neovim release...")
         r = urlopen("https://api.github.com/repos/neovim/neovim/releases/latest")
-        s = r.read().decode()
-        r = json.loads(s)
-        version = r["tag_name"]
-    print("latest version is:", version)
-    download_url = "https://github.com/neovim/neovim/releases/download/{}/nvim-{}.tar.gz".format(version, args.arch)
+        data = json.loads(r.read().decode())
+        version = data["tag_name"]
+
+    print("Version:", version)
+    download_url = "https://github.com/neovim/neovim/releases/download/{}/nvim-{}.tar.gz".format(version, arch)
+    print("Download:", download_url)
+
     import tarfile
     import tempfile
 
-    print("download from:", download_url)
+    logger.info("downloading...")
     r = urlopen(download_url)
     fp = tempfile.TemporaryFile()
     fp.write(r.read())
     fp.flush()
     fp.seek(0)
+
     tempdir = tempfile.TemporaryDirectory()
     tar = tarfile.open(fileobj=fp, mode="r:gz")
     out = join(local_dir, "nvim")
     tar.extractall(tempdir.name)
     tar.close()
-    import shutil
 
     if os.path.exists(out):
         shutil.rmtree(out)
-    shutil.copytree(join(tempdir.name, f"nvim-{args.arch}"), join(local_dir, "nvim"))
+    shutil.copytree(join(tempdir.name, "nvim-{}".format(arch)), out)
     tempdir.cleanup()
-    nvim_source_path = join(out, "bin", "nvim")
-    nvim_target_path = join(local_dir, "bin", "nvim")
-    if os.path.exists(nvim_target_path):
-        os.remove(nvim_target_path)
-    os.makedirs(os.path.dirname(nvim_target_path), exist_ok=True)
-    os.symlink(nvim_source_path, nvim_target_path)
+
+    # create symlink
+    nvim_bin = join(out, "bin", "nvim")
+    nvim_link = join(local_dir, "bin", "nvim")
+    os.makedirs(os.path.dirname(nvim_link), exist_ok=True)
+    if os.path.exists(nvim_link):
+        os.remove(nvim_link)
+    os.symlink(nvim_bin, nvim_link)
+
+    # remove bundled tree-sitter parsers (use nvim-treesitter instead)
     shutil.rmtree(Path(out) / "lib" / "nvim" / "parser")
-    print("download successfully")
+
+    print("Neovim %s installed to %s" % (version, out))
 
 
 def create_arg_parser():
-    parser = argparse.ArgumentParser(description="vim config helper.")
+    parser = argparse.ArgumentParser(description="ovim config helper")
     subparsers = parser.add_subparsers(metavar="COMMAND", dest="command")
+
     # install
-    parser_install = subparsers.add_parser("install", aliases=["i"], help="install vim config")
+    parser_install = subparsers.add_parser("install", aliases=["i"], help="install ovim config")
     parser_install.set_defaults(func=install)
-    parser_install.add_argument(
-        "target",
-        metavar="TARGET",
-        choices=["nvim"],
-        default="nvim",
-        help="option choices: nvim. default: nvim",
-        nargs="?",
-    )
-    parser_install.add_argument(
-        "-d",
-        "--depend",
-        dest="install_depend",
-        type=str,
-        action="append",
-        nargs="?",
-        help='install dependency.example: -d="-i-p" -d="-n"',
-    )
+
     # uninstall
-    parser_uninstall = subparsers.add_parser("uninstall", aliases=["u"], help="uninstall nvim config")
+    parser_uninstall = subparsers.add_parser("uninstall", aliases=["u"], help="uninstall ovim config")
     parser_uninstall.set_defaults(func=uninstall)
-    parser_uninstall.add_argument(
-        "target",
-        metavar="TARGET",
-        choices=["nvim"],
-        default="nvim",
-        help="option choices: nvim. default: nvim",
-        nargs="?",
-    )
     parser_uninstall.add_argument(
         "-r-c",
         "--remove-cache",
         dest="remove_cache",
-        help="remove cache. default: False",
+        help="also remove cache dir",
         default=False,
         action="store_true",
     )
-    # depend
-    # create the parser for the "b" command
-    parser_dep = subparsers.add_parser("depend", aliases=["d"], help="install ovim dependency")
-    parser_dep.add_argument(
-        "-i-p",
-        "--ignore-python",
-        dest="ignore_python",
-        help="python dependency. default: False",
-        default=False,
-        action="store_true",
-    )
-    parser_dep.add_argument("-n", "--node", help="node dependency", default=False, action="store_true")
-    parser_dep.add_argument("-c", "--cargo", help="cargo dependency", default=False, action="store_true")
-    parser_dep.add_argument(
-        "--all",
-        help="ignore-python=False,node=True,cargo=True",
-        default=False,
-        action="store_true",
-    )
-    parser_dep.set_defaults(func=depend)
 
-    parser_download = subparsers.add_parser("download", help="download and install lastest neovim")
+    # download
+    parser_download = subparsers.add_parser("download", aliases=["dl"], help="download latest neovim")
     parser_download.set_defaults(func=download)
     parser_download.add_argument(
         "-a",
         "--arch",
-        choices=["linux-x86_64", "linux-arm64", "macos-x86_64", "macos-arm64"],
+        choices=VALID_ARCHS,
         type=str,
-        default="linux-x86_64",
+        default=None,
+        help="target platform arch (auto-detect if omitted)",
     )
     parser_download.add_argument("--nightly", default=False, action="store_true")
-    parser_download.set_defaults(func=download)
+
     return parser
 
 

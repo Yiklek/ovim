@@ -9,22 +9,17 @@ Ovim is a Neovim configuration and plugin management framework that provides the
 ## Installation and Setup
 
 ```bash
-# Install with dependencies
-python3 h.py install -d
+# Install (create symlink ~/.config/nvim/init.lua -> ovim/init.lua)
+python3 h.py install
 
-# Install dependencies only
-python3 h.py depend --all
-
-# Install specific dependencies
-python3 h.py depend -n  # node
-python3 h.py depend -c  # cargo
-
-# Download latest Neovim release
+# Download latest Neovim release (auto-detect platform)
 python3 h.py download
 
 # Uninstall
 python3 h.py uninstall -r-c  # remove cache too
 ```
+
+On first Neovim startup, lazy.nvim is automatically bootstrapped from `ovim/lua/ovim/core/lazy.lua`.
 
 ## Architecture
 
@@ -104,10 +99,9 @@ Use `stylua` for formatting (config in `stylua.toml`):
 - Lazy state is cached in `$XDG_CACHE_HOME/ovim/lazy/state.json`
 - Delete cache files to force reload: `rm -rf ~/.cache/ovim/lazy/`
 
-**Helper script dependencies (managed via `h.py`):**
-- Node packages listed in `ovim/packages.txt`
-- Python packages in `ovim/requirements.txt`
-- Cargo crates in `ovim/cargo.txt`
+**System dependencies:**
+- [ripgrep](https://github.com/BurntSushi/ripgrep) — required by telescope and blink.cmp for search (`brew install ripgrep`, `apt install ripgrep`, x-cmd: `x env use rg`)
+- [Neovim](https://neovim.io/) >= 0.10
 
 ## Git Commit
 
